@@ -124,3 +124,32 @@ body {
   font-weight: lighter;
   color:rgba(0, 0, 0, 0.625)
 }
+
+.handle-product-button {
+  background-color: #30C1BD;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 7rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s;
+}
+
+.handle-product-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.handle-product-image {
+  color: white;
+}
+
+.handle-product-button:hover {
+  transform: scale(1.1);
+}
+
+.handle-product-button:not(:hover) {
+  transform: scale(1);
+}
