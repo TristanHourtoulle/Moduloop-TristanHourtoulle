@@ -8,10 +8,12 @@ import { RegisterButton } from "./header/RegisterButton";
 import { LoginButton } from "./header/LoginButton";
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+import { User } from '../models/User';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [session, setSession] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -33,6 +35,14 @@ const Header = () => {
     fetchSession();
   }, []);
 
+  useEffect(() => {
+    if (session && session.user && session.user.role === "admin") {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
+    }
+  }, [session]);
+
   return session ? (
     <div className='flex items-center h-24 w-full'>
         <Logo />
@@ -46,12 +56,12 @@ const Header = () => {
             <Link href="/projects" className="nav-link link-to-scale">
               Projets
             </Link>
-            <Link href="/products" className="nav-link link-to-scale">
-              Produits
-            </Link>
-            <Link href="/users" className="nav-link link-to-scale">
-              Users
-            </Link>
+            { isAdmin && ( <Link href="/products" className="nav-link link-to-scale">
+                  Produits
+                </Link>
+            )} { isAdmin && ( <Link href="/users" className="nav-link link-to-scale">
+            Users
+            </Link> )}
             <Link
               href="https://www.moduloop.com/contact/"
               className="link-to-scale"
@@ -112,8 +122,12 @@ const Header = () => {
                     <nav className='grid gap-y-8'>
                       <Link href="/" className=''><p className="text">Accueil</p></Link>
                       <Link href="/projects" className=''><p className="text">Projets</p></Link>
-                      <Link href="/products" className=''><p className="text">Produits</p></Link>
-                      <Link href="/Users" className=''><p className="text">Users</p></Link>
+                      { isAdmin && ( <Link href="/products" className="">
+                            Produits
+                          </Link>
+                      )} { isAdmin && ( <Link href="/users" className="">
+                            Users
+                      </Link> )}
                       <Link
                         href="https://www.moduloop.com/contact/"
                         onClick={(e) => {
