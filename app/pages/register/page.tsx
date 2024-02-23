@@ -5,7 +5,6 @@ import { User } from "@models/User"
 export default function Register() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        alert("Form submitted !")
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const user: User = {
@@ -19,7 +18,6 @@ export default function Register() {
             updatedAt: Date.now().toString(),
             avatar: "",
         }
-        console.log("Value from form: ", user)
 
         try {
             const response = await fetch("/api/user", {
@@ -31,15 +29,10 @@ export default function Register() {
             });
 
             if (response.ok) {
-                console.log("User created")
                 window.location.href = "/pages/login"
             } else {
-                console.log("Error: ", response.statusText)
-                alert("Error: " + response.statusText)
             }
         } catch (error) {
-            console.log("Error: ", error)
-            alert("Error: " + error)
         }
     }
 
