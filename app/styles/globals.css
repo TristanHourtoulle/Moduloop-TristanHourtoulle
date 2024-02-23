@@ -113,3 +113,14 @@ body {
   font-weight: 400;
   text-align: center;
 }
+
+.page-title {
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.page-number {
+  font-size: 3rem;
+  font-weight: lighter;
+  color:rgba(0, 0, 0, 0.625)
+}
