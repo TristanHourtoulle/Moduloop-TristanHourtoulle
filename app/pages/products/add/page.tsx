@@ -5,9 +5,9 @@ import { Title } from '@components/Title'
 export default function page() {
 
     const title: TitleType = {
-        title: "Utilisateurs",
+        title: "Mettre à jour vos produits",
         image: "/icons/admin.svg",
-        number: "5"
+        number: null
     }
 
   return (

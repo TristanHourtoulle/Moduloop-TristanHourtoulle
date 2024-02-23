@@ -113,3 +113,153 @@ body {
   font-weight: 400;
   text-align: center;
 }
+
+.page-title {
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.page-number {
+  font-size: 3rem;
+  font-weight: lighter;
+  color:rgba(0, 0, 0, 0.625)
+}
+
+.handle-product-button {
+  background-color: #30C1BD;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 7rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s;
+}
+
+.handle-product-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.handle-product-image {
+  color: white;
+}
+
+.handle-product-button:hover {
+  transform: scale(1.1);
+}
+
+.handle-product-button:not(:hover) {
+  transform: scale(1);
+}
+
+.no-product-text {
+    font-weight: lighter;
+    font-size: 3rem;
+    color:rgba(0, 0, 0, 0.625)
+}
+
+.scroll-view {
+  overflow-y: scroll;
+  height: 450px;
+}
+
+.product-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px;
+}
+
+.product-card {
+  transition: transform 0.25s;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card:not(:hover) {
+    transform: scale(1); /* Taille normale lorsque l'objet n'est pas en hover */
+}
+
+.products-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 2rem;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center; /* Ajout de la propriété justify-content avec la valeur center */
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .products-cards {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+  }
+}
+
+.product-separation {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%; /* Adjust as needed */
+  height: 1px; /* Adjust as needed */
+  background-color: #000; /* Adjust color as needed */
+  opacity: 0.5;
+}
+
+.product-header {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  white-space: nowrap; /* Empêche le saut à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse */
+  text-overflow: ellipsis;
+  text-align: center;
+  margin-bottom: 1rem;
+  background-color: #30C1BD;
+  border-radius: 10px;;
+  padding: 10px;
+}
+
+.product-content-space {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px 40px;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-base {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-button {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap; /* Empêche le saut à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse */
+  text-overflow: ellipsis;
+  text-align: center;
+  color:  white;
+  background-color: #30C1BD;
+  border-radius: 10px;
+  width: 30%;
+  padding: 7px;
+  margin-left: auto;
+  margin-right: auto;
+}
