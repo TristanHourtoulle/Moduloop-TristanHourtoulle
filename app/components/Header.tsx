@@ -53,13 +53,13 @@ const Header = () => {
             <Link href="/" className="nav-link link-to-scale">
               Accueil
             </Link>
-            <Link href="/projects" className="nav-link link-to-scale">
+            <Link href="/pages/projects" className="nav-link link-to-scale">
               Projets
             </Link>
-            { isAdmin && ( <Link href="/products" className="nav-link link-to-scale">
+            { isAdmin && ( <Link href="/pages/products" className="nav-link link-to-scale">
                   Produits
                 </Link>
-            )} { isAdmin && ( <Link href="/users" className="nav-link link-to-scale">
+            )} { isAdmin && ( <Link href="/pages/users" className="nav-link link-to-scale">
             Users
             </Link> )}
             <Link
@@ -121,11 +121,11 @@ const Header = () => {
                 <div className='mt-6 ml-3'>
                     <nav className='grid gap-y-8'>
                       <Link href="/" className=''><p className="text">Accueil</p></Link>
-                      <Link href="/projects" className=''><p className="text">Projets</p></Link>
-                      { isAdmin && ( <Link href="/products" className="">
+                      <Link href="/pages/projects" className=''><p className="text">Projets</p></Link>
+                      { isAdmin && ( <Link href="/pages/products" className="">
                             Produits
                           </Link>
-                      )} { isAdmin && ( <Link href="/users" className="">
+                      )} { isAdmin && ( <Link href="/pages/users" className="">
                             Users
                       </Link> )}
                       <Link
