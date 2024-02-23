@@ -8,7 +8,6 @@ import { RegisterButton } from "./header/RegisterButton";
 import { LoginButton } from "./header/LoginButton";
 
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
-import { User } from '../models/User';
 
 const Header = () => {
   const [selectedLink, setSelectedLink] = useState("/");
