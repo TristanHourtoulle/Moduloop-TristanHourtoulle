@@ -2,6 +2,8 @@ export interface ProductType {
     id: number | null;
     name: string | null;
     image: string | null;
+    unit: string | null;
+    base: string | null;
     // All impact (New)
     nrc_manufacturing: number | null;
     nrc_installation: number | null;
