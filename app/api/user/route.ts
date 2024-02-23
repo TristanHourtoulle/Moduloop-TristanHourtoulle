@@ -8,13 +8,11 @@ import { login } from '@/lib/session';
 export async function POST(request: NextRequest) {
     try {
         const user: User = await request.json();
-        console.log('request.body: ', user);
         const result = await pool.query('INSERT INTO users ("firstName", "name", "email", "password", "role", "createdAt", "updatedAt", "avatar") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
                                         [user.firstName, user.name, user.email, user.password, user.role, user.createdAt, user.updatedAt, user.avatar]);
 
         // Vérification si la requête a réussi
         if (result.rowCount === 1) {
-            console.log('Résultat de la requête:', result.rows[0]);
             const data = result.rows[0]; // Nouvel utilisateur ajouté
             return Response.json({ success: true, data}, { status: 200 });
         } else {
@@ -64,13 +62,11 @@ export async function GET(request: NextRequest) {
 export async function PUT(request: NextRequest) {
     try {
         const user: User = await request.json();
-        console.log('request.body: ', user);
         const result = await pool.query('UPDATE users SET name = $1, email = $2, password = $3, role = $4 WHERE id = $5 RETURNING *;',
             [user.name, user.email, user.password, user.role, user.id]);
 
         // Vérification si la requête a réussi
         if (result.rowCount === 1) {
-            console.log('Résultat de la requête:', result.rows[0]);
             const data = result.rows[0];
             return Response.json({ success: true, data}, { status: 200 });
         } else {
@@ -86,12 +82,10 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
     try {
         const user: User = await request.json();
-        console.log('request.body: ', user);
         const result = await pool.query('DELETE FROM users WHERE id = $1;', [user.id]);
 
         // Vérification si la requête a réussi
         if (result.rowCount === 1) {
-            console.log('Résultat de la requête:', result.rows[0]);
             const data = result.rows[0];
             return Response.json({ success: true, data}, { status: 200 });
         } else {

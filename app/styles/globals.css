@@ -31,3 +31,85 @@ body {
 .text {
   font-family: 'M PLUS Rounded 1c', sans-serif;
 }
+
+.nav-logo {
+  position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    padding: 7px;
+    margin-left: 10px;
+    transition: transform 0.25s ease-in-out;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-logo:not(:hover) {
+  transform: scale(1);
+}
+
+.nav-logo-text {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.nav-link {
+  color: #989FAC;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nav-link-selected {
+  color: black;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.link-to-scale {
+  transition: transform 0.25s;
+}
+
+.link-to-scale:hover {
+  transform: scale(1.25);
+}
+
+.link-to-scale:not(:hover) {
+  transform: scale(1); /* Taille normale lorsque l'objet n'est pas en hover */
+}
+
+.nav-user {
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+}
+
+.mobile-menu {
+  border-radius: 1rem;
+}
+
+.auth-button {
+  background-color: #30C1BD;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 10rem;
+}
+
+.auth-button-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+}

@@ -5,7 +5,6 @@ import { User } from '@/models/User';
 export default function Login() {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        alert("Form submitted !")
         e.preventDefault()
         const formData = new FormData(e.currentTarget)
         const user: User = {
@@ -19,7 +18,6 @@ export default function Login() {
             updatedAt: "",
             avatar: "",
         }
-        console.log("Value from form: ", user)
 
         try {
             const email = user.email || '';
@@ -33,15 +31,11 @@ export default function Login() {
             });
 
             if (response.ok) {
-                console.log("Successfully logged in !")
                 window.location.href = "/"
             } else {
-                console.log("Error: ", response.statusText)
                 alert("Error: " + response.statusText)
             }
         } catch (error) {
-            console.log("Error: ", error)
-            alert("Error: " + error)
         }
     }
 
