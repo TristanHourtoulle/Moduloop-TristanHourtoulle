@@ -11,6 +11,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import { User } from '../models/User';
 
 const Header = () => {
+  const [selectedLink, setSelectedLink] = useState("/");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [session, setSession] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -50,18 +51,43 @@ const Header = () => {
         {/* Desktop View */}
         <div className="hidden sm:flex flex-grow justify-center">
           <div className="flex items-center justify-center gap-7 mr-auto ml-auto">
-            <Link href="/" className="nav-link link-to-scale">
+            <Link
+              href="/"
+              onClick={() => {
+                setSelectedLink("/");
+              }}
+              className={`nav-link ${selectedLink === "/" ? "nav-link-selected" : "link-to-scale"}`}
+            >
               Accueil
             </Link>
-            <Link href="/pages/projects" className="nav-link link-to-scale">
+            <Link
+              href="/pages/projects"
+              onClick={() => {
+                setSelectedLink("/pages/projects");
+              }}
+              className={`nav-link ${selectedLink === '/pages/projects' ? 'nav-link-selected' : 'link-to-scale'}`}>
               Projets
             </Link>
-            { isAdmin && ( <Link href="/pages/products" className="nav-link link-to-scale">
-                  Produits
-                </Link>
-            )} { isAdmin && ( <Link href="/pages/users" className="nav-link link-to-scale">
-            Users
-            </Link> )}
+            {isAdmin && (
+              <Link
+              href="/pages/products"
+              onClick={() => {
+                setSelectedLink("/pages/products");
+              }}
+              className={`nav-link ${selectedLink === '/pages/products' ? 'nav-link-selected' : 'link-to-scale'}`}>
+                Produits
+              </Link>
+            )}
+            {isAdmin && (
+              <Link
+              href="/pages/users"
+              onClick={() => {
+                setSelectedLink("/pages/users");
+              }}
+              className={`nav-link ${selectedLink === '/pages/users' ? 'nav-link-selected' : 'link-to-scale'}`}>
+                Users
+              </Link>
+            )}
             <Link
               href="https://www.moduloop.com/contact/"
               className="link-to-scale"
