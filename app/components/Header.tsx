@@ -3,6 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useEffect, useState } from "react";
+import { Logo } from "./header/Logo";
 
 const Header = () => {
   const [session, setSession] = useState(null);
@@ -25,7 +26,9 @@ const Header = () => {
 
   return (
     session ? (
-      <div>Connected</div>
+      <div className="container flex items-center justify-between h-24">
+          <Logo />
+      </div>
     ) : (
       <div>Not connected</div>
     )
