@@ -12,7 +12,7 @@ const Card = (product: ProductType) => {
         </div>
         <div className='product-content-space'>
             <div className='product-image'>
-                {product.image != '' ? <Image
+                {product.image != '' && product.image ? <Image
                     src={product.image ?? ''}
                     alt={product.name ?? ''}
                     width={100}
