@@ -31,48 +31,14 @@ export async function GET(request: NextRequest) {
         const id = searchParams.get('id') || '';
         console.log("ID: ", id);
 
-        const product: ProductType = {
-                id: 1,
-                name: "Etagère",
-                image: "/products/etagere.png",
-                unit: "pièce",
-                base: "Impact",
-                nrc_manufacturing: 1,
-                nrc_installation: 1,
-                nrc_usage: 1,
-                nrc_end_of_life: 1,
-                nerf_manufacturing: 1,
-                nerf_installation: 1,
-                nerf_usage: 1,
-                nerf_end_of_life: 1,
-                nase_manufacturing: 1,
-                nase_installation: 1,
-                nase_usage: 1,
-                nase_end_of_life: 1,
-                nem_manufacturing: 1,
-                nem_installation: 1,
-                nem_usage: 1,
-                nem_end_of_life: 1,
-                rrc_manufacturing: 65,
-                rrc_installation: 65,
-                rrc_usage: 65,
-                rrc_end_of_life: 65,
-                rerf_manufacturing: 65,
-                rerf_installation: 65,
-                rerf_usage: 65,
-                rerf_end_of_life: 65,
-                rase_manufacturing: 65,
-                rase_installation: 65,
-                rase_usage: 65,
-                rase_end_of_life: 65,
-                rem_manufacturing: 65,
-                rem_installation: 65,
-                rem_usage: 65,
-                rem_end_of_life: 65,
-                new: JSON.parse('{}'),
-                reuse: JSON.parse('{}')
-            }
-        return Response.json({success: true, product}, { status: 200 })
+        const result = await pool.query('SELECT * FROM products WHERE id = $1;', [id]);
+        if (result.rowCount == 1) {
+            const product = result.rows[0];
+            console.log(product);
+            return Response.json({success: true, product}, { status: 200 })
+        } else {
+            return Response.json({success: false, message: 'No product found'}, { status: 404 });
+        }
     } catch (error) {
         console.error('Erreur lors de la récupération du produit:', error);
         return Response.json({ success: false, error }, { status: 500 });
