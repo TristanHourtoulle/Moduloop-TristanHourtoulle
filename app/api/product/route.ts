@@ -7,10 +7,10 @@ import { User } from '@/models/User';
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
     try {
-        const product: ProductType = await request.json();
+        const product: any = await request.json();
 
         const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
-                                        [product.name, product.image, product.unit, product.base, "", product.new, product.reuse])
+                                        [product.name, product.image, product.unit, product.category, "", product.new, product.reuse])
 
         if (result.rowCount == 1) {
             const data = result.rows[0];
