@@ -1,4 +1,6 @@
-import React from 'react'
+"use client"
+
+import React, { useEffect, useState } from 'react'
 import { TitleType } from '@models/Title'
 import { Title } from '@components/Title'
 import Link from 'next/link'
@@ -8,12 +10,27 @@ import Card from '@components/products/Card'
 
 export default function page() {
 
-    let products: ProductType[] = [];
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await fetch('/api/product/list', {
+                method: 'GET'
+            });
+            const data = await res.json();
+            if (data.success) {
+                setProducts(data.data);
+            } else {
+                console.error('Failed to fetch products:', data.error);
+            }
+        };
+        fetchData();
+    }, []);
 
     const title: TitleType = {
         title: "Vos produits",
         image: "/icons/entrepot.svg",
-        number: products.length.toString()
+        number: ""
     }
 
   return (
@@ -40,7 +57,7 @@ export default function page() {
         <div className='ml-5 scroll-view'>
             <div className='products-cards'>
                 {products ? (
-                    products.map((product: ProductType) => (
+                    products.map((product) => (
                         <Card key={product.id} {...product}/>
                     ))
                 ) : (
