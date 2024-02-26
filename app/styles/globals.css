@@ -316,3 +316,32 @@ body {
   color:rgba(0, 0, 0, 0.625);
   font-size:x-large;
 }
+
+.add-product-card {
+  background-color: #30C1BD;
+  width: 500px;
+  height: 500px;
+  padding: 25px;
+}
+
+.add-product-card .tutoriel {
+  text-align: center;
+}
+
+.add-product-card button {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.add-product-card p {
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.add-product-card .upload {
+  text-align: center;
+}
