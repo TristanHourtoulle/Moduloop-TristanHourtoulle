@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         if (result.rowCount == 0) {
             toSend = JSON.stringify({});
         }
-        toSend = result
+        toSend = result.rows;
         return Response.json({success: true, data: toSend}, {status: 200});
     } catch (error) {
         console.error('Erreur lors de la récupération de tous les utilisateurs: ', error);
