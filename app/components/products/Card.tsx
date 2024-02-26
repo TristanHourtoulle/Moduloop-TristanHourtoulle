@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const Card = (product: ProductType) => {
+    const showProductUrl = '/pages/products/' + product.id
   return (
     <div className="product-card">
         <div className='product-header'>
@@ -24,7 +25,7 @@ const Card = (product: ProductType) => {
             </div>
         </div>
         <div className="product-separation"></div>
-        <Link href='#'>
+        <Link href={showProductUrl}>
             <p className='product-button link-to-scale'>Ouvrir</p>
         </Link>
     </div>
