@@ -12,13 +12,19 @@ const Card = (product: ProductType) => {
         </div>
         <div className='product-content-space'>
             <div className='product-image'>
-                <Image
+                {product.image != '' ? <Image
                     src={product.image ?? ''}
                     alt={product.name ?? ''}
                     width={100}
                     height={100}
                     className='object-contain'
-                />
+                /> : <Image
+                src="/icons/no-image.png"
+                alt=""
+                width={100}
+                height={100}
+                className='object-contain'
+            />}
             </div>
             <div className='product-base'>
                 <h3>{product.base}</h3>
