@@ -25,18 +25,18 @@ const ImpactTable: React.FC<ImpactTableProps> = ({ product, type }) => {
             <th className='cell index-color index-col'>Réchauffement Climatique</th>
             {type === 'new' ? (
               <>
-                <td className='cell'>{product.nrc_manufacturing}</td>
-                <td className='cell'>{product.nrc_usage}</td>
-                <td className='cell'>{product.nrc_installation}</td>
-                <td className='cell'>{product.nrc_end_of_life}</td>
+                <td className='cell'>{product.new.rc_manufacturing}</td>
+                <td className='cell'>{product.new.rc_usage}</td>
+                <td className='cell'>{product.new.rc_installation}</td>
+                <td className='cell'>{product.new.rc_endOfLife}</td>
               </>
             )
             : (
               <>
-                <td className='cell'>{product.rrc_manufacturing}</td>
-                <td className='cell'>{product.rrc_usage}</td>
-                <td className='cell'>{product.rrc_installation}</td>
-                <td className='cell'>{product.rrc_end_of_life}</td>
+                <td className='cell'>{product.reuse.rc_manufacturing}</td>
+                <td className='cell'>{product.reuse.rc_usage}</td>
+                <td className='cell'>{product.reuse.rc_installation}</td>
+                <td className='cell'>{product.reuse.rc_endOfLife}</td>
               </>
             )
             }
@@ -47,18 +47,18 @@ const ImpactTable: React.FC<ImpactTableProps> = ({ product, type }) => {
 
             {type === 'new' ? (
               <>
-                <td className='cell'>{product.nerf_manufacturing}</td>
-                <td className='cell'>{product.nerf_installation}</td>
-                <td className='cell'>{product.nerf_usage}</td>
-                <td className='cell'>{product.nerf_end_of_life}</td>
+                <td className='cell'>{product.new.erc_manufacturing}</td>
+                <td className='cell'>{product.new.erc_installation}</td>
+                <td className='cell'>{product.new.erc_usage}</td>
+                <td className='cell'>{product.new.erc_endOfLife}</td>
               </>
             )
             : (
               <>
-                <td className='cell'>{product.rerf_manufacturing}</td>
-                <td className='cell'>{product.rerf_installation}</td>
-                <td className='cell'>{product.rerf_usage}</td>
-                <td className='cell'>{product.rerf_end_of_life}</td>
+                <td className='cell'>{product.reuse.erc_manufacturing}</td>
+                <td className='cell'>{product.reuse.erc_installation}</td>
+                <td className='cell'>{product.reuse.erc_usage}</td>
+                <td className='cell'>{product.reuse.erc_endOfLife}</td>
               </>
             )
             }
@@ -69,18 +69,18 @@ const ImpactTable: React.FC<ImpactTableProps> = ({ product, type }) => {
 
             {type === 'new' ? (
               <>
-                <td className='cell'>{product.nase_manufacturing}</td>
-                <td className='cell'>{product.nase_installation}</td>
-                <td className='cell'>{product.nase_usage}</td>
-                <td className='cell'>{product.nase_end_of_life}</td>
+                <td className='cell'>{product.new.ase_manufacturing}</td>
+                <td className='cell'>{product.new.ase_installation}</td>
+                <td className='cell'>{product.new.ase_usage}</td>
+                <td className='cell'>{product.new.ase_endOfLife}</td>
               </>
             )
             : (
               <>
-                <td className='cell'>{product.rase_manufacturing}</td>
-                <td className='cell'>{product.rase_installation}</td>
-                <td className='cell'>{product.rase_usage}</td>
-                <td className='cell'>{product.rase_end_of_life}</td>
+                <td className='cell'>{product.reuse.ase_manufacturing}</td>
+                <td className='cell'>{product.reuse.ase_installation}</td>
+                <td className='cell'>{product.reuse.ase_usage}</td>
+                <td className='cell'>{product.reuse.ase_endOfLife}</td>
               </>
             )
             }
@@ -91,18 +91,18 @@ const ImpactTable: React.FC<ImpactTableProps> = ({ product, type }) => {
 
             {type === 'new' ? (
               <>
-                <td className='cell'>{product.nase_manufacturing}</td>
-                <td className='cell'>{product.nase_installation}</td>
-                <td className='cell'>{product.nase_usage}</td>
-                <td className='cell'>{product.nase_end_of_life}</td>
+                <td className='cell'>{product.new.ase_manufacturing}</td>
+                <td className='cell'>{product.new.ase_installation}</td>
+                <td className='cell'>{product.new.ase_usage}</td>
+                <td className='cell'>{product.new.ase_endOfLife}</td>
               </>
             )
             : (
               <>
-                <td className='cell'>{product.rase_manufacturing}</td>
-                <td className='cell'>{product.rase_installation}</td>
-                <td className='cell'>{product.rase_usage}</td>
-                <td className='cell'>{product.rase_end_of_life}</td>
+                <td className='cell'>{product.reuse.ase_manufacturing}</td>
+                <td className='cell'>{product.reuse.ase_installation}</td>
+                <td className='cell'>{product.reuse.ase_usage}</td>
+                <td className='cell'>{product.reuse.ase_endOfLife}</td>
               </>
             )
             }

@@ -1,7 +1,7 @@
 import { ProductType } from "@models/Product";
 
 
-const InfoTable = (product: ProductType) => {
+const InfoTable = (product) => {
     return (
         <div>
             <table>
