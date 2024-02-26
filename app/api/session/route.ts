@@ -1,7 +1,7 @@
 import { getSession } from "@lib/session";
 import { NextRequest } from "next/server";
 
-export default async function POST(request: NextRequest) {
+export async function POST(request: NextRequest) {
     const session = await getSession();
     return Response.json({ success: true, session}, { status: 200 });
 }
