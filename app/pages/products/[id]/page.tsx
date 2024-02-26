@@ -31,7 +31,6 @@ export default function Page({
         });
         if (response.ok) {
             const product = await response.json();
-            alert(product);
             setMyProduct(product.product);
             if (product.product) {
               const title: TitleType = {
