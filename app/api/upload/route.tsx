@@ -1,4 +1,4 @@
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, readFile } from "fs/promises";
 import { NextResponse } from "next/server";
 import path from "path";
 
@@ -18,5 +18,7 @@ export async function POST(request: NextResponse) {
     await writeFile(filepath, buffer);
     console.log(`open ${path} to see the uploaded file.`);
 
-    return Response.json({success: true, data: filepath}, {status: 200});
+    const fileData = await readFile(filepath, 'utf-8');
+
+    return Response.json({success: true, data: fileData}, {status: 200});
 }
