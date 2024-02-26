@@ -7,16 +7,16 @@ import { User } from '@/models/User';
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
     try {
-        const user: User = await request.json();
-        const result = await pool.query('INSERT INTO users ("firstName", "name", "email", "password", "role", "createdAt", "updatedAt", "avatar") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
-                                        [user.firstName, user.name, user.email, user.password, user.role, user.createdAt, user.updatedAt, user.avatar]);
+        const product: ProductType = await request.json();
 
-        // Vérification si la requête a réussi
-        if (result.rowCount === 1) {
-            const data = result.rows[0]; // Nouvel utilisateur ajouté
-            return Response.json({ success: true, data}, { status: 200 });
+        const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+                                        [product.name, product.image, product.unit, product.base, "", product.new, product.reuse])
+
+        if (result.rowCount == 1) {
+            const data = result.rows[0];
+            return Response.json({success: true, data}, {status: 200});
         } else {
-            throw new Error('La requête INSERT a échoué');
+            throw new Error('La requête INSERT a échoué')
         }
     } catch (error) {
         console.error('Erreur lors de l\'insertion de l\'utilisateur:', error);
@@ -68,7 +68,9 @@ export async function GET(request: NextRequest) {
                 rem_manufacturing: 65,
                 rem_installation: 65,
                 rem_usage: 65,
-                rem_end_of_life: 65
+                rem_end_of_life: 65,
+                new: JSON.parse('{}'),
+                reuse: JSON.parse('{}')
             }
         return Response.json({success: true, product}, { status: 200 })
     } catch (error) {
