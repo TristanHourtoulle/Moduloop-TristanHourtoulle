@@ -30,14 +30,18 @@ export default function Page({
             }
         });
         if (response.ok) {
-            const product: ProductType = await response.json();
+            const product = await response.json();
+            alert(product);
             setMyProduct(product.product);
-            const title: TitleType = {
-              title: "Votre produit: ",
-              image: "/icons/close.svg",
-              number: product.product.name
+            if (product.product) {
+              const title: TitleType = {
+                title: "Votre produit: ",
+                image: "/icons/close.svg",
+                number: product.product.name,
+                back: "/pages/products"
+              }
+              setTitle(title);
             }
-            setTitle(title)
         } else {
             // Handle error
         }
@@ -78,13 +82,19 @@ export default function Page({
 
             <div className="flex items-center">
                 <div className="flex flex-col items-center mr-auto">
-                    <Image
-                        src={myProduct.image}
-                        alt="image"
-                        height={450}
+                    {myProduct.image != '' && myProduct.image ? <Image
+                        src={myProduct.image ?? ''}
+                        alt={myProduct.name ?? ''}
                         width={450}
-                        />
-
+                        height={450}
+                        className='object-contain'
+                    /> : <Image
+                    src="/icons/no-image.png"
+                    alt=""
+                    width={450}
+                    height={450}
+                    className='object-contain'
+                />}
                     <button type="button" className="open-button">
                         <p className="text">Changer</p>
                     </button>

@@ -30,7 +30,8 @@ export default function page() {
     const title: TitleType = {
         title: "Vos produits",
         image: "/icons/entrepot.svg",
-        number: ""
+        number: "",
+        back: "#"
     }
 
   return (
@@ -57,8 +58,8 @@ export default function page() {
         <div className='ml-5 scroll-view'>
             <div className='products-cards'>
                 {products ? (
-                    products.map((product) => (
-                        <Card key={product.id} {...product}/>
+                    products.map((product, index) => (
+                        <Card key={index} {...product}/>
                     ))
                 ) : (
                     <div className='flex items-center justify-center'>

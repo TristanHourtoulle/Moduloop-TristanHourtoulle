@@ -10,6 +10,7 @@ export const Title = (title: TitleType) => {
 
   return (
     <div className='flex ml-5 gap-5 items-center'>
+      <a href={title.back}>
         <Image
             src={title.image}
             alt="Page Logo"
@@ -17,6 +18,7 @@ export const Title = (title: TitleType) => {
             height={50}
             className='object-contain'
         />
+      </a>
 
         <h1 className='page-title'>{title.title}</h1>
         <p className='page-number'>{number}</p>
