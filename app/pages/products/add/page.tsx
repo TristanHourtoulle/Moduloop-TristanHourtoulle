@@ -7,8 +7,9 @@ export default function page() {
 
     const title: TitleType = {
         title: "Mettre à jour vos produits",
-        image: "/icons/admin.svg",
-        number: null
+        image: "/icons/close.svg",
+        number: null,
+        back: "/pages/products"
     }
 
   return (
