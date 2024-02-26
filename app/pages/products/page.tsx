@@ -48,7 +48,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -88,7 +90,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -128,7 +132,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -168,7 +174,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -208,7 +216,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -248,7 +258,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -288,7 +300,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -328,7 +342,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -368,7 +384,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -408,7 +426,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         },
         {
@@ -448,7 +468,9 @@ export default function page() {
             rem_manufacturing: null,
             rem_installation: null,
             rem_usage: null,
-            rem_end_of_life: null
+            rem_end_of_life: null,
+            new: JSON.parse('{}'),
+            reuse: JSON.parse('{}')
 
         }
     ]

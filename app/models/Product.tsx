@@ -38,4 +38,6 @@ export interface ProductType {
     rem_installation: number | null;
     rem_usage: number | null;
     rem_end_of_life: number | null;
+    new: JSON;
+    reuse: JSON;
 }
