@@ -5,6 +5,8 @@ import { TitleType } from '@models/Title'
 import { Title } from '@components/Title'
 import { useState, useEffect } from 'react'
 import { ProjectType } from '@models/Project'
+import Link from 'next/link'
+import Image from 'next/image'
 
 function databaseToModel(data: JSON) {
     let projects: ProjectType[] = [];
@@ -61,7 +63,20 @@ export default function page() {
 
   return (
     <div>
+      <div className='flex items-center'>
         <Title {...title} />
+        <Link href="/pages/projects/create" className='create-project-button'>
+          <div className='flex gap-2'>
+            <Image
+              src="/icons/plus-blanc.svg"
+              alt="Créer un projet"
+              width={20}
+              height={20}
+            />
+            Créer un projet
+          </div>
+        </Link>
+      </div>
     </div>
   )
 }
