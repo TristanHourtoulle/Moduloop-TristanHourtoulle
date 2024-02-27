@@ -19,6 +19,30 @@ export default function Page({
   const [myProduct, setMyProduct] = useState<ProductType | null>(null);
   const [title, setTitle] = useState<TitleType | null>(null);
   const [view, setView] = useState("new") // "new" - "reuse"
+  const [file, setFile] = useState(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file); // Ajoutez votre fichier upload à FormData
+      formData.append("productId", myProduct?.id); // Ajoutez l'id du produit à FormData
+
+      const response = await fetch("/api/upload/image/product", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      } else {
+        alert("Failed to upload image.")
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -94,9 +118,23 @@ export default function Page({
                     height={450}
                     className='object-contain'
                 />}
-                    <button type="button" className="open-button">
-                        <p className="text">Changer</p>
-                    </button>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type='file'
+                    name='file'
+                    onChange={(e) => setFile(e.target.files?.[0])}
+                  />
+                  <input
+                    type="hidden"
+                    name="productId"
+                    value={id}
+                  />
+                  <input
+                    type="submit"
+                    value="Changer"
+                    className="open-button"
+                  />
+                </form>
                 </div>
                 <div className="flex flex-col items-center gap-10 mr-20">
                     <InfoTable {...myProduct} />
