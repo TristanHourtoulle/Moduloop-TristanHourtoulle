@@ -7,7 +7,8 @@ export default function page() {
     const title: TitleType = {
         title: "Vos projets",
         image: "/icons/but.svg",
-        number: "5"
+        number: "5",
+        back: "#"
     }
 
   return (
