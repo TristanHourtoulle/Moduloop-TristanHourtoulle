@@ -4,8 +4,42 @@ import React, {useState, useEffect} from 'react'
 import { TitleType } from '@models/Title'
 import { Title } from '@components/Title'
 import Image from 'next/image'
+import { User } from '@models/User'
+import { GroupType } from '@models/Group'
+import { databaseToGroupModel } from '@utils/convert'
 
 function page() {
+    const [idUser, setIdUser] = useState(null)
+    const [groups, setGroups] = useState<GroupType | null>(null)
+
+    useEffect (() => {
+        const fetchData = async () => {
+            let res = await fetch('/api/session', {
+                method: 'GET'
+            })
+            const data = await res.json()
+            if (data.success) {
+                console.log("GET: ", data.session.user)
+                await setIdUser(data.session.user.id)
+                console.log("ID: ", data.session.user.id); // Afficher la valeur juste après l'avoir définie
+            } else {
+                console.error('Failed to fetch user:', data.error)
+                alert("ERROR")
+            }
+            res = await fetch('/api/group/list?id=${encodeURIComponent(idUser)}', {
+                method: 'GET'
+            });
+            const groupData = await res.json();
+            if (groupData.success) {
+                console.log("GROUP GET: ", groupData.data)
+                setGroups(databaseToGroupModel(groupData.data));
+            } else {
+                console.error('Failed to fetch groups:', groupData.error);
+                alert("ERROR")
+            }
+        }
+        fetchData()
+    }, [])
 
     const [createGroup, setCreateGroup] = useState(false);
 
