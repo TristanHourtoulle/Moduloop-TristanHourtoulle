@@ -4,13 +4,15 @@ import React, {useState, useEffect} from 'react'
 import { TitleType } from '@models/Title'
 import { Title } from '@components/Title'
 import Image from 'next/image'
-import { User } from '@models/User'
 import { GroupType } from '@models/Group'
 import { databaseToGroupModel } from '@utils/convert'
 
 function page() {
     const [idUser, setIdUser] = useState(null)
     const [groups, setGroups] = useState<GroupType | null>(null)
+    const [groupName, setGroupName] = useState("");
+    const [groupDescription, setGroupDescription] = useState("");
+    const [groupBudget, setGroupBudget] = useState("");
 
     useEffect (() => {
         const fetchData = async () => {
@@ -48,7 +50,39 @@ function page() {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        alert("Hello")
+        e.preventDefault();
+
+        try {
+            const formData = new FormData();
+
+            formData.append("user_id", idUser);
+            formData.append("name", e.currentTarget.name.value);
+            formData.append("description", e.currentTarget.description.value);
+            formData.append("company", e.currentTarget.company.value);
+            formData.append("location", e.currentTarget.location.value);
+            formData.append("area", e.currentTarget.area.value);
+            formData.append("budget", e.currentTarget.budget.value);
+            formData.append("group", e.currentTarget.group.value);
+            if (createGroup) {
+                formData.append('group-name', groupName);
+                formData.append('group-description', groupDescription);
+                formData.append('group-budget', groupBudget);
+            }
+
+            const response = await fetch("/api/project", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                window.location.href = '/pages/projects';
+                alert("Project created successfully.")
+            } else {
+                alert("Failed to create project.")
+            }
+        } catch (error) {
+            alert(error);
+        }
     }
 
     const title: TitleType = {
@@ -112,7 +146,7 @@ function page() {
 
                                 <div className='flex items-center justify-center mb-5'>
                                     <label hidden htmlFor="group" className='form-label'>Prénom</label>
-                                    <select name="group" id="group" className='border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans' required onChange={handleGroupChange}>
+                                    <select name="group" id="group" className='border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans' onChange={handleGroupChange}>
                                         <option value="">Aucun groupe</option>
                                         {groups && groups.map(group => (
                                             <option key={group.id} value={group.id}>{group.name}</option>
@@ -132,6 +166,8 @@ function page() {
                                             name="group-name"
                                             placeholder="Nom du groupe"
                                             className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
+                                            value={groupName}
+                                            onChange={e => setGroupName(e.target.value)}
                                             required
                                         />
                                         <label hidden htmlFor="group-description" className='form-label'>Prénom</label>
@@ -140,6 +176,8 @@ function page() {
                                             name="group-description"
                                             placeholder="Description du groupe"
                                             className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans large-input"
+                                            value={groupDescription}
+                                            onChange={e => setGroupDescription(e.target.value)}
                                         />
                                         <label hidden htmlFor="group-budget" className='form-label'>Prénom</label>
                                         <input
@@ -148,14 +186,8 @@ function page() {
                                             name="group-budget"
                                             placeholder="Budget de votre groupe"
                                             className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
-                                        />
-                                        <label hidden htmlFor="group-image" className='form-label'>Prénom</label>
-                                        <input
-                                            type="file"
-                                            id="group-image"
-                                            name="group-image"
-                                            placeholder="Ajoutez une image"
-                                            className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
+                                            value={groupBudget}
+                                            onChange={e => setGroupBudget(e.target.value)}
                                         />
                                     </div>
                                 }
