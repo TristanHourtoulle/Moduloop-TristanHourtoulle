@@ -345,3 +345,60 @@ body {
 .add-product-card .upload {
   text-align: center;
 }
+
+.create-project-button {
+  background-color: #30C1BD;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  margin-left: auto;
+  margin-right: 20px;
+  font-size: larger;
+}
+
+.create-project-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 3rem;
+  margin-top: 2.5%;
+  margin-left: 5%;
+}
+
+.large-input {
+  resize: none;
+}
+
+.create-project-section .validate {
+  font-size: 1.5rem;
+  font-weight: larger;
+  margin-bottom: 20px;
+  background-color: #30C1BD;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-container {
+  position: relative; /* Ajoutez cette ligne pour permettre le positionnement absolu de l'image */
+  flex: 1; /* Centrez l'image verticalement */
+}
+
+.image-container img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.85;
+  margin-right: 5%; /* Aligner l'image par rapport au coin en bas à droite */
+}
+
+.option-create-group {
+}

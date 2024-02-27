@@ -83,7 +83,7 @@ const Header = () => {
                 setSelectedLink("/pages/users");
               }}
               className={`nav-link ${selectedLink === '/pages/users' ? 'nav-link-selected' : 'link-to-scale'}`}>
-                Users
+                Utilisateurs
               </Link>
             )}
             <Link
@@ -150,7 +150,7 @@ const Header = () => {
                             Produits
                           </Link>
                       )} { isAdmin && ( <Link href="/pages/users" className="">
-                            Users
+                            Utilisateurs
                       </Link> )}
                       <Link
                         href="https://www.moduloop.com/contact/"
