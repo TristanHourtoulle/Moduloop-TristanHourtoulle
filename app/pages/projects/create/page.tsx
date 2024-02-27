@@ -114,9 +114,9 @@ function page() {
                                     <label hidden htmlFor="group" className='form-label'>Prénom</label>
                                     <select name="group" id="group" className='border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans' required onChange={handleGroupChange}>
                                         <option value="">Aucun groupe</option>
-                                        <option value="1">Strasbourg</option>
-                                        <option value="2">Paris</option>
-                                        <option value="3">Nice</option>
+                                        {groups && groups.map(group => (
+                                            <option key={group.id} value={group.id}>{group.name}</option>
+                                        ))}
                                         <option value="-1">
                                                 Créer un groupe
                                         </option>
