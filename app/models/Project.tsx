@@ -11,7 +11,7 @@ export interface ProjectType {
     location: string | null;
     area: string | null;
     user_id: number | null;
-    group: GroupType | null;
+    group: number | null;
     created_at: string | null;
     updated_at: string | null;
 };
