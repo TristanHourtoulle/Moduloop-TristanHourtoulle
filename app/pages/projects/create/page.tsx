@@ -1,11 +1,17 @@
 "use client"
 
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { TitleType } from '@models/Title'
 import { Title } from '@components/Title'
 import Image from 'next/image'
 
 function page() {
+
+    const [createGroup, setCreateGroup] = useState(false);
+
+    const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setCreateGroup(e.target.value === "-1" ? true : false)
+    }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         alert("Hello")
@@ -72,14 +78,53 @@ function page() {
 
                                 <div className='flex items-center justify-center mb-5'>
                                     <label hidden htmlFor="group" className='form-label'>Prénom</label>
-                                    <input
-                                        type="text"
-                                        id="group"
-                                        name="group"
-                                        placeholder="Vos groupes..."
-                                        className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-                                    />
+                                    <select name="group" id="group" className='border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans' required onChange={handleGroupChange}>
+                                        <option value="">Aucun groupe</option>
+                                        <option value="1">Strasbourg</option>
+                                        <option value="2">Paris</option>
+                                        <option value="3">Nice</option>
+                                        <option value="-1">
+                                                Créer un groupe
+                                        </option>
+                                    </select>
+                                    {/* Display only if he wants to create a group */}
                                 </div>
+                                {createGroup &&
+                                    <div className=' flex flex-col gap-2 create-group-section'>
+                                        <label hidden htmlFor="group-name" className='form-label'>Prénom</label>
+                                        <input
+                                            type="text"
+                                            id="group-name"
+                                            name="group-name"
+                                            placeholder="Nom du groupe"
+                                            className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
+                                            required
+                                        />
+                                        <label hidden htmlFor="group-description" className='form-label'>Prénom</label>
+                                        <textarea
+                                            id="group-description"
+                                            name="group-description"
+                                            placeholder="Description du groupe"
+                                            className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans large-input"
+                                        />
+                                        <label hidden htmlFor="group-budget" className='form-label'>Prénom</label>
+                                        <input
+                                            type="text"
+                                            id="group-budget"
+                                            name="group-budget"
+                                            placeholder="Budget de votre groupe"
+                                            className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
+                                        />
+                                        <label hidden htmlFor="group-image" className='form-label'>Prénom</label>
+                                        <input
+                                            type="file"
+                                            id="group-image"
+                                            name="group-image"
+                                            placeholder="Ajoutez une image"
+                                            className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
+                                        />
+                                    </div>
+                                }
                             </div>
                             <div className='md:hidden ml-auto mr-auto' style={{ borderLeft: '1px solid black', height: '100%', alignSelf: 'center' }}></div>
                             <div className='flex flex-col md:w-1/2'>
