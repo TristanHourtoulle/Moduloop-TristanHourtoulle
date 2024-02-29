@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         const searchParams = request.nextUrl.searchParams;
         const id = searchParams.get('id') || '';
         console.log("ID: ", id);
-        const result = await pool.query('SELECT * FROM groups WHERE id = $1;', [id]);
+        const result = await pool.query('SELECT * FROM groups WHERE user_id = $1;', [id]);
         let toSend;
 
         if (result.rowCount == 0) {
