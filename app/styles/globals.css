@@ -478,3 +478,15 @@ body {
   font-size: 1.25rem;
   font-weight: 800;
 }
+
+.project-card .open-btn {
+  transition: transform 0.25s;
+}
+
+.project-card .open-btn:hover {
+    transform: scale(1.05);
+}
+
+.project-card .open-btn:not(:hover) {
+    transform: scale(1);
+}
