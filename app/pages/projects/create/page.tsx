@@ -5,16 +5,16 @@ import { TitleType } from '@models/Title'
 import { Title } from '@components/Title'
 import Image from 'next/image'
 import { GroupType } from '@models/Group'
-import { databaseToGroupModel } from '@utils/convert'
+import { databaseToGroupModel, databaseToSeveralGroupModel } from '@utils/convert'
 
 function page() {
     const [idUser, setIdUser] = useState(null)
-    const [groups, setGroups] = useState<GroupType | null>(null)
+    const [groups, setGroups] = useState<GroupType[]>([])
     const [groupName, setGroupName] = useState("");
     const [groupDescription, setGroupDescription] = useState("");
     const [groupBudget, setGroupBudget] = useState("");
 
-    useEffect (() => {
+    useEffect(() => {
         const fetchData = async () => {
             let res = await fetch('/api/session', {
                 method: 'GET'
@@ -26,22 +26,28 @@ function page() {
                 console.log("ID: ", data.session.user.id); // Afficher la valeur juste après l'avoir définie
             } else {
                 console.error('Failed to fetch user:', data.error)
-                alert("ERROR")
-            }
-            res = await fetch('/api/group/list?id=${encodeURIComponent(idUser)}', {
-                method: 'GET'
-            });
-            const groupData = await res.json();
-            if (groupData.success) {
-                console.log("GROUP GET: ", groupData.data)
-                setGroups(databaseToGroupModel(groupData.data));
-            } else {
-                console.error('Failed to fetch groups:', groupData.error);
-                alert("ERROR")
             }
         }
         fetchData()
     }, [])
+
+    useEffect(() => {
+        const fetchGroups = async () => {
+            if (idUser) {
+                let res = await fetch(`/api/group/list?id=${encodeURIComponent(idUser)}`, {
+                    method: 'GET'
+                });
+                const groupData = await res.json();
+                if (groupData.success) {
+                    console.log("GROUP GET: ", groupData.data)
+                    setGroups(databaseToSeveralGroupModel(groupData.data));
+                } else {
+                    console.error('Failed to fetch groups:', groupData.error);
+                }
+            }
+        }
+        fetchGroups()
+    }, [idUser])
 
     const [createGroup, setCreateGroup] = useState(false);
 
@@ -76,7 +82,6 @@ function page() {
 
             if (response.ok) {
                 window.location.href = '/pages/projects';
-                alert("Project created successfully.")
             } else {
                 alert("Failed to create project.")
             }
@@ -148,11 +153,11 @@ function page() {
                                     <label hidden htmlFor="group" className='form-label'>Prénom</label>
                                     <select name="group" id="group" className='border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans' onChange={handleGroupChange}>
                                         <option value="">Aucun groupe</option>
-                                        {groups && groups.map(group => (
+                                        {Array.isArray(groups) && groups.map(group => (
                                             <option key={group.id} value={group.id}>{group.name}</option>
                                         ))}
                                         <option value="-1">
-                                                Créer un groupe
+                                            Créer un groupe
                                         </option>
                                     </select>
                                     {/* Display only if he wants to create a group */}

@@ -40,12 +40,13 @@ export default function page() {
                 let projectsData = databaseToProjectModel(data.data);
                 for (let i = 0; i < projectsData.length; i++) {
                     // Get Group By Id
-                    res = await fetch(`/api/group/list?id=${encodeURIComponent(projectsData[i].group)}`, {
+                    res = await fetch(`/api/group/id?id=${encodeURIComponent(projectsData[i].group)}`, {
                         method: 'GET'
                     });
                     const groupData = await res.json();
                     if (groupData.success) {
                         const groupInfo = databaseToGroupModel(groupData.data);
+                        console.log("JE SUIS LE PRINT DU GROUPINFO: ", groupInfo)
                         if (groupInfo.id) {
                             projectsData[i].groupInfo = groupInfo;
                         } else {
@@ -94,9 +95,9 @@ export default function page() {
           const group = project.groupInfo;
           return (
             <div key={index} className='flex flex-col project-card gap-2 project-zoom'>
-                <p className='group'>{group ? group.name : 'Groupe non trouvé'}</p>
+                <p className='group'>{group ? group.name : 'Aucun Groupe'}</p>
                 <p className='name'>{project.name}</p>
-                <p className='description'>{project.description}</p>
+                <p className='description'>{project.description ? project.description : 'Aucune description'}</p>
                 <div className='flex'>
                   <p className='date mr-auto'>Dernières modifications:</p>
                   <p className='date mr-5'>{dateFormater(project.updated_at).date} à {dateFormater(project.updated_at).time}</p>
