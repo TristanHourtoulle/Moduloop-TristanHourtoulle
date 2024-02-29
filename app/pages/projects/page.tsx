@@ -90,14 +90,14 @@ export default function page() {
         </Link>
       </div>
       {/* Projects */}
-      <div className='flex items-center justify-center gap-4 mt-10'>
+      <div className='flex items-center justify-center gap-4 mt-10 flex-wrap ml-10 projects-container'>
         {projects ? projects.map((project, index) => {
           const group = project.groupInfo;
           return (
             <div key={index} className='flex flex-col project-card gap-2 project-zoom'>
-                <p className='group'>{group ? group.name : 'Aucun Groupe'}</p>
-                <p className='name'>{project.name}</p>
-                <p className='description'>{project.description ? project.description : 'Aucune description'}</p>
+                <p className='group text-in-single-line'>{group ? group.name : 'Aucun Groupe'}</p>
+                <p className='name text-in-single-line'>{project.name}</p>
+                <p className='description text-in-single-line'>{project.description ? project.description : 'Aucune description'}</p>
                 <div className='flex'>
                   <p className='date mr-auto'>Dernières modifications:</p>
                   <p className='date mr-5'>{dateFormater(project.updated_at).date} à {dateFormater(project.updated_at).time}</p>
