@@ -24,7 +24,6 @@ export async function POST(request: NextRequest) {
         let group_budget = "";
 
         if (group_id === "-1") {
-            console.log("BONJOUR")
             group_name = data.get('group-name') as string;
             group_description = data.get('group-description') as string;
             group_budget = data.get('group-budget') as string;

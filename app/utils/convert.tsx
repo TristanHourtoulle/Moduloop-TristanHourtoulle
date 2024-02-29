@@ -17,6 +17,25 @@ export function databaseToGroupModel(data: JSON) {
         groups.push(group);
     }
 
+    return groups[0];
+}
+
+export function databaseToSeveralGroupModel(data: JSON) {
+    let groups: GroupType[] = [];
+
+    const dataArray = Array.from(data);
+    for (let i = 0; i < dataArray.length; i++) {
+        let group: GroupType = {
+            id: data[i].id,
+            name: data[i].name,
+            description: data[i].description,
+            image: data[i].image,
+            budget: data[i].budget,
+            user_id: data[i].user_id
+        }
+        groups.push(group);
+    }
+
     return groups;
 }
 

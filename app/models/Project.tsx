@@ -14,4 +14,5 @@ export interface ProjectType {
     group: number | null;
     created_at: string | null;
     updated_at: string | null;
+    groupInfo: GroupType | null;
 };
