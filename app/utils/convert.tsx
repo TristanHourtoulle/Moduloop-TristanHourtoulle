@@ -17,7 +17,7 @@ export function databaseToGroupModel(data: JSON) {
         groups.push(group);
     }
 
-    return groups;
+    return groups[0];
 }
 
 export function databaseToProjectModel(data: JSON) {
