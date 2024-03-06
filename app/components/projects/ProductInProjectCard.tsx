@@ -53,8 +53,8 @@ const ProductInProjectCard = (props: { product: AddProductType }) => {
                 <label className="text-xs" htmlFor={`reuse`}>Réemploi</label>
                 <input type="number" name={`reuse`} id={`reuse`} value={qUsed} onChange={handleQUsedChange} className="w-full text-right input-bg-gray-200"></input>
             </div>
-            <button onClick={handleUpdate} className={ isDifferent ? "text-bottom project-product-button" : "hidden text-bottom project-product-button"}>Modifier</button>
         </div>
+        <button onClick={handleUpdate} className={ isDifferent ? "text-bottom project-product-button mt-[5%]" : "hidden text-bottom project-product-button"}>Modifier</button>
     </div>
   )
 }

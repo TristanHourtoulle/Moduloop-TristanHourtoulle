@@ -173,8 +173,8 @@ export default function Page({
             </div>
             {/* Products */}
             {project?.products ? (
-                <div className="flex items-center justify-start mx-[5%] my-[2%]">
-                    <div className="">
+                <div className="">
+                    <div className="ml-[5%]">
                         <button onClick={addProductSubmit} className="flex items-center justify-center gap-5 add-product-btn">
                             <Image
                                 src="/icons/plus-blanc.svg"
@@ -237,9 +237,10 @@ export default function Page({
                             </div>
                         </div>
                     )}
-                    {productCards}
+                    <div className="flex items-center justify-start mx-[5%] my-[2%]">
+                        {productCards}
+                    </div>
                 </div>
-                
             ) : (
                 <div className="mt-10 flex flex-col gap-7 items-center justify-center">
                     <p className="text">Il n'y a pas de produits dans votre projet...</p>
