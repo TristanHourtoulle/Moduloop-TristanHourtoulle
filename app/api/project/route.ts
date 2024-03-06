@@ -32,7 +32,6 @@ export async function POST(request: NextRequest) {
                 [group_name, group_description, group_budget, user_id, ""]);
             if (result.rowCount === 1) {
                 group_id = result.rows[0].id;
-                console.log("GROUP CREATED, group_id: ", group_id);
             } else {
                 throw new Error('La requête INSERT pour le groupe a échoué');
             }
@@ -55,7 +54,6 @@ export async function POST(request: NextRequest) {
             [name, description, imageUrl, budget, company, location, area, user_id, group_id]);
         if (result.rowCount === 1) {
             const project = result.rows[0];
-            console.log("PROJECT CREATED: ", project);
             return Response.json({ success: true, project}, { status: 200 });
         } else {
             throw new Error('La requête INSERT pour le projet a échoué');
@@ -72,12 +70,10 @@ export async function GET(request: NextRequest) {
     try {
         const searchParams = request.nextUrl.searchParams;
         const id = searchParams.get('id') || '';
-        console.log("ID: ", id);
 
-        const result = await pool.query('SELECT * FROM products WHERE id = $1;', [id]);
+        const result = await pool.query('SELECT * FROM projects WHERE id = $1;', [id]);
         if (result.rowCount == 1) {
             const product = result.rows[0];
-            console.log(product);
             return Response.json({success: true, product}, { status: 200 })
         } else {
             return Response.json({success: false, message: 'No product found'}, { status: 404 });

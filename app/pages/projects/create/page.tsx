@@ -21,9 +21,7 @@ function page() {
             })
             const data = await res.json()
             if (data.success) {
-                console.log("GET: ", data.session.user)
                 await setIdUser(data.session.user.id)
-                console.log("ID: ", data.session.user.id); // Afficher la valeur juste après l'avoir définie
             } else {
                 console.error('Failed to fetch user:', data.error)
             }
@@ -39,7 +37,6 @@ function page() {
                 });
                 const groupData = await res.json();
                 if (groupData.success) {
-                    console.log("GROUP GET: ", groupData.data)
                     setGroups(databaseToSeveralGroupModel(groupData.data));
                 } else {
                     console.error('Failed to fetch groups:', groupData.error);

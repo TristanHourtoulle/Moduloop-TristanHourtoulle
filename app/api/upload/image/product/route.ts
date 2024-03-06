@@ -20,8 +20,6 @@ export async function POST(request: NextResponse) {
         await mkdir(uploadDir, { recursive: true });
         const filepath = path.join(uploadDir, file.name);
         await writeFile(filepath, buffer);
-        console.log(`open ${path} to see the uploaded file.`);
-        console.log('idProduct:', idProduct);
         // store the filepath of image in the database products
         const dbFilePath = filepath.replace(process.cwd(), '').replace(/\\/g, '/');
         const dbImageUrl = dbFilePath.replace('/public', '');

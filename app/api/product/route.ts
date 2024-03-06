@@ -29,12 +29,10 @@ export async function GET(request: NextRequest) {
     try {
         const searchParams = request.nextUrl.searchParams;
         const id = searchParams.get('id') || '';
-        console.log("ID: ", id);
 
         const result = await pool.query('SELECT * FROM products WHERE id = $1;', [id]);
         if (result.rowCount == 1) {
             const product = result.rows[0];
-            console.log(product);
             return Response.json({success: true, product}, { status: 200 })
         } else {
             return Response.json({success: false, message: 'No product found'}, { status: 404 });

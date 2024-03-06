@@ -1,4 +1,5 @@
 import { GroupType } from "./Group";
+import { AddProductType } from "./AddProduct";
 
 export interface ProjectType {
     id: number | null;
@@ -6,7 +7,7 @@ export interface ProjectType {
     description: string | null;
     image: string | null;
     budget: string | null;
-    products: JSON | null;
+    products: AddProductType | null;
     company: string | null;
     location: string | null;
     area: string | null;

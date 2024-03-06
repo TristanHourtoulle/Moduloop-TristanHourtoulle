@@ -6,7 +6,7 @@ export const Logo = () => {
   return (
     <Link href='/' className='flex gap-2 flex-center nav-logo'>
         <Image
-            src="icons/logoImage.svg"
+            src="/icons/logoImage.svg"
             alt="Moduloop Logo"
             width={30}
             height={30}

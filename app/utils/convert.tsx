@@ -1,5 +1,21 @@
 import { ProjectType } from "@models/Project";
 import { GroupType } from "@models/Group";
+import { ProductType } from "@models/Product";
+import { AddProductType } from "@models/AddProduct";
+
+export function databaseToSingleProductModel(data: JSON) {
+    let product: ProductType = {
+        id: data.id,
+        name: data.name,
+        image: data.image,
+        unit: data.unit,
+        base: data.base,
+        new: data.new,
+        reuse: data.reuse,
+    }
+
+    return product;
+}
 
 export function databaseToGroupModel(data: JSON) {
     let groups: GroupType[] = [];
@@ -63,4 +79,27 @@ export function databaseToProjectModel(data: JSON) {
     }
 
     return projects;
+}
+
+export function databaseToSingleProjectModel(data: JSON) {
+    let products: AddProductType[] = [];
+
+    let project: ProjectType = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        image: data.image,
+        budget: data.budget,
+        products: data.products,
+        company: data.company,
+        location: data.location,
+        area: data.area,
+        user_id: data.user_id,
+        group: data.group_id,
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+        groupInfo: null
+    }
+
+    return project;
 }
