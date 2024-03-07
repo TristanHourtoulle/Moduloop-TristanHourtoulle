@@ -8,8 +8,8 @@ import { AddProductType } from '@models/AddProduct';
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
+    const data = await request.json();
     try {
-        const data = await request.json();
 
         let res = await pool.query('SELECT * FROM products WHERE id = $1', [data.product.id])
         if (res.rowCount === 0) {
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
                     }
                     project.products.push(storeData); // Correction ici pour initialiser project.products avec un tableau
                     const jsonProducts = JSON.stringify(project.products);
-                    res = await pool.query('UPDATE projects SET products = $1 WHERE id = $3 RETURNING *;', [jsonProducts, data.idProject]);
+                    res = await pool.query('UPDATE projects SET products = $1 WHERE id = $2 RETURNING *;', [jsonProducts, data.idProject]);
                     if (res.rowCount === 0) {
                         throw new Error('Erreur lors de la mise à jour du produit');
                     } else {
@@ -67,6 +67,8 @@ export async function POST(request: NextRequest) {
             return Response.json({ success: true, storeData }, { status: 200 });
         }
     } catch (error) {
+        console.log("ID product: ", data.product.id)
+        console.log("ID project: ", data.idProject)
         console.error('Erreur lors de la récupération du produit:', error);
         return Response.json({ success: false, error }, { status: 500 });
     }

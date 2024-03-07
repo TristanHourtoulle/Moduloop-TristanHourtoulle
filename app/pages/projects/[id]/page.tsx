@@ -90,8 +90,49 @@ export default function Page({
         fetchData()
     }, []);
 
+    // Ajoutez cette fonction pour créer les cartes de produits
+    const createProductCards = (products) => {
+        let index = 0;
+        let tempProductCards = [];
+        for (let item of products) {
+            tempProductCards.push(<ProductInProjectCard product={item} key={index} />);
+            index++;
+        }
+        return tempProductCards;
+    }
+
+    // Dans la fonction fetchProjectProducts, mettez à jour productCards après avoir mis à jour l'état des produits
+    const fetchProjectProducts = async () => {
+        try {
+            const res = await fetch(`/api/project?id=${encodeURIComponent(id)}`, {
+                method: 'GET'
+            });
+            const data = await res.json();
+            if (data.success) {
+                const projectData = databaseToSingleProjectModel(data.product);
+                let products = Array.isArray(projectData.products) ? projectData.products : [projectData.products];
+                setProductsImpact(products);
+                setProductCards(createProductCards(products)); // Mettez à jour productCards avec les nouvelles cartes de produits
+            } else {
+                console.error('Failed to fetch project:', data.error);
+                alert(data.error);
+            }
+        } catch (error) {
+            console.error('Failed to fetch project:', error);
+            alert('Failed to fetch project. Please try again.');
+        }
+    }
+
+    const updateProjectProducts = async () => {
+        // Mettez à jour les produits du projet en appelant l'API ou en mettant à jour l'état directement
+        await fetchProjectProducts(); // Assurez-vous que cette fonction met à jour l'état des produits du projet
+    }
+
     const addProductSubmit = async () => {
-        updatePopupState();
+        if (isPopupOpen) {
+            window.location.reload();
+        }
+        setIsPopupOpen(!isPopupOpen);
     }
 
     const addProductForm = async (product: ProductType, index: number) => {
