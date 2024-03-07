@@ -26,8 +26,8 @@ const ImpactTable: React.FC<ImpactTableProps> = ({ product, type }) => {
             {type === 'new' ? (
               <>
                 <td className='cell'>{product.new.rc_manufacturing}</td>
-                <td className='cell'>{product.new.rc_usage}</td>
                 <td className='cell'>{product.new.rc_installation}</td>
+                <td className='cell'>{product.new.rc_usage}</td>
                 <td className='cell'>{product.new.rc_endOfLife}</td>
               </>
             )

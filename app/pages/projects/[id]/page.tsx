@@ -10,6 +10,7 @@ import Image from 'next/image'
 import { ProductType } from "@models/Product";
 import ProductCard from "@components/projects/ProductCard";
 import ProductInProjectCard from "@components/projects/ProductInProjectCard";
+import ImpactSection from "@components/projects/ImpactSection";
 
 export default function Page({
     params: { id },
@@ -22,6 +23,8 @@ export default function Page({
     const [storeProducts, setStoreProducts] = useState<ProductType[] | null>(null);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [productCards, setProductCards] = useState([]);
+    const [section, setSection] = useState("products")
+    const [productsImpact, setProductsImpact] = useState([])
 
     const updatePopupState = () => {
         setIsPopupOpen(!isPopupOpen);
@@ -60,6 +63,7 @@ export default function Page({
                             tempProductCards.push(<ProductInProjectCard product={item} key={index} />);
                             index++;
                         }
+                        setProductsImpact(products)
                         setProductCards(tempProductCards);
                         // Get stored products
                         res = await fetch(`/api/product/list`, {
@@ -175,16 +179,25 @@ export default function Page({
             {project?.products ? (
                 <div className="">
                     <div className="ml-[5%]">
-                        <button onClick={addProductSubmit} className="flex items-center justify-center gap-5 add-product-btn">
-                            <Image
-                                src="/icons/plus-blanc.svg"
-                                alt="Ajouter un produit"
-                                width={20}
-                                height={20}
-                            >
-                            </Image>
-                            <p className="">Ajouter un produit</p>
-                        </button>
+                        <div className="flex items-center justify-start gap-5">
+                            <button onClick={addProductSubmit} className="flex items-center justify-center gap-5 add-product-btn">
+                                <Image
+                                    src="/icons/plus-blanc.svg"
+                                    alt="Ajouter un produit"
+                                    width={20}
+                                    height={20}
+                                >
+                                </Image>
+                                <p className="">Ajouter un produit</p>
+                            </button>
+                            <button className="chooseSection" onClick={() => {section === "products" ? setSection("impact") : setSection("products")} }>
+                                {section === "products" ? (
+                                    <p>Afficher l'impact</p>
+                                ) : (
+                                    <p>Afficher les produits</p>
+                                )}
+                            </button>
+                        </div>
                     </div>
                     {isPopupOpen && (
                         <div className="popup-section w-full">
@@ -227,7 +240,7 @@ export default function Page({
                                                 </Image>
                                             </button>
                                         </div>
-                                        <div className="products-section" style={{ display: 'flex', flexWrap: 'wrap', maxHeight: 'calc(100% - 200px)', overflowY: 'auto', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
+                                        <div className="products-section scroll-view max-h-[200%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
                                             {storeProducts && storeProducts.map((product, index) => (
                                                 <ProductCard key={index} product={product} idProject={Number(id)} />
                                             ))}
@@ -237,9 +250,15 @@ export default function Page({
                             </div>
                         </div>
                     )}
-                    <div className="flex items-center justify-start mx-[5%] my-[2%]">
-                        {productCards}
-                    </div>
+                    {section === "products" ? (
+                        <div className="flex items-center justify-start gap-5 mx-[5%] my-[2%]">
+                            {productCards}
+                        </div>
+                    ) : (
+                        <div>
+                            <ImpactSection products={productsImpact}/>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="mt-10 flex flex-col gap-7 items-center justify-center">
@@ -297,7 +316,7 @@ export default function Page({
                                                 </Image>
                                             </button>
                                         </div>
-                                        <div className="products-section" style={{ display: 'flex', flexWrap: 'wrap', maxHeight: 'calc(100% - 200px)', overflowY: 'auto', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
+                                        <div className="products-section scroll-view max-h-[200%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
                                             {storeProducts && storeProducts.map((product, index) => (
                                                 <ProductCard key={index} product={product} idProject={Number(id)} />
                                             ))}

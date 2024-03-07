@@ -594,7 +594,7 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -664,4 +664,22 @@ body {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.chooseSection {
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #30C1BD;
+  padding: 10px;
+  transform: scale(1);
+  transition: transform 0.15s ease-in-out;
+}
+
+.chooseSection p {
+  color: #30C1BD;
+  font-weight: 600;
+}
+
+.chooseSection:hover {
+  transform: scale(1.025);
 }
