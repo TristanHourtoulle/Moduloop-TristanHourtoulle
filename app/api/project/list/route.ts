@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         const searchParams = request.nextUrl.searchParams;
         const id = searchParams.get('id') || '';
 
-        const result = await pool.query('SELECT * FROM projects WHERE user_id = $1;', [id]);
+        const result = await pool.query('SELECT * FROM projects WHERE user_id = $1 ORDER BY updated_at DESC;', [id]);
         let toSend;
 
         if (result.rowCount == 0) {

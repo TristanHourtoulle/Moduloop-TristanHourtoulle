@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
                     }
                     project.products.push(storeData); // Correction ici pour initialiser project.products avec un tableau
                     const jsonProducts = JSON.stringify(project.products);
-                    res = await pool.query('UPDATE projects SET products = $1 WHERE id = $2 RETURNING *;', [jsonProducts, data.idProject]);
+                    res = await pool.query('UPDATE projects SET products = $1 WHERE id = $3 RETURNING *;', [jsonProducts, data.idProject]);
                     if (res.rowCount === 0) {
                         throw new Error('Erreur lors de la mise à jour du produit');
                     } else {
