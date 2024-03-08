@@ -81,7 +81,6 @@ const GlobalTable = (props: { products: AddProductType[] }) => {
 
     return (
         <div>
-            <p>GlobalTable</p>
             <table className='table'>
                 <thead>
                     <tr>
