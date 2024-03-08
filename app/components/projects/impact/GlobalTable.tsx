@@ -56,18 +56,18 @@ function getGlobalImpact(products: AddProductType[]): GlobalImpact {
         globalImpact.rc.installation += product.product.reuse.rc_installation * qUsed;
         globalImpact.rc.usage += product.product.reuse.rc_usage * qUsed;
         globalImpact.rc.endOfLife += product.product.reuse.rc_endOfLife * qUsed;
-        globalImpact.erf.manufacturing += product.product.reuse.erc_manufacturing * qNew;
-        globalImpact.erf.installation += product.product.reuse.erc_installation * qNew;
-        globalImpact.erf.usage += product.product.reuse.erc_usage * qNew;
-        globalImpact.erf.endOfLife += product.product.reuse.erc_endOfLife * qNew;
-        globalImpact.ase.manufacturing += product.product.reuse.ase_manufacturing * qNew;
-        globalImpact.ase.installation += product.product.reuse.ase_installation * qNew;
-        globalImpact.ase.usage += product.product.reuse.ase_usage * qNew;
-        globalImpact.ase.endOfLife += product.product.reuse.ase_endOfLife * qNew;
-        globalImpact.em.manufacturing += product.product.reuse.em_manufacturing * qNew;
-        globalImpact.em.installation += product.product.reuse.em_installation * qNew;
-        globalImpact.em.usage += product.product.reuse.em_usage * qNew;
-        globalImpact.em.endOfLife += product.product.reuse.em_endOfLife * qNew;
+        globalImpact.erf.manufacturing += product.product.reuse.erc_manufacturing * qUsed;
+        globalImpact.erf.installation += product.product.reuse.erc_installation * qUsed;
+        globalImpact.erf.usage += product.product.reuse.erc_usage * qUsed;
+        globalImpact.erf.endOfLife += product.product.reuse.erc_endOfLife * qUsed;
+        globalImpact.ase.manufacturing += product.product.reuse.ase_manufacturing * qUsed;
+        globalImpact.ase.installation += product.product.reuse.ase_installation * qUsed;
+        globalImpact.ase.usage += product.product.reuse.ase_usage * qUsed;
+        globalImpact.ase.endOfLife += product.product.reuse.ase_endOfLife * qUsed;
+        globalImpact.em.manufacturing += product.product.reuse.em_manufacturing * qUsed;
+        globalImpact.em.installation += product.product.reuse.em_installation * qUsed;
+        globalImpact.em.usage += product.product.reuse.em_usage * qUsed;
+        globalImpact.em.endOfLife += product.product.reuse.em_endOfLife * qUsed;
     }
 
     return globalImpact;
