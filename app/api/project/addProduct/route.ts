@@ -10,7 +10,8 @@ import { AddProductType } from '@models/AddProduct';
 export async function POST(request: NextRequest) {
     const data = await request.json();
     try {
-
+        console.log("Data: ", data)
+        console.log("ID product: ", data.product.id)
         let res = await pool.query('SELECT * FROM products WHERE id = $1', [data.product.id])
         if (res.rowCount === 0) {
             throw new Error('Le produit n\'existe pas');

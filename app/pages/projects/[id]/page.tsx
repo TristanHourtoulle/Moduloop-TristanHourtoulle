@@ -60,7 +60,7 @@ export default function Page({
                         let products = Array.isArray(projectData.products) ? projectData.products : [projectData.products];
                         let tempProductCards = [];
                         for (let item of products) {
-                            tempProductCards.push(<ProductInProjectCard product={item} key={index} />);
+                            tempProductCards.push(<ProductInProjectCard product={item} idProject={Number(id)} key={index} />);
                             index++;
                         }
                         setProductsImpact(products)
