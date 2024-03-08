@@ -8,7 +8,7 @@ import { Title } from '@components/Title'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ProductType } from "@models/Product";
-import ProductCard from "@components/projects/ProductCard";
+import ProductCardWithToaster from "@components/projects/ProductCard";
 import ProductInProjectCard from "@components/projects/ProductInProjectCard";
 import ImpactSection from "@components/projects/ImpactSection";
 
@@ -283,7 +283,7 @@ export default function Page({
                                         </div>
                                         <div className="products-section scroll-view max-h-[200%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
                                             {storeProducts && storeProducts.map((product, index) => (
-                                                <ProductCard key={index} product={product} idProject={Number(id)} />
+                                                <ProductCardWithToaster key={index} product={product} idProject={Number(id)} />
                                             ))}
                                         </div>
                                     </div>
@@ -359,7 +359,7 @@ export default function Page({
                                         </div>
                                         <div className="products-section scroll-view max-h-[200%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
                                             {storeProducts && storeProducts.map((product, index) => (
-                                                <ProductCard key={index} product={product} idProject={Number(id)} />
+                                                <ProductCardWithToaster key={index} product={product} idProject={Number(id)} />
                                             ))}
                                         </div>
                                     </div>
