@@ -86,6 +86,19 @@ export default function page() {
       }
     }
 
+    const handleDuplicateProject = async (id: number) => {
+      console.log("DUPLICATE PROJECT WITH ID: ", id)
+      let res = await fetch(`/api/project/duplicate?id_project=${id}`, {
+        method: 'POST'
+      });
+      if (res.ok) {
+        window.location.reload()
+      } else {
+        console.log("Error while duplicating project: ", res)
+        alert("FAILED")
+      }
+    }
+
   return (
     <div>
       {/* Header */}
@@ -118,7 +131,7 @@ export default function page() {
                   <p className='date mr-5'>{dateFormater(project.updated_at).date} à {dateFormater(project.updated_at).time}</p>
                 </div>
                 <div className='line'></div>
-                <div className='flex justify-center items-center gap-10'>
+                <div className='flex justify-center items-center gap-5'>
                   <div className='flex items-center gap-2 delete-btn' onClick={() => handleDeleteProject(project.id)}>
                     <Image
                       src="/icons/trash-can.svg"
@@ -127,8 +140,11 @@ export default function page() {
                       height={30}
                     />
                   </div>
+                  <div onClick={() => {handleDuplicateProject(project.id)}} className='flex items-center open-btn cursor-pointer'>
+                    <p className=''>Dupliquer</p>
+                  </div>
                   <Link href={showProjectUrl}>
-                    <div className='flex items-center gap-2 open-btn'>
+                    <div className='flex items-center open-btn'>
                       <p className=''>Ouvrir</p>
                     </div>
                   </Link>
