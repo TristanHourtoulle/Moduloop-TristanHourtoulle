@@ -6,13 +6,12 @@ export const Logo = () => {
   return (
     <Link href='/' className='flex gap-2 flex-center nav-logo'>
         <Image
-            src="/icons/logoImage.svg"
+            src="/icons/logo.png"
             alt="Moduloop Logo"
-            width={30}
-            height={30}
+            width={150}
+            height={150}
             className='object-contain'
         />
-        <p className='nav-logo-text text'>Moduloop</p>
     </Link>
   )
 }
