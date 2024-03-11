@@ -107,8 +107,11 @@ export async function PUT(request: NextRequest) {
 // Fonction pour gérer les requêtes DELETE
 export async function DELETE(request: NextRequest) {
     try {
-        const user: User = await request.json();
-        const result = await pool.query('DELETE FROM users WHERE id = $1;', [user.id]);
+        const searchParams = request.nextUrl.searchParams;
+        const idProject = searchParams.get('id_project') || '';
+
+        console.log('idProject in API ROUTE:', idProject);
+        const result = await pool.query('DELETE FROM projects WHERE id = $1;',[idProject]);
 
         // Vérification si la requête a réussi
         if (result.rowCount === 1) {
@@ -118,7 +121,7 @@ export async function DELETE(request: NextRequest) {
             throw new Error('La requête DELETE a échoué');
         }
     } catch (error) {
-        console.error('Erreur lors de la suppression de l\'utilisateur:', error);
+        console.error('Erreur lors de la suppression du projet:', error);
         return Response.json({ success: false, error}, { status: 500 });
     }
 }

@@ -70,6 +70,35 @@ export default function page() {
       back: "#"
     }
 
+    const handleDeleteProject = async (id: number) => {
+      if (window.confirm("Voulez-vous vraiment supprimer ce projet ?\n Cet action est irréversible.")) {
+        console.log("DELETE PROJECT WITH ID: ", id)
+        let res = await fetch(`/api/project?id_project=${id}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          window.location.reload()
+        } else {
+          alert("FAILED")
+        }
+      } else {
+        console.log("Project not deleted.")
+      }
+    }
+
+    const handleDuplicateProject = async (id: number) => {
+      console.log("DUPLICATE PROJECT WITH ID: ", id)
+      let res = await fetch(`/api/project/duplicate?id_project=${id}`, {
+        method: 'POST'
+      });
+      if (res.ok) {
+        window.location.reload()
+      } else {
+        console.log("Error while duplicating project: ", res)
+        alert("FAILED")
+      }
+    }
+
   return (
     <div>
       {/* Header */}
@@ -102,19 +131,20 @@ export default function page() {
                   <p className='date mr-5'>{dateFormater(project.updated_at).date} à {dateFormater(project.updated_at).time}</p>
                 </div>
                 <div className='line'></div>
-                <div className='flex justify-center items-center gap-10'>
-                  <Link href="#" className=''>
-                    <div className='flex items-center gap-2 delete-btn'>
-                      <Image
-                        src="/icons/trash-can.svg"
-                        alt="Supprimer le projet"
-                        width={30}
-                        height={30}
-                      />
-                    </div>
-                  </Link>
+                <div className='flex justify-center items-center gap-5'>
+                  <div className='flex items-center gap-2 delete-btn' onClick={() => handleDeleteProject(project.id)}>
+                    <Image
+                      src="/icons/trash-can.svg"
+                      alt="Supprimer le projet"
+                      width={30}
+                      height={30}
+                    />
+                  </div>
+                  <div onClick={() => {handleDuplicateProject(project.id)}} className='flex items-center open-btn cursor-pointer'>
+                    <p className=''>Dupliquer</p>
+                  </div>
                   <Link href={showProjectUrl}>
-                    <div className='flex items-center gap-2 open-btn'>
+                    <div className='flex items-center open-btn'>
                       <p className=''>Ouvrir</p>
                     </div>
                   </Link>
