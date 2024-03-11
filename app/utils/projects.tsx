@@ -22,3 +22,16 @@ export function isProductInProject(product: AddProductType, project: ProjectType
     }
     return retValue
 }
+
+export function deleteProductFromProject(idProduct: number, project: any) {
+    let res: any[] = [];
+
+    let products = project;
+    for (let item of products) {
+        if (item.product.id !== idProduct) {
+            res.push(item);
+        }
+    }
+    return res;
+}
+
