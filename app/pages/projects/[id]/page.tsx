@@ -58,6 +58,7 @@ export default function Page({
                         setProject(projectData);
                         let index = 0
                         let products = Array.isArray(projectData.products) ? projectData.products : [projectData.products];
+                        console.log("products: ", products)
                         let tempProductCards = [];
                         for (let item of products) {
                             tempProductCards.push(<ProductInProjectCard product={item} idProject={Number(id)} key={index} />);

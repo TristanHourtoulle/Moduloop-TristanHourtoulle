@@ -3,6 +3,7 @@ import { AddProductType } from '../../models/AddProduct';
 import { useState } from 'react'
 import Image from 'next/image';
 import { Toaster, toast } from 'sonner';
+import TrashCan from '@components/button/TrashCan';
 
 const ProductInProjectCard = (props: { product: AddProductType, idProject: number }) => {
     const { product, idProject } = props;
@@ -63,9 +64,33 @@ const ProductInProjectCard = (props: { product: AddProductType, idProject: numbe
         }
     }
 
+    const handleDeleteProduct = async () => {
+        if (window.confirm("Voulez-vous vraiment supprimer ce produit du projet ?\n Cet action est irréversible.")) {
+            // Delete product from project
+            let res = await fetch(`/api/project/list?id_project=${idProject}&id_product=${product.product.id}`, {
+                method: 'DELETE',
+            });
+            if (res.ok) {
+                toast.success('Produit supprimé du projet', { duration: 2000 });
+                window.location.reload()
+            } else {
+                console.error("Erreur lors de la suppression du produit du projet");
+                toast.error("Erreur lors de la suppression du produit du projet.", { duration: 2000 });
+            }
+        } else {
+            // Do nothing
+            alert("Product not deleted from the project.")
+        }
+    }
+
   return (
     <div className='product-in-project-card w-[20%] px-[2%] py-[1%]  flex flex-col items-center'>
-        <p className="font-2xl">{product.product.name}</p>
+        <div className='flex gap-5'>
+            <div onClick={handleDeleteProduct} className='cursor-pointer'>
+                <TrashCan />
+            </div>
+            <p className="ml-auto font-2xl">{product.product.name}</p>
+        </div>
         <Image
             src={product.product.image ? product.product.image : '/icons/no-image.png'}
             alt={product.product.name ? product.product.name : ''}
