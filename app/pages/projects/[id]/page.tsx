@@ -218,7 +218,7 @@ export default function Page({
                 {/* Cost & number Products -> to do later */}
             </div>
             {/* Products */}
-            {project?.products ? (
+            {project && project.products && project.products.length > 0 ? (
                 <div className="">
                     <div className="ml-[5%]">
                         <div className="flex items-center justify-start gap-5">
