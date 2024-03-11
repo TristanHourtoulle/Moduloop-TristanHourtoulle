@@ -1,8 +1,8 @@
 import { writeFile, mkdir, readFile } from "fs/promises";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 
-export async function POST(request: NextResponse) {
+export async function POST(request: NextRequest) {
     const data = await request.formData();
     const file = data.get('file') as File;
 
@@ -19,5 +19,5 @@ export async function POST(request: NextResponse) {
 
     const fileData = await readFile(filepath, 'utf-8');
 
-    return Response.json({success: true, data: fileData}, {status: 200});
+    return Response.json({ success: true, data: fileData }, { status: 200 });
 }
