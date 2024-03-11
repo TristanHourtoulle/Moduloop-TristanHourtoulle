@@ -70,6 +70,22 @@ export default function page() {
       back: "#"
     }
 
+    const handleDeleteProject = async (id: number) => {
+      if (window.confirm("Voulez-vous vraiment supprimer ce projet ?\n Cet action est irréversible.")) {
+        console.log("DELETE PROJECT WITH ID: ", id)
+        let res = await fetch(`/api/project?id_project=${id}`, {
+          method: 'DELETE'
+        });
+        if (res.ok) {
+          window.location.reload()
+        } else {
+          alert("FAILED")
+        }
+      } else {
+        console.log("Project not deleted.")
+      }
+    }
+
   return (
     <div>
       {/* Header */}
@@ -103,16 +119,14 @@ export default function page() {
                 </div>
                 <div className='line'></div>
                 <div className='flex justify-center items-center gap-10'>
-                  <Link href="#" className=''>
-                    <div className='flex items-center gap-2 delete-btn'>
-                      <Image
-                        src="/icons/trash-can.svg"
-                        alt="Supprimer le projet"
-                        width={30}
-                        height={30}
-                      />
-                    </div>
-                  </Link>
+                  <div className='flex items-center gap-2 delete-btn' onClick={() => handleDeleteProject(project.id)}>
+                    <Image
+                      src="/icons/trash-can.svg"
+                      alt="Supprimer le projet"
+                      width={30}
+                      height={30}
+                    />
+                  </div>
                   <Link href={showProjectUrl}>
                     <div className='flex items-center gap-2 open-btn'>
                       <p className=''>Ouvrir</p>
