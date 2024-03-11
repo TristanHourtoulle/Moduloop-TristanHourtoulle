@@ -1,6 +1,7 @@
 import { AddProductType } from '@models/AddProduct'
 import React from 'react'
 import { GlobalImpact } from '@models/Impact';
+import { visibleNumber } from './ProductCard';
 
 function getGlobalImpact(products: AddProductType[]): GlobalImpact {
     const globalImpact: GlobalImpact = {
@@ -93,39 +94,32 @@ const GlobalTable = (props: { products: AddProductType[] }) => {
                 <tbody>
                     <tr>
                         <th className='cell index-color index-col'>Réchauffement Climatique</th>
-                            <td className='cell'>{globalImpact.rc.manufacturing === 0 ? "0" : globalImpact.rc.manufacturing.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.rc.installation === 0 ? "0" : globalImpact.rc.installation.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.rc.usage === 0 ? "0" : globalImpact.rc.usage.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.rc.endOfLife === 0 ? "0" : globalImpact.rc.endOfLife.toFixed(2)}</td>
+                        {Object.values(globalImpact.rc).map((value, index) => (
+                            <td key={index} className='cell'>{value === 0 ? "0" : visibleNumber(value.toFixed(2))}</td>
+                        ))}
                     </tr>
-
                     <tr>
                         <th className='cell index-color index-col'>Epuisement des ressources fossiles</th>
-                            <td className='cell'>{globalImpact.erf.manufacturing === 0 ? "0" : globalImpact.erf.manufacturing.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.erf.installation === 0 ? "0" : globalImpact.erf.installation.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.erf.usage === 0 ? "0" : globalImpact.erf.usage.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.erf.endOfLife === 0 ? "0" : globalImpact.erf.endOfLife.toFixed(2)}</td>
+                        {Object.values(globalImpact.erf).map((value, index) => (
+                            <td key={index} className='cell'>{value === 0 ? "0" : visibleNumber(value.toFixed(2))}</td>
+                        ))}
                     </tr>
-
                     <tr>
                         <th className='cell index-color index-col'>Acidifications des sols et eaux</th>
-                            <td className='cell'>{globalImpact.ase.manufacturing === 0 ? "0" : globalImpact.ase.manufacturing.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.ase.installation === 0 ? "0" : globalImpact.ase.installation.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.ase.usage === 0 ? "0" : globalImpact.ase.usage.toFixed(2)}</td>
-                            <td className='cell'>{globalImpact.ase.endOfLife === 0 ? "0" : globalImpact.ase.endOfLife.toFixed(2)}</td>
+                        {Object.values(globalImpact.ase).map((value, index) => (
+                            <td key={index} className='cell'>{value === 0 ? "0" : visibleNumber(value.toFixed(2))}</td>
+                        ))}
                     </tr>
-
                     <tr>
                         <th className='cell index-color index-col'>Eutrophisation marine</th>
-                            <td className='cell'>{globalImpact.em.manufacturing === 0 ? "0" : globalImpact.em.manufacturing.toFixed(5)}</td>
-                            <td className='cell'>{globalImpact.em.installation === 0 ? "0" : globalImpact.em.installation.toFixed(5)}</td>
-                            <td className='cell'>{globalImpact.em.usage === 0 ? "0" : globalImpact.em.usage.toFixed(5)}</td>
-                            <td className='cell'>{globalImpact.em.endOfLife === 0 ? "0" : globalImpact.em.endOfLife.toFixed(5)}</td>
+                        {Object.values(globalImpact.em).map((value, index) => (
+                            <td key={index} className='cell'>{value === 0 ? "0" : visibleNumber(value.toFixed(5))}</td>
+                        ))}
                     </tr>
                 </tbody>
-                </table>
+            </table>
         </div>
-    )
-}
+    );
+};
 
-export default GlobalTable
+export default GlobalTable;
