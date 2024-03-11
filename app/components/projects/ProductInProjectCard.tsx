@@ -100,11 +100,11 @@ const ProductInProjectCard = (props: { product: AddProductType, idProject: numbe
         <div className='flex items-center justify-center w-[75%] gap-3'>
             <div className="flex flex-col justify-center">
                 <label className="text-xs" htmlFor={`new`}>Neuf</label>
-                <input type="number" name={`new`} id={`new`} value={qNew} onChange={handleQNewChange} className="w-full text-right input-bg-gray-200"></input>
+                <input min={0} type="number" name={`new`} id={`new`} value={qNew} onChange={handleQNewChange} className="w-full text-right input-bg-gray-200"></input>
             </div>
             <div className="flex flex-col">
                 <label className="text-xs" htmlFor={`reuse`}>Réemploi</label>
-                <input type="number" name={`reuse`} id={`reuse`} value={qUsed} onChange={handleQUsedChange} className="w-full text-right input-bg-gray-200"></input>
+                <input min={0} type="number" name={`reuse`} id={`reuse`} value={qUsed} onChange={handleQUsedChange} className="w-full text-right input-bg-gray-200"></input>
             </div>
         </div>
         <button onClick={handleAdd} className={ isDifferent ? "text-bottom project-product-button mt-[5%]" : "hidden text-bottom project-product-button"}>Modifier</button>
