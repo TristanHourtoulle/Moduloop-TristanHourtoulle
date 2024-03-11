@@ -56,6 +56,7 @@ const ProductCard = (props: { product: ProductType; idProject: number }) => {
                         Neuf
                     </label>
                     <input
+                        min={0}
                         type="number"
                         name={`new`}
                         id={`new`}
@@ -69,6 +70,7 @@ const ProductCard = (props: { product: ProductType; idProject: number }) => {
                         Réemploi
                     </label>
                     <input
+                        min={0}
                         type="number"
                         name={`reuse`}
                         id={`reuse`}

@@ -293,7 +293,7 @@ export default function Page({
                         </div>
                     )}
                     {section === "products" ? (
-                        <div className="flex items-center justify-start gap-5 mx-[5%] my-[2%]">
+                        <div className="products-section my-[2%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '25px', justifyContent: 'center' }}>
                             {productCards}
                         </div>
                     ) : (
@@ -358,7 +358,7 @@ export default function Page({
                                                 </Image>
                                             </button>
                                         </div>
-                                        <div className="products-section scroll-view max-h-[200%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
+                                        <div className="products-section scroll-view" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '2px', margin: '1rem', justifyContent: 'center' }}>
                                             {storeProducts && storeProducts.map((product, index) => (
                                                 <ProductCardWithToaster key={index} product={product} idProject={Number(id)} />
                                             ))}

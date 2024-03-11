@@ -679,3 +679,12 @@ body {
 .chooseSection:hover {
   transform: scale(1.025);
 }
+
+.create-project-btn {
+  transform: size(1);
+  transition: transform 0.25s ease-in-out;
+}
+
+.create-project-btn:hover {
+  transform: scale(1.025);
+}

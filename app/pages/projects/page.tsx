@@ -104,7 +104,7 @@ export default function page() {
       {/* Header */}
       <div className='flex items-center mb-10'>
         <Title {...title} />
-        <Link href="/pages/projects/create" className='create-project-button'>
+        <Link href="/pages/projects/create" className='create-project-button create-project-btn'>
           <div className='flex gap-2'>
             <Image
               src="/icons/plus-blanc.svg"
