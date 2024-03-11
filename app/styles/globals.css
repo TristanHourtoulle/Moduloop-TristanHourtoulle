@@ -31,3 +31,655 @@ body {
 .text {
   font-family: 'M PLUS Rounded 1c', sans-serif;
 }
+
+.nav-logo {
+  position: relative;
+    display: inline-flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+    padding: 7px;
+    margin-left: 10px;
+    transition: transform 0.25s ease-in-out;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-logo:not(:hover) {
+  transform: scale(1);
+}
+
+.nav-logo-text {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.nav-link {
+  color: #989FAC;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nav-link-selected {
+  color: black;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.link-to-scale {
+  transition: transform 0.25s;
+}
+
+.link-to-scale:hover {
+  transform: scale(1.25);
+}
+
+.link-to-scale:not(:hover) {
+  transform: scale(1); /* Taille normale lorsque l'objet n'est pas en hover */
+}
+
+.nav-user {
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+}
+
+.mobile-menu {
+  border-radius: 1rem;
+}
+
+.auth-button {
+  background-color: #30C1BD;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 10rem;
+}
+
+.auth-button-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.page-number {
+  font-size: 3rem;
+  font-weight: lighter;
+  color:rgba(0, 0, 0, 0.625)
+}
+
+.handle-product-button {
+  background-color: #30C1BD;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 7rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s;
+}
+
+.handle-product-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.handle-product-image {
+  color: white;
+}
+
+.handle-product-button:hover {
+  transform: scale(1.1);
+}
+
+.handle-product-button:not(:hover) {
+  transform: scale(1);
+}
+
+.no-product-text {
+    font-weight: lighter;
+    font-size: 3rem;
+    color:rgba(0, 0, 0, 0.625)
+}
+
+.scroll-view {
+  overflow-y: scroll;
+  height: 550px;
+}
+
+.product-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px;
+}
+
+.product-card {
+  transition: transform 0.25s;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card:not(:hover) {
+    transform: scale(1); /* Taille normale lorsque l'objet n'est pas en hover */
+}
+
+.products-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 2rem;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center; /* Ajout de la propriété justify-content avec la valeur center */
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .products-cards {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+  }
+}
+
+.product-separation {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%; /* Adjust as needed */
+  height: 1px; /* Adjust as needed */
+  background-color: #000; /* Adjust color as needed */
+  opacity: 0.5;
+}
+
+.product-header {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  white-space: nowrap; /* Empêche le saut à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse */
+  text-overflow: ellipsis;
+  text-align: center;
+  margin-bottom: 1rem;
+  background-color: #30C1BD;
+  border-radius: 10px;;
+  padding: 10px;
+}
+
+.product-content-space {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px 40px;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-base {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-button {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap; /* Empêche le saut à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse */
+  text-overflow: ellipsis;
+  text-align: center;
+  color:  white;
+  background-color: #30C1BD;
+  border-radius: 10px;
+  width: 30%;
+  padding: 7px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.download-button {
+  background-color: #30C1BD;
+  border-radius: 10px;
+  color: white;
+  padding: 7px;
+  margin-right: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.open-button {
+  background-color: #30C1BD;
+  border-radius: 10px;
+  color: white;
+  padding: 7px;
+  margin-right: 5px;
+  width: fit-content
+}
+
+.open-button .text {
+  color: white;
+  font-weight: 500;
+  font-size: larger;
+}
+
+.index-color {
+  color: black;
+  background-color: #98E0DE;
+}
+
+.index-line {
+  width: 200px;
+}
+
+.index-col {
+  width: 300px;
+}
+
+.cell {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.inter-nav-bar {
+  color:black;
+  font-size:x-large;
+}
+
+.inter-nav-bar-selected {
+  color:rgba(0, 0, 0, 0.625);
+  font-size:x-large;
+}
+
+.add-product-card {
+  background-color: #30C1BD;
+  width: 500px;
+  height: 500px;
+  padding: 25px;
+}
+
+.add-product-card .tutoriel {
+  text-align: center;
+}
+
+.add-product-card button {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.add-product-card p {
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.add-product-card .upload {
+  text-align: center;
+}
+
+.create-project-button {
+  background-color: #30C1BD;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  margin-left: auto;
+  margin-right: 20px;
+  font-size: larger;
+}
+
+.create-project-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 3rem;
+  margin-top: 2.5%;
+  margin-left: 5%;
+}
+
+.large-input {
+  resize: none;
+}
+
+.create-project-section .validate {
+  font-size: 1.5rem;
+  font-weight: larger;
+  margin-bottom: 20px;
+  background-color: #30C1BD;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-container {
+  position: relative; /* Ajoutez cette ligne pour permettre le positionnement absolu de l'image */
+  flex: 1; /* Centrez l'image verticalement */
+}
+
+.image-container img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.85;
+  margin-right: 5%; /* Aligner l'image par rapport au coin en bas à droite */
+}
+
+.project-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 350px;
+  margin: 10px;
+}
+
+.project-card .name {
+  font-size: 2rem;
+  font-weight: bold;
+
+}
+
+.project-card .group {
+  font-size: 0.7rem;
+  font-weight: lighter;
+  background-color: #30C1BD;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.text-in-single-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-card .description {
+  font-size: 1.25rem;
+  font-weight: lighter;
+  color:rgba(0, 0, 0, 0.75);
+}
+
+.project-card .date {
+  font-size: 0.75rem;
+  font-weight: lighter;
+  color:rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+}
+
+.project-card .line {
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  opacity: 0.75;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.project-card .delete-btn {
+  background-color: rgba(255, 0, 0, 0.30);
+  padding: 7px;
+  border-radius: 8px;
+  border: 2px solid red; /* Ajout du border rouge */
+}
+
+.project-card .delete-btn {
+  transition: transform 0.25s;
+}
+
+.project-card .delete-btn:hover {
+    transform: scale(1.05);
+}
+
+.project-card .delete-btn:not(:hover) {
+    transform: scale(1);
+}
+
+.project-card .open-btn {
+  color: #30C1BD;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.project-card .open-btn {
+  transition: transform 0.25s;
+}
+
+.project-card .open-btn:hover {
+    transform: scale(1.05);
+}
+
+.project-card .open-btn:not(:hover) {
+    transform: scale(1);
+}
+
+.projects-container {
+  overflow-y: scroll;
+  height: 450px;
+}
+
+.project-page .group-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: black;
+  margin-left: 6rem;
+  margin-right: 1rem;
+}
+
+.project-page .group-name {
+  font-size: 1rem;
+  font-weight: normal;
+  color: white;
+  background-color: black;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+.title-image {
+  transition: transform 0.25s;
+}
+
+.title-image:hover {
+    transform: scale(1.1);
+}
+
+.title-image:not(:hover) {
+    transform: scale(1);
+}
+
+.search-bar-input {
+  background-color: rgb(233, 233, 233);
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 6rem;
+}
+
+.search-bar-input .input {
+  background-color: rgb(233, 233, 233);
+  width: 25rem;
+}
+
+.section-infos .filter-btn {
+  background-color: #30C1BD;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.description-input {
+  resize: none;
+  width: 30rem;
+  height: 6rem;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  margin-right: 1rem;
+}
+
+.section-products {
+  background-color: #4ec9c5;
+  margin: 1rem;
+  width: 80%;
+  height: fit-content;
+  border-radius: 20px;
+}
+
+.section-products-container {
+}
+
+.add-product-btn {
+  background-color: #30C1BD;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.text {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.popup-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  height: 75%;
+  width: 75%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.popup-content .header {
+  margin-bottom: 2rem;
+}
+
+.popup-content .form {
+  position: relative;
+}
+
+.popup-content .title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.popup-content .form .button {
+  margin-top: auto;
+}
+
+.project-products-section {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.project-product-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px;
+  margin: 10px;
+}
+
+.project-product-button {
+  background-color: #30C1BD;
+  padding: 5px;
+  border-radius: 10px;
+  color: white;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: end;
+}
+
+.input-bg-gray-200 {
+  background-color: #E5E7EB !important;
+  border-radius: 5px;
+}
+
+.product-in-project-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.chooseSection {
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #30C1BD;
+  padding: 10px;
+  transform: scale(1);
+  transition: transform 0.15s ease-in-out;
+}
+
+.chooseSection p {
+  color: #30C1BD;
+  font-weight: 600;
+}
+
+.chooseSection:hover {
+  transform: scale(1.025);
+}

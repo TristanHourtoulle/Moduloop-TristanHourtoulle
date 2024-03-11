@@ -16,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
+        <div className="mb-10" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+          <Header />
+        </div>
         {children}
       </body>
     </html>
