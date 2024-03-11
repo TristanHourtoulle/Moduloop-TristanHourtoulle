@@ -132,7 +132,7 @@ export default function page() {
                 </div>
                 <div className='line'></div>
                 <div className='flex justify-center items-center gap-5'>
-                  <div className='flex items-center gap-2 delete-btn' onClick={() => handleDeleteProject(project.id)}>
+                  <div className='flex items-center gap-2 delete-btn cursor-pointer' onClick={() => handleDeleteProject(project.id)}>
                     <Image
                       src="/icons/trash-can.svg"
                       alt="Supprimer le projet"
