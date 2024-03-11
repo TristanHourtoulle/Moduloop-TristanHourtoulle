@@ -688,3 +688,32 @@ body {
 .create-project-btn:hover {
   transform: scale(1.025);
 }
+
+.impact-product-card {
+  background-color: white;
+  min-width: 350px;
+  border-radius: 16px;
+}
+
+.impact-product-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #30C1BD;
+  margin-bottom: 0.75rem;
+}
+
+.impact-product-card p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.impact-product-card .text-bold {
+  font-weight: 600;
+}
+
+.impact-product-card h3 span {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #30C1BD;
+}

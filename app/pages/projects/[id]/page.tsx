@@ -293,7 +293,7 @@ export default function Page({
                         </div>
                     )}
                     {section === "products" ? (
-                        <div className="products-section my-[2%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '25px', justifyContent: 'center' }}>
+                        <div className="products-section my-[2%] mx-[5%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '25px', justifyContent: 'start' }}>
                             {productCards}
                         </div>
                     ) : (
