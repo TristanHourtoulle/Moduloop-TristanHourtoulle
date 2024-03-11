@@ -16,7 +16,7 @@ export const Title = (title: TitleType) => {
             alt="Page Logo"
             width={50}
             height={50}
-            className='object-contain'
+            className='object-contain title-image'
         />
       </a>
 

@@ -28,7 +28,6 @@ export default function page() {
               console.error('Failed to fetch session:', session.error);
               alert(session.error);
           } else {
-              console.log("Session: ", session.data)
               await setUser(session.session.user);
               // Get Projects
               // Get Projects
@@ -46,7 +45,6 @@ export default function page() {
                     const groupData = await res.json();
                     if (groupData.success) {
                         const groupInfo = databaseToGroupModel(groupData.data);
-                        console.log("JE SUIS LE PRINT DU GROUPINFO: ", groupInfo)
                         if (groupInfo.id) {
                             projectsData[i].groupInfo = groupInfo;
                         } else {
@@ -93,6 +91,7 @@ export default function page() {
       <div className='flex items-center justify-center gap-4 mt-10 flex-wrap ml-10 projects-container'>
         {projects ? projects.map((project, index) => {
           const group = project.groupInfo;
+          const showProjectUrl = '/pages/projects/' + project.id;
           return (
             <div key={index} className='flex flex-col project-card gap-2 project-zoom'>
                 <p className='group text-in-single-line'>{group ? group.name : 'Aucun Groupe'}</p>
@@ -114,7 +113,7 @@ export default function page() {
                       />
                     </div>
                   </Link>
-                  <Link href="#">
+                  <Link href={showProjectUrl}>
                     <div className='flex items-center gap-2 open-btn'>
                       <p className=''>Ouvrir</p>
                     </div>

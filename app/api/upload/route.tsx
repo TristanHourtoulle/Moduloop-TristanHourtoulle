@@ -16,7 +16,6 @@ export async function POST(request: NextResponse) {
     await mkdir(uploadDir, { recursive: true });
     const filepath = path.join(uploadDir, file.name);
     await writeFile(filepath, buffer);
-    console.log(`open ${path} to see the uploaded file.`);
 
     const fileData = await readFile(filepath, 'utf-8');
 
