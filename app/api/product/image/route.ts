@@ -1,7 +1,7 @@
 import pool from "@lib/database";
 import { NextRequest } from "next/server";
 
-export async function UPDATE(request: NextRequest) {
+export async function PUT(request: NextRequest) {
     try {
         const product = await request.json();
         const result = await pool.query('UPDATE products SET name = $1, image = $2, unit = $3, base = $4, source = $5, new = $6, reuse = $7 WHERE id = $8 RETURNING *;',
