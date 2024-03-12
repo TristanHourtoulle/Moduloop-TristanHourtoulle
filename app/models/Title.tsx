@@ -4,4 +4,5 @@ export interface TitleType {
     number: string | null;
     back: string;
     canChange: boolean;
+    id_project: number | undefined;
 }
