@@ -37,9 +37,7 @@ const ProductInProjectCard = (props: { product: AddProductType, idProject: numbe
             setInitialQNew(qNew)
             setInitialQUsed(qUsed)
             setIsDifferent(false)
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
+            window.location.reload();
         } else {
             console.error("Erreur lors de l'ajout du produit au projet");
             toast.error("Erreur lors de l'ajout du produit au projet.", { duration: 2000 });
@@ -87,7 +85,7 @@ const ProductInProjectCard = (props: { product: AddProductType, idProject: numbe
 
 
   return (
-    <div className='product-in-project-card w-[25%] px-[2%] py-[2%] flex flex-col justify-center'>
+    <div className='product-in-project-card w-[30%] px-[2%] py-[2%] flex flex-col justify-center'>
         {/* Header */}
         <div className='flex item-center justify-between'>
             <div className='flex flex-col items-start'>
@@ -125,32 +123,6 @@ const ProductInProjectCard = (props: { product: AddProductType, idProject: numbe
         </div>
 
     </div>
-    // <div className='product-in-project-card w-[20%] px-[2%] py-[1%]  flex flex-col items-center'>
-    //     <div className='flex gap-5'>
-    //         <div onClick={handleDeleteProduct} className='cursor-pointer'>
-    //             <TrashCan />
-    //         </div>
-    //         <p className="ml-auto font-2xl">{product.product.name}</p>
-    //     </div>
-    //     <Image
-    //         src={product.product.image ? product.product.image : '/icons/no-image.png'}
-    //         alt={product.product.name ? product.product.name : ''}
-    //         width={40}
-    //         height={40}
-    //     />
-    //     <div className='flex items-center justify-center w-[75%] gap-3'>
-    //         <div className="flex flex-col justify-center">
-    //             <label className="text-xs" htmlFor={`new`}>Neuf</label>
-    //             <input min={0} type="number" name={`new`} id={`new`} value={qNew} onChange={handleQNewChange} className="w-full text-right input-bg-gray-200"></input>
-    //         </div>
-    //         <div className="flex flex-col">
-    //             <label className="text-xs" htmlFor={`reuse`}>Réemploi</label>
-    //             <input min={0} type="number" name={`reuse`} id={`reuse`} value={qUsed} onChange={handleQUsedChange} className="w-full text-right input-bg-gray-200"></input>
-    //         </div>
-    //     </div>
-    //     <button onClick={handleAdd} className={ isDifferent ? "text-bottom project-product-button mt-[5%]" : "hidden text-bottom project-product-button"}>Modifier</button>
-    //     <Toaster richColors position="top-center" expand={false} />
-    // </div>
   )
 }
 
