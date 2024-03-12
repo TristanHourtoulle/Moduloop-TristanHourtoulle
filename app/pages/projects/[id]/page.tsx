@@ -49,6 +49,7 @@ export default function Page({
                 const data = await res.json();
                 if (data.success) {
                     const projectData = databaseToSingleProjectModel(data.product);
+                    console.log('Project data:', projectData); // Ajout du console.log pour vérifier projectData
                     res = await fetch(`/api/group/id?id=${encodeURIComponent(projectData.group)}`, {
                         method: 'GET'
                     });
@@ -87,7 +88,7 @@ export default function Page({
                 }
             }
         }
-
+    
         fetchData()
     }, []);
 
@@ -140,13 +141,24 @@ export default function Page({
         alert(index)
     }
 
-    const title: TitleType = {
+    // Initialisez title avec une valeur par défaut
+    const [title, setTitle] = useState<TitleType>({
         title: "Votre projet",
         image: "/icons/close.svg",
-        number: project ? project.name : "Chargement...",
+        number: "Chargement...", // Initialisez title.title avec une valeur par défaut
         back: "/pages/projects",
         canChange: true
-    }
+    });
+
+    useEffect(() => {
+        // Mettez à jour le titre une fois que project est chargé
+        if (project) {
+            setTitle(prevTitle => ({
+                ...prevTitle,
+                number: project.name // Mettez à jour le titre avec le nom du projet une fois qu'il est chargé
+            }));
+        }
+    }, [project]); // Déclenchez cette mise à jour lorsque project change
 
     return (
         <div className="project-page w-full">
