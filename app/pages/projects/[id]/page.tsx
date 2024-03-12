@@ -144,7 +144,8 @@ export default function Page({
         title: "Votre projet",
         image: "/icons/close.svg",
         number: project ? project.name : "Chargement...",
-        back: "/pages/projects"
+        back: "/pages/projects",
+        canChange: true
     }
 
     return (

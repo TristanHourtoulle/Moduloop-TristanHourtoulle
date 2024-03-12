@@ -9,7 +9,8 @@ export default function page() {
         title: "Mettre à jour vos produits",
         image: "/icons/close.svg",
         number: null,
-        back: "/pages/products"
+        back: "/pages/products",
+        canChange: false
     }
 
   return (

@@ -8,7 +8,8 @@ export default function page() {
         title: "Utilisateurs",
         image: "/icons/admin.svg",
         number: "5",
-        back: "#"
+        back: "#",
+        canChange: false
     }
 
   return (

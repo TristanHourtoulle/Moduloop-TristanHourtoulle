@@ -91,7 +91,8 @@ function page() {
         title: "Votre nouveau projet",
         image: "/icons/close.svg",
         number: "",
-        back: "/pages/projects"
+        back: "/pages/projects",
+        canChange: false
     }
 
     return (

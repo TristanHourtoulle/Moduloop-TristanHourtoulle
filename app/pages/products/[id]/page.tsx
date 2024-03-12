@@ -61,7 +61,8 @@ export default function Page({
                 title: "Votre produit: ",
                 image: "/icons/close.svg",
                 number: product.product.name,
-                back: "/pages/products"
+                back: "/pages/products",
+                canChange: false
               }
               setTitle(title);
             }

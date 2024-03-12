@@ -67,7 +67,8 @@ export default function page() {
       title: "Vos projets",
       image: "/icons/but.svg",
       number: projects ? projects.length.toString() : "0",
-      back: "#"
+      back: "#",
+      canChange: false
     }
 
     const handleDeleteProject = async (id: number) => {

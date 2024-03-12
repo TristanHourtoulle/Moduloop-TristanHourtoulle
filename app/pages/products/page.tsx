@@ -31,7 +31,8 @@ export default function page() {
         title: "Vos produits",
         image: "/icons/entrepot.svg",
         number: "",
-        back: "#"
+        back: "#",
+        canChange: false
     }
 
   return (
