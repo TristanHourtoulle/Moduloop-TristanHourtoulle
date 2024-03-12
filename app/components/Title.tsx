@@ -9,14 +9,35 @@ function isOnlyNumber(str: string) {
 export const Title = (title: TitleType) => {
     const [nameOfPage, setNameOfPage] = useState(title.number || "");
     const [displayChange, setDisplayChange] = useState(false);
+    const [apiRoutes, setApiRoutes] = useState<string>("");
+    const [isApiRoutesSet, setIsApiRoutesSet] = useState(false);
+
+    if (!isApiRoutesSet && title.back === "/pages/projects") {
+        setApiRoutes(`/api/project`);
+        setIsApiRoutesSet(true);
+    }
 
     useEffect(() => {
-      setNameOfPage(title.number || "");
-    }
-    , [title.number]);
+        if (title.number !== undefined) {
+            setNameOfPage(title.number || "");
+        }
+    }, [title.number]);
 
-    const handleSubmitTitle = () => {
-        setDisplayChange(false);
+    const handleSubmitTitle = async () => {
+        try {
+            const tempApiRoutes = `${apiRoutes}?id=${title.id_project}&name=${nameOfPage}`;
+            const res = await fetch(tempApiRoutes, {
+                method: "PUT",
+            });
+            if (!res.ok) {
+                alert("ERROR")
+                throw new Error("Erreur lors de la modification du titre");
+            }
+            setDisplayChange(false);
+        } catch (error) {
+            console.error(error);
+            alert("Erreur lors de la modification du titre");
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,7 +86,7 @@ export const Title = (title: TitleType) => {
                               width={50}
                               height={50}
                               className='cursor-pointer'
-                              onClick={() => setDisplayChange(!displayChange)}
+                              onClick={() => handleSubmitTitle()}
                           />
                           <Image
                               src="/icons/close.svg"
