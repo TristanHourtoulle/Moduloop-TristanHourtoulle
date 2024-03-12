@@ -27,6 +27,7 @@ export default function Page({
     const [section, setSection] = useState("products")
     const [productsImpact, setProductsImpact] = useState([])
     const [allIsLoaded, setAllIsLoaded] = useState(false);
+    const [description, setDescription] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -47,8 +48,9 @@ export default function Page({
                 const data = await res.json();
                 if (data.success) {
                     const projectData = databaseToSingleProjectModel(data.product);
+                    setDescription(projectData.description ?? "");
                     console.log('Project data:', projectData); // Ajout du console.log pour vérifier projectData
-                    res = await fetch(`/api/group/id?id=${encodeURIComponent(projectData.group)}`, {
+                    res = await fetch(`/api/group/id?id=${encodeURIComponent(projectData.group ?? "")}`, {
                         method: 'GET'
                     });
                     const groupData = await res.json();
@@ -88,7 +90,7 @@ export default function Page({
                 }
             }
         }
-    
+
         fetchData()
     }, []);
 
@@ -156,6 +158,15 @@ export default function Page({
             }));
         }
     }, [project]); // Déclenchez cette mise à jour lorsque project change
+
+    const handleDescriptionChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDescription(e.target.value);
+    }
+
+    const handleSubmitDescription = async () => {
+        console.log("Description mise à jour avec: ", description);
+        alert(description);
+    }
 
     // Rendre le contenu de la page uniquement lorsque tout est chargé
     if (!allIsLoaded) {
@@ -231,8 +242,13 @@ export default function Page({
                 </div>
                 {/* Description */}
                 <div>
-                    <textarea value={project?.description} className="description-input">
-                    </textarea>
+                {/* <input
+                    className="description-input"
+                    type="text"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    style={{ overflowWrap: "break-word" }}
+                /> */}
                 </div>
                 {/* Cost & number Products -> to do later */}
             </div>
