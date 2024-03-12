@@ -3,4 +3,5 @@ export interface TitleType {
     image: string;
     number: string | null;
     back: string;
+    canChange: boolean;
 }
