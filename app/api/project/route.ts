@@ -4,6 +4,7 @@ import { NextRequest } from 'next/server';
 import { User } from '@/models/User';
 import { writeFile, mkdir, readFile } from "fs/promises";
 import path from "path";
+import { ProjectType } from '@models/Project';
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
@@ -87,16 +88,20 @@ export async function GET(request: NextRequest) {
 // Fonction pour gérer les requêtes PUT
 export async function PUT(request: NextRequest) {
     try {
-        const user: User = await request.json();
-        const result = await pool.query('UPDATE users SET name = $1, email = $2, password = $3, role = $4 WHERE id = $5 RETURNING *;',
-            [user.name, user.email, user.password, user.role, user.id]);
+        const searchParams = request.nextUrl.searchParams;
+        const id = searchParams.get('id') || '';
+        const name = searchParams.get('name') || '';
+        console.log("Params received: ", id, name)
+
+        const result = await pool.query('UPDATE projects SET name = $1 WHERE id = $2 RETURNING *;',
+            [name, id]);
 
         // Vérification si la requête a réussi
         if (result.rowCount === 1) {
             const data = result.rows[0];
             return Response.json({ success: true, data}, { status: 200 });
         } else {
-            throw new Error('La requête UPDATE a échoué');
+            throw new Error('La requête UPDATE sur la table project a échoué');
         }
     } catch (error) {
         console.error('Erreur lors de la mise à jour de l\'utilisateur:', error);
