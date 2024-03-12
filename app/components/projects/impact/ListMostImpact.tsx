@@ -3,6 +3,8 @@ import { AddProductType } from '@models/AddProduct'
 import { MostImpactType } from '@models/MostImpact'
 import { GlobalImpact } from '@models/Impact'
 import { ProductCard } from './ProductCard'
+import { PieConfigType, PieType } from '@models/PieType'
+import Pie from '@components/charts/Pie'
 
 function getTotalRcImpact(products: AddProductType[]) {
     let totalRcImpact: number = 0;
@@ -153,6 +155,21 @@ function sortByEm(res: MostImpactType[]) {
     return res.slice(0, Math.min(3, res.length));
 }
 
+function getConfigPie(impactProducts: MostImpactType[]) {
+    const data: PieType[] = []
+
+    for (let impactProduct of impactProducts) {
+        const percentage = impactProduct.totalImpact / impactProducts[0].totalImpact * 100;
+        const pie: PieType = {
+            name: impactProduct.product.product.name,
+            value: percentage
+        }
+        console.log(pie)
+        data.push(pie)
+    }
+    return data
+}
+
 const ListMostImpact = (props: { products: AddProductType[] }) => {
     const { products } = props;
     const impactProducts = getTop3MostImpact(products)
@@ -166,36 +183,72 @@ const ListMostImpact = (props: { products: AddProductType[] }) => {
     const totalAseImpact = getTotalAseImpact(products)
     const totalEmImpact = getTotalEmImpact(products)
 
+    const rcPieConfig: PieConfigType = {
+        title: "Réchauffement climatique",
+        data: getConfigPie(rcImpactProducts),
+        total: totalRcImpact
+    }
+
+    const erfPieConfig: PieConfigType = {
+        title: "Épuisement des ressources fossiles",
+        data: getConfigPie(erfImpactProducts),
+        total: totalErfImpact
+    }
+
+    const asePieConfig: PieConfigType = {
+        title: "Acidification des sols et des eaux",
+        data: getConfigPie(aseImpactProducts),
+        total: totalAseImpact
+    }
+
+    const emPieConfig: PieConfigType = {
+        title: "Eutrophisation marine",
+        data: getConfigPie(emImpactProducts),
+        total: totalEmImpact
+    }
+
     return (
         <div>
             {products.length >= 1 ? (
                 <div className='flex flex-col items-start'>
                     <h3 className='mt-[2%] mb-[1%] font-xl font-bold'>Produits plus impactant sur le réchauffement climatique</h3>
-                    <div className='flex items-center gap-5'>
-                        {rcImpactProducts[0] && (<ProductCard product={rcImpactProducts[0].product} impactValue={rcImpactProducts[0].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={1} totalImpact={totalRcImpact} />)}
-                        {rcImpactProducts[1] && (<ProductCard product={rcImpactProducts[1].product} impactValue={rcImpactProducts[1].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={2} totalImpact={totalRcImpact} />)}
-                        {rcImpactProducts[2] && (<ProductCard product={rcImpactProducts[2].product} impactValue={rcImpactProducts[2].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={3} totalImpact={totalRcImpact} />)}
+                    <div className='sm:flex sm:items-center sm:gap-5'>
+                        <Pie pieConfig={rcPieConfig} />
+                        <div className='sm:flex sm:gap-5 mx-auto'>
+                            {rcImpactProducts[0] && (<ProductCard product={rcImpactProducts[0].product} impactValue={rcImpactProducts[0].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={1} totalImpact={totalRcImpact} />)}
+                            {rcImpactProducts[1] && (<ProductCard product={rcImpactProducts[1].product} impactValue={rcImpactProducts[1].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={2} totalImpact={totalRcImpact} />)}
+                            {rcImpactProducts[2] && (<ProductCard product={rcImpactProducts[2].product} impactValue={rcImpactProducts[2].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={3} totalImpact={totalRcImpact} />)}
+                        </div>
                     </div>
 
                     <h3 className='mt-[2%] mb-[1%] font-xl font-bold'>Produits plus impactant sur l'épuisement des ressources fossiles</h3>
-                    <div className='flex items-center gap-5'>
-                        {erfImpactProducts[0] && (<ProductCard product={erfImpactProducts[0].product} impactValue={erfImpactProducts[0].totalErf.toFixed(2)} impactType='MJ' positionInTop={1} totalImpact={totalErfImpact}/>)}
-                        {erfImpactProducts[1] && (<ProductCard product={erfImpactProducts[1].product} impactValue={erfImpactProducts[1].totalErf.toFixed(2)} impactType='MJ' positionInTop={2} totalImpact={totalErfImpact}/>)}
-                        {erfImpactProducts[2] && (<ProductCard product={erfImpactProducts[2].product} impactValue={erfImpactProducts[2].totalErf.toFixed(2)} impactType='MJ' positionInTop={3} totalImpact={totalErfImpact}/>)}
+                    <div className='flex items-center gap-5 my-[1%] '>
+                        <Pie pieConfig={erfPieConfig} />
+                        <div className='flex items-center gap-5'>
+                            {erfImpactProducts[0] && (<ProductCard product={erfImpactProducts[0].product} impactValue={erfImpactProducts[0].totalErf.toFixed(2)} impactType='MJ' positionInTop={1} totalImpact={totalErfImpact} />)}
+                            {erfImpactProducts[1] && (<ProductCard product={erfImpactProducts[1].product} impactValue={erfImpactProducts[1].totalErf.toFixed(2)} impactType='MJ' positionInTop={2} totalImpact={totalErfImpact} />)}
+                            {erfImpactProducts[2] && (<ProductCard product={erfImpactProducts[2].product} impactValue={erfImpactProducts[2].totalErf.toFixed(2)} impactType='MJ' positionInTop={3} totalImpact={totalErfImpact} />)}
+                        </div>
                     </div>
 
                     <h3 className='mt-[2%] mb-[1%] font-xl font-bold'>Produits plus impactant sur l'acidification des sols et des eaux</h3>
-                    <div className='flex items-center gap-5'>
-                        {aseImpactProducts[0] && (<ProductCard product={aseImpactProducts[0].product} impactValue={aseImpactProducts[0].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={1} totalImpact={totalAseImpact}/>)}
-                        {aseImpactProducts[1] && (<ProductCard product={aseImpactProducts[1].product} impactValue={aseImpactProducts[1].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={2} totalImpact={totalAseImpact}/>)}
-                        {aseImpactProducts[2] && (<ProductCard product={aseImpactProducts[2].product} impactValue={aseImpactProducts[2].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={3} totalImpact={totalAseImpact}/>)}
+                    <div className='flex items-center gap-5 my-[1%] '>
+                        <Pie pieConfig={asePieConfig} />
+                        <div className='flex items-center gap-5'>
+                            {aseImpactProducts[0] && (<ProductCard product={aseImpactProducts[0].product} impactValue={aseImpactProducts[0].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={1} totalImpact={totalAseImpact} />)}
+                            {aseImpactProducts[1] && (<ProductCard product={aseImpactProducts[1].product} impactValue={aseImpactProducts[1].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={2} totalImpact={totalAseImpact} />)}
+                            {aseImpactProducts[2] && (<ProductCard product={aseImpactProducts[2].product} impactValue={aseImpactProducts[2].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={3} totalImpact={totalAseImpact} />)}
+                        </div>
                     </div>
 
-                    <h3 className='mt-[2%] mb-[1%] font-xl font-bold'>Produits plus impactant sur l'épuisement des ressources fossiles</h3>
-                    <div className='flex items-center gap-5'>
-                        {emImpactProducts[0] && (<ProductCard product={emImpactProducts[0].product} impactValue={emImpactProducts[0].totalEm.toFixed(5)} impactType='kg PO4eq' positionInTop={1} totalImpact={totalEmImpact}/>)}
-                        {emImpactProducts[1] && (<ProductCard product={emImpactProducts[1].product} impactValue={emImpactProducts[1].totalEm.toFixed(5)} impactType='kg PO4eq' positionInTop={2} totalImpact={totalEmImpact}/>)}
-                        {emImpactProducts[2] && (<ProductCard product={emImpactProducts[2].product} impactValue={emImpactProducts[2].totalEm.toFixed(5)} impactType='kg PO4eq' positionInTop={3} totalImpact={totalEmImpact}/>)}
+                    <h3 className='mt-[2%] mb-[1%] font-xl font-bold'>Produits plus impactant sur l'eutrophisation marine</h3>
+                    <div className='flex items-center gap-5 my-[1%] '>
+                        <Pie pieConfig={emPieConfig} />
+                        <div className='flex items-center gap-5'>
+                            {emImpactProducts[0] && (<ProductCard product={emImpactProducts[0].product} impactValue={emImpactProducts[0].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={1} totalImpact={totalEmImpact} />)}
+                            {emImpactProducts[1] && (<ProductCard product={emImpactProducts[1].product} impactValue={emImpactProducts[1].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={2} totalImpact={totalEmImpact} />)}
+                            {emImpactProducts[2] && (<ProductCard product={emImpactProducts[2].product} impactValue={emImpactProducts[2].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={3} totalImpact={totalEmImpact} />)}
+                        </div>
                     </div>
                 </div>
             ) : (
