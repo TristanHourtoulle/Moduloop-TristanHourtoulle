@@ -1,6 +1,7 @@
 import React from 'react'
 import { TitleType } from '@models/Title'
 import Image from 'next/image'
+import { useState } from 'react'
 
 function isOnlyNumber(str: string) {
     return /^\d+$/.test(str);
@@ -8,12 +9,28 @@ function isOnlyNumber(str: string) {
 
 export const Title = (title: TitleType) => {
     let number = ""
+
     if (title.number) {
-        if (isOnlyNumber(title.number)) {
-            number = "(" + title.number + ")"
-        } else {
-            number = title.number
-        }
+      if (isOnlyNumber(title.number)) {
+        number = "(" + title.number + ")"
+      } else {
+        number = title.number
+      }
+    }
+    const [nameOfPage, setNameOfPage] = useState<string>(number);
+    const [displayChange, setDisplayChange] = useState<boolean>(false);
+
+    const handleSubmitTitle = () => {
+      setDisplayChange(false)
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNameOfPage(e.target.value)
+    }
+
+    const handleCancelChangeTitle = () => {
+      setNameOfPage(number)
+      setDisplayChange(false)
     }
 
   return (
@@ -28,8 +45,41 @@ export const Title = (title: TitleType) => {
         />
       </a>
 
-        <h1 className='page-title'>{title.title}</h1>
-        <p className='page-number'>{number}</p>
+      <h1 className='page-title'>{title.title}</h1>
+        {title.canChange && displayChange ? ( <input onChange={handleChange} type="text" className="title-input" value={nameOfPage} /> )
+        : ( <p className='page-number'>{nameOfPage}</p> )}
+
+        {title.canChange && !displayChange && (
+          <Image
+            src="/icons/lien.png"
+            alt="Change"
+            width={50}
+            height={50}
+            className='cursor-pointer'
+            onClick={() => setDisplayChange(!displayChange)}
+          />
+        )}
+
+        {title.canChange && displayChange && (
+          <div className='flex'>
+            <Image
+              src="/icons/validé.png"
+              alt="Change"
+              width={50}
+              height={50}
+              className='cursor-pointer'
+              onClick={() => handleSubmitTitle()}
+            />
+            <Image
+              src="/icons/close.png"
+              alt="Cancel"
+              width={50}
+              height={50}
+              className='cursor-pointer'
+              onClick={() => handleCancelChangeTitle()}
+            />
+          </div>
+        )}
     </div>
   )
 }

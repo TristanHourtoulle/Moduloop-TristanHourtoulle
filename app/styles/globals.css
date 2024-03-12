@@ -717,3 +717,10 @@ body {
   font-weight: 800;
   color: #30C1BD;
 }
+
+.title-input {
+  background-color: #E5E7EB;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1.5rem;
+}
