@@ -1,8 +1,15 @@
 import React from 'react'
+import Image from 'next/image';
 
 const Loader = () => {
     return (
-        <div className="loader"></div>
+        <Image
+            src="/icons/logoImage.svg"
+            alt="Loader"
+            width={50}
+            height={50}
+            className='loader'
+        />
     )
 }
 
