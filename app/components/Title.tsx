@@ -2,10 +2,18 @@ import React from 'react'
 import { TitleType } from '@models/Title'
 import Image from 'next/image'
 
+function isOnlyNumber(str: string) {
+    return /^\d+$/.test(str);
+}
+
 export const Title = (title: TitleType) => {
     let number = ""
     if (title.number) {
-        number = "(" + title.number + ")"
+        if (isOnlyNumber(title.number)) {
+            number = "(" + title.number + ")"
+        } else {
+            number = title.number
+        }
     }
 
   return (
