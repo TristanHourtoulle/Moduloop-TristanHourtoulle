@@ -1,85 +1,85 @@
-import React from 'react'
-import { TitleType } from '@models/Title'
-import Image from 'next/image'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { TitleType } from '@models/Title';
 
 function isOnlyNumber(str: string) {
     return /^\d+$/.test(str);
 }
 
 export const Title = (title: TitleType) => {
-    let number = ""
+    const [nameOfPage, setNameOfPage] = useState(title.number || "");
+    const [displayChange, setDisplayChange] = useState(false);
 
-    if (title.number) {
-      if (isOnlyNumber(title.number)) {
-        number = "(" + title.number + ")"
-      } else {
-        number = title.number
-      }
+    useEffect(() => {
+      setNameOfPage(title.number || "");
     }
-    const [nameOfPage, setNameOfPage] = useState<string>(number);
-    const [displayChange, setDisplayChange] = useState<boolean>(false);
+    , [title.number]);
 
     const handleSubmitTitle = () => {
-      setDisplayChange(false)
-    }
+        setDisplayChange(false);
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setNameOfPage(e.target.value)
-    }
+        setNameOfPage(e.target.value);
+    };
 
     const handleCancelChangeTitle = () => {
-      setNameOfPage(number)
-      setDisplayChange(false)
-    }
+        setNameOfPage(title.number || "");
+        setDisplayChange(false);
+    };
 
-  return (
-    <div className='flex ml-5 gap-5 items-center'>
-      <a href={title.back}>
-        <Image
-            src={title.image}
-            alt="Page Logo"
-            width={50}
-            height={50}
-            className='object-contain title-image'
-        />
-      </a>
+    return (
+        <div className='flex ml-5 gap-5 items-center'>
+            <a href={title.back}>
+                <Image
+                    src={title.image}
+                    alt="Page Logo"
+                    width={50}
+                    height={50}
+                    className='object-contain title-image'
+                />
+            </a>
 
-      <h1 className='page-title'>{title.title}</h1>
-        {title.canChange && displayChange ? ( <input onChange={handleChange} type="text" className="title-input" value={nameOfPage} /> )
-        : ( <p className='page-number'>{nameOfPage}</p> )}
+            <h1 className='page-title'>{title.title}</h1>
 
-        {title.canChange && !displayChange && (
-          <Image
-            src="/icons/Edit.png"
-            alt="Change"
-            width={50}
-            height={50}
-            className='cursor-pointer'
-            onClick={() => setDisplayChange(!displayChange)}
-          />
-        )}
+            {title.canChange && (
+                <div className='flex gap-5'>
+                    {displayChange ? (
+                        <input onChange={handleChange} type="text" className="title-input" value={nameOfPage} />
+                    ) : (
+                        <p className='page-number'>{nameOfPage}</p>
+                    )}
 
-        {title.canChange && displayChange && (
-          <div className='flex'>
-            <Image
-              src="/icons/validé.png"
-              alt="Change"
-              width={50}
-              height={50}
-              className='cursor-pointer'
-              onClick={() => handleSubmitTitle()}
-            />
-            <Image
-              src="/icons/close.png"
-              alt="Cancel"
-              width={50}
-              height={50}
-              className='cursor-pointer'
-              onClick={() => handleCancelChangeTitle()}
-            />
-          </div>
-        )}
-    </div>
-  )
-}
+                    {!displayChange ? (<Image
+                        src="/icons/Edit.svg"
+                        alt="Change"
+                        width={50}
+                        height={50}
+                        className='cursor-pointer'
+                        onClick={() => setDisplayChange(!displayChange)}
+                    />) :
+                      (<div className='flex'>
+                          <Image
+                              src={"/icons/validé.png"}
+                              alt={"Change"}
+                              width={50}
+                              height={50}
+                              className='cursor-pointer'
+                              onClick={() => setDisplayChange(!displayChange)}
+                          />
+                          <Image
+                              src="/icons/close.png"
+                              alt="Cancel"
+                              width={50}
+                              height={50}
+                              className='cursor-pointer'
+                              onClick={() => handleCancelChangeTitle()}
+                          />
+                      </div>)}
+                </div>
+            )}
+
+            {!title.canChange && <p className='page-number'>({title.number})</p>}
+        </div>
+    );
+};
