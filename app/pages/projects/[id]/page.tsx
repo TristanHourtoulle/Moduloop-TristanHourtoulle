@@ -143,7 +143,8 @@ export default function Page({
         image: "/icons/close.svg",
         number: "Chargement...", // Initialisez title.title avec une valeur par défaut
         back: "/pages/projects",
-        canChange: true
+        canChange: true,
+        id_project: Number(id)
     });
 
     useEffect(() => {
