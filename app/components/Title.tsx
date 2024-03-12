@@ -51,7 +51,7 @@ export const Title = (title: TitleType) => {
 
         {title.canChange && !displayChange && (
           <Image
-            src="/icons/lien.png"
+            src="/icons/Edit.png"
             alt="Change"
             width={50}
             height={50}
