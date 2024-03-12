@@ -60,7 +60,7 @@ export const Title = (title: TitleType) => {
                     />) :
                       (<div className='flex'>
                           <Image
-                              src={"/icons/validé.png"}
+                              src={"/icons/validé.svg"}
                               alt={"Change"}
                               width={50}
                               height={50}
@@ -68,7 +68,7 @@ export const Title = (title: TitleType) => {
                               onClick={() => setDisplayChange(!displayChange)}
                           />
                           <Image
-                              src="/icons/close.png"
+                              src="/icons/close.svg"
                               alt="Cancel"
                               width={50}
                               height={50}
