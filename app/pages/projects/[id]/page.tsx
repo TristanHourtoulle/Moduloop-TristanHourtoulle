@@ -11,6 +11,7 @@ import { ProductType } from "@models/Product";
 import ProductCardWithToaster from "@components/projects/ProductCard";
 import ProductInProjectCard from "@components/projects/ProductInProjectCard";
 import ImpactSection from "@components/projects/ImpactSection";
+import Loader from "@components/Loader";
 
 export default function Page({
     params: { id },
@@ -25,10 +26,7 @@ export default function Page({
     const [productCards, setProductCards] = useState([]);
     const [section, setSection] = useState("products")
     const [productsImpact, setProductsImpact] = useState([])
-
-    const updatePopupState = () => {
-        setIsPopupOpen(!isPopupOpen);
-    }
+    const [allIsLoaded, setAllIsLoaded] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -78,6 +76,8 @@ export default function Page({
                             console.error('Failed to fetch products:', productsData.error);
                             alert(productsData.error);
                         }
+                        // Mettre à jour l'état allIsLoaded à true une fois que tout est chargé
+                        setAllIsLoaded(true);
                     } else {
                         console.error('Failed to fetch group:', groupData.error);
                         alert(groupData.error);
@@ -137,10 +137,6 @@ export default function Page({
         setIsPopupOpen(!isPopupOpen);
     }
 
-    const addProductForm = async (product: ProductType, index: number) => {
-        alert(index)
-    }
-
     // Initialisez title avec une valeur par défaut
     const [title, setTitle] = useState<TitleType>({
         title: "Votre projet",
@@ -159,6 +155,15 @@ export default function Page({
             }));
         }
     }, [project]); // Déclenchez cette mise à jour lorsque project change
+
+    // Rendre le contenu de la page uniquement lorsque tout est chargé
+    if (!allIsLoaded) {
+        return (
+            <div className="flex items-center justify-center flex-1">
+                <Loader />
+            </div>
+        );
+    }
 
     return (
         <div className="project-page w-full">
