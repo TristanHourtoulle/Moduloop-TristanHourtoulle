@@ -58,7 +58,7 @@ export default function page() {
         </div>
 
         <div className='ml-[3%] scroll-view overflow-y-hidden'>
-            <div className='products-cards mb-[3%]'>
+            <div  className="products-section my-[2%] mx-[5%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '25px', justifyContent: 'space-between' }}>
                 {products ? (
                     products.map((product, index) => (
                         <Card key={index} {...product}/>
