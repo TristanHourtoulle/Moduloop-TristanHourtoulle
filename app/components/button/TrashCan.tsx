@@ -1,14 +1,18 @@
 import React from 'react'
 import Image from 'next/image';
 
-const TrashCan = () => {
+export interface TrashCanProps {
+  size?: number;
+}
+
+const TrashCan = ({ size }: TrashCanProps) => {
   return (
-    <div className='delete-btn flex'>
+    <div className='delete-btn flex cursor-pointer'>
         <Image
         src="/icons/trash-can.svg"
         alt="Supprimer le produit du projet"
-        width={25}
-        height={25}
+        width={size || 25}
+        height={size || 25}
         />
     </div>
   )
