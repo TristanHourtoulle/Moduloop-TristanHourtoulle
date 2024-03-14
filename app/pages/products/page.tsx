@@ -30,9 +30,10 @@ export default function page() {
     const title: TitleType = {
         title: "Vos produits",
         image: "/icons/entrepot.svg",
-        number: "",
+        number: products.length.toString(),
         back: "#",
-        canChange: false
+        canChange: false,
+        id_project: 0
     }
 
   return (
@@ -56,8 +57,8 @@ export default function page() {
             </Link>
         </div>
 
-        <div className='ml-5 scroll-view'>
-            <div className='products-cards'>
+        <div className='ml-[3%] scroll-view overflow-y-hidden'>
+            <div className='products-cards mb-[3%]'>
                 {products ? (
                     products.map((product, index) => (
                         <Card key={index} {...product}/>
