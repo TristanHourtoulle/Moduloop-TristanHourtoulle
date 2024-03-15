@@ -1,23 +1,45 @@
 // Importez les types NextApiRequest et NextApiResponse
 import pool from '@/lib/database';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { ProductType } from '@models/Product';
 import { User } from '@/models/User';
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
     try {
-        const product: any = await request.json();
+        const param: any = await request.json();
+        const products = param.products;
 
-        const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
-                                        [product.name, product.image, product.unit, product.category, "", product.new, product.reuse])
+        // Parcours de chaque produit
+        for (const productName in products) {
+            if (Object.hasOwnProperty.call(products, productName)) {
+            const product = products[productName];
+            const base = product.base;
+            const unit = product.unit;
 
-        if (result.rowCount == 1) {
-            const data = result.rows[0];
-            return Response.json({success: true, data}, {status: 200});
-        } else {
-            throw new Error('La requête INSERT a échoué')
+            // Vérifie si le produit existe déjà dans la base de données
+            const queryText = 'SELECT * FROM products WHERE name = $1';
+            const res = await pool.query(queryText, [productName]);
+
+            if (res.rows.length === 0) {
+                // Si le produit n'existe pas encore, l'ajoute à la base de données
+                const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+                            [productName, "", unit, base, "", product.new, product.used])
+                console.log(`Produit "${productName}" ajouté à la base de données.`);
+            } else {
+                console.log(`Produit "${productName}" déjà présent dans la base de données.`);
+            }
+            }
         }
+        return Response.json({success: true, data: "OK"}, {status: 200});
+        // const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
+        //                                 [product.name, product.image, product.unit, product.category, "", product.new, product.reuse])
+
+        // if (result.rowCount == 1) {
+        //     const data = result.rows[0];
+        // } else {
+        //     throw new Error('La requête INSERT a échoué')
+        // }
     } catch (error) {
         console.error('Erreur lors de l\'insertion de l\'utilisateur:', error);
         return Response.json({ success: false, error}, { status: 500 });
