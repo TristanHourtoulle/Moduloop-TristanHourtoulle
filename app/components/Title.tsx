@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { TitleType } from '@models/Title';
@@ -20,7 +22,8 @@ export const Title = (title: TitleType) => {
     useEffect(() => {
         if (title.number !== undefined) {
             setNameOfPage(title.number || "");
-        }
+        } else if (title.number === null)
+            setNameOfPage("");
     }, [title.number]);
 
     const handleSubmitTitle = async () => {
