@@ -7,6 +7,23 @@ const Card = (product: ProductType) => {
     const showProductUrl = '/pages/products/' + product.id
     const nameProduct = product.name?.replace("Inies - ", "")
     const baseName = product.base?.toLowerCase()?.replace(/^\w/, (c) => c.toUpperCase());
+
+    const handleDelete = async () => {
+        const response = await fetch(`/api/product?id=${product.id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+
+        if (response.ok) {
+            console.log('Product deleted')
+            window.location.reload()
+        } else {
+            alert('Product not deleted')
+        }
+    }
+
   return (
     <div className='product-card w-[30%] px-[2%] py-[2%] flex flex-col justify-between gap-2'>
         {/* Header */}
@@ -15,7 +32,9 @@ const Card = (product: ProductType) => {
                 <h2 className='name'>{nameProduct}</h2>
                 <p className='base'>{baseName}</p>
             </div>
-            <TrashCan size={23} />
+            <div onClick={handleDelete}>
+                <TrashCan size={23} />
+            </div>
         </div>
         {/* Content */}
         <div className='flex justify-center'>
