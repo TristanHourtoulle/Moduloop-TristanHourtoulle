@@ -9,6 +9,7 @@ import { Title } from "@components/Title";
 import Image from "next/image";
 import InfoTable from "@components/products/infoTable";
 import ImpactTable from "@components/products/impactTable";
+import Loader from "@components/Loader";
 
 export default function Page({
     params: { id },
@@ -20,11 +21,13 @@ export default function Page({
   const [title, setTitle] = useState<TitleType | null>(null);
   const [view, setView] = useState("new") // "new" - "reuse"
   const [file, setFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Set initial value to true
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append("file", file); // Ajoutez votre fichier upload à FormData
       formData.append("productId", myProduct?.id); // Ajoutez l'id du produit à FormData
@@ -41,11 +44,14 @@ export default function Page({
       }
     } catch (error) {
       alert(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     const fetchProduct = async () => {
+      setIsLoading(true); // Set isLoading to true before fetch operation
       try {
         const response = await fetch(`/api/product?id=${encodeURIComponent(id)}`, {
             method: "GET",
@@ -72,20 +78,17 @@ export default function Page({
       } catch (error) {
         alert(error)
       } finally {
-        setLoading(false); // Marquer le chargement comme terminé, que la requête réussisse ou échoue
+        setIsLoading(false); // Set isLoading to false after fetch operation
       }
     };
 
     fetchProduct();
   }, [id]);
 
-
   return (
     <div className="">
-      {loading ?
-        <div className="m-auto">
-            <FontAwesomeIcon icon={faSpinner} spin /> Chargement...
-        </div> : myProduct ?
+      {!isLoading ? (
+        myProduct ?
         <div className="">
             <div className="flex items-center mb-10">
                 <div className='mr-auto'>
@@ -147,10 +150,14 @@ export default function Page({
                 </div>
             </div>
 
-        </div> :
+        </div> : <div>
+            <p>Produit introuvable</p>
+        </div>
+      ) : (
         <div>
-            Erreur de chargement du produit
-        </div>}
+          <Loader />
+        </div>
+      )}
     </div>
-  )
+  );
 }
