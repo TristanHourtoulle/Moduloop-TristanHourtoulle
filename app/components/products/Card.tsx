@@ -8,7 +8,7 @@ const Card = (product: ProductType) => {
     const nameProduct = product.name?.replace("Inies - ", "")
     const baseName = product.base?.toLowerCase()?.replace(/^\w/, (c) => c.toUpperCase());
   return (
-    <div className='product-card w-[30%] px-[2%] py-[2%] flex flex-col gap-2'>
+    <div className='product-card w-[30%] px-[2%] py-[2%] flex flex-col justify-between gap-2'>
         {/* Header */}
         <div className='flex items-center justify-between'>
             <div className='flex flex-col'>
