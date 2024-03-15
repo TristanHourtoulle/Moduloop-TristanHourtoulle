@@ -4,6 +4,39 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ProductType } from '@models/Product';
 import { User } from '@/models/User';
 
+function substituteNewValuesFromReuseValues(newProduct, reuseProduct) {
+    console.log('newProduct:', newProduct);
+    console.log('reuseProduct:', reuseProduct);
+    reuseProduct.reuse = {
+        rc: {
+            manufacturing: reuseProduct.rc.manufacturing - newProduct.rc.manufacturing,
+            installation: reuseProduct.rc.installation - newProduct.rc.installation,
+            usage: reuseProduct.rc.usage - newProduct.rc.usage,
+            endOfLife: reuseProduct.rc.endOfLife - newProduct.rc.endOfLife,
+        },
+        erf: {
+            manufacturing: reuseProduct.erf.manufacturing - newProduct.erf.manufacturing,
+            installation: reuseProduct.erf.installation - newProduct.erf.installation,
+            usage: reuseProduct.erf.usage - newProduct.erf.usage,
+            endOfLife: reuseProduct.erf.endOfLife - newProduct.erf.endOfLife,
+        },
+        ase: {
+            manufacturing: reuseProduct.ase.manufacturing - newProduct.ase.manufacturing,
+            installation: reuseProduct.ase.installation - newProduct.ase.installation,
+            usage: reuseProduct.ase.usage - newProduct.ase.usage,
+            endOfLife: reuseProduct.ase.endOfLife - newProduct.ase.endOfLife,
+        },
+        em: {
+            manufacturing: reuseProduct.em.manufacturing - newProduct.em.manufacturing,
+            installation: reuseProduct.em.installation - newProduct.em.installation,
+            usage: reuseProduct.em.usage - newProduct.em.usage,
+            endOfLife: reuseProduct.em.endOfLife - newProduct.em.endOfLife,
+        },
+    }
+    console.log('reuseProductToInsertInDb:', reuseProduct);
+    return reuseProduct.reuse;
+}
+
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
     try {
@@ -24,7 +57,7 @@ export async function POST(request: NextRequest) {
             if (res.rows.length === 0) {
                 // Si le produit n'existe pas encore, l'ajoute à la base de données
                 const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
-                            [productName, "", unit, base, "", product.new, product.used])
+                            [productName, "", unit, base, "", product.new, substituteNewValuesFromReuseValues(product.new, product.used)])
                 console.log(`Produit "${productName}" ajouté à la base de données.`);
             } else {
                 console.log(`Produit "${productName}" déjà présent dans la base de données.`);
