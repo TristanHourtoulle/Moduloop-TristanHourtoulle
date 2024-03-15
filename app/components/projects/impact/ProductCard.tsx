@@ -29,8 +29,7 @@ export function visibleNumber(value: number) {
 
 export const ProductCard = (props: { product: AddProductType, impactValue: number, impactType: string, positionInTop: number, totalImpact: number }) => {
     const { product, impactValue, impactType, positionInTop, totalImpact } = props;
-    let percentage = impactValue / totalImpact * 100;
-    percentage = parseFloat(percentage.toFixed(2));
+    let percentage = parseFloat(totalImpact.toFixed(2));
 
 
     return (
