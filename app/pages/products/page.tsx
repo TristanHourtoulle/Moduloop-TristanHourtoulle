@@ -7,13 +7,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ProductType } from '@models/Product'
 import Card from '@components/products/Card'
+import Loader from '@components/Loader'
 
 export default function page() {
 
     const [products, setProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
+            setIsLoading(true);
             const res = await fetch('/api/product/list', {
                 method: 'GET'
             });
@@ -23,6 +26,7 @@ export default function page() {
             } else {
                 console.error('Failed to fetch products:', data.error);
             }
+            setIsLoading(false);
         };
         fetchData();
     }, []);
@@ -57,19 +61,23 @@ export default function page() {
             </Link>
         </div>
 
-        <div className='ml-[3%] scroll-view overflow-y-hidden'>
-            <div  className="products-section my-[2%] mx-[5%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '25px', justifyContent: 'space-between' }}>
-                {products ? (
-                    products.map((product, index) => (
-                        <Card key={index} {...product}/>
-                    ))
-                ) : (
-                    <div className='flex items-center justify-center'>
-                        <p className='no-product-text'>Oh, c'est bien vide par ici...</p>
-                    </div>
-                )}
+        {isLoading ? (
+            <Loader />)
+        :
+            <div className='ml-[3%] scroll-view overflow-y-hidden'>
+                <div  className="products-section my-[2%] mx-[5%]" style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row', gap: '25px', justifyContent: 'space-between' }}>
+                    {products ? (
+                        products.map((product, index) => (
+                            <Card key={index} {...product}/>
+                        ))
+                    ) : (
+                        <div className='flex items-center justify-center'>
+                            <p className='no-product-text'>Oh, c'est bien vide par ici...</p>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        }
     </div>
   )
 }
