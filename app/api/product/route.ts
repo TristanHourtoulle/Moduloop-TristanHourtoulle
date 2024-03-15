@@ -121,7 +121,16 @@ export async function PUT(request: NextRequest) {
 // Fonction pour gérer les requêtes DELETE
 export async function DELETE(request: NextRequest) {
     try {
-        const user: User = await request.json();
+        const searchParams = request.nextUrl.searchParams;
+        const id = searchParams.get('id') || '';
+
+        const res = await pool.query('DELETE FROM products WHERE id = $1;', [id]);
+        if (res.rowCount === 1) {
+            return Response.json({ success: true, data: "OK"}, { status: 200 });
+        } else {
+            throw new Error('La requête DELETE sur le produit a échoué');
+        }
+        /* const user: User = await request.json();
         const result = await pool.query('DELETE FROM users WHERE id = $1;', [user.id]);
 
         // Vérification si la requête a réussi
@@ -130,7 +139,7 @@ export async function DELETE(request: NextRequest) {
             return Response.json({ success: true, data}, { status: 200 });
         } else {
             throw new Error('La requête DELETE a échoué');
-        }
+        } */
     } catch (error) {
         console.error('Erreur lors de la suppression de l\'utilisateur:', error);
         return Response.json({ success: false, error}, { status: 500 });
