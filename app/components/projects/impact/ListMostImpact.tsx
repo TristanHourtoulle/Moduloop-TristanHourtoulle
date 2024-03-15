@@ -83,39 +83,39 @@ function getTop3MostImpact(products: AddProductType[]) {
         const qNew = product.qNew;
         const qUsed = product.qUsed;
         // calculate the impact of the product for qNew
-        globalImpact.rc.manufacturing += product.product.new.rc_manufacturing * qNew;
-        globalImpact.rc.installation += product.product.new.rc_installation * qNew;
-        globalImpact.rc.usage += product.product.new.rc_usage * qNew;
-        globalImpact.rc.endOfLife += product.product.new.rc_endOfLife * qNew;
-        globalImpact.erf.manufacturing += product.product.new.erc_manufacturing * qNew;
-        globalImpact.erf.installation += product.product.new.erc_installation * qNew;
-        globalImpact.erf.usage += product.product.new.erc_usage * qNew;
-        globalImpact.erf.endOfLife += product.product.new.erc_endOfLife * qNew;
-        globalImpact.ase.manufacturing += product.product.new.ase_manufacturing * qNew;
-        globalImpact.ase.installation += product.product.new.ase_installation * qNew;
-        globalImpact.ase.usage += product.product.new.ase_usage * qNew;
-        globalImpact.ase.endOfLife += product.product.new.ase_endOfLife * qNew;
-        globalImpact.em.manufacturing += product.product.new.em_manufacturing * qNew;
-        globalImpact.em.installation += product.product.new.em_installation * qNew;
-        globalImpact.em.usage += product.product.new.em_usage * qNew;
-        globalImpact.em.endOfLife += product.product.new.em_endOfLife * qNew;
+        globalImpact.rc.manufacturing += product.product.new.rc.manufacturing * qNew;
+        globalImpact.rc.installation += product.product.new.rc.installation * qNew;
+        globalImpact.rc.usage += product.product.new.rc.usage * qNew;
+        globalImpact.rc.endOfLife += product.product.new.rc.endOfLife * qNew;
+        globalImpact.erf.manufacturing += product.product.new.erf.manufacturing * qNew;
+        globalImpact.erf.installation += product.product.new.erf.installation * qNew;
+        globalImpact.erf.usage += product.product.new.erf.usage * qNew;
+        globalImpact.erf.endOfLife += product.product.new.erf.endOfLife * qNew;
+        globalImpact.ase.manufacturing += product.product.new.ase.manufacturing * qNew;
+        globalImpact.ase.installation += product.product.new.ase.installation * qNew;
+        globalImpact.ase.usage += product.product.new.ase.usage * qNew;
+        globalImpact.ase.endOfLife += product.product.new.ase.endOfLife * qNew;
+        globalImpact.em.manufacturing += product.product.new.em.manufacturing * qNew;
+        globalImpact.em.installation += product.product.new.em.installation * qNew;
+        globalImpact.em.usage += product.product.new.em.usage * qNew;
+        globalImpact.em.endOfLife += product.product.new.em.endOfLife * qNew;
         // calculate the impact of the product for qUsed
-        globalImpact.rc.manufacturing += product.product.reuse.rc_manufacturing * qUsed;
-        globalImpact.rc.installation += product.product.reuse.rc_installation * qUsed;
-        globalImpact.rc.usage += product.product.reuse.rc_usage * qUsed;
-        globalImpact.rc.endOfLife += product.product.reuse.rc_endOfLife * qUsed;
-        globalImpact.erf.manufacturing += product.product.reuse.erc_manufacturing * qUsed;
-        globalImpact.erf.installation += product.product.reuse.erc_installation * qUsed;
-        globalImpact.erf.usage += product.product.reuse.erc_usage * qUsed;
-        globalImpact.erf.endOfLife += product.product.reuse.erc_endOfLife * qUsed;
-        globalImpact.ase.manufacturing += product.product.reuse.ase_manufacturing * qUsed;
-        globalImpact.ase.installation += product.product.reuse.ase_installation * qUsed;
-        globalImpact.ase.usage += product.product.reuse.ase_usage * qUsed;
-        globalImpact.ase.endOfLife += product.product.reuse.ase_endOfLife * qUsed;
-        globalImpact.em.manufacturing += product.product.reuse.em_manufacturing * qUsed;
-        globalImpact.em.installation += product.product.reuse.em_installation * qUsed;
-        globalImpact.em.usage += product.product.reuse.em_usage * qUsed;
-        globalImpact.em.endOfLife += product.product.reuse.em_endOfLife * qUsed;
+        globalImpact.rc.manufacturing += product.product.reuse.rc.manufacturing * qUsed;
+        globalImpact.rc.installation += product.product.reuse.rc.installation * qUsed;
+        globalImpact.rc.usage += product.product.reuse.rc.usage * qUsed;
+        globalImpact.rc.endOfLife += product.product.reuse.rc.endOfLife * qUsed;
+        globalImpact.erf.manufacturing += product.product.reuse.erf.manufacturing * qUsed;
+        globalImpact.erf.installation += product.product.reuse.erf.installation * qUsed;
+        globalImpact.erf.usage += product.product.reuse.erf.usage * qUsed;
+        globalImpact.erf.endOfLife += product.product.reuse.erf.endOfLife * qUsed;
+        globalImpact.ase.manufacturing += product.product.reuse.ase.manufacturing * qUsed;
+        globalImpact.ase.installation += product.product.reuse.ase.installation * qUsed;
+        globalImpact.ase.usage += product.product.reuse.ase.usage * qUsed;
+        globalImpact.ase.endOfLife += product.product.reuse.ase.endOfLife * qUsed;
+        globalImpact.em.manufacturing += product.product.reuse.em.manufacturing * qUsed;
+        globalImpact.em.installation += product.product.reuse.em.installation * qUsed;
+        globalImpact.em.usage += product.product.reuse.em.usage * qUsed;
+        globalImpact.em.endOfLife += product.product.reuse.em.endOfLife * qUsed;
 
 
         const singleProduct: MostImpactType = {
@@ -158,12 +158,17 @@ function sortByEm(res: MostImpactType[]) {
 function getConfigPie(impactProducts: MostImpactType[]) {
     const data: PieType[] = []
 
+    // Calcul du total d'impact global
+    const totalImpactGlobal = impactProducts.reduce((acc, curr) => acc + curr.totalImpact, 0);
+
     for (let impactProduct of impactProducts) {
-        const percentage = impactProduct.totalImpact / impactProducts[0].totalImpact * 100;
+        console.log("impact product: ", impactProduct)
+        const percentage = totalImpactGlobal !== 0 ? (impactProduct.totalImpact / totalImpactGlobal * 100) : 0;
         const pie: PieType = {
             name: impactProduct.product.product.name,
             value: percentage
         }
+        console.log("pieConfig: ", pie)
         console.log(pie)
         data.push(pie)
     }
@@ -215,9 +220,9 @@ const ListMostImpact = (props: { products: AddProductType[] }) => {
                     <div className='sm:flex sm:items-center sm:gap-5'>
                         <Pie pieConfig={rcPieConfig} />
                         <div className='sm:flex sm:gap-5 mx-auto'>
-                            {rcImpactProducts[0] && (<ProductCard product={rcImpactProducts[0].product} impactValue={rcImpactProducts[0].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={1} totalImpact={totalRcImpact} />)}
-                            {rcImpactProducts[1] && (<ProductCard product={rcImpactProducts[1].product} impactValue={rcImpactProducts[1].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={2} totalImpact={totalRcImpact} />)}
-                            {rcImpactProducts[2] && (<ProductCard product={rcImpactProducts[2].product} impactValue={rcImpactProducts[2].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={3} totalImpact={totalRcImpact} />)}
+                            {rcImpactProducts[0] && (<ProductCard product={rcImpactProducts[0].product} impactValue={rcImpactProducts[0].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={1} totalImpact={rcPieConfig.data[0].value} />)}
+                            {rcImpactProducts[1] && (<ProductCard product={rcImpactProducts[1].product} impactValue={rcImpactProducts[1].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={2} totalImpact={rcPieConfig.data[1].value} />)}
+                            {rcImpactProducts[2] && (<ProductCard product={rcImpactProducts[2].product} impactValue={rcImpactProducts[2].totalRc.toFixed(2)} impactType='kg CO2eq' positionInTop={3} totalImpact={rcPieConfig.data[2].value} />)}
                         </div>
                     </div>
 
@@ -225,9 +230,9 @@ const ListMostImpact = (props: { products: AddProductType[] }) => {
                     <div className='flex items-center gap-5 my-[1%] '>
                         <Pie pieConfig={erfPieConfig} />
                         <div className='flex items-center gap-5'>
-                            {erfImpactProducts[0] && (<ProductCard product={erfImpactProducts[0].product} impactValue={erfImpactProducts[0].totalErf.toFixed(2)} impactType='MJ' positionInTop={1} totalImpact={totalErfImpact} />)}
-                            {erfImpactProducts[1] && (<ProductCard product={erfImpactProducts[1].product} impactValue={erfImpactProducts[1].totalErf.toFixed(2)} impactType='MJ' positionInTop={2} totalImpact={totalErfImpact} />)}
-                            {erfImpactProducts[2] && (<ProductCard product={erfImpactProducts[2].product} impactValue={erfImpactProducts[2].totalErf.toFixed(2)} impactType='MJ' positionInTop={3} totalImpact={totalErfImpact} />)}
+                            {erfImpactProducts[0] && (<ProductCard product={erfImpactProducts[0].product} impactValue={erfImpactProducts[0].totalErf.toFixed(2)} impactType='MJ' positionInTop={1} totalImpact={erfPieConfig.data[0].value} />)}
+                            {erfImpactProducts[1] && (<ProductCard product={erfImpactProducts[1].product} impactValue={erfImpactProducts[1].totalErf.toFixed(2)} impactType='MJ' positionInTop={2} totalImpact={erfPieConfig.data[1].value} />)}
+                            {erfImpactProducts[2] && (<ProductCard product={erfImpactProducts[2].product} impactValue={erfImpactProducts[2].totalErf.toFixed(2)} impactType='MJ' positionInTop={3} totalImpact={erfPieConfig.data[2].value} />)}
                         </div>
                     </div>
 
@@ -235,9 +240,9 @@ const ListMostImpact = (props: { products: AddProductType[] }) => {
                     <div className='flex items-center gap-5 my-[1%] '>
                         <Pie pieConfig={asePieConfig} />
                         <div className='flex items-center gap-5'>
-                            {aseImpactProducts[0] && (<ProductCard product={aseImpactProducts[0].product} impactValue={aseImpactProducts[0].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={1} totalImpact={totalAseImpact} />)}
-                            {aseImpactProducts[1] && (<ProductCard product={aseImpactProducts[1].product} impactValue={aseImpactProducts[1].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={2} totalImpact={totalAseImpact} />)}
-                            {aseImpactProducts[2] && (<ProductCard product={aseImpactProducts[2].product} impactValue={aseImpactProducts[2].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={3} totalImpact={totalAseImpact} />)}
+                            {aseImpactProducts[0] && (<ProductCard product={aseImpactProducts[0].product} impactValue={aseImpactProducts[0].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={1} totalImpact={asePieConfig.data[0].value} />)}
+                            {aseImpactProducts[1] && (<ProductCard product={aseImpactProducts[1].product} impactValue={aseImpactProducts[1].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={2} totalImpact={asePieConfig.data[1].value} />)}
+                            {aseImpactProducts[2] && (<ProductCard product={aseImpactProducts[2].product} impactValue={aseImpactProducts[2].totalAse.toFixed(2)} impactType='kg SO2eq' positionInTop={3} totalImpact={asePieConfig.data[2].value} />)}
                         </div>
                     </div>
 
@@ -245,9 +250,9 @@ const ListMostImpact = (props: { products: AddProductType[] }) => {
                     <div className='flex items-center gap-5 my-[1%] '>
                         <Pie pieConfig={emPieConfig} />
                         <div className='flex items-center gap-5'>
-                            {emImpactProducts[0] && (<ProductCard product={emImpactProducts[0].product} impactValue={emImpactProducts[0].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={1} totalImpact={totalEmImpact} />)}
-                            {emImpactProducts[1] && (<ProductCard product={emImpactProducts[1].product} impactValue={emImpactProducts[1].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={2} totalImpact={totalEmImpact} />)}
-                            {emImpactProducts[2] && (<ProductCard product={emImpactProducts[2].product} impactValue={emImpactProducts[2].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={3} totalImpact={totalEmImpact} />)}
+                            {emImpactProducts[0] && (<ProductCard product={emImpactProducts[0].product} impactValue={emImpactProducts[0].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={1} totalImpact={emPieConfig.data[0].value} />)}
+                            {emImpactProducts[1] && (<ProductCard product={emImpactProducts[1].product} impactValue={emImpactProducts[1].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={2} totalImpact={emPieConfig.data[1].value} />)}
+                            {emImpactProducts[2] && (<ProductCard product={emImpactProducts[2].product} impactValue={emImpactProducts[2].totalEm.toFixed(2)} impactType='kg PO4eq' positionInTop={3} totalImpact={emPieConfig.data[2].value} />)}
                         </div>
                     </div>
                 </div>
