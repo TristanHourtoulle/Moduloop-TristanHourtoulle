@@ -28,7 +28,7 @@ const Card = (product: ProductType) => {
         </div>
         {/* CTA */}
         <div className='flex items-center gap-3 justify-center link-cta ml-auto mr-auto'>
-            <Link href='#' className='flex items-center gap-15 bg-white border-10'>
+            <Link href={showProductUrl} className='flex items-center gap-15 bg-white border-10'>
                 <Image
                     src="/icons/link.svg"
                     alt="Ouvrir"
@@ -36,8 +36,8 @@ const Card = (product: ProductType) => {
                     height={27}
                     className='object-contain'
                 />
+                <p>Ouvrir</p>
             </Link>
-            <p>Ouvrir</p>
         </div>
     </div>
   )
