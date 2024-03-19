@@ -49,6 +49,7 @@ export async function POST(request: NextRequest) {
             const product = products[productName];
             const base = product.base;
             const unit = product.unit;
+            const image = "/products/" + productName.replaceAll(" ", "_") + ".png";
 
             // Vérifie si le produit existe déjà dans la base de données
             const queryText = 'SELECT * FROM products WHERE name = $1';
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
             if (res.rows.length === 0) {
                 // Si le produit n'existe pas encore, l'ajoute à la base de données
                 const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
-                            [productName, "", unit, base, "", product.new, substituteNewValuesFromReuseValues(product.new, product.used)])
+                            [productName, image, unit, base, "", product.new, substituteNewValuesFromReuseValues(product.new, product.used)])
                 console.log(`Produit "${productName}" ajouté à la base de données.`);
             } else {
                 console.log(`Produit "${productName}" déjà présent dans la base de données.`);
