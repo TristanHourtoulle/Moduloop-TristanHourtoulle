@@ -3,13 +3,15 @@ import Image from 'next/image';
 
 const Loader = () => {
     return (
-        <Image
-            src="/icons/logoImage.svg"
-            alt="Loader"
-            width={50}
-            height={50}
-            className='loader'
-        />
+        <div className='flex items-center justify-center my-auto'>
+            <Image
+                src="/icons/logoImage.svg"
+                alt="Loader"
+                width={50}
+                height={50}
+                className='loader'
+            />
+        </div>
     )
 }
 
