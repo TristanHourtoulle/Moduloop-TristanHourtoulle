@@ -1,8 +1,8 @@
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
-import { GitCompareArrows } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ImpactGlobalProject } from "./impact/ImpactGlobalProject";
+import { MostImpact } from "./impact/MostImpact";
 
 const ImpactSection = (props: {
   products: AddProductType[];
@@ -11,7 +11,7 @@ const ImpactSection = (props: {
   const { products, project } = props;
   const [projects, setProjects] = useState<[]>([]);
   const [impactSelect, setImpactSelect] = useState("global");
-  const [isCompare, setIsCompare] = useState(false);
+  const [isCompare, setIsCompare] = useState(true);
   const [session, setSession] = useState(null);
   const [compareWith, setCompareWith] = useState("");
 
@@ -50,7 +50,7 @@ const ImpactSection = (props: {
 
   return (
     <div className="impact flex flex-col items-start gap-5 my-[2%] mx-[5%]">
-      {/* isCompare */}
+      {/* isCompare
       <div
         className="btn-compare cursor-pointer transition-all hover:opacity-80"
         onClick={() => {
@@ -61,14 +61,14 @@ const ImpactSection = (props: {
         <p className="text-lg font-bold">
           {isCompare ? "Arrêter de comparer" : "Comparer à un autre projet"}
         </p>
-      </div>
+      </div> */}
 
       {isCompare && project ? (
         <div className="w-full flex flex-col gap-6">
           {/* Select project for compare */}
           <div className="flex items-center gap-5">
-            <p className="font-bold text-lg">{project.name}</p>
-            <p className="font-bold text-sm">avec</p>
+            <p className="font-bold text-lg">Comparer</p>
+            <p className="font-bold text-lg">avec</p>
             <div className="h-10 w-72 min-w-[200px]">
               <select
                 className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
@@ -77,7 +77,7 @@ const ImpactSection = (props: {
                 }}
               >
                 <option selected value="-1">
-                  Choisir un projet
+                  Aucun Projet
                 </option>
                 {projects?.map((temp) => (
                   <option key={temp.id} value={temp.id}>
@@ -90,6 +90,8 @@ const ImpactSection = (props: {
 
           {/* Impact Globale Project */}
           <ImpactGlobalProject project_one={project} />
+          {/* Most Impact List */}
+          <MostImpact project={project} />
         </div>
       ) : (
         <div>

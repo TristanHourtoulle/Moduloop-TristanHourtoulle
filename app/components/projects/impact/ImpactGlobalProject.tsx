@@ -1,5 +1,5 @@
 import { ProjectType } from "@models/Project";
-import { CardImpactGlobal } from "./CardImpactGlobal";
+import { CardImpactGlobal } from "./Card/CardImpactGlobal";
 
 export type ImpactGlobalProjectProps = {
   project_one: ProjectType;
