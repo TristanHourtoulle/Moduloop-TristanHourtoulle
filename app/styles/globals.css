@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -19,7 +19,7 @@
 }
 
 body {
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
 }
 
 @layer utilities {
@@ -29,7 +29,7 @@ body {
 }
 
 .text {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
 }
 
 .nav-logo {
@@ -54,15 +54,15 @@ body {
 }
 
 .nav-link {
-  color: #989FAC;
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  color: #989fac;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 16px;
   font-weight: 600;
 }
 
 .nav-link-selected {
   color: black;
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 16px;
   font-weight: 600;
   background-color: white;
@@ -95,7 +95,7 @@ body {
 }
 
 .auth-button {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   border-radius: 0.5rem;
   padding: 6px;
   padding-left: 10px;
@@ -118,11 +118,11 @@ body {
 .page-number {
   font-size: 3rem;
   font-weight: lighter;
-  color:rgba(0, 0, 0, 0.625)
+  color: rgba(0, 0, 0, 0.625);
 }
 
 .handle-product-button {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   border-radius: 0.5rem;
   padding: 6px;
   padding-left: 10px;
@@ -151,9 +151,9 @@ body {
 }
 
 .no-product-text {
-    font-weight: lighter;
-    font-size: 3rem;
-    color:rgba(0, 0, 0, 0.625)
+  font-weight: lighter;
+  font-size: 3rem;
+  color: rgba(0, 0, 0, 0.625);
 }
 
 .scroll-view {
@@ -197,7 +197,7 @@ body {
 }
 
 .product-header {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 1.25rem;
   font-weight: 800;
   color: white;
@@ -206,8 +206,8 @@ body {
   text-overflow: ellipsis;
   text-align: center;
   margin-bottom: 1rem;
-  background-color: #30C1BD;
-  border-radius: 10px;;
+  background-color: #30c1bd;
+  border-radius: 10px;
   padding: 10px;
 }
 
@@ -221,7 +221,7 @@ body {
 }
 
 .product-base {
-  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 1.25rem;
   font-weight: 400;
   white-space: nowrap;
@@ -237,8 +237,8 @@ body {
   overflow: hidden; /* Cache le contenu qui dépasse */
   text-overflow: ellipsis;
   text-align: center;
-  color:  white;
-  background-color: #30C1BD;
+  color: white;
+  background-color: #30c1bd;
   border-radius: 10px;
   width: 30%;
   padding: 7px;
@@ -247,7 +247,7 @@ body {
 }
 
 .download-button {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   border-radius: 10px;
   color: white;
   padding: 7px;
@@ -257,12 +257,12 @@ body {
 }
 
 .open-button {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   border-radius: 10px;
   color: white;
   padding: 7px;
   margin-right: 5px;
-  width: fit-content
+  width: fit-content;
 }
 
 .open-button .text {
@@ -273,7 +273,7 @@ body {
 
 .index-color {
   color: black;
-  background-color: #98E0DE;
+  background-color: #98e0de;
 }
 
 .index-line {
@@ -290,17 +290,17 @@ body {
 }
 
 .inter-nav-bar {
-  color:black;
-  font-size:x-large;
+  color: black;
+  font-size: x-large;
 }
 
 .inter-nav-bar-selected {
-  color:rgba(0, 0, 0, 0.625);
-  font-size:x-large;
+  color: rgba(0, 0, 0, 0.625);
+  font-size: x-large;
 }
 
 .add-product-card {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   width: 500px;
   height: 500px;
   padding: 25px;
@@ -329,7 +329,7 @@ body {
 }
 
 .create-project-button {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   color: white;
   padding: 10px;
   border-radius: 10px;
@@ -358,7 +358,7 @@ body {
   font-size: 1.5rem;
   font-weight: larger;
   margin-bottom: 20px;
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   color: white;
   padding: 10px;
   border-radius: 10px;
@@ -394,13 +394,12 @@ body {
 .project-card .name {
   font-size: 2rem;
   font-weight: bold;
-
 }
 
 .project-card .group {
   font-size: 0.7rem;
   font-weight: lighter;
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   color: white;
   padding: 5px;
   border-radius: 10px;
@@ -418,13 +417,13 @@ body {
 .project-card .description {
   font-size: 1.25rem;
   font-weight: lighter;
-  color:rgba(0, 0, 0, 0.75);
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .project-card .date {
   font-size: 0.75rem;
   font-weight: lighter;
-  color:rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.5);
   margin-top: 10px;
 }
 
@@ -448,7 +447,7 @@ body {
   background-color: rgba(255, 0, 0, 0.25);
   padding: 7px;
   border-radius: 8px;
-  border: 2px solid #B00002;
+  border: 2px solid #b00002;
   transform: size(1);
   transform: rotate(0);
   transition: transform 0.15s ease-in-out;
@@ -474,15 +473,15 @@ body {
 }
 
 .project-card .delete-btn:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .project-card .delete-btn:not(:hover) {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 .project-card .open-btn {
-  color: #30C1BD;
+  color: #30c1bd;
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
@@ -498,11 +497,11 @@ body {
 }
 
 .project-card .open-btn:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .project-card .open-btn:not(:hover) {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 .projects-container {
@@ -534,11 +533,11 @@ body {
 }
 
 .title-image:hover {
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 .title-image:not(:hover) {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 .search-bar-input {
@@ -554,7 +553,7 @@ body {
 }
 
 .section-infos .filter-btn {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   padding: 10px;
   border-radius: 10px;
 }
@@ -575,7 +574,7 @@ body {
 }
 
 .add-product-btn {
-  background-color: #30C1BD;
+  background-color: #30c1bd;
   padding: 10px;
   border-radius: 10px;
   color: white;
@@ -649,13 +648,13 @@ body {
   background-color: white;
   padding: 10px;
   border-radius: 7px;
-  color: #30C1BD;
+  color: #30c1bd;
   font-weight: 600;
-  border: solid 3px #30C1BD;
+  border: solid 3px #30c1bd;
 }
 
 .input-bg-gray-200 {
-  background-color: #E5E7EB !important;
+  background-color: #e5e7eb !important;
   border-radius: 5px;
 }
 
@@ -668,14 +667,14 @@ body {
 .chooseSection {
   background-color: white;
   border-radius: 10px;
-  border: 2px solid #30C1BD;
+  border: 2px solid #30c1bd;
   padding: 10px;
   transform: scale(1);
   transition: transform 0.15s ease-in-out;
 }
 
 .chooseSection p {
-  color: #30C1BD;
+  color: #30c1bd;
   font-weight: 600;
 }
 
@@ -701,7 +700,7 @@ body {
 .impact-product-card h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #30C1BD;
+  color: #30c1bd;
   margin-bottom: 0.75rem;
 }
 
@@ -718,18 +717,18 @@ body {
 .impact-product-card h3 span {
   font-size: 2rem;
   font-weight: 800;
-  color: #30C1BD;
+  color: #30c1bd;
 }
 
 .title-input {
-  background-color: #E5E7EB;
+  background-color: #e5e7eb;
   border-radius: 10px;
   padding: 10px;
   font-size: 1.5rem;
 }
 
 .description-input {
-  background-color: #E5E7EB;
+  background-color: #e5e7eb;
   border-radius: 10px;
   padding: 10px;
   font-size: 1rem;
@@ -741,8 +740,12 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .product-in-project-card .name {
@@ -771,7 +774,7 @@ body {
   text-decoration: none;
   background-color: white;
   padding: 3% 5%;
-  border: 2px solid #30C1BD;
+  border: 2px solid #30c1bd;
   width: 40%;
   border-radius: 10px;
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.07);
@@ -790,9 +793,30 @@ body {
   box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.15);
 }
 
-
 .product-card .link-cta:not(:hover) {
   transform: scale(1);
   transform: translateY(0%);
 }
 
+.impact .btn-compare {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: rgba(48, 193, 189, 0.25);
+  border-radius: 10px;
+  color: #30c1bd;
+  border: 2px solid #30c1bd;
+}
+
+.impact-section-card {
+  background-color: #e9e9e9;
+  padding: 20px;
+}
+
+.impact-section-card .title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: black;
+  opacity: 0.9;
+}

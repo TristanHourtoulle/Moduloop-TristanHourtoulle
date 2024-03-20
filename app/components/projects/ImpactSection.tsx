@@ -1,23 +1,103 @@
-import React from 'react'
-import GlobalTable from './impact/GlobalTable'
-import ListMostImpact from './impact/ListMostImpact'
-import { AddProductType } from '@models/AddProduct'
+import { AddProductType } from "@models/AddProduct";
+import { ProjectType } from "@models/Project";
+import { GitCompareArrows } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ImpactGlobalProject } from "./impact/ImpactGlobalProject";
 
-const ImpactSection = (props: { products: AddProductType[] }) => {
-    const { products } = props;
-    const [impactSelect , setImpactSelect] = React.useState('global');
+const ImpactSection = (props: {
+  products: AddProductType[];
+  project: ProjectType;
+}) => {
+  const { products, project } = props;
+  const [projects, setProjects] = useState<[]>([]);
+  const [impactSelect, setImpactSelect] = useState("global");
+  const [isCompare, setIsCompare] = useState(false);
+  const [session, setSession] = useState(null);
+  const [compareWith, setCompareWith] = useState("");
 
-    return (
-        <div className='flex flex-col items-start gap-5 my-[2%] mx-[5%]'>
-            <div className='flex gap-5 items-center mb-[1%]'>
-                <p onClick={() => {setImpactSelect("global")}} className={impactSelect === 'global' ? "cursor-pointer text-xl font-bold" : "cursor-pointer text-xl opacity-50"}>Global</p>
-                <p onClick={() => {setImpactSelect("ranking")}} className={impactSelect === 'ranking' ? "cursor-pointer text-xl font-bold" : "cursor-pointer text-xl opacity-50"}>Classement</p>
+  useEffect(() => {
+    const fetchProjects = async () => {
+      let res = await fetch("/api/session", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      let data = await res.json();
+      setSession(data.session);
+      console.log(data.session);
+
+      res = await fetch(
+        `/api/project/list?id=${encodeURIComponent(data.session.user.id)}`,
+        {
+          method: "GET",
+        }
+      );
+      data = await res.json();
+      if (data.success) {
+        setProjects(data.data);
+        console.log(data.data);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  {
+    useEffect(() => {
+      console.log("compare with Project: ", compareWith);
+    }, [compareWith]);
+  }
+
+  return (
+    <div className="impact flex flex-col items-start gap-5 my-[2%] mx-[5%]">
+      {/* isCompare */}
+      <div
+        className="btn-compare cursor-pointer transition-all hover:opacity-80"
+        onClick={() => {
+          setIsCompare(!isCompare);
+        }}
+      >
+        <GitCompareArrows size={25} />
+        <p className="text-lg font-bold">
+          {isCompare ? "Arrêter de comparer" : "Comparer à un autre projet"}
+        </p>
+      </div>
+
+      {isCompare && project ? (
+        <div className="w-full flex flex-col gap-6">
+          {/* Select project for compare */}
+          <div className="flex items-center gap-5">
+            <p className="font-bold text-lg">{project.name}</p>
+            <p className="font-bold text-sm">avec</p>
+            <div className="h-10 w-72 min-w-[200px]">
+              <select
+                className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
+                onChange={(event) => {
+                  setCompareWith(event.target.value);
+                }}
+              >
+                <option selected value="-1">
+                  Choisir un projet
+                </option>
+                {projects?.map((temp) => (
+                  <option key={temp.id} value={temp.id}>
+                    {temp.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <p className='text-2xl font-medium mb-[1%]'>Impact de votre projet sur l'environnement</p>
-            {impactSelect === 'global' && <GlobalTable products={products}/> }
-            {impactSelect === 'ranking' && <ListMostImpact products={products}/> }
-        </div>
-    )
-}
+          </div>
 
-export default ImpactSection
+          {/* Impact Globale Project */}
+          <ImpactGlobalProject project_one={project} />
+        </div>
+      ) : (
+        <div>
+          <p>PAS COMPARER</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ImpactSection;

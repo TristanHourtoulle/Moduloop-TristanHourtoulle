@@ -1,0 +1,1950 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[11].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[11].oneOf[12].use[3]!./app/styles/globals.css ***!
+  \********************************************************************************************************************************************************************************************************************************************************************/
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap");
+
+/*
+! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com
+*/
+
+/*
+1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
+2. Allow adding a border to an element by just adding a border-width. (https://github.com/tailwindcss/tailwindcss/pull/116)
+*/
+
+*,
+::before,
+::after {
+  box-sizing: border-box; /* 1 */
+  border-width: 0; /* 2 */
+  border-style: solid; /* 2 */
+  border-color: #e5e7eb; /* 2 */
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4; /* 3 */
+  font-family: "M PLUS Rounded 1c", sans-serif; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0; /* 1 */
+  line-height: inherit; /* 2 */
+}
+
+/*
+1. Add the correct height in Firefox.
+2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+3. Ensure horizontal rules are visible by default.
+*/
+
+hr {
+  height: 0; /* 1 */
+  color: inherit; /* 2 */
+  border-top-width: 1px; /* 3 */
+}
+
+/*
+Add the correct text decoration in Chrome, Edge, and Safari.
+*/
+
+abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+}
+
+/*
+Remove the default font size and weight for headings.
+*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/*
+Reset links to optimize for opt-in styling instead of opt-out.
+*/
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+/*
+Add the correct font weight in Edge and Safari.
+*/
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/*
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
+*/
+
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; /* 1 */
+  font-feature-settings: normal; /* 2 */
+  font-variation-settings: normal; /* 3 */
+  font-size: 1em; /* 4 */
+}
+
+/*
+Add the correct font size in all browsers.
+*/
+
+small {
+  font-size: 80%;
+}
+
+/*
+Prevent `sub` and `sup` elements from affecting the line height in all browsers.
+*/
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/*
+1. Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+2. Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+3. Remove gaps between table borders by default.
+*/
+
+table {
+  text-indent: 0; /* 1 */
+  border-color: inherit; /* 2 */
+  border-collapse: collapse; /* 3 */
+}
+
+/*
+1. Change the font styles in all browsers.
+2. Remove the margin in Firefox and Safari.
+3. Remove default padding in all browsers.
+*/
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-feature-settings: inherit; /* 1 */
+  font-variation-settings: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  font-weight: inherit; /* 1 */
+  line-height: inherit; /* 1 */
+  color: inherit; /* 1 */
+  margin: 0; /* 2 */
+  padding: 0; /* 3 */
+}
+
+/*
+Remove the inheritance of text transform in Edge and Firefox.
+*/
+
+button,
+select {
+  text-transform: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Remove default button styles.
+*/
+
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button; /* 1 */
+  background-color: transparent; /* 2 */
+  background-image: none; /* 2 */
+}
+
+/*
+Use the modern Firefox focus style for all focusable elements.
+*/
+
+:-moz-focusring {
+  outline: auto;
+}
+
+/*
+Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
+*/
+
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/*
+Add the correct vertical alignment in Chrome and Firefox.
+*/
+
+progress {
+  vertical-align: baseline;
+}
+
+/*
+Correct the cursor style of increment and decrement buttons in Safari.
+*/
+
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/*
+1. Correct the odd appearance in Chrome and Safari.
+2. Correct the outline style in Safari.
+*/
+
+[type='search'] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/*
+Remove the inner padding in Chrome and Safari on macOS.
+*/
+
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/*
+1. Correct the inability to style clickable types in iOS and Safari.
+2. Change font properties to `inherit` in Safari.
+*/
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/*
+Add the correct display in Chrome and Safari.
+*/
+
+summary {
+  display: list-item;
+}
+
+/*
+Removes the default spacing and border for appropriate elements.
+*/
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre {
+  margin: 0;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+Reset default styling for dialogs.
+*/
+
+dialog {
+  padding: 0;
+}
+
+/*
+Prevent resizing textareas horizontally by default.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/*
+1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
+2. Set the default placeholder color to the user's configured gray 400 color.
+*/
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1; /* 1 */
+  color: #9ca3af; /* 2 */
+}
+
+/*
+Set the default cursor for buttons.
+*/
+
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+/*
+Make sure disabled buttons don't get the pointer cursor.
+*/
+
+:disabled {
+  cursor: default;
+}
+
+/*
+1. Make replaced elements `display: block` by default. (https://github.com/mozdevs/cssremedy/issues/14)
+2. Add `vertical-align: middle` to align replaced elements more sensibly by default. (https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210)
+   This can trigger a poorly considered lint error in some tools but is included by design.
+*/
+
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block; /* 1 */
+  vertical-align: middle; /* 2 */
+}
+
+/*
+Constrain images and videos to the parent width and preserve their intrinsic aspect ratio. (https://github.com/mozdevs/cssremedy/issues/14)
+*/
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Make elements with the HTML hidden attribute stay hidden by default */
+
+[hidden] {
+  display: none;
+}
+
+*, ::before, ::after{
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+
+::backdrop{
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-gradient-from-position:  ;
+  --tw-gradient-via-position:  ;
+  --tw-gradient-to-position:  ;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  ;
+}
+.sr-only{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+.fixed{
+  position: fixed;
+}
+.absolute{
+  position: absolute;
+}
+.inset-0{
+  inset: 0px;
+}
+.inset-x-0{
+  left: 0px;
+  right: 0px;
+}
+.top-0{
+  top: 0px;
+}
+.mx-\[5\%\]{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
+}
+.my-\[1\%\]{
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+.my-\[2\%\]{
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+.my-\[5\%\]{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.my-auto{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.-mr-2{
+  margin-right: -0.5rem;
+}
+.mb-10{
+  margin-bottom: 2.5rem;
+}
+.mb-4{
+  margin-bottom: 1rem;
+}
+.mb-5{
+  margin-bottom: 1.25rem;
+}
+.mb-\[1\%\]{
+  margin-bottom: 1%;
+}
+.ml-10{
+  margin-left: 2.5rem;
+}
+.ml-20{
+  margin-left: 5rem;
+}
+.ml-3{
+  margin-left: 0.75rem;
+}
+.ml-5{
+  margin-left: 1.25rem;
+}
+.ml-\[3\%\]{
+  margin-left: 3%;
+}
+.ml-\[5\%\]{
+  margin-left: 5%;
+}
+.ml-auto{
+  margin-left: auto;
+}
+.mr-20{
+  margin-right: 5rem;
+}
+.mr-3{
+  margin-right: 0.75rem;
+}
+.mr-5{
+  margin-right: 1.25rem;
+}
+.mr-auto{
+  margin-right: auto;
+}
+.mt-10{
+  margin-top: 2.5rem;
+}
+.mt-20{
+  margin-top: 5rem;
+}
+.mt-6{
+  margin-top: 1.5rem;
+}
+.mt-\[2\%\]{
+  margin-top: 2%;
+}
+.mt-auto{
+  margin-top: auto;
+}
+.flex{
+  display: flex;
+}
+.inline-flex{
+  display: inline-flex;
+}
+.table{
+  display: table;
+}
+.grid{
+  display: grid;
+}
+.hidden{
+  display: none;
+}
+.h-10{
+  height: 2.5rem;
+}
+.h-24{
+  height: 6rem;
+}
+.h-48{
+  height: 12rem;
+}
+.h-6{
+  height: 1.5rem;
+}
+.h-full{
+  height: 100%;
+}
+.max-h-\[200\%\]{
+  max-height: 200%;
+}
+.min-h-60{
+  min-height: 15rem;
+}
+.w-3\/4{
+  width: 75%;
+}
+.w-48{
+  width: 12rem;
+}
+.w-6{
+  width: 1.5rem;
+}
+.w-72{
+  width: 18rem;
+}
+.w-96{
+  width: 24rem;
+}
+.w-\[100\%\]{
+  width: 100%;
+}
+.w-\[25\%\]{
+  width: 25%;
+}
+.w-\[30\%\]{
+  width: 30%;
+}
+.w-auto{
+  width: auto;
+}
+.w-full{
+  width: 100%;
+}
+.min-w-\[200px\]{
+  min-width: 200px;
+}
+.flex-1{
+  flex: 1 1 0%;
+}
+.flex-grow{
+  flex-grow: 1;
+}
+.grow{
+  flex-grow: 1;
+}
+.transform{
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.flex-col{
+  flex-direction: column;
+}
+.flex-wrap{
+  flex-wrap: wrap;
+}
+.items-start{
+  align-items: flex-start;
+}
+.items-center{
+  align-items: center;
+}
+.justify-start{
+  justify-content: flex-start;
+}
+.justify-end{
+  justify-content: flex-end;
+}
+.justify-center{
+  justify-content: center;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.gap-1{
+  gap: 0.25rem;
+}
+.gap-10{
+  gap: 2.5rem;
+}
+.gap-2{
+  gap: 0.5rem;
+}
+.gap-20{
+  gap: 5rem;
+}
+.gap-3{
+  gap: 0.75rem;
+}
+.gap-4{
+  gap: 1rem;
+}
+.gap-5{
+  gap: 1.25rem;
+}
+.gap-6{
+  gap: 1.5rem;
+}
+.gap-7{
+  gap: 1.75rem;
+}
+.gap-8{
+  gap: 2rem;
+}
+.gap-y-8{
+  row-gap: 2rem;
+}
+.divide-y-2 > :not([hidden]) ~ :not([hidden]){
+  --tw-divide-y-reverse: 0;
+  border-top-width: calc(2px * calc(1 - var(--tw-divide-y-reverse)));
+  border-bottom-width: calc(2px * var(--tw-divide-y-reverse));
+}
+.divide-gray-50 > :not([hidden]) ~ :not([hidden]){
+  --tw-divide-opacity: 1;
+  border-color: rgb(249 250 251 / var(--tw-divide-opacity));
+}
+.overflow-x-auto{
+  overflow-x: auto;
+}
+.overflow-y-hidden{
+  overflow-y: hidden;
+}
+.whitespace-nowrap{
+  white-space: nowrap;
+}
+.rounded-\[8px\]{
+  border-radius: 8px;
+}
+.rounded-md{
+  border-radius: 0.375rem;
+}
+.rounded-xl{
+  border-radius: 0.75rem;
+}
+.rounded-\[16px\]{
+  border-radius: 16px;
+}
+.border-2{
+  border-width: 2px;
+}
+.border{
+  border-width: 1px;
+}
+.border-b{
+  border-bottom-width: 1px;
+}
+.border-t-2{
+  border-top-width: 2px;
+}
+.border-t-4{
+  border-top-width: 4px;
+}
+.border-blue-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(96 165 250 / var(--tw-border-opacity));
+}
+.border-gray-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
+}
+.border-\[\#FF0000\]{
+  --tw-border-opacity: 1;
+  border-color: rgb(255 0 0 / var(--tw-border-opacity));
+}
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+.bg-blue-500{
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+.bg-gray-50{
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+.object-contain{
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.p-2{
+  padding: 0.5rem;
+}
+.p-4{
+  padding: 1rem;
+}
+.p-8{
+  padding: 2rem;
+}
+.px-5{
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.px-6{
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.px-\[2\%\]{
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.px-\[5\%\]{
+  padding-left: 5%;
+  padding-right: 5%;
+}
+.py-3{
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.py-4{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.py-8{
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.py-\[2\%\]{
+  padding-top: 2%;
+  padding-bottom: 2%;
+}
+.py-\[3\%\]{
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.pb-6{
+  padding-bottom: 1.5rem;
+}
+.pt-5{
+  padding-top: 1.25rem;
+}
+.pt-\[5\%\]{
+  padding-top: 5%;
+}
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+.font-sans{
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
+.text-6xl{
+  font-size: 3.75rem;
+  line-height: 1;
+}
+.text-lg{
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+.text-sm{
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.text-xl{
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.text-xs{
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+.text-2xl{
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+.text-4xl{
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
+.text-5xl{
+  font-size: 3rem;
+  line-height: 1;
+}
+.font-bold{
+  font-weight: 700;
+}
+.font-medium{
+  font-weight: 500;
+}
+.uppercase{
+  text-transform: uppercase;
+}
+.text-gray-400{
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
+}
+.text-gray-500{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+.text-gray-700{
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+.text-gray-900{
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+.opacity-30{
+  opacity: 0.3;
+}
+.opacity-50{
+  opacity: 0.5;
+}
+.shadow-lg{
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.shadow-md{
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+.ring-1{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+.ring-black{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(0 0 0 / var(--tw-ring-opacity));
+}
+.ring-opacity-5{
+  --tw-ring-opacity: 0.05;
+}
+.transition{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition-all{
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.ease-in-out{
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  background-color: #f6f6f6;
+}
+
+.text {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+}
+
+.nav-logo {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 2%;
+  transition: transform 0.25s ease-in-out;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-logo:not(:hover) {
+  transform: scale(1);
+}
+
+.nav-logo-text {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.nav-link {
+  color: #989fac;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nav-link-selected {
+  color: black;
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.link-to-scale {
+  transition: transform 0.25s;
+}
+
+.link-to-scale:hover {
+  transform: scale(1.25);
+}
+
+.link-to-scale:not(:hover) {
+  transform: scale(1); /* Taille normale lorsque l'objet n'est pas en hover */
+}
+
+.nav-user {
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
+}
+
+.mobile-menu {
+  border-radius: 1rem;
+}
+
+.auth-button {
+  background-color: #30c1bd;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 10rem;
+}
+
+.auth-button-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: bolder;
+}
+
+.page-number {
+  font-size: 3rem;
+  font-weight: lighter;
+  color: rgba(0, 0, 0, 0.625);
+}
+
+.handle-product-button {
+  background-color: #30c1bd;
+  border-radius: 0.5rem;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 7rem;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  transition: transform 0.25s;
+}
+
+.handle-product-text {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.handle-product-image {
+  color: white;
+}
+
+.handle-product-button:hover {
+  transform: scale(1.1);
+}
+
+.handle-product-button:not(:hover) {
+  transform: scale(1);
+}
+
+.no-product-text {
+  font-weight: lighter;
+  font-size: 3rem;
+  color: rgba(0, 0, 0, 0.625);
+}
+
+.scroll-view {
+  overflow-y: scroll;
+  height: 550px;
+}
+
+.product-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+}
+
+.products-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 40px;
+  margin-top: 2rem;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center; /* Ajout de la propriété justify-content avec la valeur center */
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .products-cards {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+  }
+}
+
+.product-separation {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  width: 100%; /* Adjust as needed */
+  height: 1px; /* Adjust as needed */
+  background-color: #000; /* Adjust color as needed */
+  opacity: 0.5;
+}
+
+.product-header {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: white;
+  white-space: nowrap; /* Empêche le saut à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse */
+  text-overflow: ellipsis;
+  text-align: center;
+  margin-bottom: 1rem;
+  background-color: #30c1bd;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.product-content-space {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 5px 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-base {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-button {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap; /* Empêche le saut à la ligne */
+  overflow: hidden; /* Cache le contenu qui dépasse */
+  text-overflow: ellipsis;
+  text-align: center;
+  color: white;
+  background-color: #30c1bd;
+  border-radius: 10px;
+  width: 30%;
+  padding: 7px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.download-button {
+  background-color: #30c1bd;
+  border-radius: 10px;
+  color: white;
+  padding: 7px;
+  margin-right: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.open-button {
+  background-color: #30c1bd;
+  border-radius: 10px;
+  color: white;
+  padding: 7px;
+  margin-right: 5px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.open-button .text {
+  color: white;
+  font-weight: 500;
+  font-size: larger;
+}
+
+.index-color {
+  color: black;
+  background-color: #98e0de;
+}
+
+.index-line {
+  width: 200px;
+}
+
+.index-col {
+  width: 300px;
+}
+
+.cell {
+  border: 1px solid black;
+  text-align: center;
+}
+
+.inter-nav-bar {
+  color: black;
+  font-size: x-large;
+}
+
+.inter-nav-bar-selected {
+  color: rgba(0, 0, 0, 0.625);
+  font-size: x-large;
+}
+
+.add-product-card {
+  background-color: #30c1bd;
+  width: 500px;
+  height: 500px;
+  padding: 25px;
+}
+
+.add-product-card .tutoriel {
+  text-align: center;
+}
+
+.add-product-card button {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.add-product-card p {
+  font-weight: bold;
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.add-product-card .upload {
+  text-align: center;
+}
+
+.create-project-button {
+  background-color: #30c1bd;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  margin-left: auto;
+  margin-right: 20px;
+  font-size: larger;
+}
+
+.create-project-section {
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 3rem;
+  margin-top: 2.5%;
+  margin-left: 5%;
+}
+
+.large-input {
+  resize: none;
+}
+
+.create-project-section .validate {
+  font-size: 1.5rem;
+  font-weight: larger;
+  margin-bottom: 20px;
+  background-color: #30c1bd;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.image-container {
+  position: relative; /* Ajoutez cette ligne pour permettre le positionnement absolu de l'image */
+  flex: 1; /* Centrez l'image verticalement */
+}
+
+.image-container img {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.85;
+  margin-right: 5%; /* Aligner l'image par rapport au coin en bas à droite */
+}
+
+.project-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 350px;
+  margin: 10px;
+}
+
+.project-card .name {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.project-card .group {
+  font-size: 0.7rem;
+  font-weight: lighter;
+  background-color: #30c1bd;
+  color: white;
+  padding: 5px;
+  border-radius: 10px;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.text-in-single-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-card .description {
+  font-size: 1.25rem;
+  font-weight: lighter;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.project-card .date {
+  font-size: 0.75rem;
+  font-weight: lighter;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 10px;
+}
+
+.project-card .line {
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  opacity: 0.75;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.project-card .delete-btn {
+  background-color: rgba(255, 0, 0, 0.25);
+  padding: 7px;
+  border-radius: 8px;
+  border: 2px solid red; /* Ajout du border rouge */
+}
+
+.delete-btn {
+  background-color: rgba(255, 0, 0, 0.25);
+  padding: 7px;
+  border-radius: 8px;
+  border: 2px solid #b00002;
+  transform: size(1);
+  transform: rotate(0);
+  transition: transform 0.15s ease-in-out;
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+  transform: rotate(8deg);
+}
+
+.item-center {
+  display: flex;
+  align-items: center;
+}
+
+.justify-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-card .delete-btn {
+  transition: transform 0.25s;
+}
+
+.project-card .delete-btn:hover {
+  transform: scale(1.05);
+}
+
+.project-card .delete-btn:not(:hover) {
+  transform: scale(1);
+}
+
+.project-card .open-btn {
+  color: #30c1bd;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  font-size: 1.25rem;
+  font-weight: 800;
+  transition: transform 0.25s;
+}
+
+.project-card .open-btn:hover {
+  transform: scale(1.05);
+}
+
+.project-card .open-btn:not(:hover) {
+  transform: scale(1);
+}
+
+.projects-container {
+  overflow-y: scroll;
+  height: 450px;
+}
+
+.project-page .group-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: black;
+  margin-left: 6rem;
+  margin-right: 1rem;
+}
+
+.project-page .group-name {
+  font-size: 1rem;
+  font-weight: normal;
+  color: white;
+  background-color: black;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 5px;
+}
+
+.title-image {
+  transition: transform 0.25s;
+}
+
+.title-image:hover {
+  transform: scale(1.1);
+}
+
+.title-image:not(:hover) {
+  transform: scale(1);
+}
+
+.search-bar-input {
+  background-color: rgb(233, 233, 233);
+  border-radius: 10px;
+  padding: 10px;
+  margin-left: 6rem;
+}
+
+.search-bar-input .input {
+  background-color: rgb(233, 233, 233);
+  width: 25rem;
+}
+
+.section-infos .filter-btn {
+  background-color: #30c1bd;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.description-input {
+  border-radius: 10px;
+}
+
+.section-products {
+  background-color: #4ec9c5;
+  margin: 1rem;
+  width: 80%;
+  height: -moz-fit-content;
+  height: fit-content;
+  border-radius: 20px;
+}
+
+.section-products-container {
+}
+
+.add-product-btn {
+  background-color: #30c1bd;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 800;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.text {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.popup-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  height: 75%;
+  width: 75%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.popup-content .header {
+  margin-bottom: 2rem;
+}
+
+.popup-content .form {
+  position: relative;
+}
+
+.popup-content .title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.popup-content .form .button {
+  margin-top: auto;
+}
+
+.project-products-section {
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+}
+
+.project-product-card {
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1rem;
+  width: 250px;
+  margin: 10px;
+}
+
+.project-product-button {
+  background-color: white;
+  padding: 10px;
+  border-radius: 7px;
+  color: #30c1bd;
+  font-weight: 600;
+  border: solid 3px #30c1bd;
+}
+
+.input-bg-gray-200 {
+  background-color: #e5e7eb !important;
+  border-radius: 5px;
+}
+
+.product-in-project-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+}
+
+.chooseSection {
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #30c1bd;
+  padding: 10px;
+  transform: scale(1);
+  transition: transform 0.15s ease-in-out;
+}
+
+.chooseSection p {
+  color: #30c1bd;
+  font-weight: 600;
+}
+
+.chooseSection:hover {
+  transform: scale(1.025);
+}
+
+.create-project-btn {
+  transform: size(1);
+  transition: transform 0.25s ease-in-out;
+}
+
+.create-project-btn:hover {
+  transform: scale(1.025);
+}
+
+.impact-product-card {
+  background-color: white;
+  min-width: 350px;
+  border-radius: 16px;
+}
+
+.impact-product-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #30c1bd;
+  margin-bottom: 0.75rem;
+}
+
+.impact-product-card p {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.impact-product-card .text-bold {
+  font-weight: 600;
+}
+
+.impact-product-card h3 span {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #30c1bd;
+}
+
+.title-input {
+  background-color: #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1.5rem;
+}
+
+.description-input {
+  background-color: #e5e7eb;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.loader {
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.product-in-project-card .name {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.product-in-project-card .base {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 1);
+}
+
+.product-card .name {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.product-card .base {
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 1);
+}
+
+.product-card .link-cta {
+  text-decoration: none;
+  background-color: white;
+  padding: 3% 5%;
+  border: 2px solid #30c1bd;
+  width: 40%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.07);
+  transition: transform 0.15s;
+}
+
+.product-card .link-cta p {
+  font-size: large;
+  font-weight: 600;
+  color: #30c1bd;
+}
+
+.product-card .link-cta:hover {
+  transform: scale(1.5);
+  transform: translateY(7%);
+  box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.15);
+}
+
+.product-card .link-cta:not(:hover) {
+  transform: scale(1);
+  transform: translateY(0%);
+}
+
+.impact .btn-compare {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: rgba(48, 193, 189, 0.25);
+  border-radius: 10px;
+  color: #30c1bd;
+  border: 2px solid #30c1bd;
+}
+
+.impact-section-card {
+  background-color: #e9e9e9;
+  padding: 20px;
+}
+
+.impact-section-card .title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: black;
+  opacity: 0.9;
+}
+
+.odd\:bg-white:nth-child(odd){
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.even\:bg-gray-50:nth-child(even){
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-100:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.hover\:text-gray-500:hover{
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.hover\:opacity-100:hover{
+  opacity: 1;
+}
+
+.hover\:opacity-80:hover{
+  opacity: 0.8;
+}
+
+.focus\:outline-none:focus{
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus\:ring-2:focus{
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-inset:focus{
+  --tw-ring-inset: inset;
+}
+
+.focus\:ring-indigo-500:focus{
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(99 102 241 / var(--tw-ring-opacity));
+}
+
+@media (min-width: 640px){
+
+  .sm\:flex{
+    display: flex;
+  }
+
+  .sm\:hidden{
+    display: none;
+  }
+
+  .sm\:items-center{
+    align-items: center;
+  }
+
+  .sm\:gap-5{
+    gap: 1.25rem;
+  }
+
+  .sm\:rounded-lg{
+    border-radius: 0.5rem;
+  }
+}
+
+@media (min-width: 768px){
+
+  .md\:hidden{
+    display: none;
+  }
+
+  .md\:w-1\/2{
+    width: 50%;
+  }
+
+  .md\:w-48{
+    width: 12rem;
+  }
+
+  .md\:w-96{
+    width: 24rem;
+  }
+
+  .md\:flex-row{
+    flex-direction: row;
+  }
+}
+
+.rtl\:text-right:where([dir="rtl"], [dir="rtl"] *){
+  text-align: right;
+}
+
+@media (prefers-color-scheme: dark){
+
+  .dark\:border-gray-700{
+    --tw-border-opacity: 1;
+    border-color: rgb(55 65 81 / var(--tw-border-opacity));
+  }
+
+  .dark\:bg-gray-700{
+    --tw-bg-opacity: 1;
+    background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+  }
+
+  .dark\:text-gray-400{
+    --tw-text-opacity: 1;
+    color: rgb(156 163 175 / var(--tw-text-opacity));
+  }
+
+  .dark\:text-white{
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+  }
+
+  .odd\:dark\:bg-gray-900:nth-child(odd){
+    --tw-bg-opacity: 1;
+    background-color: rgb(17 24 39 / var(--tw-bg-opacity));
+  }
+
+  .even\:dark\:bg-gray-800:nth-child(even){
+    --tw-bg-opacity: 1;
+    background-color: rgb(31 41 55 / var(--tw-bg-opacity));
+  }
+}
+
