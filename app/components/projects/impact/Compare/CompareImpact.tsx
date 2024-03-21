@@ -1,14 +1,15 @@
 import { ProjectType } from "@models/Project";
 import Image from "next/image";
-import { CardImpactProject } from "./CardImpactProject";
+import { CardImpactProject } from "../Card/CardImpactProject";
 
 export type CompareImpactProps = {
   project_one: ProjectType;
   project_two: ProjectType;
+  percentage: number;
 };
 
 export const CompareImpact = (props: CompareImpactProps) => {
-  const { project_one, project_two } = props;
+  const { project_one, project_two, percentage } = props;
 
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
@@ -27,7 +28,7 @@ export const CompareImpact = (props: CompareImpactProps) => {
               height={60}
               className="drop-shadow-lg"
             />
-            <p className="text-white font-bold text-5xl">58%</p>
+            <p className="text-white font-bold text-5xl">{percentage}%</p>
           </div>
         </div>
 

@@ -1,6 +1,7 @@
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
 import { useEffect, useState } from "react";
+import { getCO2impact } from "./impact/Card/CardImpactProject";
 import { CompareImpact } from "./impact/Compare/CompareImpact";
 import { ImpactGlobalProject } from "./impact/ImpactGlobalProject";
 import { MostImpact } from "./impact/MostImpact";
@@ -15,6 +16,7 @@ const ImpactSection = (props: {
   const [isCompare, setIsCompare] = useState(false);
   const [session, setSession] = useState(null);
   const [compareWith, setCompareWith] = useState<ProjectType | null>(null);
+  const [percentage, setPercentage] = useState<number>(0.0);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -44,7 +46,18 @@ const ImpactSection = (props: {
   useEffect(() => {
     if (compareWith !== null) {
       console.log("isCompare value changed: ", compareWith);
-      alert("isCompare value changed: " + compareWith);
+      const value1: number = Number(getCO2impact(project));
+      const value2: number = Number(getCO2impact(compareWith));
+      let percentage;
+
+      if (value1 > value2) {
+        percentage = ((value1 - value2) / value1) * 100;
+      } else {
+        percentage = ((value2 - value1) / value2) * 100;
+      }
+
+      setPercentage(Number(percentage.toFixed(0)));
+      console.log("Percentage: ", Number(percentage.toFixed(0)));
     } else {
       console.log("Don't compare with any project");
     }
@@ -101,7 +114,11 @@ const ImpactSection = (props: {
         </div>
 
         {isCompare && compareWith && (
-          <CompareImpact project_one={project} project_two={compareWith} />
+          <CompareImpact
+            project_one={project}
+            project_two={compareWith}
+            percentage={percentage}
+          />
         )}
         {/* Impact Globale Project */}
         <ImpactGlobalProject project_one={project} />
