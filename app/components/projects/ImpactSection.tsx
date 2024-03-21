@@ -1,8 +1,9 @@
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
+import { getCO2impact } from "@utils/getImpact";
 import { useEffect, useState } from "react";
-import { getCO2impact } from "./impact/Card/CardImpactProject";
 import { CompareImpact } from "./impact/Compare/CompareImpact";
+import { EquivalenceImpact } from "./impact/Compare/EquivalenceImpact";
 import { ImpactGlobalProject } from "./impact/ImpactGlobalProject";
 import { MostImpact } from "./impact/MostImpact";
 
@@ -17,6 +18,11 @@ const ImpactSection = (props: {
   const [session, setSession] = useState(null);
   const [compareWith, setCompareWith] = useState<ProjectType | null>(null);
   const [percentage, setPercentage] = useState<number>(0.0);
+  const [betterProject, setBetterProject] = useState<ProjectType>(project);
+  const [worstProject, setWorstProject] = useState<ProjectType>(project);
+  const [planeEquivalent, setPlaneEquivalent] = useState<number>(0);
+  const [personEquivalent, setPersonEquivalent] = useState<number>(0);
+  const [kmEquivalent, setKmEquivalent] = useState<number>(0);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -52,12 +58,37 @@ const ImpactSection = (props: {
 
       if (value1 > value2) {
         percentage = ((value1 - value2) / value1) * 100;
+        setBetterProject(compareWith);
+        setWorstProject(project);
+
+        // Plane equivalent
+        let delta = value1 - value2;
+        let result = delta / 434;
+        setPlaneEquivalent(Number(result.toFixed(0)));
+        // Person equivalent
+        result = delta / 32.6;
+        setPersonEquivalent(Number(result.toFixed(0)));
+        // Km equivalent
+        result = delta / 0.17;
+        setKmEquivalent(Number(result.toFixed(0)));
       } else {
         percentage = ((value2 - value1) / value2) * 100;
+        setBetterProject(project);
+        setWorstProject(compareWith);
+
+        // Plane equivalent
+        let delta = value2 - value1;
+        let result = delta / 434;
+        setPlaneEquivalent(Number(result.toFixed(0)));
+        // Person equivalent
+        result = delta / 32.6;
+        setPersonEquivalent(Number(result.toFixed(0)));
+        // Km equivalent
+        result = delta / 0.17;
+        setKmEquivalent(Number(result.toFixed(0)));
       }
 
       setPercentage(Number(percentage.toFixed(0)));
-      console.log("Percentage: ", Number(percentage.toFixed(0)));
     } else {
       console.log("Don't compare with any project");
     }
@@ -118,6 +149,15 @@ const ImpactSection = (props: {
             project_one={project}
             project_two={compareWith}
             percentage={percentage}
+          />
+        )}
+        {isCompare && compareWith && (
+          <EquivalenceImpact
+            project={betterProject}
+            worstProject={worstProject}
+            planeValue={planeEquivalent}
+            personValue={personEquivalent}
+            kmValue={kmEquivalent}
           />
         )}
         {/* Impact Globale Project */}
