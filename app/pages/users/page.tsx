@@ -21,7 +21,6 @@ export default function Page() {
         });
         const data = await res.json();
         if (data.success) {
-          console.log("Utilisateurs:", data.data);
           setUsers(data.data);
           setTitle({
             title: "Utilisateurs",

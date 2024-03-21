@@ -26,7 +26,6 @@ export async function GET(request: NextRequest) {
         updatedAt: user.updatedAt,
         avatar: user.avatar,
       };
-      console.log("Utilisateur:", newUser);
       return Response.json({ success: true, data: user }, { status: 200 });
     } else {
       throw new Error(

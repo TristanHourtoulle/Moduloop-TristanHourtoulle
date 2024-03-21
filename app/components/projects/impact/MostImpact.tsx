@@ -25,7 +25,8 @@ export const MostImpact = (props: MostImpactProps) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-4xl opacity-90">
-          Les produits les plus impactants
+          Les produits les plus impactants pour{" "}
+          <span className="opacity-50">{project.name}</span>
         </h2>
         <div className="flex items-center gap-5">
           <Link href="#" className="flex items-center gap-3 btn-contact">

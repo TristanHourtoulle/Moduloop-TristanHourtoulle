@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loader from "../../../components/Loader";
 import { Title } from "../../../components/Title";
 import { TitleType } from "../../../models/Title";
@@ -27,7 +27,6 @@ export default function Page({
         );
         const data = await res.json();
         if (data.success) {
-          console.log("Utilisateurs:", data.data);
           setUser(data.data);
           setTitle({
             title: "Utilisateur",

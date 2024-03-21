@@ -12,7 +12,6 @@ export type CardImpactGlobalProps = {
 
 export const CardImpactGlobal = (props: CardImpactGlobalProps) => {
   const { title, image, subtitle, color, value, value2, unit } = props;
-  console.log("color: ", color);
 
   return (
     <div

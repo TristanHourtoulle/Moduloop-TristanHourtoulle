@@ -11,9 +11,9 @@ const ImpactSection = (props: {
   const { products, project } = props;
   const [projects, setProjects] = useState<[]>([]);
   const [impactSelect, setImpactSelect] = useState("global");
-  const [isCompare, setIsCompare] = useState(true);
+  const [isCompare, setIsCompare] = useState(false);
   const [session, setSession] = useState(null);
-  const [compareWith, setCompareWith] = useState("");
+  const [compareWith, setCompareWith] = useState("-1");
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -25,7 +25,6 @@ const ImpactSection = (props: {
       });
       let data = await res.json();
       setSession(data.session);
-      console.log(data.session);
 
       res = await fetch(
         `/api/project/list?id=${encodeURIComponent(data.session.user.id)}`,
@@ -36,17 +35,19 @@ const ImpactSection = (props: {
       data = await res.json();
       if (data.success) {
         setProjects(data.data);
-        console.log(data.data);
       }
     };
     fetchProjects();
   }, []);
 
-  {
-    useEffect(() => {
-      console.log("compare with Project: ", compareWith);
-    }, [compareWith]);
-  }
+  useEffect(() => {
+    if (compareWith !== "-1") {
+      console.log("isCompare value changed: ", compareWith);
+      alert("isCompare value changed: " + compareWith);
+    } else {
+      console.log("Don't compare with any project");
+    }
+  }, [isCompare]);
 
   return (
     <div className="impact flex flex-col items-start gap-5 my-[2%] mx-[5%]">
@@ -63,41 +64,39 @@ const ImpactSection = (props: {
         </p>
       </div> */}
 
-      {isCompare && project ? (
-        <div className="w-full flex flex-col gap-6">
-          {/* Select project for compare */}
-          <div className="flex items-center gap-5">
-            <p className="font-bold text-lg">Comparer</p>
-            <p className="font-bold text-lg">avec</p>
-            <div className="h-10 w-72 min-w-[200px]">
-              <select
-                className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
-                onChange={(event) => {
-                  setCompareWith(event.target.value);
-                }}
-              >
-                <option selected value="-1">
-                  Aucun Projet
-                </option>
-                {projects?.map((temp) => (
-                  <option key={temp.id} value={temp.id}>
-                    {temp.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+      <div className="w-full flex flex-col gap-6">
+        {/* Select project for compare */}
+        <div className="flex items-center gap-5">
+          <p className="font-bold text-lg">Comparer</p>
+          <p className="font-bold text-lg">avec</p>
+          <div className="h-10 w-72 min-w-[200px]">
+            <select
+              className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
+              onChange={(event) => {
+                setCompareWith(event.target.value);
+                setIsCompare(!isCompare);
+              }}
+            >
+              <option selected value="-1">
+                Aucun Projet
+              </option>
+              {projects.map(
+                (temp) =>
+                  temp.id !== project.id && (
+                    <option key={temp.id} value={temp.id}>
+                      {temp.name}
+                    </option>
+                  )
+              )}
+            </select>
           </div>
+        </div>
 
-          {/* Impact Globale Project */}
-          <ImpactGlobalProject project_one={project} />
-          {/* Most Impact List */}
-          <MostImpact project={project} />
-        </div>
-      ) : (
-        <div>
-          <p>PAS COMPARER</p>
-        </div>
-      )}
+        {/* Impact Globale Project */}
+        <ImpactGlobalProject project_one={project} />
+        {/* Most Impact List */}
+        <MostImpact project={project} />
+      </div>
     </div>
   );
 };

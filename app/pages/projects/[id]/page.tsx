@@ -50,7 +50,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         if (data.success) {
           const projectData = databaseToSingleProjectModel(data.product);
           setDescription(projectData.description ?? "");
-          console.log("Project data:", projectData); // Ajout du console.log pour vérifier projectData
           res = await fetch(
             `/api/group/id?id=${encodeURIComponent(projectData.group ?? "")}`,
             {
@@ -65,7 +64,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             let products = Array.isArray(projectData.products)
               ? projectData.products
               : [projectData.products];
-            console.log("products: ", products);
             let tempProductCards = [];
             for (let item of products) {
               tempProductCards.push(
@@ -182,7 +180,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   };
 
   const handleSubmitDescription = async () => {
-    console.log("Description mise à jour avec: ", description);
     alert(description);
   };
 
