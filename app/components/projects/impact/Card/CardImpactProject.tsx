@@ -6,7 +6,7 @@ export type CardImpactProjectProps = {
   type: string;
 };
 
-function getCO2impact(project: ProjectType) {
+export function getCO2impact(project: ProjectType) {
   let result = 0.0;
   if (project.products === undefined || project.products === null)
     return (result = 0.0);
@@ -24,7 +24,7 @@ function getCO2impact(project: ProjectType) {
     result += qUsed * product.product.reuse.rc.endOfLife;
   });
 
-  return result.toFixed(2);
+  return result.toFixed(0);
 }
 
 export const CardImpactProject = (props: CardImpactProjectProps) => {
