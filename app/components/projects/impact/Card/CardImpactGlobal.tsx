@@ -16,7 +16,7 @@ export const CardImpactGlobal = (props: CardImpactGlobalProps) => {
 
   return (
     <div
-      className={`flex flex-col gap-6 w-[30%] items-center justify-between bg-white px-8 py-4 rounded-[16px]`}
+      className={`flex flex-col gap-6 w-full sm:w-[30%] items-center justify-between bg-white px-8 py-4 rounded-[16px]`}
       style={{
         borderTop: `5px solid ${color}`,
         boxShadow: "4px 4px 4px rgba(0, 0, 0, 0.25)",

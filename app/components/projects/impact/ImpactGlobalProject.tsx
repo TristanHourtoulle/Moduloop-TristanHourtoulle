@@ -11,7 +11,7 @@ export const ImpactGlobalProject = (props: ImpactGlobalProjectProps) => {
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
       <h2 className="title">Impact global de {project_one.name}</h2>
-      <div className="flex items-start justify-between">
+      <div className="flex  flex-col sm:flex-row sm:items-start items-center justify-center sm:justify-between">
         <CardImpactGlobal
           title="Santé Humaine"
           image="/icons/climate-change.svg"
