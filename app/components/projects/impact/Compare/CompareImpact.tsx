@@ -1,16 +1,18 @@
 import { ProjectType } from "@models/Project";
+import { getCO2impact } from "@utils/getImpact";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { CardImpactProject, getCO2impact } from "../Card/CardImpactProject";
+import { CardImpactProject } from "../Card/CardImpactProject";
 
 export type CompareImpactProps = {
   project_one: ProjectType;
   project_two: ProjectType;
+  type: string;
   percentage: number;
 };
 
 export const CompareImpact = (props: CompareImpactProps) => {
-  const { project_one, project_two, percentage } = props;
+  const { project_one, project_two, percentage, type } = props;
 
   const [betterProject, setBetterProject] = useState<ProjectType>(project_one);
   const [worstProject, setWorstProject] = useState<ProjectType>(project_two);
@@ -20,11 +22,16 @@ export const CompareImpact = (props: CompareImpactProps) => {
       project_one: ProjectType,
       project_two: ProjectType
     ) => {
-      const valueOne = getCO2impact(project_one);
-      const valueTwo = getCO2impact(project_two);
-      if (valueOne > valueTwo) {
-        setBetterProject(project_two);
-        setWorstProject(project_one);
+      if (type === "rc") {
+        const valueOne = getCO2impact(project_one);
+        const valueTwo = getCO2impact(project_two);
+        if (valueOne > valueTwo) {
+          setBetterProject(project_two);
+          setWorstProject(project_one);
+        }
+      } else if (type === "erf") {
+      } else if (type === "ase") {
+      } else {
       }
     };
     getBetterAndWorstProject(project_one, project_two);

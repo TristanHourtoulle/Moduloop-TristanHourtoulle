@@ -1,31 +1,11 @@
 import { ProjectType } from "@models/Project";
 import Image from "next/image";
+import { getCO2impact } from "@utils/getImpact";
 
 export type CardImpactProjectProps = {
   project: ProjectType;
   type: string;
 };
-
-export function getCO2impact(project: ProjectType) {
-  let result = 0.0;
-  if (project.products === undefined || project.products === null)
-    return (result = 0.0);
-  project.products.forEach((product) => {
-    let qNew = product.qNew;
-    let qUsed = product.qUsed;
-
-    result += qNew * product.product.new.rc.manufacturing;
-    result += qNew * product.product.new.rc.installation;
-    result += qNew * product.product.new.rc.usage;
-    result += qNew * product.product.new.rc.endOfLife;
-    result += qUsed * product.product.reuse.rc.manufacturing;
-    result += qUsed * product.product.reuse.rc.installation;
-    result += qUsed * product.product.reuse.rc.usage;
-    result += qUsed * product.product.reuse.rc.endOfLife;
-  });
-
-  return result.toFixed(0);
-}
 
 export const CardImpactProject = (props: CardImpactProjectProps) => {
   const { project, type } = props;
@@ -34,7 +14,7 @@ export const CardImpactProject = (props: CardImpactProjectProps) => {
   console.log("project: ", project);
 
   if (type !== "better") {
-    image = "/icons/toxique.svg";
+    image = "/icons/rc.svg";
   }
 
   return (
