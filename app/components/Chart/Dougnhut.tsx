@@ -1,4 +1,4 @@
-import { ArcElement, Chart } from "chart.js";
+import { ArcElement, Chart, Tooltip } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 
 export type DougnhutProps = {
@@ -8,7 +8,7 @@ export type DougnhutProps = {
 
 export const Dougnhut = (props: DougnhutProps) => {
   const { data, text } = props;
-  Chart.register(ArcElement);
+  Chart.register(ArcElement, Tooltip);
 
   // Plugin personnalisé pour dessiner du texte au milieu du Doughnut
   const centerTextPlugin = {
