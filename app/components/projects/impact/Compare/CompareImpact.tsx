@@ -1,5 +1,10 @@
 import { ProjectType } from "@models/Project";
-import { getCO2impact } from "@utils/getImpact";
+import {
+  getASEimpact,
+  getCO2impact,
+  getEMimpact,
+  getERFimpact,
+} from "@utils/getImpact";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CardImpactProject } from "../Card/CardImpactProject";
@@ -16,22 +21,54 @@ export const CompareImpact = (props: CompareImpactProps) => {
 
   const [betterProject, setBetterProject] = useState<ProjectType>(project_one);
   const [worstProject, setWorstProject] = useState<ProjectType>(project_two);
+  const [title, setTitle] = useState<string>("");
+  const [impact, setImpact] = useState<string>("rc");
+  const [image, setImage] = useState<string>("/icons/ecologie.svg");
 
   useEffect(() => {
     const getBetterAndWorstProject = (
       project_one: ProjectType,
       project_two: ProjectType
     ) => {
-      if (type === "rc") {
+      if (type === "Réchauffement climatique") {
+        setTitle("émissions évitées");
+        setImpact("rc");
         const valueOne = getCO2impact(project_one);
         const valueTwo = getCO2impact(project_two);
         if (valueOne > valueTwo) {
           setBetterProject(project_two);
           setWorstProject(project_one);
         }
-      } else if (type === "erf") {
-      } else if (type === "ase") {
+      } else if (type === "Epuisement des ressources fossiles") {
+        setTitle("épuisement évitées");
+        setImpact("erf");
+        setImage("/icons/éolienne.svg");
+        const valueOne = getERFimpact(project_one);
+        const valueTwo = getERFimpact(project_two);
+        if (valueOne > valueTwo) {
+          setBetterProject(project_two);
+          setWorstProject(project_one);
+        }
+      } else if (type === "Acidification des sols et eaux") {
+        setTitle("acidifications évitées");
+        setImpact("ase");
+        setImage("/icons/no-ase.svg");
+        const valueOne = getASEimpact(project_one);
+        const valueTwo = getASEimpact(project_two);
+        if (valueOne > valueTwo) {
+          setBetterProject(project_two);
+          setWorstProject(project_one);
+        }
       } else {
+        setTitle("Eutrophisation évitée");
+        setImpact("em");
+        setImage("/icons/no-em.svg");
+        const valueOne = getEMimpact(project_one);
+        const valueTwo = getEMimpact(project_two);
+        if (valueOne > valueTwo) {
+          setBetterProject(project_two);
+          setWorstProject(project_one);
+        }
       }
     };
     getBetterAndWorstProject(project_one, project_two);
@@ -39,16 +76,18 @@ export const CompareImpact = (props: CompareImpactProps) => {
 
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
-      <h2 className="title">Impact de vos projets</h2>
+      <h2 className="title">
+        Impact de vos projets <span className="opacity-50">{type}</span>
+      </h2>
       <div className="flex flex-col sm:flex-row items-center gap-10">
         {/* Ecologie Card */}
         <div className="px-8 py-4 bg-[#4AD860] flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
           <h3 className="uppercase font-semibold text-2xl text-white opacity-95">
-            % émissions évitées
+            {title}
           </h3>
           <div className="flex items-center gap-5">
             <Image
-              src={"/icons/ecologie.svg"}
+              src={image}
               alt="Ecologie"
               width={60}
               height={60}
@@ -59,9 +98,17 @@ export const CompareImpact = (props: CompareImpactProps) => {
         </div>
 
         {/* Better Project */}
-        <CardImpactProject project={betterProject} type="better" />
+        <CardImpactProject
+          project={betterProject}
+          type="better"
+          impact={impact}
+        />
         {/* Worst Project */}
-        <CardImpactProject project={worstProject} type="worst" />
+        <CardImpactProject
+          project={worstProject}
+          type="worst"
+          impact={impact}
+        />
       </div>
     </div>
   );
