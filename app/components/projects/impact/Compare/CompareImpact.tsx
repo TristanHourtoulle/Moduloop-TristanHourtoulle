@@ -1,6 +1,7 @@
 import { ProjectType } from "@models/Project";
 import Image from "next/image";
-import { CardImpactProject } from "../Card/CardImpactProject";
+import { useEffect, useState } from "react";
+import { CardImpactProject, getCO2impact } from "../Card/CardImpactProject";
 
 export type CompareImpactProps = {
   project_one: ProjectType;
@@ -10,6 +11,24 @@ export type CompareImpactProps = {
 
 export const CompareImpact = (props: CompareImpactProps) => {
   const { project_one, project_two, percentage } = props;
+
+  const [betterProject, setBetterProject] = useState<ProjectType>(project_one);
+  const [worstProject, setWorstProject] = useState<ProjectType>(project_two);
+
+  useEffect(() => {
+    const getBetterAndWorstProject = (
+      project_one: ProjectType,
+      project_two: ProjectType
+    ) => {
+      const valueOne = getCO2impact(project_one);
+      const valueTwo = getCO2impact(project_two);
+      if (valueOne > valueTwo) {
+        setBetterProject(project_two);
+        setWorstProject(project_one);
+      }
+    };
+    getBetterAndWorstProject(project_one, project_two);
+  });
 
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
@@ -33,9 +52,9 @@ export const CompareImpact = (props: CompareImpactProps) => {
         </div>
 
         {/* Better Project */}
-        <CardImpactProject project={project_one} type="better" />
+        <CardImpactProject project={betterProject} type="better" />
         {/* Worst Project */}
-        <CardImpactProject project={project_two} type="worst" />
+        <CardImpactProject project={worstProject} type="worst" />
       </div>
     </div>
   );
