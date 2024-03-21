@@ -4,6 +4,7 @@ import { ProjectType } from "@models/Project";
 import { Pencil, Phone } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { CardMostImpact } from "./Card/CardMostImpact";
 
 export type MostImpactProps = {
   project: ProjectType;
@@ -70,6 +71,39 @@ export const MostImpact = (props: MostImpactProps) => {
         >
           Ressources Naturelles
         </p>
+      </div>
+
+      {/* All cards */}
+      <div className="flex flex-col sm:flex-row items-center justify-between">
+        <CardMostImpact
+          title="Bibliothèque"
+          percentage={20}
+          manufacturing={50}
+          installation={20}
+          usage={20}
+          endOfLife={10}
+          ranking={1}
+        />
+
+        <CardMostImpact
+          title="Plafond"
+          percentage={10}
+          manufacturing={10}
+          installation={20}
+          usage={50}
+          endOfLife={10}
+          ranking={2}
+        />
+
+        <CardMostImpact
+          title="Bureau"
+          percentage={5}
+          manufacturing={20}
+          installation={10}
+          usage={20}
+          endOfLife={50}
+          ranking={3}
+        />
       </div>
     </div>
   );
