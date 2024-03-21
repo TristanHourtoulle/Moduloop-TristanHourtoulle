@@ -1,6 +1,7 @@
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
 import { useEffect, useState } from "react";
+import { CompareImpact } from "./impact/Compare/CompareImpact";
 import { ImpactGlobalProject } from "./impact/ImpactGlobalProject";
 import { MostImpact } from "./impact/MostImpact";
 
@@ -13,7 +14,7 @@ const ImpactSection = (props: {
   const [impactSelect, setImpactSelect] = useState("global");
   const [isCompare, setIsCompare] = useState(false);
   const [session, setSession] = useState(null);
-  const [compareWith, setCompareWith] = useState("-1");
+  const [compareWith, setCompareWith] = useState<ProjectType | null>(null);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -41,7 +42,7 @@ const ImpactSection = (props: {
   }, []);
 
   useEffect(() => {
-    if (compareWith !== "-1") {
+    if (compareWith !== null) {
       console.log("isCompare value changed: ", compareWith);
       alert("isCompare value changed: " + compareWith);
     } else {
@@ -73,8 +74,15 @@ const ImpactSection = (props: {
             <select
               className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
               onChange={(event) => {
-                setCompareWith(event.target.value);
-                setIsCompare(!isCompare);
+                for (let i = 0; i < projects.length; i++) {
+                  if (projects[i].id === parseInt(event.target.value)) {
+                    setCompareWith(projects[i]);
+                    setIsCompare(!isCompare);
+                    return;
+                  }
+                }
+                setCompareWith(null);
+                setIsCompare(false);
               }}
             >
               <option selected value="-1">
@@ -92,6 +100,9 @@ const ImpactSection = (props: {
           </div>
         </div>
 
+        {isCompare && compareWith && (
+          <CompareImpact project_one={project} project_two={compareWith} />
+        )}
         {/* Impact Globale Project */}
         <ImpactGlobalProject project_one={project} />
         {/* Most Impact List */}
