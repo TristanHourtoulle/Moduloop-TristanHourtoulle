@@ -17,7 +17,7 @@ const ImpactSection = (props: {
   project: ProjectType;
 }) => {
   const { products, project } = props;
-  const [projects, setProjects] = useState<[]>([]);
+  const [projects, setProjects] = useState<ProjectType[] | null>(null);
   const [impactSelect, setImpactSelect] = useState("global");
   const [isCompare, setIsCompare] = useState(false);
   const [session, setSession] = useState(null);
@@ -160,8 +160,12 @@ const ImpactSection = (props: {
             <select
               className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
               onChange={(event) => {
+                if (projects === null) return;
                 for (let i = 0; i < projects.length; i++) {
-                  if (projects[i].id === parseInt(event.target.value)) {
+                  if (
+                    projects &&
+                    projects[i].id === parseInt(event.target.value)
+                  ) {
                     setCompareWith(projects[i]);
                     setIsCompare(!isCompare);
                     return;
@@ -174,8 +178,9 @@ const ImpactSection = (props: {
               <option selected value="-1">
                 Aucun Projet
               </option>
-              {projects.map(
+              {projects?.map(
                 (temp) =>
+                  temp.id &&
                   temp.id !== project.id && (
                     <option key={temp.id} value={temp.id}>
                       {temp.name}
