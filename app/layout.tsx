@@ -3,7 +3,7 @@ import "@styles/globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Outil Moduloop",
+  title: "Moduloop - Outil",
   description:
     "Calculer l'impact environnemental de votre projet de construction avec Moduloop",
 };
