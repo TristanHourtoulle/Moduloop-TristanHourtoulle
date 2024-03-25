@@ -1,10 +1,11 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import { Title } from "@/components/Title";
+import { getSession } from "@/lib/session";
+import { TitleType } from "@/models/Title";
+import { User } from "@/models/User";
 import { useEffect, useState } from "react";
-import Loader from "../../../components/Loader";
-import { Title } from "../../../components/Title";
-import { TitleType } from "../../../models/Title";
-import { User } from "../../../models/User";
 
 export default function Page({
   params: { userId },
@@ -12,10 +13,25 @@ export default function Page({
   params: { userId: number };
 }) {
   const [user, setUser] = useState<User | null>(null);
+  const [userSession, getUserSession] = useState(null);
   const [title, setTitle] = useState<TitleType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const fetchSession = async () => {
+      const temp = await getSession();
+
+      if (
+        temp &&
+        !temp.user.name.includes("undefined") &&
+        temp.user.role === "admin"
+      ) {
+        getUserSession(temp);
+        fetchData();
+        return;
+      }
+      window.location.href = "/";
+    };
     const fetchData = async () => {
       setIsLoading(true);
       try {
@@ -51,7 +67,7 @@ export default function Page({
         setIsLoading(false);
       }
     };
-    fetchData();
+    fetchSession();
   }, []);
 
   if (isLoading || !user) {

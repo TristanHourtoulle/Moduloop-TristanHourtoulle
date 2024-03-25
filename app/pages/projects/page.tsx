@@ -1,24 +1,35 @@
 "use client";
 
-import React from "react";
-import { TitleType } from "@models/Title";
-import { Title } from "@components/Title";
-import { useState, useEffect } from "react";
-import { ProjectType } from "@models/Project";
-import { GroupType } from "@models/Group";
-import { databaseToProjectModel, databaseToGroupModel } from "@utils/convert";
-import Link from "next/link";
-import Image from "next/image";
-import dateFormater from "@utils/dateFormater";
 import Loader from "@components/Loader";
+import { Title } from "@components/Title";
+import { getSession } from "@lib/session";
+import { GroupType } from "@models/Group";
+import { ProjectType } from "@models/Project";
+import { TitleType } from "@models/Title";
+import { databaseToGroupModel, databaseToProjectModel } from "@utils/convert";
+import dateFormater from "@utils/dateFormater";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function page() {
   const [projects, setProjects] = useState<ProjectType | null>(null);
   const [group, setGroup] = useState<GroupType | null>(null);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [userSession, getUserSession] = useState(null);
 
   useEffect(() => {
+    const fetchSession = async () => {
+      const temp = await getSession();
+
+      if (temp && !temp.user.name.includes("undefined")) {
+        getUserSession(temp);
+        fetchData();
+        return;
+      }
+      window.location.href = "/";
+    };
     const fetchData = async () => {
       setIsLoading(true);
       // Get User Session
@@ -69,7 +80,8 @@ export default function page() {
       }
       setIsLoading(false);
     };
-    fetchData();
+
+    fetchSession();
   }, []);
 
   const title: TitleType = {
@@ -119,88 +131,91 @@ export default function page() {
 
   return (
     <div>
-      {/* Header */}
-      <div className="flex items-center mb-10">
-        <Title {...title} />
-        <Link
-          href="/pages/projects/create"
-          className="create-project-button create-project-btn"
-        >
-          <div className="flex gap-2">
-            <Image
-              src="/icons/plus-blanc.svg"
-              alt="Créer un projet"
-              width={20}
-              height={20}
-            />
-            Créer un projet
+      {/* Afficher le Loader si isLoading est true */}
+      {isLoading && <Loader />}
+
+      {/* Header et Projects */}
+      {!isLoading && (
+        <>
+          <div className="flex items-center mb-10">
+            <Title {...title} />
+            <Link
+              href="/pages/projects/create"
+              className="create-project-button create-project-btn"
+            >
+              <div className="flex gap-2">
+                <Image
+                  src="/icons/plus-blanc.svg"
+                  alt="Créer un projet"
+                  width={20}
+                  height={20}
+                />
+                Créer un projet
+              </div>
+            </Link>
           </div>
-        </Link>
-      </div>
-      {/* Projects */}
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="flex items-center justify-center gap-4 mt-10 flex-wrap ml-10 projects-container">
-          {projects ? (
-            projects.map((project, index) => {
-              const group = project.groupInfo;
-              const showProjectUrl = "/pages/projects/" + project.id;
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col project-card gap-2 project-zoom"
-                >
-                  <p className="group text-in-single-line">
-                    {group ? group.name : "Aucun Groupe"}
-                  </p>
-                  <p className="name text-in-single-line">{project.name}</p>
-                  <p className="description text-in-single-line">
-                    {project.description
-                      ? project.description
-                      : "Aucune description"}
-                  </p>
-                  <div className="flex">
-                    <p className="date mr-auto">Dernières modifications:</p>
-                    <p className="date mr-5">
-                      {dateFormater(project.updated_at).date} à{" "}
-                      {dateFormater(project.updated_at).time}
+
+          <div className="flex items-center justify-center gap-4 mt-10 flex-wrap ml-10 projects-container">
+            {projects ? (
+              projects.map((project, index) => {
+                const group = project.groupInfo;
+                const showProjectUrl = "/pages/projects/" + project.id;
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col project-card gap-2 project-zoom"
+                  >
+                    <p className="group text-in-single-line">
+                      {group ? group.name : "Aucun Groupe"}
                     </p>
-                  </div>
-                  <div className="line"></div>
-                  <div className="flex justify-center items-center gap-5">
-                    <div
-                      className="flex items-center gap-2 delete-btn cursor-pointer"
-                      onClick={() => handleDeleteProject(project.id)}
-                    >
-                      <Image
-                        src="/icons/trash-can.svg"
-                        alt="Supprimer le projet"
-                        width={30}
-                        height={30}
-                      />
+                    <p className="name text-in-single-line">{project.name}</p>
+                    <p className="description text-in-single-line">
+                      {project.description
+                        ? project.description
+                        : "Aucune description"}
+                    </p>
+                    <div className="flex">
+                      <p className="date mr-auto">Dernières modifications:</p>
+                      <p className="date mr-5">
+                        {dateFormater(project.updated_at).date} à{" "}
+                        {dateFormater(project.updated_at).time}
+                      </p>
                     </div>
-                    <div
-                      onClick={() => {
-                        handleDuplicateProject(project.id);
-                      }}
-                      className="flex items-center open-btn cursor-pointer"
-                    >
-                      <p className="">Dupliquer</p>
-                    </div>
-                    <Link href={showProjectUrl}>
-                      <div className="flex items-center open-btn">
-                        <p className="">Ouvrir</p>
+                    <div className="line"></div>
+                    <div className="flex justify-center items-center gap-5">
+                      <div
+                        className="flex items-center gap-2 delete-btn cursor-pointer"
+                        onClick={() => handleDeleteProject(project.id)}
+                      >
+                        <Image
+                          src="/icons/trash-can.svg"
+                          alt="Supprimer le projet"
+                          width={30}
+                          height={30}
+                        />
                       </div>
-                    </Link>
+                      <div
+                        onClick={() => {
+                          handleDuplicateProject(project.id);
+                        }}
+                        className="flex items-center open-btn cursor-pointer"
+                      >
+                        <p className="">Dupliquer</p>
+                      </div>
+                      <Link href={showProjectUrl}>
+                        <div className="flex items-center open-btn">
+                          <p className="">Ouvrir</p>
+                        </div>
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            <p>Vous n'avez pas de projets pour le moment.</p>
-          )}
-        </div>
+                );
+              })
+            ) : (
+              <p>Vous n'avez pas de projets pour le moment.</p>
+            )}
+          </div>
+        </>
       )}
     </div>
   );

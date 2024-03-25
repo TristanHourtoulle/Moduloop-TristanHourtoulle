@@ -1,18 +1,34 @@
 "use client";
 
+import Loader from "@/components/Loader";
+import { Title } from "@/components/Title";
+import { getSession } from "@/lib/session";
+import { TitleType } from "@/models/Title";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import Loader from "../../components/Loader";
-import { Title } from "../../components/Title";
-import { TitleType } from "../../models/Title";
+import { useEffect, useState } from "react";
 
 export default function Page() {
   const [users, setUsers] = useState(null);
+  const [userSession, getUserSession] = useState(null);
   const [title, setTitle] = useState<TitleType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const fetchSession = async () => {
+      const temp = await getSession();
+
+      if (
+        temp &&
+        !temp.user.name.includes("undefined") &&
+        temp.user.role === "admin"
+      ) {
+        getUserSession(temp);
+        fetchData();
+        return;
+      }
+      window.location.href = "/";
+    };
     const fetchData = async () => {
       setIsLoading(true);
       try {
@@ -45,7 +61,7 @@ export default function Page() {
         setIsLoading(false);
       }
     };
-    fetchData();
+    fetchSession();
   }, []);
 
   // Fonction pour formater la date
