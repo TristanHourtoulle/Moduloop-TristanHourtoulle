@@ -43,7 +43,6 @@ const ProductInProjectCard = (props: {
       setInitialQNew(qNew);
       setInitialQUsed(qUsed);
       setIsDifferent(false);
-      window.location.reload();
     } else {
       console.error("Erreur lors de l'ajout du produit au projet");
       toast.error("Erreur lors de l'ajout du produit au projet.", {
