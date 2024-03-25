@@ -1,12 +1,11 @@
-import React from 'react'
-import Link from 'next/link'
+import Link from "next/link";
 
 export const RegisterButton = () => {
   return (
-    <div className='auth-button'>
+    <div className="flex items-center justify-center bg-white border-2 border-[#30c1bd] rounded-[8px] px-7 py-3 transition-all hover:opacity-50 cursor-pointer">
       <Link href="/pages/register">
-        <p className='auth-button-text text'>S'inscrire</p>
+        <p className="text-[#30c1bd] text-lg">S'inscrire</p>
       </Link>
     </div>
-  )
-}
+  );
+};
