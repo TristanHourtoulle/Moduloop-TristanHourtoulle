@@ -1,9 +1,9 @@
-import React from "react";
-import { AddProductType } from "../../models/AddProduct";
-import { useState } from "react";
-import Image from "next/image";
-import { Toaster, toast } from "sonner";
+import { AddProductType } from "@/models/AddProduct";
 import TrashCan from "@components/button/TrashCan";
+import { Dialogs, DialogsProps } from "@components/features/Dialogs";
+import Image from "next/image";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 const ProductInProjectCard = (props: {
   product: AddProductType;
@@ -15,6 +15,7 @@ const ProductInProjectCard = (props: {
   const [qUsed, setQUsed] = useState(product.qUsed);
   const [initialQUsed, setInitialQUsed] = useState(product.qUsed);
   const [isDifferent, setIsDifferent] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleAdd = async () => {
     const addProduct: AddProductType = {
@@ -79,32 +80,36 @@ const ProductInProjectCard = (props: {
     }
   };
 
-  const handleDeleteProduct = async () => {
-    if (
-      window.confirm(
-        "Voulez-vous vraiment supprimer ce produit du projet ?\n Cet action est irréversible."
-      )
-    ) {
-      // Delete product from project
-      let res = await fetch(
-        `/api/project/list?id_project=${idProject}&id_product=${product.product.id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (res.ok) {
-        toast.success("Produit supprimé du projet", { duration: 2000 });
-        window.location.reload();
-      } else {
-        console.error("Erreur lors de la suppression du produit du projet");
-        toast.error("Erreur lors de la suppression du produit du projet.", {
-          duration: 2000,
-        });
+  const handleDeleteProduct = () => {
+    setDialogOpen(true);
+  };
+
+  const confirmDeleteProduct = async () => {
+    let res = await fetch(
+      `/api/project/list?id_project=${idProject}&id_product=${product.product.id}`,
+      {
+        method: "DELETE",
       }
+    );
+    if (res.ok) {
+      toast.success("Produit supprimé du projet");
+      setDialogOpen(false);
+      window.location.reload();
     } else {
-      // Do nothing
-      alert("Product not deleted from the project.");
+      setDialogOpen(false);
+      console.error("Erreur lors de la suppression du produit du projet");
+      toast.error("Erreur lors de la suppression du produit du projet.");
     }
+    setDialogOpen(false);
+  };
+
+  const dialogProps: DialogsProps = {
+    title: "Supprimer le produit " + "'" + product.product.name + "'",
+    content: "Voulez-vous vraiment supprimer ce produit ?",
+    validate: "Confirmer",
+    cancel: "Annuler",
+    cta: confirmDeleteProduct,
+    cancelCta: () => setDialogOpen(false),
   };
 
   return (
@@ -177,6 +182,9 @@ const ProductInProjectCard = (props: {
           ></input>
         </div>
       </div>
+
+      {/* Dialog */}
+      {dialogOpen && <Dialogs {...dialogProps} />}
     </div>
   );
 };
