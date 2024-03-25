@@ -1,7 +1,9 @@
+"use server";
+
+import { User } from "@/models/User";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { User } from "@/models/User";
 
 const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
