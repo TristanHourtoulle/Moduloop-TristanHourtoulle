@@ -1,20 +1,20 @@
 "use client";
 
+import Loader from "@components/Loader";
+import { Title } from "@components/Title";
+import ImpactSection from "@components/projects/ImpactSection";
+import ProductCardWithToaster from "@components/projects/ProductCard";
+import ProductInProjectCard from "@components/projects/ProductInProjectCard";
+import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
-import { useEffect, useState } from "react";
 import { TitleType } from "@models/Title";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import {
   databaseToGroupModel,
   databaseToSingleProjectModel,
 } from "../../../utils/convert";
-import { Title } from "@components/Title";
-import Link from "next/link";
-import Image from "next/image";
-import { ProductType } from "@models/Product";
-import ProductCardWithToaster from "@components/projects/ProductCard";
-import ProductInProjectCard from "@components/projects/ProductInProjectCard";
-import ImpactSection from "@components/projects/ImpactSection";
-import Loader from "@components/Loader";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
   const [user, setUser] = useState(null);
@@ -76,7 +76,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               index++;
             }
             setProductsImpact(products);
-            setProductCards(tempProductCards);
+            setProductCards(tempProductCards.reverse());
             // Get stored products
             res = await fetch(`/api/product/list`, {
               method: "GET",
@@ -108,7 +108,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const createProductCards = (products) => {
     let index = 0;
     let tempProductCards = [];
-    for (let item of products) {
+    for (let item of products.reverse()) {
       tempProductCards.push(
         <ProductInProjectCard product={item} key={index} />
       );
@@ -127,10 +127,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       if (data.success) {
         const projectData = databaseToSingleProjectModel(data.product);
         let products = Array.isArray(projectData.products)
-          ? projectData.products
+          ? projectData.products.reverse()
           : [projectData.products];
         setProductsImpact(products);
-        setProductCards(createProductCards(products)); // Mettez à jour productCards avec les nouvelles cartes de produits
+        setProductCards(createProductCards(products.reverse()));
+        console.log("Products updated: ", products);
       } else {
         console.error("Failed to fetch project:", data.error);
         alert(data.error);
@@ -148,7 +149,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
   const addProductSubmit = async () => {
     if (isPopupOpen) {
-      window.location.reload();
     }
     setIsPopupOpen(!isPopupOpen);
   };
@@ -172,6 +172,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       }));
     }
   }, [project]); // Déclenchez cette mise à jour lorsque project change
+
+  const updateProducts = () => {
+    fetchProjectProducts();
+  };
 
   const handleDescriptionChange = async (
     e: React.ChangeEvent<HTMLInputElement>
@@ -356,6 +360,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                             key={index}
                             product={product}
                             idProject={Number(id)}
+                            cta={() => {
+                              fetchProjectProducts();
+                            }}
                           />
                         ))}
                     </div>
@@ -459,6 +466,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                             key={index}
                             product={product}
                             idProject={Number(id)}
+                            cta={() => {
+                              fetchProjectProducts();
+                            }}
                           />
                         ))}
                     </div>
