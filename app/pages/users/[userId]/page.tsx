@@ -5,7 +5,8 @@ import { Title } from "@/components/Title";
 import { getSession } from "@/lib/session";
 import { TitleType } from "@/models/Title";
 import { User } from "@/models/User";
-import { Eye } from "lucide-react";
+import { ProjectType } from "@models/Project";
+import { Copy, ExternalLink, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -19,6 +20,10 @@ export default function Page({
   const [title, setTitle] = useState<TitleType | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedView, setSelectedView] = useState("infos");
+  const [isCopied, setIsCopied] = useState(false);
+  const [emailHeight, setEmailHeight] = useState("auto");
+  const [projects, setProjects] = useState<ProjectType[] | null>(null);
+  const [viewProjects, setViewProjects] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -30,11 +35,39 @@ export default function Page({
         temp.user.role === "admin"
       ) {
         getUserSession(temp);
-        fetchData();
+        await fetchData();
+        await fetchProjects();
         return;
       }
       window.location.href = "/";
     };
+
+    const fetchProjects = async () => {
+      setIsLoading(true);
+      try {
+        let res = await fetch(`/api/project/list?id=${userId}`, {
+          method: "GET",
+        });
+        const data = await res.json();
+        if (data.success) {
+          console.log("Project User: ", data.data);
+          setProjects(data.data);
+        } else {
+          console.error(
+            "Erreur lors de la récupération des projets de l'utilisateur:",
+            data.error
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Erreur lors de la récupération des projets de l'utilisateur:",
+          error
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
     const fetchData = async () => {
       setIsLoading(true);
       try {
@@ -80,10 +113,12 @@ export default function Page({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("fr-FR", {
+    return date.toLocaleString("fr-FR", {
       year: "numeric",
       month: "long",
       day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
     });
   };
 
@@ -97,7 +132,7 @@ export default function Page({
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
     if (days > 0) {
-      return days + 1 + " jours";
+      return days + " jours";
     } else if (hours > 0) {
       return hours + " heures";
     } else if (minutes > 0) {
@@ -107,7 +142,20 @@ export default function Page({
     }
   };
 
-  if (isLoading || !user) {
+  const handleCopyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setIsCopied(true);
+      setEmailHeight("auto"); // Réinitialise la hauteur de la div de l'email pour déclencher l'animation
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    } catch (error) {
+      console.error("Erreur lors de la copie dans le presse-papiers : ", error);
+    }
+  };
+
+  if (isLoading || !user || !title || !projects) {
     return <Loader />;
   }
 
@@ -128,7 +176,7 @@ export default function Page({
         {/* View Content */}
         {/* Infos View */}
         {selectedView === "infos" && (
-          <div className="flex flex-col w-[50%]">
+          <div className="flex flex-col w-[75%]">
             <div className="px-4 sm:px-0">
               <h3 className="text-2xl align-left font-semibold leading-7 text-gray-900">
                 Informations
@@ -150,8 +198,24 @@ export default function Page({
                   <dt className="text-lg font-medium leading-6 text-gray-500">
                     Addresse Mail
                   </dt>
-                  <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
-                    {user.email || ""}
+                  <dd
+                    className={`mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0 transition-all duration-100 ease-in-out overflow-hidden hover:opacity-75`}
+                    style={{ height: emailHeight }}
+                  >
+                    <div
+                      className="flex items-center gap-3 cursor-pointer"
+                      onClick={() => {
+                        handleCopyToClipboard(user.email || "");
+                      }}
+                    >
+                      {user.email || ""}
+                      <Copy className="transition-rotate duration-300 rotate-0 hover:rotate-[8deg]" />
+                    </div>
+                    {isCopied && (
+                      <p className="mt-2 text-sm font-semibold text-[#30c1bd]">
+                        Texte copié avec succès !
+                      </p>
+                    )}
                   </dd>
                 </div>
 
@@ -169,16 +233,68 @@ export default function Page({
 
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-lg font-medium leading-6 text-gray-500">
-                    Projets
+                    Dernières Activitées
                   </dt>
                   <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
+                    {formatDate(projects[0].updated_at || "")}{" "}
+                    <span className="text-gray-500">
+                      ({getElapsedTime(projects[0].updated_at || "")})
+                    </span>
+                  </dd>
+                </div>
+
+                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt className="text-lg font-medium leading-6 text-gray-500">
+                    Projets
+                  </dt>
+                  <dd
+                    className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0"
+                    onClick={() => {
+                      setViewProjects(!viewProjects);
+                    }}
+                  >
                     <Link
                       href="#"
-                      className="flex items-center gap-4 w-[90%] bg-white text-[#30c1bd] border-2 border-[#30c1bd] rounded-md px-4 py-2 hover:bg-[#30c1bd] hover:text-white transition-all ease-in-out delay-50"
+                      className="flex items-center gap-4 w-fit bg-white text-[#30c1bd] border-2 border-[#30c1bd] rounded-md px-4 py-2 hover:bg-[#30c1bd] hover:text-white transition-all ease-in-out delay-50"
                     >
-                      <Eye />
-                      <span>Voir les projets</span>
+                      {viewProjects ? <EyeOff /> : <Eye />}
+                      {viewProjects ? (
+                        <span>Masquer les projets</span>
+                      ) : (
+                        <span>Voir les projets</span>
+                      )}
                     </Link>
+
+                    <div className="flex flex-col items-start w-[250%] mt-5">
+                      {viewProjects &&
+                        (projects.map((project) => (
+                          <div className="flex items-center justify-between gap-12 border-t-2 py-4 border-gray-300">
+                            <div className="flex flex-col items-start">
+                              <p className="text-lg font-semibold">
+                                {project.name}
+                              </p>
+                              <p className="text-lg">
+                                Dernière modification:{" "}
+                                {formatDate(project.updated_at || "")}{" "}
+                                <span>
+                                  {getElapsedTime(project.updated_at || "")}
+                                </span>
+                              </p>
+                            </div>
+                            <div className="flex flex-col items-center bg-white border-2 border-black px-4 py-2 rounded-[8px]">
+                              <Link
+                                href={`/pages/projects/${project.id}`}
+                                className="flex items-center justify-center gap-3 w-fit"
+                              >
+                                <ExternalLink />
+                                <p className="text-lg font-semibold">Ouvrir</p>
+                              </Link>
+                            </div>
+                          </div>
+                        )) || (
+                          <div className="mt-">Il n'y a pas de projets</div>
+                        ))}
+                    </div>
                   </dd>
                 </div>
               </dl>
