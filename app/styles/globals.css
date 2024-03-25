@@ -36,7 +36,6 @@ body {
   position: relative;
   display: inline-flex;
   align-items: center;
-  margin-left: 2%;
   transition: transform 0.25s ease-in-out;
 }
 
@@ -54,24 +53,20 @@ body {
 }
 
 .nav-link {
-  color: #989fac;
+  color: #000;
+  opacity: 0.5;
   font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 16px;
   font-weight: 600;
+  transition: transform 0.25s;
 }
 
 .nav-link-selected {
   color: black;
+  opacity: 1;
   font-family: "M PLUS Rounded 1c", sans-serif;
   font-size: 16px;
   font-weight: 600;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
 }
 
 .link-to-scale {
@@ -79,7 +74,7 @@ body {
 }
 
 .link-to-scale:hover {
-  transform: scale(1.25);
+  transform: scale(1.05);
 }
 
 .link-to-scale:not(:hover) {

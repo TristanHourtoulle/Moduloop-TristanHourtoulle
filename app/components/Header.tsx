@@ -1,7 +1,6 @@
 "use client";
 
 import { SessionType } from "@models/Session";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LoginButton } from "./header/LoginButton";
@@ -43,13 +42,13 @@ const Header = () => {
     }
   }, [session]);
 
-  return session ? (
-    <div className="flex items-center h-24 w-full">
+  return (
+    <div className="flex items-center justify-between h-24 w-full px-7 py-2">
       <Logo />
 
       {/* Desktop View */}
-      <div className="hidden sm:flex flex-grow justify-center">
-        <div className="flex items-center justify-center gap-7 mr-auto ml-auto">
+      <div className="hidden sm:flex">
+        <div className="flex items-center gap-7">
           <Link
             href="/"
             onClick={() => {
@@ -61,19 +60,21 @@ const Header = () => {
           >
             Accueil
           </Link>
-          <Link
-            href="/pages/projects"
-            onClick={() => {
-              setSelectedLink("/pages/projects");
-            }}
-            className={`nav-link ${
-              selectedLink === "/pages/projects"
-                ? "nav-link-selected"
-                : "link-to-scale"
-            }`}
-          >
-            Projets
-          </Link>
+          {session && session.user && (
+            <Link
+              href="/pages/projects"
+              onClick={() => {
+                setSelectedLink("/pages/projects");
+              }}
+              className={`nav-link ${
+                selectedLink === "/pages/projects"
+                  ? "nav-link-selected"
+                  : "link-to-scale"
+              }`}
+            >
+              Projets
+            </Link>
+          )}
           {isAdmin && (
             <Link
               href="/pages/products"
@@ -106,7 +107,6 @@ const Header = () => {
           )}
           <Link
             href="https://www.moduloop.com/contact/"
-            className="link-to-scale"
             onClick={(e) => {
               e.preventDefault();
               const newWindow = window.open(
@@ -120,17 +120,6 @@ const Header = () => {
             <p className="nav-link">Contact</p>
           </Link>
         </div>
-
-        {/* Move the div containing the user icon inside the popover panel */}
-        <Link href="/" className="nav-user link-to-scale mr-5">
-          <Image
-            src="/icons/utilisateur.svg"
-            alt="profil"
-            width={30}
-            height={30}
-            className="object-contain"
-          />
-        </Link>
       </div>
 
       {/* Mobile View */}
@@ -175,7 +164,7 @@ const Header = () => {
                     <Link href="/pages/products" className="">
                       Produits
                     </Link>
-                  )}{" "}
+                  )}
                   {isAdmin && (
                     <Link href="/pages/users" className="">
                       Utilisateurs
@@ -206,8 +195,6 @@ const Header = () => {
         </div>
       )}
     </div>
-  ) : (
-    <div>Not connected</div>
   );
 };
 
