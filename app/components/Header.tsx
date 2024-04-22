@@ -2,36 +2,70 @@
 
 import { SessionType } from "@models/Session";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { LoginButton } from "./header/LoginButton";
 import { Logo } from "./header/Logo";
 import { RegisterButton } from "./header/RegisterButton";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { logout } from "@lib/session";
 
 const Header = () => {
+  const navigation = usePathname();
   const [selectedLink, setSelectedLink] = useState("/");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [session, setSession] = useState<SessionType | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [actualPage, setActualPage] = useState(navigation);
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error logging out:", error);
+      toast.error("Erreur lors de la déconnexion");
+    } finally {
+      toast.success("Déconnexion réussie");
+      window.location.href = "/";
+    }
+  };
+
   useEffect(() => {
     const fetchSession = async () => {
-      const res = await fetch("/api/session", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      setSession(data.session);
+      try {
+        const res = await fetch("/api/session", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        setSession(data.session);
+      } catch (error) {
+        console.error("Error fetching session:", error);
+      }
+    };
+
+    const getLink = () => {
+      if (actualPage.includes("projects")) {
+        setSelectedLink("/pages/projects");
+      } else if (actualPage.includes("products")) {
+        setSelectedLink("/pages/products");
+      } else if (actualPage.includes("users")) {
+        setSelectedLink("/pages/users");
+      } else {
+        setSelectedLink("/");
+      }
     };
 
     fetchSession();
+    getLink();
   }, []);
 
   useEffect(() => {
@@ -42,7 +76,7 @@ const Header = () => {
     }
   }, [session]);
 
-  return (
+  return session ? (
     <div className="flex items-center justify-between h-24 w-full px-7 py-2">
       <Logo />
 
@@ -119,6 +153,21 @@ const Header = () => {
           >
             <p className="nav-link">Contact</p>
           </Link>
+
+          <Link
+            href=""
+            onClick={() => {
+              // setSelectedLink("/pages/users");
+              handleLogout();
+            }}
+            className={`nav-link ${
+              selectedLink === "/pages/users"
+                ? "nav-link-selected"
+                : "link-to-scale"
+            }`}
+          >
+            Déconnexion
+          </Link>
         </div>
       </div>
 
@@ -194,6 +243,16 @@ const Header = () => {
           </div>
         </div>
       )}
+    </div>
+  ) : (
+    <div className="flex items-center justify-between h-24 w-full px-7 py-2">
+      <Logo />
+
+      {/* Auth Button */}
+      <div className="flex items-center gap-3">
+        <RegisterButton />
+        <LoginButton />
+      </div>
     </div>
   );
 };
