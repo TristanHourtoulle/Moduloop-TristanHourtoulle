@@ -1,10 +1,6 @@
 // Importez les types NextApiRequest et NextApiResponse
 import pool from "@/lib/database";
 import { NextRequest } from "next/server";
-import { User } from "@/models/User";
-import { writeFile, mkdir, readFile } from "fs/promises";
-import path from "path";
-import { ProjectType } from "@models/Project";
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
@@ -12,7 +8,7 @@ export async function POST(request: NextRequest) {
     const data = await request.formData();
     const name = data.get("name") as string;
     const description = data.get("description") as string;
-    const image = data.get("image") as File;
+    const image = "";
     let imageUrl = "";
     const user_id = data.get("user_id") as string;
     const budget = data.get("budget") as string;
@@ -24,7 +20,7 @@ export async function POST(request: NextRequest) {
     let group_description = "";
     let group_budget = "";
 
-    if (group_id === "-1") {
+    if (group_id === "-2") {
       group_name = data.get("group-name") as string;
       group_description = data.get("group-description") as string;
       group_budget = data.get("group-budget") as string;
@@ -40,20 +36,20 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    if (image) {
-      const fileBlob = await image.arrayBuffer();
-      const buffer = Buffer.from(fileBlob);
-      const uploadDir = path.join(process.cwd(), "public", "projects");
-      await mkdir(uploadDir, { recursive: true });
-      const filepath = path.join(uploadDir, image.name);
-      await writeFile(filepath, buffer);
+    // if (image) {
+    //   const fileBlob = await image.arrayBuffer();
+    //   const buffer = Buffer.from(fileBlob);
+    //   const uploadDir = path.join(process.cwd(), "public", "projects");
+    //   await mkdir(uploadDir, { recursive: true });
+    //   const filepath = path.join(uploadDir, image.name);
+    //   await writeFile(filepath, buffer);
 
-      const dbFilePath = filepath
-        .replace(process.cwd(), "")
-        .replace(/\\/g, "/");
-      const dbImageUrl = dbFilePath.replace("/public", "");
-      imageUrl = dbImageUrl;
-    }
+    //   const dbFilePath = filepath
+    //     .replace(process.cwd(), "")
+    //     .replace(/\\/g, "/");
+    //   const dbImageUrl = dbFilePath.replace("/public", "");
+    //   imageUrl = dbImageUrl;
+    // }
 
     const result = await pool.query(
       "INSERT INTO projects (name, description, image, budget, company, location, area, user_id, group_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;",
