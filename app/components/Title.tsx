@@ -117,7 +117,7 @@ export const Title = (title: TitleType) => {
         </div>
       )}
 
-      {!title.canChange && <p className="page-number">({title.number})</p>}
+      {!title.canChange && <p className="page-number">{title.number}</p>}
     </div>
   );
 };
