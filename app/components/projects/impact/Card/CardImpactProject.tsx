@@ -1,3 +1,4 @@
+import { Tooltip } from "@material-tailwind/react";
 import { ProjectType } from "@models/Project";
 import {
   getASEimpact,
@@ -5,6 +6,7 @@ import {
   getEMimpact,
   getERFimpact,
 } from "@utils/getImpact";
+import { numberFormater } from "@utils/numberFormater";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -12,26 +14,27 @@ export type CardImpactProjectProps = {
   project: ProjectType;
   type: string;
   impact: string;
+  bgColor: string;
 };
 
 export const CardImpactProject = (props: CardImpactProjectProps) => {
-  const { project, type, impact } = props;
+  const { project, type, impact, bgColor } = props;
   const [unit, setUnit] = useState("kgCO2e");
   const [image, setImage] = useState("/icons/feuille.svg");
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState("0");
 
   useEffect(() => {
     if (impact === "rc") {
-      setResult(Number(getCO2impact(project)) || 0);
+      setResult(numberFormater(Number(getCO2impact(project)) || 0, false));
       setUnit("kgCO2e");
     } else if (impact === "erf") {
-      setResult(Number(getERFimpact(project)) || 0);
+      setResult(numberFormater(Number(getERFimpact(project)) || 0, false));
       setUnit("MJ");
     } else if (impact === "ase") {
-      setResult(Number(getASEimpact(project)) || 0);
+      setResult(numberFormater(Number(getASEimpact(project)) || 0, false));
       setUnit("mol H+");
     } else if (impact === "em") {
-      setResult(Number(getEMimpact(project)) || 0);
+      setResult(getEMimpact(project) || "0");
       setUnit("kg P eq.");
     }
 
@@ -44,23 +47,25 @@ export const CardImpactProject = (props: CardImpactProjectProps) => {
   });
 
   return (
-    <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
-      <h3 className="uppercase font-semibold text-2xl text-black opacity-95">
-        {project.name}
-      </h3>
-      <div className="flex items-center gap-5">
-        <Image
-          src={image}
-          alt="Ecologie"
-          width={60}
-          height={60}
-          className="drop-shadow-lg"
-        />
-        <div className="flex items-end gap-3">
-          <p className="text-black font-bold text-5xl">{result}</p>
-          <p className="text-black font-regular text-xl">{unit}</p>
+    <Tooltip content="Bonjour">
+      <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
+        <h3 className="uppercase font-semibold text-2xl text-black opacity-95">
+          {project.name}
+        </h3>
+        <div className="flex items-center gap-5">
+          <Image
+            src={image}
+            alt="Ecologie"
+            width={60}
+            height={60}
+            className="drop-shadow-lg"
+          />
+          <div className="flex items-end gap-3">
+            <p className="text-black font-bold text-4xl">{result}</p>
+            <p className="text-black font-regular text-xl">{unit}</p>
+          </div>
         </div>
       </div>
-    </div>
+    </Tooltip>
   );
 };

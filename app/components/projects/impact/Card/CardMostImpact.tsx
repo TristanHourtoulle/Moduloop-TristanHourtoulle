@@ -46,38 +46,42 @@ export const CardMostImpact = (props: CardMostImpactProps) => {
   };
 
   return (
-    <div className="most-impact-card flex flex-col gap-2 md:w-[33%] max-w-md">
-      <h4 className="text-lg">
-        Représente <span className="font-bold">{percentage}%</span> de l'impact
-        total
-      </h4>
-      <h2 className="font-bold text-3xl">{title}</h2>
-      <div className="doughnut-container flex items-center justify-between">
-        <div className="flex flex-col gap-2">
-          {/* Ici, vous pouvez créer votre légende personnalisée */}
-          <p className="text-lg font-bold">Cycle de vie</p>
-          <div className="flex gap-4 items-center">
-            <div className="px-5 py-2 bg-[#FF6384]/20 rounded-[5px] border-solid border-2 border-[#FF6384] w-[20%] h-[10%]"></div>
-            <p className="text-sm font-semibold opacity-75">Manufacturing</p>
-          </div>
+    <>
+      {percentage > 0 ? (
+        <div className="most-impact-card flex flex-col gap-2 md:w-[33%] max-w-md">
+          <h4 className="text-lg">
+            Représente <span className="font-bold">{percentage}%</span> de
+            l'impact total
+          </h4>
+          <h2 className="font-bold text-3xl">{title}</h2>
+          <div className="doughnut-container flex items-center justify-between">
+            <div className="flex flex-col gap-2">
+              {/* Ici, vous pouvez créer votre légende personnalisée */}
+              <p className="text-lg font-bold">Cycle de vie</p>
+              <div className="flex gap-4 items-center">
+                <div className="px-5 py-2 bg-[#FF6384]/20 rounded-[5px] border-solid border-2 border-[#FF6384] w-[20%] h-[10%]"></div>
+                <p className="text-sm font-semibold opacity-75">Fabrication</p>
+              </div>
 
-          <div className="flex gap-4 items-center">
-            <div className="px-5 py-2 bg-[#FF9F40]/20 rounded-[5px] border-solid border-2 border-[#FF9F40] w-[20%] h-[10%]"></div>
-            <p className="text-sm font-semibold opacity-75">Installation</p>
-          </div>
+              <div className="flex gap-4 items-center">
+                <div className="px-5 py-2 bg-[#FF9F40]/20 rounded-[5px] border-solid border-2 border-[#FF9F40] w-[20%] h-[10%]"></div>
+                <p className="text-sm font-semibold opacity-75">Installation</p>
+              </div>
 
-          <div className="flex gap-4 items-center">
-            <div className="px-5 py-2 bg-[#FFCD56]/20 rounded-[5px] border-solid border-2 border-[#FFCD56] w-[20%] h-[10%]"></div>
-            <p className="text-sm font-semibold opacity-75">Usage</p>
-          </div>
+              <div className="flex gap-4 items-center">
+                <div className="px-5 py-2 bg-[#FFCD56]/20 rounded-[5px] border-solid border-2 border-[#FFCD56] w-[20%] h-[10%]"></div>
+                <p className="text-sm font-semibold opacity-75">Utilisation</p>
+              </div>
 
-          <div className="flex gap-4 items-center">
-            <div className="px-5 py-2 bg-[#4BC0C0]/20 rounded-[5px] border-solid border-2 border-[#4BC0C0] w-[20%] h-[10%]"></div>
-            <p className="text-sm font-semibold opacity-75">EndOfLife</p>
+              <div className="flex gap-4 items-center">
+                <div className="px-5 py-2 bg-[#4BC0C0]/20 rounded-[5px] border-solid border-2 border-[#4BC0C0] w-[20%] h-[10%]"></div>
+                <p className="text-sm font-semibold opacity-75">Fin de vie</p>
+              </div>
+            </div>
+            <Dougnhut data={data} text={ranking.toString()} />
           </div>
         </div>
-        <Dougnhut data={data} text={ranking.toString()} />
-      </div>
-    </div>
-  );
+      ) : null}
+    </>
+  ); // Add closing parenthesis here // Add closing parenthesis here
 };

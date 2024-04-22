@@ -24,55 +24,62 @@ export const CompareImpact = (props: CompareImpactProps) => {
   const [title, setTitle] = useState<string>("");
   const [impact, setImpact] = useState<string>("rc");
   const [image, setImage] = useState<string>("/icons/ecologie.svg");
+  const [bgColor, setBgColor] = useState<string>("rgba(255, 138, 0, 0.1)");
+  const [finalPercentage, setFinalPercentage] = useState<string>(
+    percentage.toString()
+  );
 
   useEffect(() => {
-    const getBetterAndWorstProject = (
-      project_one: ProjectType,
-      project_two: ProjectType
-    ) => {
-      if (type === "Réchauffement climatique") {
-        setTitle("émissions évitées");
-        setImpact("rc");
-        const valueOne = getCO2impact(project_one);
-        const valueTwo = getCO2impact(project_two);
-        if (valueOne > valueTwo) {
-          setBetterProject(project_two);
-          setWorstProject(project_one);
-        }
-      } else if (type === "Epuisement des ressources fossiles") {
-        setTitle("épuisement évitées");
-        setImpact("erf");
-        setImage("/icons/éolienne.svg");
-        const valueOne = getERFimpact(project_one);
-        const valueTwo = getERFimpact(project_two);
-        if (valueOne > valueTwo) {
-          setBetterProject(project_two);
-          setWorstProject(project_one);
-        }
-      } else if (type === "Acidification des sols et eaux") {
-        setTitle("acidifications évitées");
-        setImpact("ase");
-        setImage("/icons/no-ase.svg");
-        const valueOne = getASEimpact(project_one);
-        const valueTwo = getASEimpact(project_two);
-        if (valueOne > valueTwo) {
-          setBetterProject(project_two);
-          setWorstProject(project_one);
-        }
-      } else {
-        setTitle("Eutrophisation évitée");
-        setImpact("em");
-        setImage("/icons/no-em.svg");
-        const valueOne = getEMimpact(project_one);
-        const valueTwo = getEMimpact(project_two);
-        if (valueOne > valueTwo) {
-          setBetterProject(project_two);
-          setWorstProject(project_one);
-        }
+    if (Number(finalPercentage) < 1 && Number(finalPercentage) >= 0) {
+      setFinalPercentage("< 1");
+    }
+    if (type === "Réchauffement climatique") {
+      setTitle("émissions évitées");
+      setImpact("rc");
+      const valueOne = getCO2impact(project_one);
+      const valueTwo = getCO2impact(project_two);
+      if (Number(valueOne) >= Number(valueTwo)) {
+        setBetterProject(project_two);
+        setWorstProject(project_one);
       }
-    };
-    getBetterAndWorstProject(project_one, project_two);
-  });
+    } else if (type === "Epuisement des ressources fossiles") {
+      setTitle("épuisement évitées");
+      setImpact("erf");
+      setImage("/icons/éolienne.svg");
+      const valueOne = getERFimpact(project_one);
+      const valueTwo = getERFimpact(project_two);
+      if (Number(valueOne) >= Number(valueTwo)) {
+        setBetterProject(project_two);
+        setWorstProject(project_one);
+      }
+      setBgColor("rgba(255, 48, 48, 0.1)");
+    } else if (type === "Acidification des sols et eaux") {
+      setTitle("acidifications évitées");
+      setImpact("ase");
+      setImage("/icons/no-ase.svg");
+      const valueOne = getASEimpact(project_one);
+      const valueTwo = getASEimpact(project_two);
+      if (Number(valueOne) >= Number(valueTwo)) {
+        setBetterProject(project_two);
+        setWorstProject(project_one);
+      }
+      setBgColor("rgba(0, 164, 16, 0.1)");
+    } else {
+      setTitle("Eutrophisation évitée");
+      setImpact("em");
+      setImage("/icons/no-em.svg");
+      const valueOne = getEMimpact(project_one);
+      const valueTwo = getEMimpact(project_two);
+      if (Number(valueOne) >= Number(valueTwo)) {
+        setBetterProject(project_two);
+        setWorstProject(project_one);
+      } else {
+      }
+      setBgColor("rgba(0, 164, 16, 0.1)");
+    }
+    console.log("Name better project", betterProject.name);
+    console.log("Name worst project", worstProject.name);
+  }, [project_one, project_two]);
 
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
@@ -93,7 +100,9 @@ export const CompareImpact = (props: CompareImpactProps) => {
               height={60}
               className="drop-shadow-lg"
             />
-            <p className="text-white font-bold text-5xl">{percentage}%</p>
+            <p className="text-white font-bold text-5xl">
+              {percentage.toFixed(0)}%
+            </p>
           </div>
         </div>
 
@@ -102,12 +111,14 @@ export const CompareImpact = (props: CompareImpactProps) => {
           project={betterProject}
           type="better"
           impact={impact}
+          bgColor=""
         />
         {/* Worst Project */}
         <CardImpactProject
           project={worstProject}
           type="worst"
           impact={impact}
+          bgColor={bgColor}
         />
       </div>
     </div>

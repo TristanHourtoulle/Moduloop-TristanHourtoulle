@@ -1,4 +1,5 @@
 import { ProjectType } from "@models/Project";
+import { numberFormater } from "@utils/numberFormater";
 import Image from "next/image";
 
 export type CardEquivalenceImpactProps = {
@@ -26,7 +27,9 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
           className="drop-shadow-lg"
         />
         <div className="flex items-end gap-3">
-          <p className="text-black font-bold text-5xl">{value}</p>
+          <p className="text-black font-bold text-4xl">
+            {numberFormater(value, false)}
+          </p>
           <p className="text-black font-regular text-xl">{unit}</p>
         </div>
       </div>
