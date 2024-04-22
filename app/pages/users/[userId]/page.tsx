@@ -9,6 +9,7 @@ import { ProjectType } from "@models/Project";
 import { Copy, ExternalLink, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Page({
   params: { userId },
@@ -24,6 +25,8 @@ export default function Page({
   const [emailHeight, setEmailHeight] = useState("auto");
   const [projects, setProjects] = useState<ProjectType[] | null>(null);
   const [viewProjects, setViewProjects] = useState<boolean>(false);
+  const [selectedRole, setSelectedRole] = useState<string>("user");
+  const [changeRole, setChangeRole] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -50,7 +53,6 @@ export default function Page({
         });
         const data = await res.json();
         if (data.success) {
-          console.log("Project User: ", data.data);
           setProjects(data.data);
         } else {
           console.error(
@@ -80,7 +82,7 @@ export default function Page({
         const data = await res.json();
         if (data.success) {
           setUser(data.data);
-          console.log(data);
+          setSelectedRole(data.data.role);
           setTitle({
             title: "Utilisateur",
             image: "/icons/close.svg",
@@ -159,19 +161,71 @@ export default function Page({
     return <Loader />;
   }
 
+  const handleSelectedRoleChange = async (selectedOption: string) => {
+    if (user && selectedOption !== user.role) {
+      setChangeRole(true);
+    } else if (changeRole) {
+      setChangeRole(false);
+    }
+  };
+
+  const handleSetNewRole = async () => {
+    if (user && changeRole) {
+      alert(
+        "Je dois modifier le rôle de l'utilisateur dans la base de données..."
+      );
+
+      const newUser = {
+        ...user,
+        role: selectedRole,
+        updatedAt: "",
+        createdAt: "",
+      };
+      try {
+        let res = await fetch(`/api/user`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        });
+        const data = await res.json();
+        if (data.success) {
+          alert("Le rôle de l'utilisateur a été modifié avec succès !");
+          setChangeRole(false);
+          toast.success("Le rôle de l'utilisateur a été modifié avec succès !");
+        } else {
+          console.error(
+            "Erreur lors de la modification du rôle de l'utilisateur:",
+            data.error
+          );
+          toast.error(
+            "Erreur 1 lors de la modification du rôle de l'utilisateur"
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Erreur lors de la modification du rôle de l'utilisateur:",
+          error
+        );
+        toast.error(
+          "Erreur 2 lors de la modification du rôle de l'utilisateur"
+        );
+      }
+    }
+  };
+
   return (
     <div className="">
       <Title {...title} />
       <div className="py-[3%] px-7 flex flex-col items-center">
-        {/* <p className="flex-1 text-xl">
-          Ici vous avez accès aux données de l'utilisateurs comme ses projets,
-          les dernières activités, etc...
-        </p>
-        <div className="flex items-center justify-center gap-4 py-[2%]">
-          <Loader />
-          <p className="text-lg font-bold">En construction...</p>
-          <Loader />
-        </div> */}
+        {/* Ici vous avez accès aux données de l'utilisateur comme ses projets,
+            les dernières activités, etc... */}
+        {/* <div className="flex items-center justify-center gap-4 py-[2%]">
+             <Loader />
+             <p className="text-lg font-bold">En construction...</p>
+             <Loader />
+           </div> */}
 
         {/* View Content */}
         {/* Infos View */}
@@ -187,6 +241,45 @@ export default function Page({
               <dl className="divide-y divide-gray-300">
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-lg font-medium leading-6 text-gray-500">
+                    Rôle
+                  </dt>
+                  <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
+                    <div className="flex gap-3 items-center justify-between">
+                      <select
+                        onChange={() => {
+                          const selectedOption = document.getElementById(
+                            "role"
+                          ) as HTMLSelectElement;
+                          setSelectedRole(selectedOption.value);
+                          // setSelectedRole(
+                          //   selectedRole === "admin" ? "user" : "admin"
+                          // );
+                          handleSelectedRoleChange(selectedOption.value);
+                        }}
+                        id="role"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[50%] p-2.5 "
+                      >
+                        <option value="admin" selected={user.role === "admin"}>
+                          Administrateur
+                        </option>
+                        <option value="user" selected={user.role !== "admin"}>
+                          Utilisateur
+                        </option>
+                      </select>
+
+                      <div
+                        hidden={!changeRole}
+                        onClick={handleSetNewRole}
+                        className="cursor-pointer border-2 border-[#30C1BD] bg-white text-[#30C1BD] rounded-md px-4 py-2 hover:bg-[#30C1BD] hover:text-white transition-all ease-in-out delay-50"
+                      >
+                        Confirmer
+                      </div>
+                    </div>
+                  </dd>
+                </div>
+
+                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt className="text-lg font-medium leading-6 text-gray-500">
                     Nom & Prénom
                   </dt>
                   <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
@@ -196,7 +289,7 @@ export default function Page({
 
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-lg font-medium leading-6 text-gray-500">
-                    Addresse Mail
+                    Adresse Mail
                   </dt>
                   <dd
                     className={`mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0 transition-all duration-100 ease-in-out overflow-hidden hover:opacity-75`}
@@ -233,12 +326,18 @@ export default function Page({
 
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-lg font-medium leading-6 text-gray-500">
-                    Dernières Activitées
+                    Dernières Activités
                   </dt>
                   <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
-                    {formatDate(projects[0].updated_at || "")}{" "}
+                    {projects && projects[0]
+                      ? formatDate(projects[0].updated_at || "")
+                      : "Néant"}{" "}
                     <span className="text-gray-500">
-                      ({getElapsedTime(projects[0].updated_at || "")})
+                      (
+                      {projects && projects[0]
+                        ? getElapsedTime(projects[0].updated_at || "")
+                        : "Néant"}
+                      )
                     </span>
                   </dd>
                 </div>
@@ -266,8 +365,8 @@ export default function Page({
                     </Link>
 
                     <div className="flex flex-col items-start w-[250%] mt-5">
-                      {viewProjects &&
-                        (projects.map((project) => (
+                      {viewProjects && projects.length > 0 ? (
+                        projects.map((project) => (
                           <div className="flex items-center justify-between gap-12 border-t-2 py-4 border-gray-300">
                             <div className="flex flex-col items-start">
                               <p className="text-lg font-semibold">
@@ -291,9 +390,10 @@ export default function Page({
                               </Link>
                             </div>
                           </div>
-                        )) || (
-                          <div className="mt-">Il n'y a pas de projets</div>
-                        ))}
+                        )) || <div className="mt-">Il n'y a pas de projets</div>
+                      ) : viewProjects ? (
+                        <p>L'utilisateur n'a pas encore créé de projets...</p>
+                      ) : null}
                     </div>
                   </dd>
                 </div>
