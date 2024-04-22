@@ -2,32 +2,42 @@ import { AddProductType } from "@/models/AddProduct";
 import TrashCan from "@components/button/TrashCan";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const ProductInProjectCard = (props: {
   product: AddProductType;
   idProject: number;
+  qNewReceived: number;
+  qUsedReceived: number;
+  ctaDelete: () => void;
 }) => {
-  const { product, idProject } = props;
-  const [qNew, setQNew] = useState(product.qNew);
-  const [initialQNew, setInitialQNew] = useState(product.qNew);
-  const [qUsed, setQUsed] = useState(product.qUsed);
-  const [initialQUsed, setInitialQUsed] = useState(product.qUsed);
+  const { product, idProject, qNewReceived, qUsedReceived, ctaDelete } = props;
+  const [qNew, setQNew] = useState(qNewReceived);
+  const [initialQNew, setInitialQNew] = useState(qNewReceived);
+  const [qUsed, setQUsed] = useState(qUsedReceived);
+  const [initialQUsed, setInitialQUsed] = useState(qUsedReceived);
   const [isDifferent, setIsDifferent] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [base, setBase] = useState<string>("Inies");
+
+  useEffect(() => {
+    // Mettre à jour les états locaux lorsque les nouvelles quantités sont reçues via les props
+    setQNew(qNewReceived);
+    setQUsed(qUsedReceived);
+  }, [qNewReceived, qUsedReceived]); // Exécuter l'effet chaque fois que qNewReceived ou qUsedReceived change
 
   const handleAdd = async () => {
     const addProduct: AddProductType = {
       product: product.product,
       idProject: idProject,
-      qNew: qNew - initialQNew,
-      qUsed: qUsed - initialQUsed,
+      qNew: qNew,
+      qUsed: qUsed,
       addOn: null,
       updatedOn: null,
     };
 
-    let res = await fetch(`/api/project/addProduct`, {
+    let res = await fetch(`/api/project/changeProduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,6 +53,7 @@ const ProductInProjectCard = (props: {
       setInitialQNew(qNew);
       setInitialQUsed(qUsed);
       setIsDifferent(false);
+      ctaDelete();
     } else {
       console.error("Erreur lors de l'ajout du produit au projet");
       toast.error("Erreur lors de l'ajout du produit au projet.", {
@@ -93,7 +104,7 @@ const ProductInProjectCard = (props: {
     if (res.ok) {
       toast.success("Produit supprimé du projet");
       setDialogOpen(false);
-      window.location.reload();
+      ctaDelete();
     } else {
       setDialogOpen(false);
       console.error("Erreur lors de la suppression du produit du projet");
@@ -111,13 +122,23 @@ const ProductInProjectCard = (props: {
     cancelCta: () => setDialogOpen(false),
   };
 
+  useEffect(() => {
+    if (!product.product.name.includes("Inies")) {
+      setBase("Autres");
+    }
+  }, []);
+
   return (
-    <div className="product-in-project-card w-[30%] px-[2%] py-[2%] flex flex-col justify-center">
+    <div className="product-in-project-card w-[30%] px-[2%] py-[2%] flex flex-col justify-between">
       {/* Header */}
       <div className="flex item-center justify-between">
         <div className="flex flex-col items-start">
           <p className="name">{product.product.name.replace("Inies - ", "")}</p>
-          <p className="base">{product.product.base}</p>
+          <div className="flex items-center gap-2">
+            <p className="base text-lg">{product.product.unit}</p>
+            <p className="base text-lg"> - </p>
+            <p className="base text-lg">{base}</p>
+          </div>
         </div>
         <div onClick={handleDeleteProduct} className="cursor-pointer">
           <TrashCan />
@@ -140,20 +161,25 @@ const ProductInProjectCard = (props: {
 
       {/* Quantity */}
       <div className="flex items-center justify-between">
-        <div className="flex flex-col w-[25%]">
-          <label className="text-xs" htmlFor={`new`}>
+        <div>
+          <label
+            htmlFor={`new`}
+            className="block mb-1 text-sm font-medium text-gray-900 opacity-75"
+          >
             Neuf
           </label>
           <input
+            style={{ width: "75px" }}
             min={0}
             type="number"
             name={`new`}
             id={`new`}
             value={qNew}
             onChange={handleQNewChange}
-            className="w-full text-right input-bg-gray-200"
+            className="text-right bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
           ></input>
         </div>
+
         <div className="w-auto pt-[5%]">
           <button
             onClick={handleAdd}
@@ -166,18 +192,23 @@ const ProductInProjectCard = (props: {
             Modifier
           </button>
         </div>
-        <div className="flex flex-col  w-[25%]">
-          <label className="text-xs" htmlFor={`reuse`}>
+
+        <div>
+          <label
+            htmlFor={`reuse`}
+            className="block mb-1 text-sm font-medium text-gray-900 opacity-75"
+          >
             Réemploi
           </label>
           <input
+            style={{ width: "75px" }}
             min={0}
             type="number"
             name={`reuse`}
             id={`reuse`}
             value={qUsed}
             onChange={handleQUsedChange}
-            className="w-full text-right input-bg-gray-200"
+            className="text-right bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
           ></input>
         </div>
       </div>
