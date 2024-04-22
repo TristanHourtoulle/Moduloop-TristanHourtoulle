@@ -1,83 +1,157 @@
-"use client"
+"use client";
 
-import { User } from '@/models/User';
+import { User } from "@/models/User";
+import { toast } from "sonner";
 
 export default function Login() {
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    // const formData = new FormData(e.currentTarget);
+    const emailInput = document.getElementById("email") as HTMLInputElement;
+    const passwordInput = document.getElementById(
+      "password"
+    ) as HTMLInputElement;
+    const user: User = {
+      id: 0,
+      firstName: "",
+      name: "",
+      email: emailInput.value || "",
+      password: passwordInput.value || "",
+      role: "",
+      createdAt: "",
+      updatedAt: "",
+      avatar: "",
+    };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        const formData = new FormData(e.currentTarget)
-        const user: User = {
-            id: 0,
-            firstName: "",
-            name: "",
-            email: formData.get("email") as string,
-            password: formData.get("password") as string,
-            role: "",
-            createdAt: "",
-            updatedAt: "",
-            avatar: "",
-        }
+    try {
+      const email = user.email || "";
+      const password = user.password || "";
+      const url = `/api/user?email=${encodeURIComponent(
+        email
+      )}&password=${encodeURIComponent(password)}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        try {
-            const email = user.email || '';
-            const password = user.password || '';
-            const url = `/api/user?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
-            const response = await fetch(url, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-
-            if (response.ok) {
-                window.location.href = "/"
-            } else {
-                alert("Error: " + response.statusText)
-            }
-        } catch (error) {
-        }
-    }
+      if (response.ok) {
+        toast.success("Connexion réussie");
+        window.location.href = "/";
+      } else {
+        alert("Error: " + response.statusText);
+      }
+    } catch (error) {}
+  };
 
   return (
-    <div className='flex justfy-center items-center my-auto mt-20'>
-        <div className='flex flex-col items-center mx-auto'>
-            <h1 className='text-6xl font-bold mb-10'>Se connecter</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-5">
-                    <label hidden htmlFor="email">Email</label>
-                    <input
-                        type="text"
-                        id="email"
-                        name="email"
-                        placeholder="Email"
-                        className="border-2 border-gray-300 p-2 rounded-md w-96 font-bold font-sans"
-                        required
-                    />
-                </div>
+    <div className="w-[900px] h-[500px] bg-white flex shadow-lg items-center ml-auto mr-auto rounded-lg">
+      {/* Left Side */}
+      <div className="flex flex-col gap-3 items-start justify-center bg-[#0A726F] w-[40%] h-full px-[4%] rounded-l-lg shadow-lg">
+        <h2 className="font-outfit font-bold text-white text-4xl">
+          Bon retour sur{" "}
+          <span className="text-5xl text-[#30C1BD]">Moduloop</span>
+        </h2>
+        <hr className="w-48 h-2 px-[4%] my-4 bg-[#30C1BD] border-0 rounded dark:bg-bg-[#30C1BD]"></hr>
+        <p className="font-outfit text-white text-base opacity-[90%]">
+          Connectez-vous à votre compte pour continuer.
+        </p>
+      </div>
 
-                <div className="mb-5">
-                    <label hidden htmlFor="password">Mot de passe</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Mot de passe"
-                        className="border-2 border-gray-300 p-2 rounded-md w-96 font-bold font-sans"
-                        required
-                    />
-                </div>
-
-                <div className="items-center justify-center ml-20">
-                    <button
-                        type="submit"
-                        className="bg-blue-500 text-white p-2 rounded-md w-48">
-                            <p className="text-xl">Valider</p>
-                    </button>
-                </div>
-            </form>
+      {/* Right Side */}
+      <div className="flex flex-col gap-10 items-center justify-center w-[60%] h-full">
+        {/* Head Section */}
+        <div className="flex flex-col items-center justify-center">
+          <h2 className="text-black font-outfit font-bold text-5xl">
+            Se connecter
+          </h2>
+          <p className="mt-2 text-black font-outfit text-md">
+            Vous n'avez pas encore de compte ?
+          </p>
+          <p
+            onClick={() => {
+              window.location.href = "/pages/register";
+            }}
+            className="cursor-pointer text-black font-outfit text-md font-bold transition-all hover:opacity-[75%]"
+          >
+            Créer un compte
+          </p>
         </div>
-    </div>
-  )
-}
 
+        {/* Input Section */}
+        <div className="w-full flex flex-col items-center gap-3">
+          <input
+            style={{ width: "75%" }}
+            id="email"
+            type="text"
+            placeholder="Addresse Mail"
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+          ></input>
+          <input
+            style={{ width: "75%" }}
+            id="password"
+            type="password"
+            placeholder="Mot de passe"
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+          ></input>
+
+          {/* Submit Button */}
+          <div
+            onClick={handleSubmit}
+            className="mt-3 bg-[#0A726F] px-8 py-4 rounded-lg text-white font-outfit text-lg w-[75%] text-center transition-all cursor-pointer hover:opacity-[75%]"
+          >
+            Connection
+          </div>
+          {/* Reset Password */}
+          <p
+            onClick={() => {
+              alert("Fonctionnalité encore en développement");
+            }}
+            className="cursor-pointer transition-all hover:opacity-[75%] text-left text-[#0A726F] font-bold text-md"
+          >
+            Mot de passe oublié ?
+          </p>
+        </div>
+      </div>
+    </div>
+    // <div className='flex justfy-center items-center my-auto mt-20'>
+    //     <div className='flex flex-col items-center mx-auto'>
+    //         <h1 className='text-6xl font-bold mb-10'>Se connecter</h1>
+    //         <form onSubmit={handleSubmit}>
+    //             <div className="mb-5">
+    //                 <label hidden htmlFor="email">Email</label>
+    //                 <input
+    //                     type="text"
+    //                     id="email"
+    //                     name="email"
+    //                     placeholder="Email"
+    //                     className="border-2 border-gray-300 p-2 rounded-md w-96 font-bold font-sans"
+    //                     required
+    //                 />
+    //             </div>
+
+    //             <div className="mb-5">
+    //                 <label hidden htmlFor="password">Mot de passe</label>
+    //                 <input
+    //                     type="password"
+    //                     id="password"
+    //                     name="password"
+    //                     placeholder="Mot de passe"
+    //                     className="border-2 border-gray-300 p-2 rounded-md w-96 font-bold font-sans"
+    //                     required
+    //                 />
+    //             </div>
+
+    //             <div className="items-center justify-center ml-20">
+    //                 <button
+    //                     type="submit"
+    //                     className="bg-blue-500 text-white p-2 rounded-md w-48">
+    //                         <p className="text-xl">Valider</p>
+    //                 </button>
+    //             </div>
+    //         </form>
+    //     </div>
+    // </div>
+  );
+}
