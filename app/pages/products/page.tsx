@@ -79,7 +79,7 @@ export default function Page() {
       {isLoading ? (
         <Loader />
       ) : (
-        <div className="ml-[3%] scroll-view overflow-y-hidden">
+        <div className="ml-[3%]">
           <div
             className="products-section my-[2%] mx-[5%]"
             style={{
