@@ -8,23 +8,23 @@ const pool = new Pool({
 });
 
 // Créer la fonction qui met à jour le champ updated_at
-pool.query(
-  `
-    CREATE OR REPLACE FUNCTION update_modified_column()
-    RETURNS TRIGGER AS $$
-    BEGIN
-       NEW.updated_at = now();
-       RETURN NEW; 
-    END;
-    $$ language 'plpgsql';
-`,
-  (err, res) => {
-    if (err) {
-      console.error(err);
-    } else {
-    }
-  }
-);
+// pool.query(
+//   `
+//     CREATE OR REPLACE FUNCTION update_modified_column()
+//     RETURNS TRIGGER AS $$
+//     BEGIN
+//        NEW.updatedAt = now();
+//        RETURN NEW;
+//     END;
+//     $$ language 'plpgsql';
+// `,
+//   (err, res) => {
+//     if (err) {
+//       console.error(err);
+//     } else {
+//     }
+//   }
+// );
 
 // Créer le trigger qui appelle cette fonction chaque fois qu'une ligne dans la table projects est mise à jour
 pool.query(
