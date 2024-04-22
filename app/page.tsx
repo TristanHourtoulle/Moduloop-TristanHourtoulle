@@ -11,7 +11,6 @@ export default async function Home() {
   if (initials.includes("undefined")) {
     initials = "";
   }
-  console.log("Session: ", session);
 
   return (
     <div className="flex flex-col items-center justify-between">
