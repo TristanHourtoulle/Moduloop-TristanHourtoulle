@@ -1,6 +1,7 @@
 import Header from "@components/Header";
 import "@styles/globals.css";
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Moduloop - Outil",
@@ -25,6 +26,7 @@ export default function RootLayout({
         >
           <Header />
         </div>
+        <Toaster richColors position="top-center" expand={false} />
         {children}
       </body>
     </html>
