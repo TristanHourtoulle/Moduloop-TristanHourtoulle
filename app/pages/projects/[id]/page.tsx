@@ -30,21 +30,21 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [storeProducts, setStoreProducts] = useState<ProductType[] | null>(
     null
   );
+  const [productsImpact, setProductsImpact] = useState<AddProductType | null>(
+    null
+  );
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [addProductLoader, setAddProductLoader] = useState<boolean>(false);
   const [storeProductsInies, setStoreProductsInies] = useState<ProductType[]>(
     []
   );
   const [storeProductsAutres, setStoreProductsAutres] = useState<ProductType[]>(
     []
   );
-
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [section, setSection] = useState("products");
-  const [productsImpact, setProductsImpact] = useState([]);
-  const [allIsLoaded, setAllIsLoaded] = useState(false);
-  const [kartLoaded, setKartLoaded] = useState(false);
-  const [description, setDescription] = useState("");
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [addProductLoader, setAddProductLoader] = useState(false);
+  const [allIsLoaded, setAllIsLoaded] = useState<boolean>(false);
+  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+  const [section, setSection] = useState<string>("products");
+  const [kartLoaded, setKartLoaded] = useState<boolean>(false);
 
   const dialogProps: DialogsProps = {
     title: "Supprimer tous les produits",
@@ -61,14 +61,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     });
 
     if (res.ok) {
-      console.log("Products deleted successfully");
       setProductsInProject([]);
-      setProductsImpact([]);
+      setProductsImpact(null);
       updateProductsInProject();
       setDialogOpen(false);
       toast.success("Les produits ont été supprimés avec succès");
     } else {
-      console.log("Failed to delete products:", res);
       alert("Failed to delete products");
       setDialogOpen(false);
       toast.error(
@@ -89,7 +87,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       !qUsed ||
       (qNew.value === "0" && qUsed.value === "0")
     ) {
-      console.log("Failed to fetch elements");
       return;
     }
 
@@ -119,10 +116,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         : [projectData.products];
       if (products && products.length > 0) {
         setProductsInProject(products.reverse());
-        setProductsImpact(products);
+        setProductsImpact(products as AddProductType | null);
       } else {
         setProductsInProject([]);
-        setProductsImpact([]);
+        setProductsImpact(null);
       }
 
       res = await fetch(
@@ -163,7 +160,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         alert(productsData.error);
       }
     } else {
-      console.log("Failed to fetch project:", data.error);
       alert(data.error);
     }
   };
@@ -180,14 +176,13 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       }
     );
     if (!res.ok) {
-      console.log("Failed to fetch product:", productToAdd);
       alert("Error");
       return;
     }
     const product = await res.json();
     const finalProduct: ProductType = product.product;
     const tempProductToAdd: AddProductType = {
-      product: finalProduct,
+      product: [finalProduct],
       idProject: Number(id),
       qNew: Number(qNew),
       qUsed: Number(qUsed),
@@ -203,10 +198,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       body: JSON.stringify(tempProductToAdd),
     });
     if (res.ok) {
-      console.log("Product added successfully");
       updateProductsInProject();
     } else {
-      console.log("Failed to add product:", res);
       alert("Failed to add product");
       toast.error("Une erreur s'est produite lors de l'ajout du produit");
     }
@@ -234,7 +227,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         const data = await res.json();
         if (data.success) {
           const projectData = databaseToSingleProjectModel(data.product);
-          setDescription(projectData.description ?? "");
+          //setDescription(projectData.description ?? "");
           res = await fetch(
             `/api/group/id?id=${encodeURIComponent(projectData.group ?? "")}`,
             {
@@ -245,12 +238,16 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           if (groupData.success) {
             projectData.groupInfo = databaseToGroupModel(groupData.data);
             setProject(projectData);
-            let index = 0;
             let products = Array.isArray(projectData.products)
               ? projectData.products
               : [projectData.products];
-            setProductsInProject(products.reverse());
-            setProductsImpact(products);
+            if (products && products.length > 0) {
+              setProductsInProject(products.reverse());
+              setProductsImpact(products as AddProductType | null);
+            } else {
+              setProductsInProject([]);
+              setProductsImpact(null);
+            }
             // Get stored products
             res = await fetch(`/api/product/list`, {
               method: "GET",
@@ -350,20 +347,24 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       <div className="flex items-center mb-5">
         <p className="group-title">Appartient au groupe: </p>
         <Link href="#" className="group-name">
-          {project ? (
+          {project && project.groupInfo ? (
             <div className="flex items-center gap-3">
               <Image src="/icons/lien.svg" alt="" width={20} height={20} />
               <p>{project.groupInfo?.name}</p>
             </div>
           ) : (
-            "Chargement..."
+            project && (
+              <div className="flex items-center gap-3">
+                <p>Aucun Groupe</p>
+              </div>
+            )
           )}
         </Link>
       </div>
       {/* Infos */}
       <div className="flex items-center justify-center gap-20 section-infos"></div>
       {/* Products */}
-      {project && productsInProject && productsInProject.length > 0 ? (
+      {project && productsInProject ? (
         <div className="mt-5">
           <div className="px-[5%]">
             <div className="flex items-end justify-between">
@@ -606,12 +607,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                 </div>
               ) : (
                 productsInProject?.map((product, index) => {
-                  console.log(product);
                   return (
                     <ProductInProjectCard
                       product={product}
-                      qNewReceived={product?.qNew}
-                      qUsedReceived={product?.qUsed}
+                      qNewReceived={product?.qNew || 0}
+                      qUsedReceived={product?.qUsed || 0}
                       idProject={Number(id)}
                       key={index}
                       ctaDelete={() => {
@@ -624,7 +624,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             </div>
           ) : (
             <div>
-              <ImpactSection products={productsImpact} project={project} />
+              <ImpactSection
+                products={productsImpact as AddProductType[]}
+                project={project}
+              />
             </div>
           )}
         </div>

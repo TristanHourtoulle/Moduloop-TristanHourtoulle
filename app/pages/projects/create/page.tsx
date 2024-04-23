@@ -5,6 +5,7 @@ import { GroupType } from "@models/Group";
 import { TitleType } from "@models/Title";
 import { databaseToSeveralGroupModel } from "@utils/convert";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 function page() {
   const [idUser, setIdUser] = useState<string>("");
@@ -69,13 +70,9 @@ function page() {
         alert("Le nom du projet doit contenir entre 5 et 50 caractères.");
         return;
       }
-      console.log("nameProject", nameProject.value);
-      console.log("groupId", groupId.value);
 
       if (groupId.value === "-10") {
-        console.log("Ne pas relié à un groupe");
       } else {
-        console.log("Relié à un groupe");
         const formData = new FormData();
 
         formData.append("user_id", idUser);
@@ -100,8 +97,14 @@ function page() {
           body: formData,
         });
 
-        if (response.ok) {
-          window.location.href = "/pages/projects";
+        const data = await response.json();
+
+        if (data.success) {
+          const createdProject = data.data;
+          toast.success("Le projet à bien été créer.");
+          setTimeout(() => {
+            window.location.href = "/pages/projects/" + createdProject.id;
+          }, 2000);
         } else {
           alert("Failed to create project.");
         }
@@ -125,7 +128,10 @@ function page() {
       const formData = new FormData();
 
       formData.append("user_id", idUser);
-      formData.append("name", e.currentTarget.name.value);
+      const name = e.currentTarget.name;
+      if (typeof name === "string") {
+        formData.append("name", name);
+      }
       formData.append("description", e.currentTarget.description.value);
       formData.append("company", e.currentTarget.company.value);
       formData.append("location", e.currentTarget.location.value);
@@ -159,6 +165,7 @@ function page() {
     number: "",
     back: "/pages/projects",
     canChange: false,
+    id_project: undefined,
   };
 
   return (
@@ -236,159 +243,6 @@ function page() {
         </div>
       </div>
     </div>
-    // <div>
-    //     <Title {...title} />
-    //     <div className='flex-container'>
-    //         <div className='create-project-section'>
-    //             <form onSubmit={handleSubmit}>
-    //                 <div className='flex flex-col gap-7 md:flex-row'>
-    //                     <div className='flex flex-col md:w-1/2'>
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="name" className='form-label'>Prénom</label>
-    //                             <input
-    //                                 type="text"
-    //                                 id="name"
-    //                                 name="name"
-    //                                 placeholder="Quel est le nom de votre projet ?"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-    //                                 required
-    //                             />
-    //                         </div>
-
-    //                         <div className='flex items-center justify-center'>
-    //                             <label hidden htmlFor="description" className='form-label'>Prénom</label>
-    //                             <textarea
-    //                                 id="description"
-    //                                 name="description"
-    //                                 placeholder="Vous pouvez décrire votre projet ici"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 h-48 large-input"
-    //                             />
-    //                         </div>
-
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="company" className='form-label'>Prénom</label>
-    //                             <input
-    //                                 type="text"
-    //                                 id="company"
-    //                                 name="company"
-    //                                 placeholder="Pour quelle entreprise est-ce destiné ?"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-    //                             />
-    //                         </div>
-
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="location" className='form-label'>Prénom</label>
-    //                             <input
-    //                                 type="text"
-    //                                 id="location"
-    //                                 name="location"
-    //                                 placeholder="Où votre entreprise est-elle situé ?"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-    //                             />
-    //                         </div>
-
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="group" className='form-label'>Prénom</label>
-    //                             <select name="group" id="group" className='border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans' onChange={handleGroupChange}>
-    //                                 <option value="">Aucun groupe</option>
-    //                                 {Array.isArray(groups) && groups.map(group => (
-    //                                     <option key={group.id} value={group.id}>{group.name}</option>
-    //                                 ))}
-    //                                 <option value="-1">
-    //                                     Créer un groupe
-    //                                 </option>
-    //                             </select>
-    //                             {/* Display only if he wants to create a group */}
-    //                         </div>
-    //                         {createGroup &&
-    //                             <div className=' flex flex-col gap-2 create-group-section'>
-    //                                 <label hidden htmlFor="group-name" className='form-label'>Prénom</label>
-    //                                 <input
-    //                                     type="text"
-    //                                     id="group-name"
-    //                                     name="group-name"
-    //                                     placeholder="Nom du groupe"
-    //                                     className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
-    //                                     value={groupName}
-    //                                     onChange={e => setGroupName(e.target.value)}
-    //                                     required
-    //                                 />
-    //                                 <label hidden htmlFor="group-description" className='form-label'>Prénom</label>
-    //                                 <textarea
-    //                                     id="group-description"
-    //                                     name="group-description"
-    //                                     placeholder="Description du groupe"
-    //                                     className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans large-input"
-    //                                     value={groupDescription}
-    //                                     onChange={e => setGroupDescription(e.target.value)}
-    //                                 />
-    //                                 <label hidden htmlFor="group-budget" className='form-label'>Prénom</label>
-    //                                 <input
-    //                                     type="text"
-    //                                     id="group-budget"
-    //                                     name="group-budget"
-    //                                     placeholder="Budget de votre groupe"
-    //                                     className="border-2 border-blue-400 p-2 rounder-md w-full md:w-48 font-sans"
-    //                                     value={groupBudget}
-    //                                     onChange={e => setGroupBudget(e.target.value)}
-    //                                 />
-    //                             </div>
-    //                         }
-    //                     </div>
-    //                     <div className='md:hidden ml-auto mr-auto' style={{ borderLeft: '1px solid black', height: '100%', alignSelf: 'center' }}></div>
-    //                     <div className='flex flex-col md:w-1/2'>
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="area" className='form-label'>Prénom</label>
-    //                             <input
-    //                                 type="text"
-    //                                 id="area"
-    //                                 name="area"
-    //                                 placeholder="Quelle est la superficie de votre projet ?"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-    //                             />
-    //                         </div>
-
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="budget" className='form-label'>Prénom</label>
-    //                             <input
-    //                                 type="text"
-    //                                 id="budget"
-    //                                 name="budget"
-    //                                 placeholder="Quelle est votre budget ?"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-    //                             />
-    //                         </div>
-
-    //                         <div className='flex items-center justify-center mb-5'>
-    //                             <label hidden htmlFor="image" className='form-label'>Prénom</label>
-    //                             <input
-    //                                 type="file"
-    //                                 id="image"
-    //                                 name="image"
-    //                                 placeholder="Ajoutez une image"
-    //                                 className="border-2 border-gray-300 p-2 rounded-md w-full md:w-96 font-sans"
-    //                             />
-    //                         </div>
-
-    //                         <div className='mt-auto ml-auto mr-auto'>
-    //                             <button type="submit" className='validate'>
-    //                                 Créer
-    //                             </button>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </form>
-    //         </div>
-    //         <div className='image-container'>
-    //             <Image
-    //                 src="/icons/create-project-page.svg"
-    //                 alt="Créer un projet"
-    //                 width={400}
-    //                 height={400}
-    //             />
-    //         </div>
-    //     </div>
-    // </div>
   );
 }
 
