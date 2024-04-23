@@ -1,33 +1,34 @@
 import pool from "@/lib/database";
-import { NextRequest } from "next/server";
-import { isProductInProject } from "@utils/projects";
-import {
-  databaseToSingleProjectModel,
-  databaseToSingleProductModel,
-} from "@utils/convert";
+import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
-import { AddProductType } from "@models/AddProduct";
+import {
+  databaseToSingleProductModel,
+  databaseToSingleProjectModel,
+} from "@utils/convert";
+import { isProductInProject } from "@utils/projects";
+import { NextRequest } from "next/server";
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
   const data = await request.json();
   try {
     let res = await pool.query("SELECT * FROM products WHERE id = $1", [
-      data.product.id,
+      data.product[0].id,
     ]);
     if (res.rowCount === 0) {
       throw new Error("Le produit n'existe pas");
     } else {
       const product: ProductType = databaseToSingleProductModel(res.rows[0]);
       let storeData: AddProductType = {
-        product: product,
+        product: [product], // Fix: Wrap the product object in an array
         idProject: data.idProject,
         qNew: data.qNew,
         qUsed: data.qUsed,
         addOn: Date.now().toString(),
         updatedOn: Date.now().toString(),
       };
+
       // Check if this product is already in the project
       res = await pool.query("SELECT * FROM projects WHERE id = $1", [
         data.idProject,
@@ -42,8 +43,21 @@ export async function POST(request: NextRequest) {
           if (project.products && Array.isArray(project.products)) {
             let index = 0;
             for (const item of project.products) {
-              if (item.product.id == alreadyExist.product.id) {
-                project.products[index] = alreadyExist;
+              if (
+                !alreadyExist ||
+                !alreadyExist.product ||
+                !alreadyExist.product === undefined ||
+                !alreadyExist.product[0]
+              ) {
+                throw new Error("Erreur lors de la récupération du produit");
+              }
+              if (
+                alreadyExist &&
+                alreadyExist.product &&
+                (item as any).product[0].id === alreadyExist.product[0].id // Fix: Access the 'id' property correctly
+              ) {
+                (project as any).products[index] = alreadyExist;
+              } else {
               }
               index++;
             }
@@ -59,11 +73,19 @@ export async function POST(request: NextRequest) {
             }
           }
         } else {
-          // We have to add new product
-          if (project.products === null) {
-            project.products = []; // Initialisation avec un tableau vide
+          // Initialisez project.products avec un tableau vide s'il est null
+          if (!project.products) {
+            project.products = [];
           }
-          project.products.push(storeData); // Correction ici pour initialiser project.products avec un tableau
+
+          // Vérifiez si project.products est un tableau avant d'y ajouter de nouveaux éléments
+          if (Array.isArray(project.products)) {
+            // Ajoutez storeData à project.products
+            (project as any).products.push(storeData);
+          } else {
+            // Gérez le cas où project.products n'est pas un tableau
+          }
+
           const jsonProducts = JSON.stringify(project.products);
           res = await pool.query(
             "UPDATE projects SET products = $1 WHERE id = $2 RETURNING *;",

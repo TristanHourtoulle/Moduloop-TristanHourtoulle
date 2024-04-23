@@ -1,10 +1,12 @@
 // Importez les types NextApiRequest et NextApiResponse
 import pool from "@/lib/database";
-import { NextRequest, NextResponse } from "next/server";
-import { ProductType } from "@models/Product";
 import { User } from "@/models/User";
+import { NextRequest } from "next/server";
 
-function substituteNewValuesFromReuseValues(newProduct, reuseProduct) {
+function substituteNewValuesFromReuseValues(
+  newProduct: any,
+  reuseProduct: any
+) {
   reuseProduct.reuse = {
     rc: {
       manufacturing:
@@ -42,7 +44,8 @@ function substituteNewValuesFromReuseValues(newProduct, reuseProduct) {
 export async function POST(request: NextRequest) {
   try {
     const param: any = await request.json();
-    const products = param.products;
+    let products = JSON.parse(param);
+    products = products.products;
 
     // Parcours de chaque produit
     for (const productName in products) {
@@ -70,19 +73,16 @@ export async function POST(request: NextRequest) {
               substituteNewValuesFromReuseValues(product.new, product.used),
             ]
           );
+          if (result.rowCount == 1) {
+            const data = result.rows[0];
+          } else {
+            throw new Error("La requête INSERT a échoué");
+          }
         } else {
         }
       }
     }
     return Response.json({ success: true, data: "OK" }, { status: 200 });
-    // const result = await pool.query("INSERT INTO products (name, image, unit, base, source, new, reuse) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;",
-    //                                 [product.name, product.image, product.unit, product.category, "", product.new, product.reuse])
-
-    // if (result.rowCount == 1) {
-    //     const data = result.rows[0];
-    // } else {
-    //     throw new Error('La requête INSERT a échoué')
-    // }
   } catch (error) {
     console.error("Erreur lors de l'insertion de l'utilisateur:", error);
     return Response.json({ success: false, error }, { status: 500 });

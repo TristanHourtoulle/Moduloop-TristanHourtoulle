@@ -1,7 +1,6 @@
 import pool from "@/lib/database";
 import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
-import { ProjectType } from "@models/Project";
 import {
   databaseToSingleProductModel,
   databaseToSingleProjectModel,
@@ -12,14 +11,14 @@ export async function POST(request: NextRequest) {
   const data = await request.json();
   try {
     let res = await pool.query("SELECT * FROM products WHERE id = $1", [
-      data.product.id,
+      data.product[0].id,
     ]);
     if (res.rowCount === 0) {
       throw new Error("Le produit n'existe pas");
     } else {
       const product: ProductType = databaseToSingleProductModel(res.rows[0]);
       let storeData: AddProductType = {
-        product: product,
+        product: [product],
         idProject: data.idProject,
         qNew: data.qNew,
         qUsed: data.qUsed,
@@ -33,12 +32,12 @@ export async function POST(request: NextRequest) {
       if (res.rowCount === 0) {
         throw new Error("Le projet n'existe pas");
       } else {
-        const project: ProjectType = databaseToSingleProjectModel(res.rows[0]);
+        const project: any = databaseToSingleProjectModel(res.rows[0]);
         // We have to update existing product quantity
         if (project.products && Array.isArray(project.products)) {
           let index = 0;
           for (const item of project.products) {
-            if (item.product.id == data.product.id) {
+            if (item.product[0].id == data.product[0].id) {
               project.products[index] = data;
             }
             index++;
