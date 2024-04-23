@@ -10,21 +10,22 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
-  const [loading, setLoading] = useState<boolean>(true);
   const [myProduct, setMyProduct] = useState<ProductType | null>(null);
   const [title, setTitle] = useState<TitleType | null>(null);
   const [view, setView] = useState("new"); // "new" - "reuse"
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Set initial value to true
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      setLoading(true);
+      setIsLoading(true);
       const formData = new FormData();
-      formData.append("file", file); // Ajoutez votre fichier upload à FormData
-      formData.append("productId", myProduct?.id); // Ajoutez l'id du produit à FormData
+      if (file) {
+        formData.append("file", file); // Ajoutez votre fichier upload à FormData
+      }
+      formData.append("productId", String(myProduct?.id)); // Convert the value to a string before appending it to FormData
 
       const response = await fetch("/api/upload/image/product", {
         method: "POST",
@@ -50,7 +51,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     } catch (error) {
       alert(error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -77,6 +78,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               number: product.product.name,
               back: "/pages/products",
               canChange: false,
+              id_project: undefined,
             };
             setTitle(title);
           }
@@ -100,7 +102,14 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           <div className="">
             <div className="flex items-center mb-10">
               <div className="mr-auto">
-                <Title {...title} />
+                <Title
+                  title={title?.title}
+                  image={title?.image}
+                  number={title?.number ?? null}
+                  back={title?.back}
+                  canChange={title?.canChange}
+                  id_project={title?.id_project}
+                />
               </div>
               <button type="button">
                 <div className="flex items-center gap-2 download-button ">
@@ -134,19 +143,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                     className="object-contain"
                   />
                 )}
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="file"
-                    name="file"
-                    onChange={(e) => setFile(e.target.files?.[0])}
-                  />
-                  <input type="hidden" name="productId" value={id} />
-                  <input
-                    type="submit"
-                    value="Changer"
-                    className="open-button"
-                  />
-                </form>
+                <input
+                  type="file"
+                  name="file"
+                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                />
               </div>
               <div className="flex flex-col items-center gap-10 mr-20">
                 <InfoTable {...myProduct} />

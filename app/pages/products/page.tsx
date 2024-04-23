@@ -81,7 +81,7 @@ export default function Page() {
       ) : (
         <div className="ml-[3%]">
           <div
-            className="products-section my-[2%] mx-[5%]"
+            className="products-section my-[2%] mx-[5%] scroll-smooth"
             style={{
               display: "flex",
               flexWrap: "wrap",
@@ -92,7 +92,17 @@ export default function Page() {
           >
             {products ? (
               products.map((product, index) => (
-                <Card key={index} {...product} onDeleteSuccess={fetchData} />
+                <Card
+                  key={index}
+                  id={(product as any).id}
+                  name={(product as any).name}
+                  image={(product as any).image}
+                  base={(product as any).base}
+                  unit={(product as any).unit}
+                  new={(product as any).new}
+                  reuse={(product as any).reuse}
+                  onDeleteSuccess={fetchData}
+                />
               ))
             ) : (
               <div className="flex items-center justify-center">
