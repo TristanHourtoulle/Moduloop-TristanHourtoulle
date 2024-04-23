@@ -1,4 +1,5 @@
 import { Dougnhut } from "@components/Chart/Dougnhut";
+// Remove the unnecessary import statement for Doughnut
 
 export type CardMostImpactProps = {
   manufacturing: number;
@@ -78,10 +79,11 @@ export const CardMostImpact = (props: CardMostImpactProps) => {
                 <p className="text-sm font-semibold opacity-75">Fin de vie</p>
               </div>
             </div>
+
             <Dougnhut data={data} text={ranking.toString()} />
           </div>
         </div>
       ) : null}
     </>
-  ); // Add closing parenthesis here // Add closing parenthesis here
+  );
 };

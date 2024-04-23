@@ -117,7 +117,6 @@ const ImpactSection = (props: {
         emValue1 === emValue2
       ) {
         // Gérer le cas où les valeurs d'impact sont identiques pour les deux projets
-        console.log("Les projets ont des impacts équivalents.");
         setIsLoaded(true);
 
         const selectElement = document.getElementById(
@@ -219,11 +218,6 @@ const ImpactSection = (props: {
     } else {
       getEquivalenceWithoutCompare();
     }
-
-    console.log("Actual Project: ", project);
-    console.log("Compare with: ", compareWith);
-    console.log("Better project: ", betterProject);
-    console.log("Worst project: ", worstProject);
   }, [compareWith, project?.products]);
 
   return (

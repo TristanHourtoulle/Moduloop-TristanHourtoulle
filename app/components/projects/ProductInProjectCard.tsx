@@ -1,6 +1,7 @@
 import { AddProductType } from "@/models/AddProduct";
 import TrashCan from "@components/button/TrashCan";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
+
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -20,6 +21,16 @@ const ProductInProjectCard = (props: {
   const [isDifferent, setIsDifferent] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [base, setBase] = useState<string>("Inies");
+
+  const dialogProps: DialogsProps = {
+    title: "Supprimer ce produit du projet",
+    content:
+      "Êtes-vous sûr de vouloir supprimer ce produit du projet ? Cette action est irréversible.",
+    validate: "Confirmer",
+    cancel: "Annuler",
+    cta: () => confirmDeleteProduct(),
+    cancelCta: () => setDialogOpen(false),
+  };
 
   useEffect(() => {
     // Mettre à jour les états locaux lorsque les nouvelles quantités sont reçues via les props
@@ -96,7 +107,7 @@ const ProductInProjectCard = (props: {
 
   const confirmDeleteProduct = async () => {
     let res = await fetch(
-      `/api/project/list?id_project=${idProject}&id_product=${product.product.id}`,
+      `/api/project/list?id_project=${idProject}&id_product=${product.product?.[0]?.id}`,
       {
         method: "DELETE",
       }
@@ -113,17 +124,11 @@ const ProductInProjectCard = (props: {
     setDialogOpen(false);
   };
 
-  const dialogProps: DialogsProps = {
-    title: "Supprimer le produit " + "'" + product.product.name + "'",
-    content: "Voulez-vous vraiment supprimer ce produit ?",
-    validate: "Confirmer",
-    cancel: "Annuler",
-    cta: confirmDeleteProduct,
-    cancelCta: () => setDialogOpen(false),
-  };
-
   useEffect(() => {
-    if (!product.product.name.includes("Inies")) {
+    if (
+      product.product?.[0]?.name &&
+      !product.product[0].name.includes("Inies")
+    ) {
       setBase("Autres");
     }
   }, []);
@@ -133,9 +138,11 @@ const ProductInProjectCard = (props: {
       {/* Header */}
       <div className="flex item-center justify-between">
         <div className="flex flex-col items-start">
-          <p className="name">{product.product.name.replace("Inies - ", "")}</p>
+          <p className="name">
+            {product.product?.[0]?.name?.replace("Inies - ", "")}
+          </p>
           <div className="flex items-center gap-2">
-            <p className="base text-lg">{product.product.unit}</p>
+            <p className="base text-lg">{product.product?.[0]?.unit}</p>
             <p className="base text-lg"> - </p>
             <p className="base text-lg">{base}</p>
           </div>
@@ -148,12 +155,8 @@ const ProductInProjectCard = (props: {
       {/* Image */}
       <div className="flex justify-center">
         <Image
-          src={
-            product.product.image
-              ? product.product.image
-              : "/icons/no-image.png"
-          }
-          alt={product.product.name ? product.product.name : ""}
+          src={product.product?.[0]?.image ?? "/icons/no-image.png"}
+          alt={product.product?.[0]?.name ?? ""}
           width={150}
           height={150}
         />
@@ -213,7 +216,6 @@ const ProductInProjectCard = (props: {
         </div>
       </div>
 
-      {/* Dialog */}
       {dialogOpen && <Dialogs {...dialogProps} />}
     </div>
   );

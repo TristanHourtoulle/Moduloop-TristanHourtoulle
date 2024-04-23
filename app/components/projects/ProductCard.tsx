@@ -23,7 +23,7 @@ const ProductCard = (props: {
 
   const handleAdd = async () => {
     const addProductData: AddProductType = {
-      product: product,
+      product: [product],
       idProject: idProject,
       qNew: qNew,
       qUsed: qUsed,

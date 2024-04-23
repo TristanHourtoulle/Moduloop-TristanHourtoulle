@@ -77,8 +77,6 @@ export const CompareImpact = (props: CompareImpactProps) => {
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
     }
-    console.log("Name better project", betterProject.name);
-    console.log("Name worst project", worstProject.name);
   }, [project_one, project_two]);
 
   return (
