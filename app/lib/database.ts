@@ -4,7 +4,7 @@ const pool = new Pool({
   host: "localhost",
   user: "postgres",
   password: "root",
-  database: "Moduloop",
+  database: "moduloop",
 });
 
 // Créer la fonction qui met à jour le champ updated_at
