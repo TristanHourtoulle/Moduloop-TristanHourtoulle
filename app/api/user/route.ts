@@ -9,15 +9,13 @@ export async function POST(request: NextRequest) {
   try {
     const user: User = await request.json();
     const result = await pool.query(
-      'INSERT INTO users ("firstName", "name", "email", "password", "role", "createdAt", "updatedAt", "avatar") VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;',
+      'INSERT INTO users ("firstName", "name", "email", "password", "role", "avatar") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
       [
         user.firstName,
         user.name,
         user.email,
         user.password,
         user.role,
-        user.createdAt,
-        user.updatedAt,
         user.avatar,
       ]
     );
