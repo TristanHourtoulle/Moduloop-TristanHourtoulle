@@ -1,12 +1,11 @@
 "use client";
 
-import { ProductType } from "@models/Product";
-import { useState } from "react";
 import Loader from "@components/Loader";
+import { useState } from "react";
 
 async function addData(data: JSON) {
   try {
-    const parseData = JSON.parse(data);
+    const parseData = JSON.parse(JSON.stringify(data));
     const res = await fetch("/api/product", {
       method: "POST",
       headers: {
@@ -15,7 +14,6 @@ async function addData(data: JSON) {
       body: JSON.stringify(parseData),
     });
     if (!res.ok) {
-      console.log("ERROR: ", await res.text());
       throw new Error(await res.text());
     }
     const updateData = await res.json();
@@ -38,10 +36,10 @@ async function addData(data: JSON) {
 }
 
 export default function UploadForm() {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     setIsLoading(true);
     e.preventDefault();
     if (!file) return;
@@ -63,10 +61,9 @@ export default function UploadForm() {
       }
       await addData(updateData.data);
       setIsLoading(false);
-      window.location.href = "/pages/products";
+      // window.location.href = "/pages/products";
     } catch (e) {
       setIsLoading(false);
-      console.log("ERROR: ", e);
       alert("ERROR: " + e);
     }
   };
@@ -78,7 +75,7 @@ export default function UploadForm() {
       <input
         type="file"
         name="file"
-        onChange={(e) => setFile(e.target.files?.[0])}
+        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
       />
       <input type="submit" value="Upload" />
     </form>
