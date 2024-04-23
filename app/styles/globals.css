@@ -499,11 +499,6 @@ body {
   transform: scale(1);
 }
 
-.projects-container {
-  overflow-y: scroll;
-  height: 450px;
-}
-
 .project-page .group-title {
   font-size: 1rem;
   font-weight: 600;
