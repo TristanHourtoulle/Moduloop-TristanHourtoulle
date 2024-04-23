@@ -62,7 +62,7 @@ export const Title = (title: TitleType) => {
         }}
       >
         <Image
-          src={title.image}
+          src={title.image || ""}
           alt="Page Logo"
           width={50}
           height={50}
