@@ -1,9 +1,9 @@
-import { ProjectType } from "@models/Project";
+import { AddProductType } from "@models/AddProduct";
 import { GroupType } from "@models/Group";
 import { ProductType } from "@models/Product";
-import { AddProductType } from "@models/AddProduct";
+import { ProjectType } from "@models/Project";
 
-export function databaseToSingleProductModel(data: JSON) {
+export function databaseToSingleProductModel(data: any) {
   let product: ProductType = {
     id: data.id,
     name: data.name,
@@ -17,7 +17,7 @@ export function databaseToSingleProductModel(data: JSON) {
   return product;
 }
 
-export function databaseToGroupModel(data: JSON) {
+export function databaseToGroupModel(data: any) {
   let groups: GroupType[] = [];
 
   const dataArray = Array.from(data);
@@ -36,7 +36,7 @@ export function databaseToGroupModel(data: JSON) {
   return groups[0];
 }
 
-export function databaseToSeveralGroupModel(data: JSON) {
+export function databaseToSeveralGroupModel(data: any) {
   let groups: GroupType[] = [];
 
   const dataArray = Array.from(data);
@@ -55,7 +55,7 @@ export function databaseToSeveralGroupModel(data: JSON) {
   return groups;
 }
 
-export function databaseToProjectModel(data: JSON) {
+export function databaseToProjectModel(data: any) {
   let projects: ProjectType[] = [];
 
   const dataArray = Array.from(data);
@@ -74,6 +74,7 @@ export function databaseToProjectModel(data: JSON) {
       group: data[i].group_id,
       created_at: data[i].created_at,
       updated_at: data[i].updated_at,
+      groupInfo: null,
     };
     projects.push(project);
   }
@@ -81,7 +82,7 @@ export function databaseToProjectModel(data: JSON) {
   return projects;
 }
 
-export function databaseToSingleProjectModel(data: JSON) {
+export function databaseToSingleProjectModel(data: any) {
   let products: AddProductType[] = [];
 
   let project: ProjectType = {

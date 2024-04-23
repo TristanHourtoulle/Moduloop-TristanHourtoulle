@@ -2,15 +2,12 @@ import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
 
-export function isProductInProject(
-  product: AddProductType,
-  project: ProjectType
-) {
+export function isProductInProject(product: any, project: any) {
   let retValue: AddProductType | null = null;
 
   if (project.products) {
     for (const item of project.products) {
-      if (Number(item.product.id) == Number(product.product.id)) {
+      if (Number(item.product[0].id) == Number(product.product[0].id)) {
         retValue = {
           product: product.product,
           idProject: product.idProject,
@@ -31,7 +28,7 @@ export function deleteProductFromProject(idProduct: number, project: any) {
 
   let products = project;
   for (let item of products) {
-    if (item.product.id !== idProduct) {
+    if (item.product[0].id !== idProduct) {
       res.push(item);
     }
   }
@@ -41,11 +38,8 @@ export function deleteProductFromProject(idProduct: number, project: any) {
 export function getProductByBase(products: ProductType[], baseName: string) {
   let res: ProductType[] = [];
 
-  console.log("Base name to search: ", baseName);
   for (let item of products) {
-    console.log("Item base: ", item.base);
     if (item.base === baseName) {
-      console.log("Item found: ", item.base);
       res.push(item);
     } else {
     }
@@ -55,7 +49,7 @@ export function getProductByBase(products: ProductType[], baseName: string) {
 }
 
 export function convertProjectToUsedProducts(
-  products: AddProductType[],
+  products: any,
   project: ProjectType
 ) {
   // Créer une copie profonde de l'objet project
@@ -63,7 +57,7 @@ export function convertProjectToUsedProducts(
 
   if (Array.isArray(products)) {
     // Créer une copie profonde des produits
-    const tempProducts: AddProductType[] = JSON.parse(JSON.stringify(products));
+    const tempProducts: any = JSON.parse(JSON.stringify(products));
 
     for (let item of tempProducts) {
       let qNew = item.qNew;
@@ -77,21 +71,18 @@ export function convertProjectToUsedProducts(
   return tempProject;
 }
 
-export function convertProjectToNewProducts(
-  products: AddProductType[],
-  project: ProjectType
-) {
+export function convertProjectToNewProducts(products: any, project: any) {
   // Créer une copie profonde de l'objet project
-  const tempProject: ProjectType = JSON.parse(JSON.stringify(project));
+  const tempProject: any = JSON.parse(JSON.stringify(project));
 
   if (Array.isArray(products)) {
     // Créer une copie profonde des produits
     const tempProducts: AddProductType[] = JSON.parse(JSON.stringify(products));
 
     for (let item of tempProducts) {
-      let qUsed = item.qUsed;
+      let qUsed = item.qUsed ?? 0;
 
-      item.qNew = qUsed + item.qNew;
+      item.qNew = qUsed + (item.qNew ?? 0);
       item.qUsed = 0;
     }
     tempProject.products = tempProducts;
