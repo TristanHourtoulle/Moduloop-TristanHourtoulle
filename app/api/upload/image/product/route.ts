@@ -26,6 +26,11 @@ export async function POST(request: NextRequest) {
     // store the filepath of image in the database products
     const dbFilePath = filepath.replace(process.cwd(), "").replace(/\\/g, "/");
     const dbImageUrl = dbFilePath.replace("/public", "");
+    if (!idProduct)
+      return Response.json(
+        { success: false, data: "no product id" },
+        { status: 500 }
+      );
     const result = await pool.query(
       "UPDATE products SET image = $1 WHERE id = $2 RETURNING *;",
       [dbImageUrl, idProduct]
