@@ -627,6 +627,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               <ImpactSection
                 products={productsImpact as AddProductType[]}
                 project={project}
+                ctaView={(view: string) => {
+                  setSection(view);
+                }}
               />
             </div>
           )}
