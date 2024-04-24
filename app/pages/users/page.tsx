@@ -4,13 +4,12 @@ import Loader from "@/components/Loader";
 import { Title } from "@/components/Title";
 import { getSession } from "@/lib/session";
 import { TitleType } from "@/models/Title";
-import { Pencil } from "lucide-react";
-import Link from "next/link";
+import { UserLine } from "@components/users/UserLine";
 import { useEffect, useState } from "react";
 
 export default function Page() {
   const [users, setUsers] = useState([]);
-  const [userSession, getUserSession] = useState(null);
+  const [userSession, setUserSession] = useState(null); // Renommé de getUserSession à setUserSession
   const [title, setTitle] = useState<TitleType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +22,7 @@ export default function Page() {
         !temp.user.name.includes("undefined") &&
         temp.user.role === "admin"
       ) {
-        getUserSession(temp);
+        setUserSession(temp); // Changé de getUserSession à setUserSession
         fetchData();
         return;
       }
@@ -37,7 +36,7 @@ export default function Page() {
         });
         const data = await res.json();
         if (data.success) {
-          const userData = data.data || []; // Assurez-vous que userData est un tableau
+          const userData = data.data || [];
           setUsers(userData);
           setTitle({
             title: "Utilisateurs",
@@ -65,24 +64,12 @@ export default function Page() {
     fetchSession();
   }, []);
 
-  // Fonction pour formater la date
-  const formatDate = (dateString: any) => {
-    const date = new Date(dateString);
-    return date.toLocaleString("fr-FR"); // Format français : jour/mois/année
-  };
-
   return (
     <div>
-      {/* Loader */}
       {isLoading && <Loader />}
-
-      {/* Content */}
       {!isLoading && (
         <div className="h-full">
-          {/* Header */}
           {title && <Title {...title} />}
-
-          {/* Content */}
           <div className="py-8 flex items-center justify-center">
             {users && Array.isArray(users) && users[0] && (
               <div className="w-auto">
@@ -105,6 +92,9 @@ export default function Page() {
                         Date de création
                       </th>
                       <th scope="col" className="px-6 py-3">
+                        Dernière Activité
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Action
                       </th>
                     </tr>
@@ -112,27 +102,7 @@ export default function Page() {
                   <tbody className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                     {Array.isArray(users) &&
                       users.map((user, index) => (
-                        <tr key={index}>
-                          <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {(user as any).name}
-                          </td>
-                          <td className="px-6 py-4">
-                            {(user as any).firstName}
-                          </td>
-                          <td className="px-6 py-4">{(user as any).email}</td>
-                          <td className="px-6 py-4">{(user as any).role}</td>
-                          <td className="px-6 py-4">
-                            {formatDate((user as any).updatedAt)}
-                          </td>
-                          <td className="px-6 py-4">
-                            <Link
-                              href={`/pages/users/${(user as any).id}`}
-                              className="transition-all ease-in-out delay-50 text-white opacity-50 hover:opacity-100 flex items-center gap-2"
-                            >
-                              <Pencil />
-                            </Link>
-                          </td>
-                        </tr>
+                        <UserLine key={index} user_id={(user as any).id} />
                       ))}
                   </tbody>
                 </table>
