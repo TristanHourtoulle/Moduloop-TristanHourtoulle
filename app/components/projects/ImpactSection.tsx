@@ -208,12 +208,6 @@ const ImpactSection = (props: {
       }
 
       setRcPercentage(Number(percentage.toFixed(0)));
-      // console.log("Initial project: ", project);
-      // console.log("Compare project: ", compareWith);
-      // console.log("RC percentage: ", rcPercentage);
-      // console.log("ERF percentage: ", erfPercentage);
-      // console.log("ASE percentage: ", asePercentage);
-      // console.log("EM percentage: ", emPercentage);
       setIsLoaded(true);
     } else {
       getEquivalenceWithoutCompare();
