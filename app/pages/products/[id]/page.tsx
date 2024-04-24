@@ -2,6 +2,7 @@
 
 import Loader from "@components/Loader";
 import { Title } from "@components/Title";
+import { FileInput } from "@components/input/FileInput";
 import ImpactTable from "@components/products/impactTable";
 import InfoTable from "@components/products/infoTable";
 import { ProductType } from "@models/Product";
@@ -16,44 +17,75 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Set initial value to true
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      setIsLoading(true);
+  useEffect(() => {
+    if (file) {
       const formData = new FormData();
-      if (file) {
-        formData.append("file", file); // Ajoutez votre fichier upload à FormData
-      }
-      formData.append("productId", String(myProduct?.id)); // Convert the value to a string before appending it to FormData
-
-      const response = await fetch("/api/upload/image/product", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        let res = await fetch(`/api/product?id=${encodeURIComponent(id)}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      formData.append("file", file);
+      formData.append("productId", String(myProduct?.id));
+      const uploadImage = async () => {
+        const response = await fetch("/api/upload/image/product", {
+          method: "POST",
+          body: formData,
         });
-        if (res.ok) {
-          const product = await res.json();
-          setMyProduct(product.product);
+        if (response.ok) {
+          let res = await fetch(`/api/product?id=${encodeURIComponent(id)}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (res.ok) {
+            const product = await res.json();
+            setMyProduct(product.product);
+          } else {
+            console.log("Error in fetch", res);
+          }
         } else {
-          // Handle error
+          alert("Failed to upload image.");
         }
-      } else {
-        alert("Failed to upload image.");
-      }
-    } catch (error) {
-      alert(error);
-    } finally {
-      setIsLoading(false);
+      };
+      uploadImage();
     }
-  };
+  }, [file]);
+
+  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     setIsLoading(true);
+  //     const formData = new FormData();
+  //     if (file) {
+  //       formData.append("file", file); // Ajoutez votre fichier upload à FormData
+  //     }
+  //     formData.append("productId", String(myProduct?.id)); // Convert the value to a string before appending it to FormData
+
+  //     const response = await fetch("/api/upload/image/product", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+
+  //     if (response.ok) {
+  //       let res = await fetch(`/api/product?id=${encodeURIComponent(id)}`, {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       if (res.ok) {
+  //         const product = await res.json();
+  //         setMyProduct(product.product);
+  //       } else {
+  //         // Handle error
+  //       }
+  //     } else {
+  //       alert("Failed to upload image.");
+  //     }
+  //   } catch (error) {
+  //     alert(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -125,7 +157,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             </div>
 
             <div className="flex items-center">
-              <div className="flex flex-col items-center mr-auto">
+              <div className="flex flex-col items-center mr-auto ml-5">
                 {myProduct.image != "" && myProduct.image ? (
                   <Image
                     src={myProduct.image ?? ""}
@@ -143,13 +175,14 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                     className="object-contain"
                   />
                 )}
-                <input
+                {/* <input
                   type="file"
                   name="file"
                   onChange={(e) => setFile(e.target.files?.[0] || null)}
-                />
+                /> */}
+                <FileInput size="large" onSubmit={(file) => setFile(file)} />
               </div>
-              <div className="flex flex-col items-center gap-10 mr-20">
+              <div className="flex flex-col items-center gap-10 mr-5 ml-5">
                 <InfoTable {...myProduct} />
                 <div className="flex items-center gap-10">
                   <button
