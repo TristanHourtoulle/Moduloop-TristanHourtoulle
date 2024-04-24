@@ -1,6 +1,7 @@
 "use client";
 
 import { Title } from "@components/Title";
+import { Button } from "@components/button/Button";
 import { ProjectCard } from "@components/projects/ProjectCard";
 import { getSession } from "@lib/session";
 import { GroupType } from "@models/Group";
@@ -11,8 +12,6 @@ import {
   databaseToProjectModel,
   databaseToSeveralGroupModel,
 } from "@utils/convert";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function page() {
@@ -286,22 +285,17 @@ export default function page() {
 
   return (
     <div>
-      <div className="flex items-center mb-5">
+      <div className="flex items-center justify-between mb-5">
         <Title {...title} />
-        <Link
-          href="/pages/projects/create"
-          className="create-project-button create-project-btn"
-        >
-          <div className="flex gap-2">
-            <Image
-              src="/icons/plus-blanc.svg"
-              alt="Créer un projet"
-              width={20}
-              height={20}
-            />
-            Créer un projet
-          </div>
-        </Link>
+        <Button
+          variant="primary"
+          onClick={() => (window.location.href = "/pages/projects/create")}
+          content="Créer un projet"
+          image={"/icons/plus-blanc.svg"}
+          size="large"
+          disabled={false}
+          moreClasses="mr-5"
+        />
       </div>
 
       <div className="ml-[6%] flex gap-5 items-center w-[40%]">

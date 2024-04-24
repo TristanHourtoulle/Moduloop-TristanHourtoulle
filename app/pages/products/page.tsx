@@ -2,11 +2,10 @@
 
 import Loader from "@components/Loader";
 import { Title } from "@components/Title";
+import { Button } from "@components/button/Button";
 import Card from "@components/products/Card";
 import { getSession } from "@lib/session";
 import { TitleType } from "@models/Title";
-import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -61,19 +60,15 @@ export default function Page() {
         <div className="mr-auto">
           <Title {...title} />
         </div>
-
-        <Link href="/pages/products/add">
-          <div className="flex items-center justify-center gap-2 mr-5 handle-product-button">
-            <Image
-              src="/icons/reglages.svg"
-              alt="Add Product"
-              width={30}
-              height={30}
-              className="object-contain handle-product-image"
-            />
-            <p className="handle-product-text">Gérer</p>
-          </div>
-        </Link>
+        <Button
+          variant="primary"
+          onClick={() => (window.location.href = "/pages/products/add")}
+          content="Gérer"
+          disabled={false}
+          image="/icons/reglages.svg"
+          size="large"
+          moreClasses="mr-5"
+        />
       </div>
 
       {isLoading ? (

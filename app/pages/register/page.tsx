@@ -117,7 +117,7 @@ export default function Register() {
             onClick={handleSubmit}
             className="mt-3 bg-[#0A726F] px-8 py-4 rounded-lg text-white font-outfit text-lg w-[75%] text-center transition-all cursor-pointer hover:opacity-[75%]"
           >
-            Connection
+            Inscription
           </div>
           {/* Reset Password */}
           <p
