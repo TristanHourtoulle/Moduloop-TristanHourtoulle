@@ -12,6 +12,7 @@ const config: Config = {
         "red-custom": "rgb(255, 0, 0)",
         "red-custom-transparent": "rgba(255, 0, 0, 0.19)",
         "primary-transparent": "rgb(48,193,189, 0.10)",
+        "primary-border-transparent": "rgb(48,193,189, 0.5)",
       },
       fontFamily: {
         sans: ['"M PLUS Rounded 1c"', "sans-serif"],
