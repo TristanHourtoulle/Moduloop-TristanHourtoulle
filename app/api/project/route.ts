@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     // }
 
     const result = await pool.query(
-      "INSERT INTO projects (name, description, image, budget, company, location, area, user_id, group_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;",
+      "INSERT INTO projects (name, description, image, budget, company, location, area, user_id, group_id, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP) RETURNING *;",
       [
         name,
         description,
@@ -109,7 +109,7 @@ export async function PUT(request: NextRequest) {
     const name = searchParams.get("name") || "";
 
     const result = await pool.query(
-      "UPDATE projects SET name = $1 WHERE id = $2 RETURNING *;",
+      "UPDATE projects SET name = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *;",
       [name, id]
     );
 

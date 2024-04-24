@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
           }
           const jsonProducts = JSON.stringify(project.products);
           res = await pool.query(
-            "UPDATE projects SET products = $1 WHERE id = $2 RETURNING *;",
+            "UPDATE projects SET products = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *;",
             [jsonProducts, data.idProject]
           );
           if (res.rowCount === 0) {

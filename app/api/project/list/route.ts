@@ -79,7 +79,7 @@ export async function DELETE(request: NextRequest) {
           throw new Error("Product not found in project.");
         } else {
           let res = await pool.query(
-            `UPDATE projects SET products = $1 WHERE id = $2 RETURNING *;`,
+            `UPDATE projects SET products = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *;`,
             [JSON.stringify(newProducts), idProject]
           );
           if (!res) {
