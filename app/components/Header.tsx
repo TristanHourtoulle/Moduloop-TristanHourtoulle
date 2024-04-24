@@ -5,9 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { LoginButton } from "./header/LoginButton";
 import { Logo } from "./header/Logo";
-import { RegisterButton } from "./header/RegisterButton";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { logout } from "@lib/session";
@@ -235,10 +233,6 @@ const Header = () => {
                   </Link>
                 </nav>
               </div>
-              <div className="mt-6 flex items-center gap-5 justify-center">
-                <RegisterButton />
-                <LoginButton />
-              </div>
             </div>
           </div>
         </div>
@@ -247,12 +241,6 @@ const Header = () => {
   ) : (
     <div className="flex items-center justify-between h-24 w-full px-7 py-2">
       <Logo />
-
-      {/* Auth Button */}
-      <div className="flex items-center gap-3">
-        <RegisterButton />
-        <LoginButton />
-      </div>
     </div>
   );
 };
