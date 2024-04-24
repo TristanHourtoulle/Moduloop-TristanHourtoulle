@@ -6,6 +6,8 @@ import { getSession } from "@/lib/session";
 import { TitleType } from "@/models/Title";
 import { User } from "@/models/User";
 import { ProjectType } from "@models/Project";
+import { getProjectsByUserId } from "@utils/database/project";
+import { getUserById } from "@utils/database/user";
 import { Copy, ExternalLink, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -49,16 +51,12 @@ export default function Page({
     const fetchProjects = async () => {
       setIsLoading(true);
       try {
-        let res = await fetch(`/api/project/list?id=${userId}`, {
-          method: "GET",
-        });
-        const data = await res.json();
-        if (data.success) {
-          setProjects(data.data);
+        let data = await getProjectsByUserId(userId);
+        if (data) {
+          setProjects(data);
         } else {
           console.error(
-            "Erreur lors de la récupération des projets de l'utilisateur:",
-            data.error
+            "Cette utilisateur n'a pas de projets ou n'existe pas."
           );
         }
       } catch (error) {
@@ -74,29 +72,22 @@ export default function Page({
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        let res = await fetch(
-          `/api/user/admin?id=${encodeURIComponent(userId)}`,
-          {
-            method: "GET",
-          }
-        );
-        const data = await res.json();
-        if (data.success) {
-          setUser(data.data);
-          setSelectedRole(data.data.role);
-          setUserRole(data.data.role);
+        let data = await getUserById(userId);
+        if (data) {
+          setUser(data);
+          setSelectedRole(data.role);
+          setUserRole(data.role);
           setTitle({
             title: "Utilisateur",
             image: "/icons/close.svg",
-            number: data.data.name + " " + data.data.firstName || "",
+            number: data.name + " " + data.firstName || "",
             back: "/pages/users",
             canChange: false,
             id_project: undefined,
           });
         } else {
           console.error(
-            "Erreur lors de la récupération des utilisateurs:",
-            data.error
+            "Cet utilisateur n'existe pas ou n'est pas un administrateur."
           );
         }
       } catch (error) {
