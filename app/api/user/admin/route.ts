@@ -15,17 +15,6 @@ export async function GET(request: NextRequest) {
     // Vérification si l'utilisateur a été trouvé dans la base de données
     if (result.rowCount === 1) {
       const user = result.rows[0];
-      const newUser: User = {
-        id: user.id,
-        firstName: user.firstName,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        role: user.role,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        avatar: user.avatar,
-      };
       return Response.json({ success: true, data: user }, { status: 200 });
     } else {
       throw new Error(
