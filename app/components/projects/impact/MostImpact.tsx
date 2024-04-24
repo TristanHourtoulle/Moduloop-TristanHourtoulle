@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@components/button/Button";
 import { ProductImpact } from "@models/Impact";
 import { ProjectType } from "@models/Project";
 import {
@@ -28,13 +29,12 @@ import {
   getERFmanufacturing,
   getERFusage,
 } from "@utils/getImpact";
-import { Pencil, Phone } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { CardMostImpact } from "./Card/CardMostImpact";
 
 export type MostImpactProps = {
   project: ProjectType;
+  ctaView: (view: string) => void;
 };
 
 function getImpactInfo(product: any, project: ProjectType, type: string) {
@@ -101,7 +101,7 @@ function getImpactInfo(product: any, project: ProjectType, type: string) {
 }
 
 export const MostImpact = (props: MostImpactProps) => {
-  const { project } = props;
+  const { project, ctaView } = props;
   const [view, setView] = useState("rc"); // "rc", "erf", "ase", "em"
   const [productWithMostImpact, setProductWithMostImpact] = useState<
     ProductImpact[] | null
@@ -155,14 +155,32 @@ export const MostImpact = (props: MostImpactProps) => {
           <span className="opacity-50">{project.name}</span>
         </h2>
         <div className="flex items-center gap-5">
-          <Link href="#" className="flex items-center gap-3 btn-contact">
+          <Button
+            variant="primary"
+            onClick={() => {}}
+            content="Contacter un expert"
+            disabled={false}
+            image={null}
+            size="medium"
+            moreClasses="border-2 border-[#E9E9E9]"
+          />
+          {/* <Link href="#" className="flex items-center gap-3 btn-contact">
             <Phone />
             <p className="text-lg">Contacter un expert</p>
           </Link>
           <Link href="#" className="flex items-center gap-3 btn-edit">
             <Pencil />
             <p className="text-lg">Modifier</p>
-          </Link>
+          </Link> */}
+          <Button
+            variant="secondary"
+            onClick={() => ctaView("products")}
+            content="Modifier le projet"
+            disabled={false}
+            image={null}
+            size="medium"
+            moreClasses=""
+          />
         </div>
       </div>
 

@@ -21,8 +21,9 @@ import { MostImpact } from "./impact/MostImpact";
 const ImpactSection = (props: {
   products: AddProductType[];
   project: ProjectType;
+  ctaView: (view: string) => void;
 }) => {
-  const { products, project } = props;
+  const { products, project, ctaView } = props;
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [projects, setProjects] = useState<ProjectType[] | null>(null);
@@ -427,7 +428,9 @@ const ImpactSection = (props: {
           </div>
         )}
 
-        {isLoaded && !isCompare && <MostImpact project={project} />}
+        {isLoaded && !isCompare && (
+          <MostImpact project={project} ctaView={ctaView} />
+        )}
 
         {!isLoaded && <Loader />}
       </div>
