@@ -1,7 +1,7 @@
+import { Button } from "@components/button/Button";
 import TrashCan from "@components/button/TrashCan";
 import { ProductType } from "@models/Product";
 import Image from "next/image";
-import Link from "next/link";
 
 const Card = ({
   id,
@@ -51,8 +51,8 @@ const Card = ({
         />
       </div>
       {/* CTA */}
-      <div className="flex items-center gap-3 justify-center link-cta ml-auto mr-auto">
-        <Link
+      <div className="flex items-center gap-3 justify-center ml-auto mr-auto">
+        {/* <Link
           href={showProductUrl}
           className="flex items-center gap-15 bg-white border-10"
         >
@@ -64,7 +64,15 @@ const Card = ({
             className="object-contain"
           />
           <p>Ouvrir</p>
-        </Link>
+        </Link> */}
+        <Button
+          variant="secondary"
+          onClick={() => (window.location.href = showProductUrl)}
+          content="Ouvrir"
+          disabled={false}
+          image="/icons/link.svg"
+          size="medium"
+        />
       </div>
     </div>
   );

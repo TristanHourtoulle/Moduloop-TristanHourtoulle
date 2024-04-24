@@ -1,7 +1,7 @@
+import { Button } from "@components/button/Button";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import dateFormater from "@utils/dateFormater";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 
 export type ProjectCardProps = {
@@ -81,19 +81,26 @@ export const ProjectCard = (props: ProjectCardProps) => {
             height={30}
           />
         </div>
-        <div
+        <Button
+          variant="secondary"
           onClick={() => {
             handleDuplicateProject(project.id ?? -1);
           }}
-          className="flex items-center open-btn cursor-pointer"
-        >
-          <p className="">Dupliquer</p>
-        </div>
-        <Link href={showProjectUrl}>
-          <div className="flex items-center open-btn">
-            <p className="">Ouvrir</p>
-          </div>
-        </Link>
+          content="Dupliquer"
+          disabled={false}
+          image={null}
+          size="medium"
+          moreClasses="font-bold border-3"
+        />
+        <Button
+          variant="secondary"
+          onClick={() => (window.location.href = showProjectUrl)}
+          content="Ouvrir"
+          disabled={false}
+          image={null}
+          size="medium"
+          moreClasses="font-bold border-3"
+        />
       </div>
 
       {isOpenDialog && <Dialogs {...dialogProps} />}
