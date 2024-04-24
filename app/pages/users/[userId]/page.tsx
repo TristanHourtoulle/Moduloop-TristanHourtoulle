@@ -26,6 +26,7 @@ export default function Page({
   const [projects, setProjects] = useState<ProjectType[] | null>(null);
   const [viewProjects, setViewProjects] = useState<boolean>(false);
   const [selectedRole, setSelectedRole] = useState<string>("user");
+  const [userRole, setUserRole] = useState<string>("user");
   const [changeRole, setChangeRole] = useState<boolean>(false);
 
   useEffect(() => {
@@ -83,6 +84,7 @@ export default function Page({
         if (data.success) {
           setUser(data.data);
           setSelectedRole(data.data.role);
+          setUserRole(data.data.role);
           setTitle({
             title: "Utilisateur",
             image: "/icons/close.svg",
@@ -162,7 +164,7 @@ export default function Page({
   }
 
   const handleSelectedRoleChange = async (selectedOption: string) => {
-    if (user && selectedOption !== user.role) {
+    if (selectedOption !== userRole) {
       setChangeRole(true);
     } else if (changeRole) {
       setChangeRole(false);
@@ -171,10 +173,6 @@ export default function Page({
 
   const handleSetNewRole = async () => {
     if (user && changeRole) {
-      alert(
-        "Je dois modifier le rôle de l'utilisateur dans la base de données..."
-      );
-
       const newUser = {
         ...user,
         role: selectedRole,
@@ -191,7 +189,8 @@ export default function Page({
         });
         const data = await res.json();
         if (data.success) {
-          alert("Le rôle de l'utilisateur a été modifié avec succès !");
+          setSelectedRole(selectedRole);
+          setUserRole(selectedRole);
           setChangeRole(false);
           toast.success("Le rôle de l'utilisateur a été modifié avec succès !");
         } else {
@@ -251,18 +250,21 @@ export default function Page({
                             "role"
                           ) as HTMLSelectElement;
                           setSelectedRole(selectedOption.value);
-                          // setSelectedRole(
-                          //   selectedRole === "admin" ? "user" : "admin"
-                          // );
                           handleSelectedRoleChange(selectedOption.value);
                         }}
                         id="role"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[50%] p-2.5 "
                       >
-                        <option value="admin" selected={user.role === "admin"}>
+                        <option
+                          value="admin"
+                          selected={selectedRole === "admin"}
+                        >
                           Administrateur
                         </option>
-                        <option value="user" selected={user.role !== "admin"}>
+                        <option
+                          value="user"
+                          selected={selectedRole !== "admin"}
+                        >
                           Utilisateur
                         </option>
                       </select>
