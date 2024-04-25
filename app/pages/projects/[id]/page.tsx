@@ -12,6 +12,7 @@ import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
 import { TitleType } from "@models/Title";
+import { getProjectById } from "@utils/database/project";
 import { getProductByBase } from "@utils/projects";
 import Image from "next/image";
 import Link from "next/link";
@@ -106,62 +107,54 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   };
 
   const updateProductsInProject = async () => {
-    let res = await fetch(`/api/project?id=${encodeURIComponent(id)}`, {
+    const projectData = await getProjectById(Number(id));
+    if (!projectData) {
+      console.error("Failed to fetch project:");
+      toast.error(
+        "Une erreur s'est produite lors de la récupération du projet"
+      );
+      return;
+    }
+    let products = Array.isArray(projectData.products)
+      ? projectData.products
+      : [projectData.products];
+    if (products && products.length > 0) {
+      setProductsInProject(products.reverse());
+      setProductsImpact(products as AddProductType | null);
+    } else {
+      setProductsInProject([]);
+      setProductsImpact(null);
+    }
+
+    const groupData = await getGroupById(Number(projectData.group));
+    if (groupData) {
+      projectData.groupInfo = databaseToGroupModel(groupData);
+      setProject(projectData);
+    } else {
+      console.log("No group found for this project");
+    }
+
+    setProject(projectData);
+    // Get stored products
+    let res = await fetch(`/api/product/list`, {
       method: "GET",
     });
-    const data = await res.json();
-    if (data.success) {
-      const projectData = databaseToSingleProjectModel(data.product);
-      let products = Array.isArray(projectData.products)
-        ? projectData.products
-        : [projectData.products];
-      if (products && products.length > 0) {
-        setProductsInProject(products.reverse());
-        setProductsImpact(products as AddProductType | null);
-      } else {
-        setProductsInProject([]);
-        setProductsImpact(null);
-      }
-
-      res = await fetch(
-        `/api/group/id?id=${encodeURIComponent(projectData.group ?? "")}`,
-        {
-          method: "GET",
-        }
-      );
-      const groupData = await res.json();
-      if (groupData.success) {
-        projectData.groupInfo = databaseToGroupModel(groupData.data);
-        setProject(projectData);
-      } else {
-        console.error("Failed to fetch group:", groupData.error);
-        alert(groupData.error);
-      }
-
-      setProject(projectData);
-      // Get stored products
-      res = await fetch(`/api/product/list`, {
-        method: "GET",
-      });
-      const productsData = await res.json();
-      setStoreProductsInies([]);
-      setStoreProductsAutres([]);
-      setStoreProducts([]);
-      if (productsData.success) {
-        let tempInies = getProductByBase(productsData.data, "Autre");
-        setStoreProductsInies(tempInies);
-        let tempAutres = getProductByBase(productsData.data, "Inies");
-        setStoreProductsAutres(tempAutres);
-        let tempResProducts: ProductType[] = [];
-        tempResProducts.push(...tempInies);
-        tempResProducts.push(...tempAutres);
-        setStoreProducts(tempResProducts);
-      } else {
-        console.error("Failed to fetch products:", productsData.error);
-        alert(productsData.error);
-      }
+    const productsData = await res.json();
+    setStoreProductsInies([]);
+    setStoreProductsAutres([]);
+    setStoreProducts([]);
+    if (productsData.success) {
+      let tempInies = getProductByBase(productsData.data, "Autre");
+      setStoreProductsInies(tempInies);
+      let tempAutres = getProductByBase(productsData.data, "Inies");
+      setStoreProductsAutres(tempAutres);
+      let tempResProducts: ProductType[] = [];
+      tempResProducts.push(...tempInies);
+      tempResProducts.push(...tempAutres);
+      setStoreProducts(tempResProducts);
     } else {
-      alert(data.error);
+      console.error("Failed to fetch products:", productsData.error);
+      alert(productsData.error);
     }
   };
 
@@ -439,35 +432,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                       {addProductLoader ? (
                         <Loader />
                       ) : (
-                        // <div
-                        //   className="px-4 py-2 bg-white shadow-lg rounded-[8px] flex items-center border-[#30C1BD] border-[3px] cursor-pointer transform transition-all duration-300 ease-in-out hover:opacity-75"
-                        //   onClick={() => {
-                        //     const qNew = document.getElementById(
-                        //       "qNew-addProduct"
-                        //     ) as HTMLInputElement;
-                        //     const qUsed = document.getElementById(
-                        //       "qUsed-addProduct"
-                        //     ) as HTMLInputElement;
-                        //     if (
-                        //       (qNew?.value === "0" && qUsed?.value === "0") ||
-                        //       (qNew?.value === "" && qUsed?.value === "")
-                        //     ) {
-                        //       toast.error(
-                        //         "Veuillez saisir une quantité valide"
-                        //       );
-                        //       return;
-                        //     }
-                        //     addProductWithoutFormSubmit();
-                        //   }}
-                        // >
-                        //   {/* <Image
-                        //   src={"/icons/plus-sky-blue.svg"}
-                        //   alt="Ajouter"
-                        //   width={200}
-                        //   height={200}
-                        // /> */}
-                        //   <p className="text-lg text-[#30C1BD]">Ajouter</p>
-                        // </div>
                         <Button
                           variant="primary"
                           onClick={() => {
