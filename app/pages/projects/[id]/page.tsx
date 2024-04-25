@@ -12,6 +12,8 @@ import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
 import { TitleType } from "@models/Title";
+import { getGroupById } from "@utils/database/group";
+import { getProductById, getProducts } from "@utils/database/product";
 import { getProjectById } from "@utils/database/project";
 import { getProductByBase } from "@utils/projects";
 import Image from "next/image";
@@ -107,8 +109,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   };
 
   const updateProductsInProject = async () => {
+    if (!id) return;
     const projectData = await getProjectById(Number(id));
     if (!projectData) {
+      console.log("No project found for this id:", projectData);
       console.error("Failed to fetch project:");
       toast.error(
         "Une erreur s'est produite lors de la récupération du projet"
@@ -141,9 +145,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     setStoreProductsAutres([]);
     setStoreProducts([]);
     if (productsData) {
-      let tempInies = getProductByBase(productsData as any, "Autre");
+      let tempInies = getProductByBase(await productsData, "Autre");
       setStoreProductsInies(tempInies);
-      let tempAutres = getProductByBase(productsData as any, "Inies");
+      let tempAutres = getProductByBase(await productsData, "Inies");
       setStoreProductsAutres(tempAutres);
       let tempResProducts: ProductType[] = [];
       tempResProducts.push(...tempInies);
@@ -159,18 +163,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     qNew: Number,
     qUsed: Number
   ) => {
-    let res = await fetch(
-      `/api/product?id=${encodeURIComponent(productToAdd.toString())}`,
-      {
-        method: "GET",
-      }
-    );
-    if (!res.ok) {
-      alert("Error");
+    const product = await getProductById(Number(productToAdd));
+    if (!product) {
+      console.log("Ce produit n'existe pas");
       return;
     }
-    const product = await res.json();
-    const finalProduct: ProductType = product.product;
+    const finalProduct: any = product;
     const tempProductToAdd: AddProductType = {
       product: [finalProduct],
       idProject: Number(id),
@@ -179,8 +177,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       addOn: null,
       updatedOn: null,
     };
-
-    res = await fetch(`/api/project/addProduct`, {
+    let res = await fetch(`/api/project/addProduct`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -190,6 +187,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     if (res.ok) {
       updateProductsInProject();
     } else {
+      console.log("Failed to add product", await res.json());
       alert("Failed to add product");
       toast.error("Une erreur s'est produite lors de l'ajout du produit");
     }

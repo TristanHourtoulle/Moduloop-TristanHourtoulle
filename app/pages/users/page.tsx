@@ -38,7 +38,6 @@ export default function Page() {
         if (data.success) {
           const userData = data.data || [];
           setUsers(userData);
-          console.log("users", userData);
           setTitle({
             title: "Utilisateurs",
             image: "/icons/admin.svg",
