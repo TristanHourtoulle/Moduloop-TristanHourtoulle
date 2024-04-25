@@ -17,7 +17,7 @@ export const getProjectById = async (id: number) => {
     method: "GET",
   });
   const data = await response.json();
-  if (data.success && data.data) {
+  if (data.success && data.product) {
     const projectData = databaseToSingleProjectModel(data.product);
     return projectData;
   } else {

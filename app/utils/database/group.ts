@@ -1,4 +1,4 @@
-const getGroupById = async (id: number) => {
+export const getGroupById = async (id: number) => {
   let res = await fetch(`/api/group/id?id=${encodeURIComponent(id ?? "")}`, {
     method: "GET",
   });
