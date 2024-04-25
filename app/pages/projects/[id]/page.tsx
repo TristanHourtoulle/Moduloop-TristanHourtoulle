@@ -136,25 +136,21 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
     setProject(projectData);
     // Get stored products
-    let res = await fetch(`/api/product/list`, {
-      method: "GET",
-    });
-    const productsData = await res.json();
+    const productsData = getProducts();
     setStoreProductsInies([]);
     setStoreProductsAutres([]);
     setStoreProducts([]);
-    if (productsData.success) {
-      let tempInies = getProductByBase(productsData.data, "Autre");
+    if (productsData) {
+      let tempInies = getProductByBase(productsData as any, "Autre");
       setStoreProductsInies(tempInies);
-      let tempAutres = getProductByBase(productsData.data, "Inies");
+      let tempAutres = getProductByBase(productsData as any, "Inies");
       setStoreProductsAutres(tempAutres);
       let tempResProducts: ProductType[] = [];
       tempResProducts.push(...tempInies);
       tempResProducts.push(...tempAutres);
       setStoreProducts(tempResProducts);
     } else {
-      console.error("Failed to fetch products:", productsData.error);
-      alert(productsData.error);
+      console.log("No products found");
     }
   };
 
