@@ -2,6 +2,7 @@
 
 import Loader from "@components/Loader";
 import { Title } from "@components/Title";
+import { Button } from "@components/button/Button";
 import { DeleteBtn } from "@components/button/DeleteBtn";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import ImpactSection from "@components/projects/ImpactSection";
@@ -326,22 +327,24 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     );
   }
 
+  const handleDownloadProject = async () => {
+    toast.warning("Cette fonctionnalité n'est pas encore disponible.");
+  };
+
   return (
     <div className="project-page w-full">
       {/* Header */}
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <Title {...title} />
-        <Link href="/pages/projects/create" className="create-project-button">
-          <div className="flex gap-5">
-            <Image
-              src="/icons/telecharger.svg"
-              alt="Télécharger"
-              width={20}
-              height={20}
-            />
-            Télécharger
-          </div>
-        </Link>
+        <Button
+          variant="primary"
+          onClick={handleDownloadProject}
+          size="large"
+          image="/icons/telecharger.svg"
+          content="Télécharger"
+          disabled={false}
+          moreClasses="mr-5"
+        />
       </div>
       {/* Group Name And Link */}
       <div className="flex items-center mb-5">
@@ -436,8 +439,37 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                       {addProductLoader ? (
                         <Loader />
                       ) : (
-                        <div
-                          className="px-4 py-2 bg-white shadow-lg rounded-[8px] flex items-center border-[#30C1BD] border-[3px] cursor-pointer transform transition-all duration-300 ease-in-out hover:opacity-75"
+                        // <div
+                        //   className="px-4 py-2 bg-white shadow-lg rounded-[8px] flex items-center border-[#30C1BD] border-[3px] cursor-pointer transform transition-all duration-300 ease-in-out hover:opacity-75"
+                        //   onClick={() => {
+                        //     const qNew = document.getElementById(
+                        //       "qNew-addProduct"
+                        //     ) as HTMLInputElement;
+                        //     const qUsed = document.getElementById(
+                        //       "qUsed-addProduct"
+                        //     ) as HTMLInputElement;
+                        //     if (
+                        //       (qNew?.value === "0" && qUsed?.value === "0") ||
+                        //       (qNew?.value === "" && qUsed?.value === "")
+                        //     ) {
+                        //       toast.error(
+                        //         "Veuillez saisir une quantité valide"
+                        //       );
+                        //       return;
+                        //     }
+                        //     addProductWithoutFormSubmit();
+                        //   }}
+                        // >
+                        //   {/* <Image
+                        //   src={"/icons/plus-sky-blue.svg"}
+                        //   alt="Ajouter"
+                        //   width={200}
+                        //   height={200}
+                        // /> */}
+                        //   <p className="text-lg text-[#30C1BD]">Ajouter</p>
+                        // </div>
+                        <Button
+                          variant="primary"
                           onClick={() => {
                             const qNew = document.getElementById(
                               "qNew-addProduct"
@@ -456,15 +488,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                             }
                             addProductWithoutFormSubmit();
                           }}
-                        >
-                          {/* <Image
-                          src={"/icons/plus-sky-blue.svg"}
-                          alt="Ajouter"
-                          width={200}
-                          height={200}
-                        /> */}
-                          <p className="text-lg text-[#30C1BD]">Ajouter</p>
-                        </div>
+                          size="medium"
+                          image={null}
+                          content="Ajouter"
+                          disabled={false}
+                        />
                       )}
                     </div>
                   </div>
@@ -490,20 +518,22 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                   productsInProject &&
                   productsInProject.length > 0 &&
                   productsInProject[0] && (
-                    <button
-                      className="chooseSection"
+                    <Button
+                      variant="secondary"
+                      image={null}
                       onClick={() => {
                         section === "products"
                           ? setSection("impact")
                           : setSection("products");
                       }}
-                    >
-                      {section === "products" ? (
-                        <p>Afficher l'impact</p>
-                      ) : (
-                        <p>Afficher les produits</p>
-                      )}
-                    </button>
+                      size="medium"
+                      content={
+                        section === "products"
+                          ? "Afficher l'impact"
+                          : "Afficher les produits"
+                      }
+                      disabled={false}
+                    />
                   )}
               </div>
             </div>
