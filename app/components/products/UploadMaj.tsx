@@ -61,7 +61,7 @@ export default function UploadForm() {
       }
       await addData(updateData.data);
       setIsLoading(false);
-      // window.location.href = "/pages/products";
+      window.location.href = "/pages/products";
     } catch (e) {
       setIsLoading(false);
       alert("ERROR: " + e);
@@ -71,13 +71,15 @@ export default function UploadForm() {
   return isLoading ? (
     <Loader />
   ) : (
-    <form onSubmit={onSubmit}>
-      <input
-        type="file"
-        name="file"
-        onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-      />
-      <input type="submit" value="Upload" />
-    </form>
+    <div className="flex items-center justify-center ml-auto mr-auto">
+      <form onSubmit={onSubmit}>
+        <input
+          type="file"
+          name="file"
+          onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+        />
+        <input type="submit" value="Upload" />
+      </form>
+    </div>
   );
 }
