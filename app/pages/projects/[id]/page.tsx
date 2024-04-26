@@ -426,7 +426,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
                     <div>
                       <label
-                        htmlFor="qNew-addProduct"
+                        htmlFor="unit-addProduct"
                         className="block mb-2 text-sm font-medium text-gray-900"
                       >
                         Unité
@@ -434,7 +434,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                       <input
                         disabled
                         style={{ width: "100px" }}
-                        id="qNew-addProduct"
+                        id="unit-addProduct"
                         type="text"
                         value={selectedProduct?.unit || ""}
                         className="cursor-not-allowed text-center bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
