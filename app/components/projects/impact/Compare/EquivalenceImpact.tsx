@@ -92,8 +92,10 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
           </p>
         )}
         <h2 className="title">
-          En choisissant {project.name},{" "}
-          {type && type != undefined ? "vous consommez" : "vous évitez:"}{" "}
+          {!type || type === undefined
+            ? `En choisissant ${project.name}, `
+            : " "}
+          {type && type != undefined ? "Vous consommez" : "vous évitez:"}{" "}
           <span className={colorImpactValue}>{impactValue}</span>{" "}
           <span className={"text-lg opacity-75"}>{impactUnit}</span>, équivaut
           à:
