@@ -110,15 +110,19 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
           unit={unit1}
           worstProject={worstProject}
         />
-        <p className="text-lg font-bold">ou</p>
-        <CardEquivalenceImpact
-          project={project}
-          title={title2}
-          image={image2}
-          value={value2}
-          unit={unit2}
-          worstProject={worstProject}
-        />
+        {impactType === "ERF" ? null : (
+          <>
+            <p className="text-lg font-bold">ou</p>
+            <CardEquivalenceImpact
+              project={project}
+              title={title2}
+              image={image2}
+              value={value2}
+              unit={unit2}
+              worstProject={worstProject}
+            />
+          </>
+        )}
         <p className="text-lg font-bold">ou</p>
         <CardEquivalenceImpact
           project={project}
