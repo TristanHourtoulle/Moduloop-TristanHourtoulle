@@ -9,3 +9,25 @@ export const getUserById = async (id: number) => {
     return null;
   }
 };
+
+export const requiredUser = async (id: number) => {
+  const user = await getUserById(id);
+  if (!user) {
+    return false;
+  }
+  if (user.role !== "user" && user.role !== "admin") {
+    return false;
+  }
+  return true;
+};
+
+export const requiredAdmin = async (id: number) => {
+  const user = await getUserById(id);
+  if (!user) {
+    return false;
+  }
+  if (user.role !== "admin") {
+    return false;
+  }
+  return true;
+};
