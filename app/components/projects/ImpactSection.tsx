@@ -51,22 +51,26 @@ const ImpactSection = (props: {
     const erfValue: number = Number(getERFimpact(project));
 
     // Plane equivalent
-    let result = rcValue / 434;
+    let result = rcValue / 100; // Convertir kg en tonnes
+    result = result / 0.524; // 0.524 => Emission d'un vol Paris-Nice en tonne de CO2 par passager
     setPlaneEquivalent(Number(result.toFixed(0)));
     // Person equivalent
-    result = rcValue / 32.6;
+    result = rcValue / 24.38; // 24.38 => Consommation moyenne d'un français en kg de CO2 par jour
     setPersonEquivalent(Number(result.toFixed(0)));
     // Km equivalent
-    result = rcValue / 0.17;
+    console.log("rcValue: ", rcValue);
+    result = rcValue * 0.17; // 0.17 => Emission d'un km en kg de CO2 en SUV
+    console.log("result: ", result);
     setKmEquivalent(Number(result.toFixed(0)));
     // Petrol equivalent
-    result = erfValue / 5861;
+    result = erfValue / 5861.52; // 5861.52 => Equivalence d'un baril de pétrole en MJ
     setPetrolEquivalent(Number(result.toFixed(0)));
     // Lamp equivalent
     result = erfValue / 648;
     setLampEquivalent(Number(result.toFixed(0)));
     // House equivalent
-    result = erfValue / 147.96;
+    result = erfValue * 0.2778; // Convertir MJ to kWh
+    result = result / (2223 / 365); // 2223 => Consommation moyenne d'un français en kWh par an; 365 => Convertir en consommation journalière
     setHouseEquivalent(Number(result.toFixed(0)));
     setIsLoaded(true);
   };
