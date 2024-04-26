@@ -516,19 +516,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               {section === "products" &&
                 productsInProject &&
                 productsInProject.length > 0 &&
-                productsInProject !== undefined &&
-                productsInProject[0] && (
-                  <DeleteBtn
-                    text="Supprimer tous les produits"
-                    cta={() => {
-                      setDialogOpen(true);
-                      updateProductsInProject();
-                    }}
-                  />
-                )}
-              {(section === "products" || section === "impact") &&
-                productsInProject &&
-                productsInProject.length > 0 &&
                 productsInProject[0] && (
                   <Button
                     variant="secondary"
@@ -545,6 +532,19 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         : "Afficher les produits"
                     }
                     disabled={false}
+                  />
+                )}
+              {section === "products" &&
+                productsInProject &&
+                productsInProject.length > 0 &&
+                productsInProject !== undefined &&
+                productsInProject[0] && (
+                  <DeleteBtn
+                    text="Supprimer tous les produits"
+                    cta={() => {
+                      setDialogOpen(true);
+                      updateProductsInProject();
+                    }}
                   />
                 )}
             </div>

@@ -1,4 +1,5 @@
 import Loader from "@components/Loader";
+import { Button } from "@components/button/Button";
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
 import {
@@ -220,7 +221,7 @@ const ImpactSection = (props: {
   }, [compareWith, project?.products]);
 
   return (
-    <div className="impact flex flex-col items-start gap-5 my-[2%] mx-[5%]">
+    <div className="impact flex flex-col items-start gap-5 mx-[5%]">
       <div className="w-full flex flex-col gap-6">
         {/* Select project for compare */}
         <div className="flex items-center gap-5">
@@ -285,6 +286,17 @@ const ImpactSection = (props: {
               )}
             </select>
           </div>
+        </div>
+
+        <div className="flex items-center">
+          <Button
+            onClick={() => ctaView("products")}
+            content="Afficher les produits"
+            variant="secondary"
+            size="medium"
+            disabled={false}
+            image={null}
+          />
         </div>
 
         {isLoaded && isCompare && compareWith && (
