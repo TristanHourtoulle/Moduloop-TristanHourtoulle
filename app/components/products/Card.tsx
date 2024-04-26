@@ -1,7 +1,9 @@
 import { Button } from "@components/button/Button";
 import TrashCan from "@components/button/TrashCan";
+import { Dialogs } from "@components/features/Dialogs";
 import { ProductType } from "@models/Product";
 import Image from "next/image";
+import { useState } from "react";
 
 const Card = ({
   id,
@@ -13,6 +15,7 @@ const Card = ({
   const showProductUrl = "/pages/products/" + id;
   const nameProduct = name?.replace("Inies - ", "");
   const baseName = base?.toLowerCase()?.replace(/^\w/, (c) => c.toUpperCase());
+  const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
   const handleDelete = async () => {
     const response = await fetch(`/api/product?id=${id}`, {
@@ -31,13 +34,26 @@ const Card = ({
 
   return (
     <div className="product-card w-[30%] px-[2%] py-[2%] flex flex-col justify-between gap-2">
+      {dialogIsOpen && (
+        <Dialogs
+          title="Supprimer le produit"
+          content="Êtes-vous sûr de vouloir supprimer ce produit ?"
+          validate="Supprimer"
+          cancel="Annuler"
+          cta={() => {
+            handleDelete();
+            setDialogIsOpen(false);
+          }}
+          cancelCta={() => setDialogIsOpen(false)}
+        />
+      )}
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col">
           <h2 className="name">{nameProduct}</h2>
           <p className="base">{baseName}</p>
         </div>
-        <div onClick={handleDelete}>
+        <div onClick={() => setDialogIsOpen(true)}>
           <TrashCan size={23} />
         </div>
       </div>
