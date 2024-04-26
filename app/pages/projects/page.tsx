@@ -251,7 +251,7 @@ export default function page() {
   const handleDeleteProject = async (id: number) => {
     if (
       window.confirm(
-        "Voulez-vous vraiment supprimer ce projet ?\n Cet action est irréversible."
+        "Voulez-vous vraiment supprimer ce projet ?\n Cette action est irréversible."
       )
     ) {
       setIsLoading(true);
@@ -322,7 +322,7 @@ export default function page() {
       </div>
 
       <div className="flex items-center justify-center gap-4 mt-[2%] flex-wrap ml-10 projects-container">
-        {projects ? (
+        {projects && projects.length > 0 ? (
           projects.map((project, index) => {
             return (
               <ProjectCard

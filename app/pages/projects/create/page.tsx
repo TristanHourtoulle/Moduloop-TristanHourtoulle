@@ -101,7 +101,7 @@ function page() {
 
         if (data.success) {
           const createdProject = data.data;
-          toast.success("Le projet à bien été créer.");
+          toast.success("Le projet à bien été créé, vous allez être redirigé.");
           setTimeout(() => {
             window.location.href = "/pages/projects/" + createdProject.id;
           }, 2000);

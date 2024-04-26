@@ -19,7 +19,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
   const dialogProps: DialogsProps = {
     title: "Supprimer ce projet",
     content:
-      "Voulez-vous vraiment supprimer ce projet ?\n Cet action est irréversible.",
+      "Voulez-vous vraiment supprimer ce projet ?\n Cette action est irréversible.",
     validate: "Confirmer",
     cancel: "Annuler",
     cta: () => handleDeleteProject(project.id ?? -1),
