@@ -36,21 +36,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // if (image) {
-    //   const fileBlob = await image.arrayBuffer();
-    //   const buffer = Buffer.from(fileBlob);
-    //   const uploadDir = path.join(process.cwd(), "public", "projects");
-    //   await mkdir(uploadDir, { recursive: true });
-    //   const filepath = path.join(uploadDir, image.name);
-    //   await writeFile(filepath, buffer);
-
-    //   const dbFilePath = filepath
-    //     .replace(process.cwd(), "")
-    //     .replace(/\\/g, "/");
-    //   const dbImageUrl = dbFilePath.replace("/public", "");
-    //   imageUrl = dbImageUrl;
-    // }
-
     const result = await pool.query(
       "INSERT INTO projects (name, description, image, budget, company, location, area, user_id, group_id, updated_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, CURRENT_TIMESTAMP) RETURNING *;",
       [
