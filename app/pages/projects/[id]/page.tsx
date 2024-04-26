@@ -50,6 +50,30 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [section, setSection] = useState<string>("products");
   const [kartLoaded, setKartLoaded] = useState<boolean>(false);
 
+  // Select Product To add
+  const [SelectedProductId, setSelectedProductId] = useState<number | null>(
+    null
+  );
+  const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
+    null
+  );
+
+  useEffect(() => {
+    const fetchSelectedProduct = async () => {
+      if (!SelectedProductId) {
+        console.log("No product selected");
+        return;
+      }
+      const product = await getProductById(SelectedProductId);
+      if (!product) {
+        console.log("Product not found");
+        return;
+      }
+      setSelectedProduct(product);
+    };
+    fetchSelectedProduct();
+  }, [SelectedProductId]);
+
   const dialogProps: DialogsProps = {
     title: "Supprimer tous les produits",
     content: "Voulez-vous vraiment supprimer tous les produits ?",
@@ -147,6 +171,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     if (productsData) {
       let tempInies = getProductByBase(await productsData, "Autre");
       setStoreProductsInies(tempInies);
+      if (tempInies.length > 0) {
+        setSelectedProductId(tempInies[0].id);
+      }
       let tempAutres = getProductByBase(await productsData, "Inies");
       setStoreProductsAutres(tempAutres);
       let tempResProducts: ProductType[] = [];
@@ -244,6 +271,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             if (productsData.success) {
               let tempInies = getProductByBase(productsData.data, "Inies");
               setStoreProductsInies(tempInies);
+              if (tempInies.length > 0) {
+                setSelectedProductId(tempInies[0].id);
+              }
               let tempAutres = getProductByBase(productsData.data, "Autre");
               setStoreProductsAutres(tempAutres);
               let tempResProducts: ProductType[] = [];
@@ -358,7 +388,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         <div className="mt-5">
           <div className="px-[5%]">
             <div className="flex items-end justify-between">
-              <div className="flex items-end w-[50%]">
+              <div className="flex items-end w-full">
                 {section === "products" && (
                   <div className="flex items-center gap-8">
                     <div>
@@ -369,8 +399,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         Choisissez un produit
                       </label>
                       <select
+                        onChange={(e) =>
+                          setSelectedProductId(e.target.value as any)
+                        }
                         id="products-addProduct"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       >
                         {storeProducts &&
                           storeProducts.map((product, index) => (
@@ -383,9 +416,29 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                                 {product.base} -{" "}
                               </span>{" "}
                               {product.name?.replace("Inies - ", "")}
+                              {" ("}
+                              {product.unit}
+                              {")"}
                             </option>
                           ))}
                       </select>
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="qNew-addProduct"
+                        className="block mb-2 text-sm font-medium text-gray-900"
+                      >
+                        Unité
+                      </label>
+                      <input
+                        disabled
+                        style={{ width: "100px" }}
+                        id="qNew-addProduct"
+                        type="text"
+                        value={selectedProduct?.unit || ""}
+                        className="cursor-not-allowed text-center bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+                      ></input>
                     </div>
 
                     <div className="flex items-end gap-8">
@@ -458,42 +511,42 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               </div>
               {/* Dialog */}
               {dialogOpen && <Dialogs {...dialogProps} />}
-              <div className="flex items-end justify-end gap-5">
-                {section === "products" &&
-                  productsInProject &&
-                  productsInProject.length > 0 &&
-                  productsInProject !== undefined &&
-                  productsInProject[0] && (
-                    <DeleteBtn
-                      text="Supprimer tous les produits"
-                      cta={() => {
-                        setDialogOpen(true);
-                        updateProductsInProject();
-                      }}
-                    />
-                  )}
-                {(section === "products" || section === "impact") &&
-                  productsInProject &&
-                  productsInProject.length > 0 &&
-                  productsInProject[0] && (
-                    <Button
-                      variant="secondary"
-                      image={null}
-                      onClick={() => {
-                        section === "products"
-                          ? setSection("impact")
-                          : setSection("products");
-                      }}
-                      size="medium"
-                      content={
-                        section === "products"
-                          ? "Afficher l'impact"
-                          : "Afficher les produits"
-                      }
-                      disabled={false}
-                    />
-                  )}
-              </div>
+            </div>
+            <div className="flex items-center gap-5 mt-5">
+              {section === "products" &&
+                productsInProject &&
+                productsInProject.length > 0 &&
+                productsInProject !== undefined &&
+                productsInProject[0] && (
+                  <DeleteBtn
+                    text="Supprimer tous les produits"
+                    cta={() => {
+                      setDialogOpen(true);
+                      updateProductsInProject();
+                    }}
+                  />
+                )}
+              {(section === "products" || section === "impact") &&
+                productsInProject &&
+                productsInProject.length > 0 &&
+                productsInProject[0] && (
+                  <Button
+                    variant="secondary"
+                    image={null}
+                    onClick={() => {
+                      section === "products"
+                        ? setSection("impact")
+                        : setSection("products");
+                    }}
+                    size="medium"
+                    content={
+                      section === "products"
+                        ? "Afficher l'impact"
+                        : "Afficher les produits"
+                    }
+                    disabled={false}
+                  />
+                )}
             </div>
           </div>
           {isPopupOpen && (
