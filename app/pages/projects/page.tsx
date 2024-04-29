@@ -179,7 +179,9 @@ export default function page() {
           setProjects(projectsData);
           setBackupProjects(projectsData); // Sauvegarder les projets initiaux
         } else {
-          console.error("Failed to fetch projects:", data.error);
+          // console.error("Failed to fetch projects:", data.error);
+          setProjects([]);
+          setBackupProjects([]);
         }
       }
       setIsLoading(false);

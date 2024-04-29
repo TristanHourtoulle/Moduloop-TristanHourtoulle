@@ -1,6 +1,7 @@
 "use client";
 
 import { User } from "@models/User";
+import { createUser } from "@utils/database/user";
 import { toast } from "sonner";
 
 export default function Register() {
@@ -26,17 +27,11 @@ export default function Register() {
     };
 
     try {
-      const response = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
+      const response = await createUser(user);
 
-      if (response.ok) {
+      if (response) {
         toast.success("Compte créé avec succès");
-        window.location.href = "/pages/login";
+        window.location.href = "/pages/projects";
       } else {
         toast.error("Erreur lors de la création du compte");
       }

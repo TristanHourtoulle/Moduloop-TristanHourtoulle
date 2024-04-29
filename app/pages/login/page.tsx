@@ -1,6 +1,7 @@
 "use client";
 
 import { User } from "@/models/User";
+import { loginUser } from "@utils/database/user";
 import { toast } from "sonner";
 
 export default function Login() {
@@ -26,21 +27,13 @@ export default function Login() {
     try {
       const email = user.email || "";
       const password = user.password || "";
-      const url = `/api/user?email=${encodeURIComponent(
-        email
-      )}&password=${encodeURIComponent(password)}`;
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await loginUser(email, password);
 
-      if (response.ok) {
+      if (response) {
         toast.success("Connexion réussie");
         window.location.href = "/";
       } else {
-        alert("Error: " + response.statusText);
+        toast.error("Email ou mot de passe incorrect");
       }
     } catch (error) {}
   };
