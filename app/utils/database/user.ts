@@ -1,3 +1,5 @@
+import { login } from "@lib/session";
+
 export const getUserById = async (id: number) => {
   const response = await fetch(`/api/user/admin?id=${encodeURIComponent(id)}`, {
     method: "GET",
@@ -57,4 +59,38 @@ export const updateUser = async (user: any) => {
     return data.data;
   }
   return null;
+};
+
+export const createUser = async (user: any) => {
+  const response = await fetch("/api/user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+  const data = await response.json();
+  if (data.success) {
+    login(data.data);
+    return data.data;
+  }
+  return null;
+};
+
+export const loginUser = async (email: string, password: string) => {
+  const url = `/api/user?email=${encodeURIComponent(
+    email
+  )}&password=${encodeURIComponent(password)}`;
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.ok) {
+    return true;
+  } else {
+    return false;
+  }
 };
