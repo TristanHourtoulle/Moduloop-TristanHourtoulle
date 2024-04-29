@@ -1,5 +1,6 @@
 import { Button } from "@components/button/Button";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
+import { deleteProject, duplicateProject } from "@utils/database/project";
 import dateFormater from "@utils/dateFormater";
 import Image from "next/image";
 import { useState } from "react";
@@ -27,10 +28,8 @@ export const ProjectCard = (props: ProjectCardProps) => {
   };
 
   const handleDeleteProject = async (id: number) => {
-    let res = await fetch(`/api/project?id_project=${id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) {
+    let res = await deleteProject(id);
+    if (res) {
       ctaUpdate();
       setIsOpenDialog(false);
     } else {
@@ -40,10 +39,8 @@ export const ProjectCard = (props: ProjectCardProps) => {
   };
 
   const handleDuplicateProject = async (id: number) => {
-    let res = await fetch(`/api/project/duplicate?id_project=${id}`, {
-      method: "POST",
-    });
-    if (res.ok) {
+    let res = await duplicateProject(id);
+    if (res) {
       ctaUpdate();
     } else {
       alert("FAILED");

@@ -1,6 +1,10 @@
 import { AddProductType } from "@/models/AddProduct";
 import TrashCan from "@components/button/TrashCan";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
+import {
+  deleteProductInProject,
+  updateProductInProject,
+} from "@utils/database/project";
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -48,15 +52,9 @@ const ProductInProjectCard = (props: {
       updatedOn: null,
     };
 
-    let res = await fetch(`/api/project/changeProduct`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(addProduct),
-    });
+    let res = await updateProductInProject(addProduct);
 
-    if (res.ok) {
+    if (res) {
       toast.success(
         "Quantité correctement modifié ! La page va se recharger...",
         { duration: 2000 }
@@ -106,20 +104,17 @@ const ProductInProjectCard = (props: {
   };
 
   const confirmDeleteProduct = async () => {
-    let res = await fetch(
-      `/api/project/list?id_project=${idProject}&id_product=${product.product?.[0]?.id}`,
-      {
-        method: "DELETE",
+    if (product.product !== undefined && product.product[0].id !== null) {
+      let res = await deleteProductInProject(idProject, product.product[0].id);
+      if (res) {
+        toast.success("Produit supprimé du projet");
+        setDialogOpen(false);
+        ctaDelete();
+      } else {
+        setDialogOpen(false);
+        console.error("Erreur lors de la suppression du produit du projet");
+        toast.error("Erreur lors de la suppression du produit du projet.");
       }
-    );
-    if (res.ok) {
-      toast.success("Produit supprimé du projet");
-      setDialogOpen(false);
-      ctaDelete();
-    } else {
-      setDialogOpen(false);
-      console.error("Erreur lors de la suppression du produit du projet");
-      toast.error("Erreur lors de la suppression du produit du projet.");
     }
     setDialogOpen(false);
   };

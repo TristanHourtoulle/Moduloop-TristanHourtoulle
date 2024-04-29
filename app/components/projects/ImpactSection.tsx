@@ -1,7 +1,9 @@
 import Loader from "@components/Loader";
 import { Button } from "@components/button/Button";
+import { getSession } from "@lib/session";
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
+import { getProjectsByUserId } from "@utils/database/project";
 import {
   getASEimpact,
   getCO2impact,
@@ -59,9 +61,7 @@ const ImpactSection = (props: {
     result = rcValue / 24.38; // 24.38 => Consommation moyenne d'un français en kg de CO2 par jour
     setPersonEquivalent(Number(result.toFixed(0)));
     // Km equivalent
-    console.log("rcValue: ", rcValue);
     result = rcValue * 0.17; // 0.17 => Emission d'un km en kg de CO2 en SUV
-    console.log("result: ", result);
     setKmEquivalent(Number(result.toFixed(0)));
     // Petrol equivalent
     result = erfValue / 5861.52; // 5861.52 => Equivalence d'un baril de pétrole en MJ
@@ -79,24 +79,12 @@ const ImpactSection = (props: {
   useEffect(() => {
     const fetchProjects = async () => {
       setIsLoaded(false);
-      let res = await fetch("/api/session", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      let data = await res.json();
-      setSession(data.session);
-
-      res = await fetch(
-        `/api/project/list?id=${encodeURIComponent(data.session.user.id)}`,
-        {
-          method: "GET",
-        }
-      );
-      data = await res.json();
-      if (data.success) {
-        setProjects(data.data);
+      let response = await getSession();
+      let data = await response;
+      setSession(data);
+      response = await getProjectsByUserId(data.user.id);
+      if (response) {
+        setProjects(response);
       }
       await getEquivalenceWithoutCompare();
       setIsLoaded(true);

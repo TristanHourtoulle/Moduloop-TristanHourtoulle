@@ -1,6 +1,7 @@
 import Card from "@components/projects/products/Card";
 import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
+import { addProductInProject } from "@utils/database/project";
 import React, { useState } from "react";
 import { Toaster, toast } from "sonner";
 
@@ -31,15 +32,9 @@ const ProductCard = (props: {
       updatedOn: null,
     };
 
-    let res = await fetch(`/api/project/addProduct`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(addProductData),
-    });
+    let res = await addProductInProject(addProductData);
 
-    if (res.ok) {
+    if (res) {
       toast.success("Produit ajouté au projet", { duration: 2000 });
       setQNew(0);
       setQUsed(0);
