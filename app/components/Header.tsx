@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Logo } from "./header/Logo";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
-import { logout } from "@lib/session";
+import { getSession, logout } from "@lib/session";
 
 const Header = () => {
   const navigation = usePathname();
@@ -37,14 +37,13 @@ const Header = () => {
   useEffect(() => {
     const fetchSession = async () => {
       try {
-        const res = await fetch("/api/session", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const data = await res.json();
-        setSession(data.session);
+        const response = await getSession();
+        const data = response;
+        if (!data) {
+          console.error("Error fetching session:", data);
+          return;
+        }
+        setSession(data);
       } catch (error) {
         console.error("Error fetching session:", error);
       }
