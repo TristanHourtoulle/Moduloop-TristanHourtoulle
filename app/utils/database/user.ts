@@ -31,3 +31,30 @@ export const requiredAdmin = async (id: number) => {
   }
   return true;
 };
+
+export const getUsers = async () => {
+  let res = await fetch("/api/user/list", {
+    method: "GET",
+  });
+  const data = await res.json();
+  if (data.success) {
+    return data.data;
+  } else {
+    return null;
+  }
+};
+
+export const updateUser = async (user: any) => {
+  const response = await fetch(`/api/user`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+  const data = await response.json();
+  if (data.success) {
+    return data.data;
+  }
+  return null;
+};

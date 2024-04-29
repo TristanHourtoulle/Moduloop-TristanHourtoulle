@@ -39,13 +39,10 @@ export const getProjectsByGroup = async (groupId: number, projects: any) => {
   return result;
 };
 
-export const createProject = async (project: any) => {
+export const createProjectInDatabase = async (project: FormData) => {
   const response = await fetch(`/api/project`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(project),
+    body: project,
   });
   const data = await response.json();
   if (data.success && data.data) {
@@ -55,7 +52,7 @@ export const createProject = async (project: any) => {
 };
 
 export const deleteProject = async (id: number) => {
-  const response = await fetch(`/api/project?id=${id}`, {
+  let response = await fetch(`/api/project?id_project=${id}`, {
     method: "DELETE",
   });
   const data = await response.json();
@@ -78,4 +75,73 @@ export const updateProject = async (project: any) => {
     return data.data;
   }
   return null;
+};
+
+export const addProductInProject = async (product: any) => {
+  let response = await fetch(`/api/project/addProduct`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+  let data = await response.json();
+  if (data.success) {
+    return true;
+  }
+  return null;
+};
+
+export const updateProductInProject = async (product: any) => {
+  let response = await fetch(`/api/project/changeProduct`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+
+  let data = await response.json();
+  if (data.success) {
+    return true;
+  }
+  return null;
+};
+
+export const deleteProductInProject = async (
+  idProject: number,
+  idProduct: number
+) => {
+  let response = await fetch(
+    `/api/project/list?id_project=${idProject}&id_product=${idProduct}`,
+    {
+      method: "DELETE",
+    }
+  );
+  let data = await response.json();
+  if (data.success) {
+    return true;
+  }
+  return false;
+};
+
+export const deleteAllProductInProject = async (idProject: number) => {
+  let response = await fetch(`/api/project/delete?id_project=${idProject}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+};
+
+export const duplicateProject = async (id: number) => {
+  let response = await fetch(`/api/project/duplicate?id_project=${id}`, {
+    method: "POST",
+  });
+
+  if (response.ok) {
+    return true;
+  }
+  return false;
 };

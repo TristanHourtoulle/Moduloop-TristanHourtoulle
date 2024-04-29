@@ -9,3 +9,16 @@ export const getGroupById = async (id: number) => {
     return null;
   }
 };
+
+export const getGroupsByUserId = async (id: number) => {
+  let res = await fetch(`/api/group/list?id=${id}`, {
+    method: "GET",
+  });
+  const data = await res.json();
+
+  if (data.success && data.data) {
+    return data.data;
+  } else {
+    return null;
+  }
+};
