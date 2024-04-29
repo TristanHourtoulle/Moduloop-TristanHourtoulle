@@ -1,34 +1,16 @@
 "use client";
 
 import Loader from "@components/Loader";
+import { addProductsInDatabase } from "@utils/database/product";
 import { useState } from "react";
 
 async function addData(data: JSON) {
   try {
     const parseData = JSON.parse(JSON.stringify(data));
-    const res = await fetch("/api/product", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(parseData),
-    });
-    if (!res.ok) {
+    const res = await addProductsInDatabase(parseData);
+    if (!res) {
       throw new Error(await res.text());
     }
-    const updateData = await res.json();
-    // const addSection = parseData.Add;
-    // addSection.forEach(async (element: any) => {
-    //     const res = await fetch('/api/product', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(element)
-    //     });
-    //     if (!res.ok) throw new Error(await res.text());
-    //     const updateData = await res.json();
-    // });
     return { success: true, message: "Data added" };
   } catch (e: any) {
     return { success: false, message: e.message };
