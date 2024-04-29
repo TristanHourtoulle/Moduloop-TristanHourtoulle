@@ -1,9 +1,12 @@
 "use client";
 
 import { Title } from "@components/Title";
+import { getSession } from "@lib/session";
 import { GroupType } from "@models/Group";
 import { TitleType } from "@models/Title";
 import { databaseToSeveralGroupModel } from "@utils/convert";
+import { getGroupsByUserId } from "@utils/database/group";
+import { createProjectInDatabase } from "@utils/database/project";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -16,12 +19,10 @@ function page() {
 
   useEffect(() => {
     const fetchData = async () => {
-      let res = await fetch("/api/session", {
-        method: "GET",
-      });
-      const data = await res.json();
-      if (data.success) {
-        await setIdUser(data.session.user.id);
+      let res = await getSession();
+      const data = await res;
+      if (data) {
+        await setIdUser(data.user.id);
       } else {
         console.error("Failed to fetch user:", data.error);
       }
@@ -32,15 +33,10 @@ function page() {
   useEffect(() => {
     const fetchGroups = async () => {
       if (idUser) {
-        let res = await fetch(
-          `/api/group/list?id=${encodeURIComponent(idUser)}`,
-          {
-            method: "GET",
-          }
-        );
-        const groupData = await res.json();
-        if (groupData.success) {
-          setGroups(databaseToSeveralGroupModel(groupData.data));
+        let res = await getGroupsByUserId(parseInt(idUser));
+        const groupData = await res;
+        if (groupData) {
+          setGroups(databaseToSeveralGroupModel(groupData));
         } else {
           console.error("Failed to fetch groups:", groupData.error);
         }
@@ -92,15 +88,12 @@ function page() {
           formData.append("group-budget", "");
         }
 
-        const response = await fetch("/api/project", {
-          method: "POST",
-          body: formData,
-        });
+        const response = await createProjectInDatabase(formData);
 
-        const data = await response.json();
+        const data = await response;
 
-        if (data.success) {
-          const createdProject = data.data;
+        if (data) {
+          const createdProject = data;
           toast.success("Le projet à bien été créé, vous allez être redirigé.");
           setTimeout(() => {
             window.location.href = "/pages/projects/" + createdProject.id;
@@ -119,44 +112,6 @@ function page() {
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCreateGroup(e.target.value === "-2" ? true : false);
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      const formData = new FormData();
-
-      formData.append("user_id", idUser);
-      const name = e.currentTarget.name;
-      if (typeof name === "string") {
-        formData.append("name", name);
-      }
-      formData.append("description", e.currentTarget.description.value);
-      formData.append("company", e.currentTarget.company.value);
-      formData.append("location", e.currentTarget.location.value);
-      formData.append("area", e.currentTarget.area.value);
-      formData.append("budget", e.currentTarget.budget.value);
-      formData.append("group", e.currentTarget.group.value);
-      if (createGroup) {
-        formData.append("group-name", groupName);
-        formData.append("group-description", groupDescription);
-        formData.append("group-budget", groupBudget);
-      }
-
-      const response = await fetch("/api/project", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.ok) {
-        window.location.href = "/pages/projects";
-      } else {
-        alert("Failed to create project.");
-      }
-    } catch (error) {
-      alert(error);
-    }
   };
 
   const title: TitleType = {

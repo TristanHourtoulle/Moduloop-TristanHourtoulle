@@ -7,6 +7,8 @@ import ImpactTable from "@components/products/impactTable";
 import InfoTable from "@components/products/infoTable";
 import { ProductType } from "@models/Product";
 import { TitleType } from "@models/Title";
+import { uploadImageProduct } from "@utils/database/file";
+import { getProductById } from "@utils/database/product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -23,20 +25,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       formData.append("file", file);
       formData.append("productId", String(myProduct?.id));
       const uploadImage = async () => {
-        const response = await fetch("/api/upload/image/product", {
-          method: "POST",
-          body: formData,
-        });
-        if (response.ok) {
-          let res = await fetch(`/api/product?id=${encodeURIComponent(id)}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          if (res.ok) {
-            const product = await res.json();
-            setMyProduct(product.product);
+        const response = await uploadImageProduct(formData);
+        if (response) {
+          let res = await getProductById(myProduct?.id ?? -1);
+          if (res) {
+            const product = await res;
+            setMyProduct(product);
           } else {
             console.log("Error in fetch", res);
           }
@@ -48,66 +42,19 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     }
   }, [file]);
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     setIsLoading(true);
-  //     const formData = new FormData();
-  //     if (file) {
-  //       formData.append("file", file); // Ajoutez votre fichier upload à FormData
-  //     }
-  //     formData.append("productId", String(myProduct?.id)); // Convert the value to a string before appending it to FormData
-
-  //     const response = await fetch("/api/upload/image/product", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-
-  //     if (response.ok) {
-  //       let res = await fetch(`/api/product?id=${encodeURIComponent(id)}`, {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       if (res.ok) {
-  //         const product = await res.json();
-  //         setMyProduct(product.product);
-  //       } else {
-  //         // Handle error
-  //       }
-  //     } else {
-  //       alert("Failed to upload image.");
-  //     }
-  //   } catch (error) {
-  //     alert(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     const fetchProduct = async () => {
       setIsLoading(true); // Set isLoading to true before fetch operation
       try {
-        const response = await fetch(
-          `/api/product?id=${encodeURIComponent(id)}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (response.ok) {
-          const product = await response.json();
-          setMyProduct(product.product);
-          if (product.product) {
+        const response = await getProductById(Number(id));
+        if (response) {
+          const product = await response;
+          setMyProduct(product);
+          if (product) {
             const title: TitleType = {
               title: "Votre produit: ",
               image: "/icons/close.svg",
-              number: product.product.name,
+              number: product.name,
               back: "/pages/products",
               canChange: false,
               id_project: undefined,

@@ -5,6 +5,7 @@ import { Title } from "@/components/Title";
 import { getSession } from "@/lib/session";
 import { TitleType } from "@/models/Title";
 import { UserLine } from "@components/users/UserLine";
+import { getUsers } from "@utils/database/user";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -31,12 +32,14 @@ export default function Page() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        let res = await fetch("/api/user/list", {
-          method: "GET",
-        });
-        const data = await res.json();
-        if (data.success) {
-          const userData = data.data || [];
+        let res = await getUsers();
+
+        const data = await res;
+
+        console.log("data", data);
+
+        if (data) {
+          const userData = data || [];
           setUsers(userData);
           setTitle({
             title: "Utilisateurs",

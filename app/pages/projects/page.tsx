@@ -12,6 +12,8 @@ import {
   databaseToProjectModel,
   databaseToSeveralGroupModel,
 } from "@utils/convert";
+import { getGroupById, getGroupsByUserId } from "@utils/database/group";
+import { getProjectsByUserId } from "@utils/database/project";
 import { useEffect, useState } from "react";
 
 export default function page() {
@@ -43,40 +45,30 @@ export default function page() {
 
   const updateProjects = async () => {
     const fetchGroup = async (id_user: string) => {
-      let res = await fetch(`/api/group/list?id=${id_user}`, {
-        method: "GET",
-      });
-      const data = await res.json();
-      if (data.success) {
-        let groupData = databaseToSeveralGroupModel(data.data);
+      let res = await getGroupsByUserId(Number(id_user));
+      if (res) {
+        let groupData = databaseToSeveralGroupModel(res);
         await setGroups(groupData);
       } else {
-        console.error("Failed to fetch groups:", data.error);
+        console.error("Failed to fetch groups:", res.error);
       }
     };
 
     setIsLoading(true);
     // Get User Session
-    let res = await fetch("/api/session", {
-      method: "GET",
-    });
-    const session = await res.json();
-    if (!session.success) {
+    let res = await getSession();
+    const session = await res;
+    if (!session) {
       console.error("Failed to fetch session:", session.error);
       alert(session.error);
     } else {
-      await setUser(session.session.user);
-      await fetchGroup(session.session.user.id);
+      await setUser(session.user);
+      await fetchGroup(session.user.id);
       // Get Projects
-      res = await fetch(
-        `/api/project/list?id=${encodeURIComponent(session.session.user.id)}`,
-        {
-          method: "GET",
-        }
-      );
-      const data = await res.json();
-      if (data.success) {
-        let projectsData = databaseToProjectModel(data.data);
+      res = await getProjectsByUserId(session.user.id);
+      const data = await res;
+      if (data) {
+        let projectsData = databaseToProjectModel(data);
         for (let i = 0; i < projectsData.length; i++) {
           // Get Group By Id
           if (
@@ -86,17 +78,10 @@ export default function page() {
           ) {
             break;
           }
-          res = await fetch(
-            `/api/group/id?id=${encodeURIComponent(
-              projectsData[i].group?.toString() ?? ""
-            )}`,
-            {
-              method: "GET",
-            }
-          );
-          const groupData = await res.json();
-          if (groupData.success) {
-            const groupInfo = databaseToGroupModel(groupData.data);
+          res = getGroupById(projectsData[i].group ?? 0);
+          const groupData = await res;
+          if (groupData) {
+            const groupInfo = databaseToGroupModel(groupData);
             if (groupInfo && groupInfo.id) {
               projectsData[i].groupInfo = groupInfo;
             } else {
@@ -105,7 +90,7 @@ export default function page() {
                 name: "Aucun Groupe",
                 description: "",
                 budget: "0",
-                user_id: session.session.user.id,
+                user_id: session.user.id,
                 image: "",
               };
               projectsData[i].groupInfo = tempGroupInfo;
@@ -135,12 +120,10 @@ export default function page() {
     };
 
     const fetchGroup = async (id_user: string) => {
-      let res = await fetch(`/api/group/list?id=${id_user}`, {
-        method: "GET",
-      });
-      const data = await res.json();
-      if (data.success) {
-        let groupData = databaseToSeveralGroupModel(data.data);
+      let res = await getGroupsByUserId(Number(id_user));
+      const data = await res;
+      if (data) {
+        let groupData = databaseToSeveralGroupModel(data);
         await setGroups(groupData);
       } else {
         console.error("Failed to fetch groups:", data.error);
@@ -150,26 +133,19 @@ export default function page() {
     const fetchData = async () => {
       setIsLoading(true);
       // Get User Session
-      let res = await fetch("/api/session", {
-        method: "GET",
-      });
-      const session = await res.json();
-      if (!session.success) {
+      let res = await getSession();
+      const session = await res;
+      if (!session) {
         console.error("Failed to fetch session:", session.error);
         alert(session.error);
       } else {
-        await setUser(session.session.user);
-        await fetchGroup(session.session.user.id);
+        await setUser(session.user);
+        await fetchGroup(session.user.id);
         // Get Projects
-        res = await fetch(
-          `/api/project/list?id=${encodeURIComponent(session.session.user.id)}`,
-          {
-            method: "GET",
-          }
-        );
-        const data = await res.json();
-        if (data.success) {
-          let projectsData = databaseToProjectModel(data.data);
+        res = await getProjectsByUserId(session.user.id);
+        const data = await res;
+        if (data) {
+          let projectsData = databaseToProjectModel(data);
           for (let i = 0; i < projectsData.length; i++) {
             // Get Group By Id
             if (
@@ -179,17 +155,10 @@ export default function page() {
             ) {
               break;
             }
-            res = await fetch(
-              `/api/group/id?id=${encodeURIComponent(
-                projectsData[i].group?.toString() ?? ""
-              )}`,
-              {
-                method: "GET",
-              }
-            );
-            const groupData = await res.json();
-            if (groupData.success) {
-              const groupInfo = databaseToGroupModel(groupData.data);
+            res = await getGroupById(projectsData[i].group ?? 0);
+            const groupData = await res;
+            if (groupData) {
+              const groupInfo = databaseToGroupModel(groupData);
               if (groupInfo && groupInfo.id) {
                 projectsData[i].groupInfo = groupInfo;
               } else {
@@ -198,7 +167,7 @@ export default function page() {
                   name: "Aucun Groupe",
                   description: "",
                   budget: "0",
-                  user_id: session.session.user.id,
+                  user_id: session.user.id,
                   image: "",
                 };
                 projectsData[i].groupInfo = tempGroupInfo;
@@ -246,41 +215,6 @@ export default function page() {
     back: "#",
     canChange: false,
     id_project: undefined,
-  };
-
-  const handleDeleteProject = async (id: number) => {
-    if (
-      window.confirm(
-        "Voulez-vous vraiment supprimer ce projet ?\n Cette action est irréversible."
-      )
-    ) {
-      setIsLoading(true);
-      let res = await fetch(`/api/project?id_project=${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-        setIsLoading(false);
-        window.location.reload();
-      } else {
-        setIsLoading(false);
-        alert("FAILED");
-      }
-    } else {
-    }
-  };
-
-  const handleDuplicateProject = async (id: number) => {
-    setIsLoading(true);
-    let res = await fetch(`/api/project/duplicate?id_project=${id}`, {
-      method: "POST",
-    });
-    if (res.ok) {
-      setIsLoading(false);
-      window.location.reload();
-    } else {
-      setIsLoading(false);
-      alert("FAILED");
-    }
   };
 
   return (

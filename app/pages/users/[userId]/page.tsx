@@ -7,7 +7,7 @@ import { TitleType } from "@/models/Title";
 import { User } from "@/models/User";
 import { ProjectType } from "@models/Project";
 import { getProjectsByUserId } from "@utils/database/project";
-import { getUserById } from "@utils/database/user";
+import { getUserById, updateUser } from "@utils/database/user";
 import { Copy, ExternalLink, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -171,15 +171,9 @@ export default function Page({
         createdAt: "",
       };
       try {
-        let res = await fetch(`/api/user`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
-        const data = await res.json();
-        if (data.success) {
+        let res = await updateUser(user);
+        const data = await res;
+        if (data) {
           setSelectedRole(selectedRole);
           setUserRole(selectedRole);
           setChangeRole(false);

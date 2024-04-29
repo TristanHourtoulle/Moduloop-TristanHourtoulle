@@ -8,22 +8,24 @@ import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import ImpactSection from "@components/projects/ImpactSection";
 import ProductCardWithToaster from "@components/projects/ProductCard";
 import ProductInProjectCard from "@components/projects/ProductInProjectCard";
+import { getSession } from "@lib/session";
 import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
 import { TitleType } from "@models/Title";
 import { getGroupById } from "@utils/database/group";
 import { getProductById, getProducts } from "@utils/database/product";
-import { getProjectById } from "@utils/database/project";
+import {
+  addProductInProject,
+  deleteAllProductInProject,
+  getProjectById,
+} from "@utils/database/project";
 import { getProductByBase } from "@utils/projects";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import {
-  databaseToGroupModel,
-  databaseToSingleProjectModel,
-} from "../../../utils/convert";
+import { databaseToGroupModel } from "../../../utils/convert";
 
 export default function Page({ params: { id } }: { params: { id: string } }) {
   const [user, setUser] = useState(null);
@@ -84,11 +86,9 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   };
 
   const deleteAllProducts = async () => {
-    let res = await fetch(`/api/project/delete?id_project=${project?.id}`, {
-      method: "DELETE",
-    });
+    let res = await deleteAllProductInProject(Number(id));
 
-    if (res.ok) {
+    if (res) {
       setProductsInProject([]);
       setProductsImpact(null);
       updateProductsInProject();
@@ -204,17 +204,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       addOn: null,
       updatedOn: null,
     };
-    let res = await fetch(`/api/project/addProduct`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(tempProductToAdd),
-    });
-    if (res.ok) {
+    let res = await addProductInProject(tempProductToAdd);
+    if (res) {
       updateProductsInProject();
     } else {
-      console.log("Failed to add product", await res.json());
+      console.log("Failed to add product", await res);
       alert("Failed to add product");
       toast.error("Une erreur s'est produite lors de l'ajout du produit");
     }
@@ -223,35 +217,28 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       // Get user session
-      let res = await fetch("/api/session", {
-        method: "GET",
-      });
-      const session = await res.json();
-      if (!session.success) {
+      let res = await getSession();
+      const session = await res;
+      if (!session) {
         console.error("Failed to fetch session:", session.error);
         alert(session.error);
         toast.error(
           "Une erreur s'est produite lors de la récupération de la session"
         );
       } else {
-        await setUser(session.session.user);
+        await setUser(session.user);
         // Get project by id
-        res = await fetch(`/api/project?id=${encodeURIComponent(id)}`, {
-          method: "GET",
-        });
-        const data = await res.json();
-        if (data.success) {
-          const projectData = databaseToSingleProjectModel(data.product);
+        res = await getProjectById(Number(id));
+        const data = await res;
+        if (data) {
+          const projectData = data;
           //setDescription(projectData.description ?? "");
-          res = await fetch(
-            `/api/group/id?id=${encodeURIComponent(projectData.group ?? "")}`,
-            {
-              method: "GET",
-            }
-          );
-          const groupData = await res.json();
-          if (groupData.success) {
-            projectData.groupInfo = databaseToGroupModel(groupData.data);
+          console.log("Project received: ", projectData);
+          res = await getGroupById(projectData.group ?? 0);
+          const groupData = await res;
+          console.log("Group received: ", groupData);
+          if (groupData) {
+            projectData.groupInfo = databaseToGroupModel(groupData);
             setProject(projectData);
             let products = Array.isArray(projectData.products)
               ? projectData.products
@@ -264,17 +251,15 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               setProductsImpact(null);
             }
             // Get stored products
-            res = await fetch(`/api/product/list`, {
-              method: "GET",
-            });
-            const productsData = await res.json();
-            if (productsData.success) {
-              let tempInies = getProductByBase(productsData.data, "Inies");
+            res = await getProducts();
+            const productsData = await res;
+            if (productsData) {
+              let tempInies = getProductByBase(productsData, "Inies");
               setStoreProductsInies(tempInies);
               if (tempInies.length > 0) {
                 setSelectedProductId(tempInies[0].id);
               }
-              let tempAutres = getProductByBase(productsData.data, "Autre");
+              let tempAutres = getProductByBase(productsData, "Autre");
               setStoreProductsAutres(tempAutres);
               let tempResProducts: ProductType[] = [];
               tempResProducts.push(...tempInies);

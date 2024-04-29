@@ -6,6 +6,7 @@ import { Button } from "@components/button/Button";
 import Card from "@components/products/Card";
 import { getSession } from "@lib/session";
 import { TitleType } from "@models/Title";
+import { getProducts } from "@utils/database/product";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -33,12 +34,11 @@ export default function Page() {
 
   const fetchData = async () => {
     setIsLoading(true);
-    const res = await fetch("/api/product/list", {
-      method: "GET",
-    });
-    const data = await res.json();
-    if (data.success) {
-      setProducts(data.data);
+    const res = await getProducts();
+
+    const data = await res;
+    if (data) {
+      setProducts(data);
     } else {
       console.error("Failed to fetch products:", data.error);
     }
