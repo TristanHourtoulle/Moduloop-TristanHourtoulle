@@ -37,3 +37,19 @@ export const deleteProductById = async (id: number) => {
     return false;
   }
 };
+
+export const addProductsInDatabase = async (data: any) => {
+  const response = await fetch("/api/product", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (response.ok) {
+    return response.json();
+  } else {
+    return null;
+  }
+};
