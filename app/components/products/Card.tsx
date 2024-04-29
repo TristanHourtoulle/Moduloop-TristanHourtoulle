@@ -2,6 +2,7 @@ import { Button } from "@components/button/Button";
 import TrashCan from "@components/button/TrashCan";
 import { Dialogs } from "@components/features/Dialogs";
 import { ProductType } from "@models/Product";
+import { deleteProductById } from "@utils/database/product";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -18,17 +19,14 @@ const Card = ({
   const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
 
   const handleDelete = async () => {
-    const response = await fetch(`/api/product?id=${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    if (id !== null) {
+      const response = await deleteProductById(id);
 
-    if (response.ok) {
-      onDeleteSuccess();
-    } else {
-      alert("Product not deleted");
+      if (response) {
+        onDeleteSuccess();
+      } else {
+        alert("Product not deleted");
+      }
     }
   };
 
