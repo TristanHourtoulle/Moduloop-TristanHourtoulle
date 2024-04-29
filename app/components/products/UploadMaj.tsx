@@ -1,6 +1,7 @@
 "use client";
 
 import Loader from "@components/Loader";
+import { uploadFile } from "@utils/database/file";
 import { addProductsInDatabase } from "@utils/database/product";
 import { useState } from "react";
 
@@ -30,13 +31,8 @@ export default function UploadForm() {
       const data = new FormData();
       data.set("file", file);
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: data,
-      });
-      if (!res.ok) throw new Error(await res.text());
-      const updateData = await res.json();
-
+      const res = await uploadFile(data);
+      const updateData = await res;
       if (!updateData.success) {
         setIsLoading(false);
         return "KO: " + updateData.message;
