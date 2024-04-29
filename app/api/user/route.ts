@@ -3,18 +3,22 @@ import pool from "@/lib/database";
 import { login } from "@/lib/session";
 import { User } from "@/models/User";
 import { NextRequest } from "next/server";
+const bcrypt = require("bcrypt");
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
   try {
     const user: User = await request.json();
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+
     const result = await pool.query(
       'INSERT INTO users ("firstName", "name", "email", "password", "role", "avatar") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
       [
         user.firstName,
         user.name,
         user.email,
-        user.password,
+        hashedPassword,
         user.role,
         user.avatar,
       ]
@@ -40,27 +44,26 @@ export async function GET(request: NextRequest) {
     const email = searchParams.get("email") || "";
     const password = searchParams.get("password") || "";
 
-    const result = await pool.query(
-      "SELECT * FROM users WHERE email = $1 AND password = $2;",
-      [email, password]
-    );
+    const result = await pool.query("SELECT * FROM users WHERE email = $1;", [
+      email,
+    ]);
 
     // Vérification si l'utilisateur a été trouvé dans la base de données
     if (result.rowCount === 1) {
       const user = result.rows[0];
-      const newUser: User = {
-        id: user.id,
-        firstName: user.firstName,
-        name: user.name,
-        email: user.email,
-        password: user.password,
-        role: user.role,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        avatar: user.avatar,
-      };
-      await login(newUser);
-      return Response.json({ success: true, data: user }, { status: 200 });
+      const hashedPassword = user.password;
+
+      // Comparer les mots de passe
+      const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+      if (passwordMatch) {
+        // Mot de passe correct, authentification réussie
+        await login(user);
+        return Response.json({ success: true, data: user }, { status: 200 });
+      } else {
+        // Mot de passe incorrect
+        throw new Error("Mot de passe incorrect");
+      }
     } else {
       throw new Error(
         "L'utilisateur n'a pas été trouvé dans la base de données"
