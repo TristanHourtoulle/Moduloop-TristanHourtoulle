@@ -36,8 +36,6 @@ export default function Page() {
 
         const data = await res;
 
-        console.log("data", data);
-
         if (data) {
           const userData = data || [];
           setUsers(userData);
@@ -50,10 +48,7 @@ export default function Page() {
             id_project: undefined,
           });
         } else {
-          console.error(
-            "Erreur lors de la récupération des utilisateurs:",
-            data.error
-          );
+          // pas de données
         }
       } catch (error) {
         console.error(
