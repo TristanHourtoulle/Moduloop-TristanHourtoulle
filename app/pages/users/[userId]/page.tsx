@@ -55,9 +55,7 @@ export default function Page({
         if (data) {
           setProjects(data);
         } else {
-          console.error(
-            "Cette utilisateur n'a pas de projets ou n'existe pas."
-          );
+          // Pas de projets
         }
       } catch (error) {
         console.error(
@@ -86,9 +84,7 @@ export default function Page({
             id_project: undefined,
           });
         } else {
-          console.error(
-            "Cet utilisateur n'existe pas ou n'est pas un administrateur."
-          );
+          // pas de données
         }
       } catch (error) {
         console.error(
@@ -150,7 +146,7 @@ export default function Page({
     }
   };
 
-  if (isLoading || !user || !title || !projects) {
+  if (isLoading || !user || !title) {
     return <Loader />;
   }
 
@@ -230,28 +226,16 @@ export default function Page({
                   <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
                     <div className="flex gap-3 items-center justify-between">
                       <select
-                        onChange={() => {
-                          const selectedOption = document.getElementById(
-                            "role"
-                          ) as HTMLSelectElement;
-                          setSelectedRole(selectedOption.value);
-                          handleSelectedRoleChange(selectedOption.value);
+                        onChange={(event) => {
+                          setSelectedRole(event.target.value);
+                          handleSelectedRoleChange(event.target.value);
                         }}
                         id="role"
+                        value={selectedRole}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[50%] p-2.5 "
                       >
-                        <option
-                          value="admin"
-                          selected={selectedRole === "admin"}
-                        >
-                          Administrateur
-                        </option>
-                        <option
-                          value="user"
-                          selected={selectedRole !== "admin"}
-                        >
-                          Utilisateur
-                        </option>
+                        <option value="admin">Administrateur</option>
+                        <option value="user">Utilisateur</option>
                       </select>
 
                       <div
@@ -316,16 +300,21 @@ export default function Page({
                     Dernières Activités
                   </dt>
                   <dd className="mt-1 text-lg leading-6 text-gray-900 sm-col-span-2 sm:mt-0">
-                    {projects && projects[0]
-                      ? formatDate(projects[0].updated_at || "")
-                      : "Néant"}{" "}
-                    <span className="text-gray-500">
-                      (
-                      {projects && projects[0]
-                        ? getElapsedTime(projects[0].updated_at || "")
-                        : "Néant"}
-                      )
-                    </span>
+                    {projects && projects[0] ? (
+                      <span>
+                        {formatDate(projects[0].updated_at || "")}
+                        <span className="text-gray-500">
+                          ({getElapsedTime(projects[0].updated_at || "")})
+                        </span>
+                      </span>
+                    ) : (
+                      <span>
+                        {formatDate(user.updatedAt || "")}
+                        <span className="text-gray-500">
+                          ({getElapsedTime(user.updatedAt || "")})
+                        </span>
+                      </span>
+                    )}
                   </dd>
                 </div>
 
@@ -352,7 +341,7 @@ export default function Page({
                     </Link>
 
                     <div className="flex flex-col items-start w-[250%] mt-5">
-                      {viewProjects && projects.length > 0 ? (
+                      {viewProjects && projects && projects.length > 0 ? (
                         projects.map((project) => (
                           <div className="flex items-center justify-between gap-12 border-t-2 py-4 border-gray-300">
                             <div className="flex flex-col items-start">
