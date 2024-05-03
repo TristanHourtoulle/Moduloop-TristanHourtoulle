@@ -27,16 +27,6 @@ export default function page() {
   const [isLoading, setIsLoading] = useState(true);
   const [userSession, getUserSession] = useState(null);
 
-  // const dialogProps: DialogsProps = {
-  //   title: "Supprimer ce produit du projet",
-  //   content:
-  //     "Êtes-vous sûr de vouloir supprimer ce produit du projet ? Cette action est irréversible.",
-  //   validate: "Confirmer",
-  //   cancel: "Annuler",
-  //   cta: () => confirmDeleteProduct(),
-  //   cancelCta: () => setDialogOpen(false),
-  // };
-
   useEffect(() => {
     if (backupProjects !== null) {
       setProjects(filterProjects());
@@ -126,7 +116,7 @@ export default function page() {
         let groupData = databaseToSeveralGroupModel(data);
         await setGroups(groupData);
       } else {
-        console.error("Failed to fetch groups:", data.error);
+        // pas de groupe créé
       }
     };
 
@@ -179,7 +169,7 @@ export default function page() {
           setProjects(projectsData);
           setBackupProjects(projectsData); // Sauvegarder les projets initiaux
         } else {
-          // console.error("Failed to fetch projects:", data.error);
+          // pas de projet créé
           setProjects([]);
           setBackupProjects([]);
         }
