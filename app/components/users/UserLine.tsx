@@ -49,10 +49,7 @@ export const UserLine = (props: UserLineProps) => {
         if (projectsData) {
           setProjects(projectsData);
         } else {
-          console.error(
-            "Erreur lors de la récupération des projets de l'utilisateur avec l'id:",
-            user_id
-          );
+          // Pas de projets
         }
       } else {
         console.error("L'utilisateur n'a pas été trouvé avec l'id:", user_id);
