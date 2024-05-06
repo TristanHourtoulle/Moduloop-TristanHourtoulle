@@ -1,7 +1,6 @@
 "use client";
 
 import { SessionType } from "@models/Session";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -80,7 +79,7 @@ const Header = () => {
       {/* Desktop View */}
       <div className="hidden sm:flex">
         <div className="flex items-center gap-7">
-          <Link
+          <a
             href="/"
             onClick={() => {
               setSelectedLink("/");
@@ -90,9 +89,9 @@ const Header = () => {
             }`}
           >
             Accueil
-          </Link>
+          </a>
           {session && session.user && (
-            <Link
+            <a
               href="/pages/projects"
               onClick={() => {
                 setSelectedLink("/pages/projects");
@@ -104,10 +103,10 @@ const Header = () => {
               }`}
             >
               Projets
-            </Link>
+            </a>
           )}
           {isAdmin && (
-            <Link
+            <a
               href="/pages/products"
               onClick={() => {
                 setSelectedLink("/pages/products");
@@ -119,10 +118,10 @@ const Header = () => {
               }`}
             >
               Produits
-            </Link>
+            </a>
           )}
           {isAdmin && (
-            <Link
+            <a
               href="/pages/users"
               onClick={() => {
                 setSelectedLink("/pages/users");
@@ -134,9 +133,9 @@ const Header = () => {
               }`}
             >
               Utilisateurs
-            </Link>
+            </a>
           )}
-          <Link
+          <a
             href="https://www.moduloop.com/contact/"
             onClick={(e) => {
               e.preventDefault();
@@ -149,9 +148,9 @@ const Header = () => {
             }}
           >
             <p className="nav-link">Contact</p>
-          </Link>
+          </a>
 
-          <Link
+          <a
             href=""
             onClick={() => {
               // setSelectedLink("/pages/users");
@@ -164,7 +163,7 @@ const Header = () => {
             }`}
           >
             Déconnexion
-          </Link>
+          </a>
         </div>
       </div>
 
@@ -200,23 +199,23 @@ const Header = () => {
               </div>
               <div className="mt-6 ml-3">
                 <nav className="grid gap-y-8">
-                  <Link href="/" className="">
+                  <a href="/" className="">
                     <p className="text">Accueil</p>
-                  </Link>
-                  <Link href="/pages/projects" className="">
+                  </a>
+                  <a href="/pages/projects" className="">
                     <p className="text">Projets</p>
-                  </Link>
+                  </a>
                   {isAdmin && (
-                    <Link href="/pages/products" className="">
+                    <a href="/pages/products" className="">
                       Produits
-                    </Link>
+                    </a>
                   )}
                   {isAdmin && (
-                    <Link href="/pages/users" className="">
+                    <a href="/pages/users" className="">
                       Utilisateurs
-                    </Link>
+                    </a>
                   )}
-                  <Link
+                  <a
                     href="https://www.moduloop.com/contact/"
                     onClick={(e) => {
                       e.preventDefault();
@@ -229,7 +228,7 @@ const Header = () => {
                     }}
                   >
                     <p className="">Contact</p>
-                  </Link>
+                  </a>
                 </nav>
               </div>
             </div>
