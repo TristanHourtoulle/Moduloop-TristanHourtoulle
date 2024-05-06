@@ -112,6 +112,7 @@ export default function page() {
     const fetchGroup = async (id_user: string) => {
       let res = await getGroupsByUserId(Number(id_user));
       const data = await res;
+      console.log("Group found for this user: ", data);
       if (data) {
         let groupData = databaseToSeveralGroupModel(data);
         await setGroups(groupData);
@@ -134,6 +135,7 @@ export default function page() {
         // Get Projects
         res = await getProjectsByUserId(session.user.id);
         const data = await res;
+        console.log("Projects found for this user: ", data);
         if (data) {
           let projectsData = databaseToProjectModel(data);
           for (let i = 0; i < projectsData.length; i++) {
