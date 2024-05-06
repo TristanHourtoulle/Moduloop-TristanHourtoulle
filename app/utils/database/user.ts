@@ -1,8 +1,11 @@
 import { login } from "@lib/session";
+import { unstable_noStore as noStore } from "next/cache";
+
+export const dynamic = "force-dynamic";
 
 export const getUserById = async (id: number) => {
   const response = await fetch(`/api/user/admin?id=${encodeURIComponent(id)}`, {
-    method: "GET",
+    cache: "no-store",
   });
   const data = await response.json();
   if (data.success) {
@@ -35,8 +38,10 @@ export const requiredAdmin = async (id: number) => {
 };
 
 export const getUsers = async () => {
-  let res = await fetch("/api/user/list", {
-    method: "GET",
+  noStore();
+  const { signal } = new AbortController();
+  let res = await fetch("http://localhost:3000/api/user/list", {
+    signal,
   });
   const data = await res.json();
   if (data.success) {
