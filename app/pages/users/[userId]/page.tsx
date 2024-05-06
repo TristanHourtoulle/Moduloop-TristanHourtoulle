@@ -167,7 +167,7 @@ export default function Page({
         createdAt: "",
       };
       try {
-        let res = await updateUser(user);
+        let res = await updateUser(newUser);
         const data = await res;
         if (data) {
           setSelectedRole(selectedRole);
