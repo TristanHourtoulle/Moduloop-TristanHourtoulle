@@ -233,10 +233,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         if (data) {
           const projectData = data;
           //setDescription(projectData.description ?? "");
-          console.log("Project received: ", projectData);
           res = await getGroupById(projectData.group ?? 0);
           const groupData = await res;
-          console.log("Group received: ", groupData);
           if (groupData) {
             projectData.groupInfo = databaseToGroupModel(groupData);
             setProject(projectData);
