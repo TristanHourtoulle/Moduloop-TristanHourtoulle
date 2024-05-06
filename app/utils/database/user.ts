@@ -40,7 +40,7 @@ export const requiredAdmin = async (id: number) => {
 export const getUsers = async () => {
   noStore();
   const { signal } = new AbortController();
-  let res = await fetch("http://localhost:3000/api/user/list", {
+  let res = await fetch("/api/user/list", {
     signal,
   });
   const data = await res.json();
