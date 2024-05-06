@@ -11,8 +11,12 @@ export const getGroupById = async (id: number) => {
 };
 
 export const getGroupsByUserId = async (id: number) => {
-  let res = await fetch(`/api/group/list?id=${id}`, {
+  console.log("I have to fetch groups for user: ", id);
+  let res = await fetch(`/api/group/${id}`, {
     method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   const data = await res.json();
 
