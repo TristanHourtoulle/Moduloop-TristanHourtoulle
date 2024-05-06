@@ -1,6 +1,5 @@
 import { NextRequest } from "next/server";
 import pool from "../../../lib/database";
-import { User } from "../../../models/User";
 
 export async function GET(request: NextRequest) {
   try {

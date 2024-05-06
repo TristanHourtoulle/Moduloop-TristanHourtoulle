@@ -3,6 +3,10 @@ import "@styles/globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+export const runtime = "nodejs";
+
 export const metadata: Metadata = {
   title: "Moduloop - Outil",
   description:
