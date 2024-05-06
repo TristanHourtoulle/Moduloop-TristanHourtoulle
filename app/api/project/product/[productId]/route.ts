@@ -1,11 +1,9 @@
-import pool from "@/lib/database";
-import { NextRequest } from "next/server";
+import pool from "@lib/database";
 
-// Fonction pour gérer les requêtes DELETE
-export async function DELETE(request: NextRequest) {
+export async function DELETE(request: Request, context: any) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const idProject = searchParams.get("id_project") || "";
+    const { params } = context;
+    const idProject = params.idProject;
 
     const result = await pool.query(
       "UPDATE projects SET products = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *;",

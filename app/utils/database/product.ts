@@ -10,12 +10,9 @@ export const getProducts = async () => {
 };
 
 export const getProductById = async (id: number) => {
-  let res = await fetch(
-    `/api/product?id=${encodeURIComponent(id.toString())}`,
-    {
-      method: "GET",
-    }
-  );
+  let res = await fetch(`/api/product/${encodeURIComponent(id.toString())}`, {
+    method: "GET",
+  });
   const productData = await res.json();
   if (productData.success) {
     return productData.product;

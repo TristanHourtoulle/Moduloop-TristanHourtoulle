@@ -1,7 +1,7 @@
 import { databaseToSingleProjectModel } from "@utils/convert";
 
 export const getProjectsByUserId = async (id: number) => {
-  const response = await fetch(`/api/project/list?id=${id}`, {
+  const response = await fetch(`/api/project/byUser/${id}`, {
     method: "GET",
   });
   const data = await response.json();
@@ -13,7 +13,7 @@ export const getProjectsByUserId = async (id: number) => {
 };
 
 export const getProjectById = async (id: number) => {
-  const response = await fetch(`/api/project?id=${encodeURIComponent(id)}`, {
+  const response = await fetch(`/api/project/${encodeURIComponent(id)}`, {
     method: "GET",
   });
   const data = await response.json();
@@ -52,7 +52,7 @@ export const createProjectInDatabase = async (project: FormData) => {
 };
 
 export const deleteProject = async (id: number) => {
-  let response = await fetch(`/api/project?id_project=${id}`, {
+  let response = await fetch(`/api/project/${encodeURIComponent(id)}`, {
     method: "DELETE",
   });
   const data = await response.json();
@@ -126,7 +126,7 @@ export const deleteProductInProject = async (
 };
 
 export const deleteAllProductInProject = async (idProject: number) => {
-  let response = await fetch(`/api/project/delete?id_project=${idProject}`, {
+  let response = await fetch(`/api/project/product/${idProject}`, {
     method: "DELETE",
   });
   if (response.ok) {
@@ -136,7 +136,7 @@ export const deleteAllProductInProject = async (idProject: number) => {
 };
 
 export const duplicateProject = async (id: number) => {
-  let response = await fetch(`/api/project/duplicate?id_project=${id}`, {
+  let response = await fetch(`/api/project/${id}`, {
     method: "POST",
   });
 

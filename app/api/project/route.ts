@@ -62,30 +62,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Fonction pour gérer les requêtes GET
-export async function GET(request: NextRequest) {
-  try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id") || "";
-
-    const result = await pool.query("SELECT * FROM projects WHERE id = $1;", [
-      id,
-    ]);
-    if (result.rowCount == 1) {
-      const product = result.rows[0];
-      return Response.json({ success: true, product }, { status: 200 });
-    } else {
-      return Response.json(
-        { success: false, message: "No product found" },
-        { status: 404 }
-      );
-    }
-  } catch (error) {
-    console.error("Erreur lors de la récupération du produit:", error);
-    return Response.json({ success: false, error }, { status: 500 });
-  }
-}
-
 // Fonction pour gérer les requêtes PUT
 export async function PUT(request: NextRequest) {
   try {
@@ -112,24 +88,3 @@ export async function PUT(request: NextRequest) {
 }
 
 // Fonction pour gérer les requêtes DELETE
-export async function DELETE(request: NextRequest) {
-  try {
-    const searchParams = request.nextUrl.searchParams;
-    const idProject = searchParams.get("id_project") || "";
-
-    const result = await pool.query("DELETE FROM projects WHERE id = $1;", [
-      idProject,
-    ]);
-
-    // Vérification si la requête a réussi
-    if (result.rowCount === 1) {
-      const data = result.rows[0];
-      return Response.json({ success: true, data }, { status: 200 });
-    } else {
-      throw new Error("La requête DELETE a échoué");
-    }
-  } catch (error) {
-    console.error("Erreur lors de la suppression du projet:", error);
-    return Response.json({ success: false, error }, { status: 500 });
-  }
-}

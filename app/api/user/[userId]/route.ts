@@ -1,10 +1,9 @@
-import { NextRequest } from "next/server";
 import pool from "../../../lib/database";
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request, context: any) {
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id") || "";
+    const { params } = context;
+    const id = params.userId;
 
     const result = await pool.query(
       'SELECT * FROM users WHERE id = $1 ORDER BY "updatedAt" ASC;',

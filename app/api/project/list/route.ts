@@ -16,32 +16,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Fonction pour gérer les requêtes GET
-export async function GET(request: NextRequest) {
-  try {
-    const searchParams = request.nextUrl.searchParams;
-    const id = searchParams.get("id") || "";
-
-    const result = await pool.query(
-      "SELECT * FROM projects WHERE user_id = $1 ORDER BY updated_at DESC;",
-      [id]
-    );
-    let toSend;
-
-    if (result.rowCount == 0) {
-      toSend = JSON.stringify({});
-    }
-    toSend = result.rows;
-    return Response.json({ success: true, data: toSend }, { status: 200 });
-  } catch (error) {
-    console.error(
-      "Erreur lors de la récupération de tous les projets: ",
-      error
-    );
-    return Response.json({ success: false, error }, { status: 500 });
-  }
-}
-
 // Fonction pour gérer les requêtes PUT
 export async function PUT(request: NextRequest) {
   try {

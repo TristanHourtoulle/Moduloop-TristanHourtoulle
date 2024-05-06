@@ -4,8 +4,8 @@ import { unstable_noStore as noStore } from "next/cache";
 export const dynamic = "force-dynamic";
 
 export const getUserById = async (id: number) => {
-  const response = await fetch(`/api/user/admin?id=${encodeURIComponent(id)}`, {
-    cache: "no-store",
+  const response = await fetch(`/api/user/${encodeURIComponent(id)}`, {
+    method: "GET",
   });
   const data = await response.json();
   if (data.success) {
