@@ -4,11 +4,13 @@ export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
     const idProject = params.idProject;
+    console.log("idProject", idProject);
 
     const result = await pool.query(
       "UPDATE projects SET products = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *;",
       [null, idProject]
     );
+    console.log("result", result);
 
     // Vérification si la requête a réussi
     if (result.rowCount === 1) {
