@@ -30,7 +30,6 @@ const ImpactSection = (props: {
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [projects, setProjects] = useState<ProjectType[] | null>(null);
-  const [impactSelect, setImpactSelect] = useState("global");
   const [isCompare, setIsCompare] = useState(false);
   const [session, setSession] = useState(null);
   const [compareWith, setCompareWith] = useState<ProjectType | null>(null);
@@ -156,23 +155,25 @@ const ImpactSection = (props: {
 
         // Plane equivalent
         let delta = value1 - value2;
-        let result = delta / 434;
+        let result = delta / 100; // Convertir kg en tonnes
+        result = result / 0.524;
         setPlaneEquivalent(Number(result.toFixed(0)));
         // Person equivalent
-        result = delta / 32.6;
+        result = delta / 24.38;
         setPersonEquivalent(Number(result.toFixed(0)));
         // Km equivalent
-        result = delta / 0.17;
+        result = delta * 0.17;
         setKmEquivalent(Number(result.toFixed(0)));
         // Petrol equivalent
         delta = erfValue1 - erfValue2;
-        result = delta / 5861;
+        result = delta / 5861.52;
         setPetrolEquivalent(Number(result.toFixed(0)));
         // Lamp equivalent
         result = delta / 648;
         setLampEquivalent(Number(result.toFixed(0)));
         // House equivalent
-        result = delta / 147.96;
+        result = delta * 0.2778; // Convertir MJ to kWh
+        result = result / (2223 / 365);
         setHouseEquivalent(Number(result.toFixed(0)));
       } else {
         percentage = ((value2 - value1) / value2) * 100;
@@ -181,23 +182,25 @@ const ImpactSection = (props: {
 
         // Plane equivalent
         let delta = value2 - value1;
-        let result = delta / 434;
+        let result = delta / 100;
+        result = result / 0.524;
         setPlaneEquivalent(Number(result.toFixed(0)));
         // Person equivalent
-        result = delta / 32.6;
+        result = delta / 24.38;
         setPersonEquivalent(Number(result.toFixed(0)));
         // Km equivalent
-        result = delta / 0.17;
+        result = delta * 0.17;
         setKmEquivalent(Number(result.toFixed(0)));
         // Petrol equivalent
         delta = erfValue2 - erfValue1;
-        result = delta / 5861;
+        result = delta / 5861.52;
         setPetrolEquivalent(Number(result.toFixed(0)));
         // Lamp equivalent
         result = delta / 648;
         setLampEquivalent(Number(result.toFixed(0)));
         // House equivalent
-        result = delta / 147.96;
+        result = delta * 0.2778; // Convertir MJ to kWh
+        result = result / (2223 / 365);
         setHouseEquivalent(Number(result.toFixed(0)));
       }
 
