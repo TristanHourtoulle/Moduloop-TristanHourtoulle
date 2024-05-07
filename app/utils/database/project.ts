@@ -145,3 +145,16 @@ export const duplicateProject = async (id: number) => {
   }
   return false;
 };
+
+export const duplicateProjectFromTemplate = async (formData: FormData) => {
+  let response = await fetch(`/api/project/duplicate/template`, {
+    method: "POST",
+    body: formData,
+  });
+
+  const data = await response.json();
+  if (data.success) {
+    return data.project;
+  }
+  return null;
+};
