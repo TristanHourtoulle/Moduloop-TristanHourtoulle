@@ -47,12 +47,15 @@ export async function POST(request: NextRequest) {
         location,
         area,
         user_id,
-        group_id,
+        Number(group_id),
       ]
     );
     if (result.rowCount === 1) {
       const project = result.rows[0];
-      return Response.json({ success: true, data: project }, { status: 200 });
+      return Response.json(
+        { success: true, project: project },
+        { status: 200 }
+      );
     } else {
       throw new Error("La requête INSERT pour le projet a échoué");
     }
