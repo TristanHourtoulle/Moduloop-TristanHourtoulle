@@ -31,6 +31,8 @@ const ImpactSection = (props: {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [projects, setProjects] = useState<ProjectType[] | null>(null);
   const [isCompare, setIsCompare] = useState(false);
+  const [isCompareWithTemplate, setIsCompareWithTemplate] =
+    useState<boolean>(false);
   const [session, setSession] = useState(null);
   const [compareWith, setCompareWith] = useState<ProjectType | null>(null);
   const [rcPercentage, setRcPercentage] = useState<number>(0.0);
@@ -211,6 +213,25 @@ const ImpactSection = (props: {
     }
   }, [compareWith, project?.products]);
 
+  const handleCreateProjectFromTemplate = async () => {
+    const formData = new FormData();
+    formData.append("name", compareWith?.name ?? "");
+    formData.append("products", JSON.stringify(compareWith?.products));
+    formData.append("user_id", String(compareWith?.user_id) ?? "");
+    formData.append("group_id", String(compareWith?.group) ?? "");
+    formData.append("group_name", compareWith?.groupInfo?.name ?? "");
+    let result = await fetch("/api/project/duplicate/template", {
+      method: "POST",
+      body: formData,
+    });
+    let data = await result.json();
+    if (data.success) {
+      toast.success("Le projet a été créé avec succès.");
+    } else {
+      toast.error("Une erreur est survenue lors de la création du projet.");
+    }
+  };
+
   return (
     <div className="impact flex flex-col items-start gap-5 mx-[5%]">
       <div className="w-full flex flex-col gap-6">
@@ -227,6 +248,7 @@ const ImpactSection = (props: {
                 if (event.target.value === "-1") {
                   setCompareWith(null);
                   setIsCompare(false);
+                  setIsCompareWithTemplate(false);
                   return;
                 } else {
                   if (event.target.value === "-2") {
@@ -237,6 +259,7 @@ const ImpactSection = (props: {
                     );
                     setCompareWith(newProject);
                     setIsCompare(true);
+                    setIsCompareWithTemplate(true);
                     return;
                   } else if (event.target.value === "-3") {
                     // Comparer avec du réemploi
@@ -246,6 +269,7 @@ const ImpactSection = (props: {
                     );
                     setCompareWith(reusedProject);
                     setIsCompare(true);
+                    setIsCompareWithTemplate(true);
                     return;
                   }
                   for (let i = 0; i < projects.length; i++) {
@@ -277,6 +301,18 @@ const ImpactSection = (props: {
               )}
             </select>
           </div>
+
+          {/* If the compareWith are actualProjectNew or actualProjectReuse, we have to permit the creation of that project */}
+          {isCompareWithTemplate && (
+            <Button
+              variant="secondary"
+              content="Créer ce projet"
+              onClick={handleCreateProjectFromTemplate}
+              size="medium"
+              disabled={!isCompareWithTemplate}
+              image={null}
+            />
+          )}
         </div>
 
         <div className="flex items-center">
