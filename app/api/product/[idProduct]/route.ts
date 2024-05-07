@@ -4,7 +4,6 @@ import pool from "@lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
-    console.log("I get id: ", params.idProduct);
     const result = await pool.query("SELECT * FROM products WHERE id = $1;", [
       params.idProduct,
     ]);

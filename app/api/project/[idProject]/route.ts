@@ -3,7 +3,6 @@ import pool from "@lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
-    console.log("I get id: ", params.idProject);
     const result = await pool.query("SELECT * FROM projects WHERE id = $1;", [
       params.idProject,
     ]);
@@ -25,7 +24,6 @@ export async function GET(request: Request, context: any) {
 export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
-    console.log("I get id: ", params.idProject);
 
     const result = await pool.query("DELETE FROM projects WHERE id = $1;", [
       params.idProject,
