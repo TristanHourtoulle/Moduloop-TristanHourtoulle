@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest) {
   try {
     const result = await pool.query(
-      'SELECT * FROM users ORDER BY "updatedAt" DESC;'
+      'SELECT * FROM users ORDER BY "updatedAt" ASC;'
     );
     if (result.rowCount === 0) {
       throw new Error("Aucun utilisateur trouvé dans la base de données");
