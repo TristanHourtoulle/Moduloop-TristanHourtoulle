@@ -41,6 +41,9 @@ export const CompareImpact = (props: CompareImpactProps) => {
       if (Number(valueOne) >= Number(valueTwo)) {
         setBetterProject(project_two);
         setWorstProject(project_one);
+      } else {
+        setBetterProject(project_one);
+        setWorstProject(project_two);
       }
     } else if (type === "Epuisement des ressources fossiles") {
       setTitle("épuisement évitées");
@@ -51,6 +54,9 @@ export const CompareImpact = (props: CompareImpactProps) => {
       if (Number(valueOne) >= Number(valueTwo)) {
         setBetterProject(project_two);
         setWorstProject(project_one);
+      } else {
+        setBetterProject(project_one);
+        setWorstProject(project_two);
       }
       setBgColor("rgba(255, 48, 48, 0.1)");
     } else if (type === "Acidification des sols et eaux") {
@@ -62,6 +68,9 @@ export const CompareImpact = (props: CompareImpactProps) => {
       if (Number(valueOne) >= Number(valueTwo)) {
         setBetterProject(project_two);
         setWorstProject(project_one);
+      } else {
+        setBetterProject(project_one);
+        setWorstProject(project_two);
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
     } else {
@@ -74,6 +83,8 @@ export const CompareImpact = (props: CompareImpactProps) => {
         setBetterProject(project_two);
         setWorstProject(project_one);
       } else {
+        setBetterProject(project_one);
+        setWorstProject(project_two);
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
     }
