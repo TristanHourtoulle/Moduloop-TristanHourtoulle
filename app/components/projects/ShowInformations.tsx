@@ -102,10 +102,6 @@ export const ShowInformations = ({
     fetchData();
   }, [project]);
 
-  const handleGroupChange = (event: React.ChangeEvent<HTMLButtonElement>) => {
-    setSelectedGroup(event.target.value);
-  };
-
   return (
     <Sheet>
       <SheetTrigger>
