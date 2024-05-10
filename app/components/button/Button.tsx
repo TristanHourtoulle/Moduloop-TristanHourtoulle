@@ -33,7 +33,7 @@ export const Button = (props: ButtonProps) => {
 
   // Size Section
   if (size === "small") {
-    className += ` px-2 py-1 rounded-sm text-sm gap-2`;
+    className += ` px-3 py-2 rounded-md text-md gap-2`;
     imageClassName = { width: 20, height: 20 };
   } else if (size === "medium") {
     className += ` px-4 py-2 rounded-md text-lg gap-3`;
