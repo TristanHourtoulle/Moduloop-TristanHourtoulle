@@ -8,6 +8,7 @@ import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import ImpactSection from "@components/projects/ImpactSection";
 import ProductCardWithToaster from "@components/projects/ProductCard";
 import ProductInProjectCard from "@components/projects/ProductInProjectCard";
+import { ShowInformations } from "@components/projects/ShowInformations";
 import { getSession } from "@lib/session";
 import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
@@ -335,7 +336,15 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     <div className="project-page w-full">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <Title {...title} />
+        <div className="flex items-center gap-3">
+          <Title {...title} />
+          <ShowInformations
+            project={project}
+            ctaSave={() => {
+              updateProductsInProject();
+            }}
+          />
+        </div>
         <Button
           variant="primary"
           onClick={handleDownloadProject}
