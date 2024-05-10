@@ -85,16 +85,7 @@ export const Title = (title: TitleType) => {
             <p className="page-number">{nameOfPage}</p>
           )}
 
-          {!displayChange ? (
-            <Image
-              src="/icons/Edit.svg"
-              alt="Change"
-              width={50}
-              height={50}
-              className="cursor-pointer"
-              onClick={() => setDisplayChange(!displayChange)}
-            />
-          ) : (
+          {!displayChange ? null : (
             <div className="flex">
               <Image
                 src={"/icons/validé.svg"}
