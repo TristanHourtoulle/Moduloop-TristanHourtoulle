@@ -151,8 +151,7 @@ export const MostImpact = (props: MostImpactProps) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-4xl opacity-90">
-          Les produits les plus impactants pour{" "}
-          <span className="opacity-50">{project.name}</span>
+          Les produits les plus impactants
         </h2>
         <div className="flex items-center gap-5">
           <Button
@@ -160,7 +159,7 @@ export const MostImpact = (props: MostImpactProps) => {
             onClick={() => {
               window.location.href = "https://www.moduloop.com/contact/";
             }}
-            content="Contacter un expert"
+            content="Contacter Moduloop"
             disabled={false}
             image={null}
             size="medium"
