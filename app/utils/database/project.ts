@@ -77,6 +77,26 @@ export const updateProject = async (project: any) => {
   return null;
 };
 
+export const updateAllFieldsInProject = async (project: any) => {
+  const formData = new FormData();
+  formData.append("id", project.id);
+  formData.append("name", project.name);
+  formData.append("description", project.description);
+  formData.append("group", project.group);
+  formData.append("products", JSON.stringify(project.products));
+
+  const response = await fetch(`/api/project/allFields`, {
+    method: "PUT",
+    body: formData,
+  });
+
+  const data = await response.json();
+  if (data.success && data.data) {
+    return data.data;
+  }
+  return null;
+};
+
 export const addProductInProject = async (product: any) => {
   let response = await fetch(`/api/project/addProduct`, {
     method: "POST",
