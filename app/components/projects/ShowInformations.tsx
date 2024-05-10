@@ -65,15 +65,12 @@ export const ShowInformations = ({
       if (data.group_id === "-1") {
         data.group_id = null;
       }
-      console.log("data", data);
       const newProject = {
         ...project,
         name: selectedName,
         description: selectedDescription,
         group: selectedGroup,
       };
-      console.log("newProject", newProject);
-      console.log("project", project);
       const response = await updateAllFieldsInProject(newProject);
       if (!response) {
         toast.error(
@@ -95,13 +92,10 @@ export const ShowInformations = ({
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      console.log("project", project);
       const idUser = project?.user_id;
-      console.log("idUser", idUser);
 
       if (!idUser) return;
       const data = await getGroupsByUserId(idUser);
-      console.log("data", data);
       setUserGroups(data);
       setIsLoading(false);
     };
