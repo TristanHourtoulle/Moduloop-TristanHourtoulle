@@ -72,6 +72,8 @@ export const ShowInformations = ({
         description: selectedDescription,
         group: selectedGroup,
       };
+      console.log("newProject", newProject);
+      console.log("project", project);
       const response = await updateAllFieldsInProject(newProject);
       if (!response) {
         toast.error(
@@ -104,7 +106,7 @@ export const ShowInformations = ({
       setIsLoading(false);
     };
     fetchData();
-  }, []);
+  }, [project]);
 
   const handleGroupChange = (event: React.ChangeEvent<HTMLButtonElement>) => {
     setSelectedGroup(event.target.value);
@@ -165,13 +167,8 @@ export const ShowInformations = ({
                 Groupe
               </Label>
               <div style={{ width: "150px" }}>
-                <Select>
-                  <SelectTrigger
-                    className="w-full"
-                    onChange={(event: React.ChangeEvent<HTMLButtonElement>) =>
-                      handleGroupChange(event)
-                    }
-                  >
+                <Select onValueChange={(value) => setSelectedGroup(value)}>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder={project.groupInfo.name} />
                   </SelectTrigger>
                   <SelectContent>
@@ -191,7 +188,7 @@ export const ShowInformations = ({
             <SheetClose asChild>
               {(backupData.name !== selectedName ||
                 backupData.description !== selectedDescription ||
-                backupData.group !== selectedGroup) && (
+                String(backupData.group) !== selectedGroup) && (
                 <Button
                   variant="secondary"
                   onClick={handleSaveChanges}
