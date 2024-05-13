@@ -21,7 +21,7 @@ export const getProductById = async (id: number) => {
 };
 
 export const deleteProductById = async (id: number) => {
-  const response = await fetch(`/api/product?id=${id}`, {
+  const response = await fetch(`/api/product/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

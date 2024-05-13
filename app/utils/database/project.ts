@@ -45,8 +45,8 @@ export const createProjectInDatabase = async (project: FormData) => {
     body: project,
   });
   const data = await response.json();
-  if (data.success && data.data) {
-    return data.data;
+  if (data.success && data.project) {
+    return data.project;
   }
   return null;
 };
