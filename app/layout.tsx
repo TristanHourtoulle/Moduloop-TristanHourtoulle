@@ -8,7 +8,7 @@ export const revalidate = 0;
 export const runtime = "nodejs";
 
 export const metadata: Metadata = {
-  title: "Moduloop - Outil",
+  title: "Moduloop - Impact",
   description:
     "Calculer l'impact environnemental de votre projet de construction avec Moduloop",
 };
