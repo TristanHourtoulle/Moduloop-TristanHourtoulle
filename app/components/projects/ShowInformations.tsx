@@ -39,8 +39,9 @@ export const ShowInformations = ({
   const [userGroups, setUserGroups] = useState<any[]>([]);
 
   const [selectedGroup, setSelectedGroup] = useState<string | null>(
-    project.groupInfo.id // Initialisez la valeur avec la valeur actuelle du projet
+    project.groupInfo ? project.groupInfo.id ?? null : null
   );
+
   const [selectedName, setSelectedName] = useState<string | null>(
     project.name // Initialisez la valeur avec la valeur actuelle du projet
   );
@@ -51,7 +52,7 @@ export const ShowInformations = ({
   const [backupData, setBackupData] = useState<any>({
     name: project.name,
     description: project.description,
-    group: project.groupInfo.id,
+    group: project.groupInfo ? project.groupInfo.id ?? null : null,
   });
 
   const handleSaveChanges = async () => {
@@ -159,15 +160,22 @@ export const ShowInformations = ({
               <div style={{ width: "150px" }}>
                 <Select onValueChange={(value) => setSelectedGroup(value)}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder={project.groupInfo.name} />
+                    {project.groupInfo ? (
+                      <SelectValue placeholder={project.groupInfo.name} />
+                    ) : (
+                      <SelectValue placeholder="Aucun Groupe" />
+                    )}
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={"-1"}>Aucun Groupe</SelectItem>
-                    {userGroups.map((group) => (
-                      <SelectItem key={group.id} value={group.id}>
-                        {group.name}
-                      </SelectItem>
-                    ))}
+                    {userGroups &&
+                      Array.isArray(userGroups) &&
+                      userGroups.length > 0 &&
+                      userGroups.map((group) => (
+                        <SelectItem key={group.id} value={group.id}>
+                          {group.name}
+                        </SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
