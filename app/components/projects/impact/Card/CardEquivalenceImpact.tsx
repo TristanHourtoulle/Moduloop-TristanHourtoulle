@@ -74,7 +74,7 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
         </div>
       }
       showArrow={true}
-      color="primary"
+      color="default"
       className="categorize"
     >
       <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
