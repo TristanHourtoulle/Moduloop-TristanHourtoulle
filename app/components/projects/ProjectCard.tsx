@@ -1,7 +1,7 @@
 import { Button } from "@components/button/Button";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import { deleteProject, duplicateProject } from "@utils/database/project";
-import dateFormater from "@utils/dateFormater";
+import { dateFormater } from "@utils/dateFormater";
 import Image from "next/image";
 import { useState } from "react";
 
