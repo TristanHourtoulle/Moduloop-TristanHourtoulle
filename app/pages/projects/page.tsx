@@ -92,7 +92,9 @@ export default function page() {
         setProjects(projectsData);
         setBackupProjects(projectsData); // Sauvegarder les projets initiaux
       } else {
-        console.error("Failed to fetch projects:", data.error);
+        // pas de projet créé
+        setProjects([]);
+        setBackupProjects([]);
       }
     }
   };
