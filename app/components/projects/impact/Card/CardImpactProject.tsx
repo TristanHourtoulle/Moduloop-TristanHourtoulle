@@ -1,5 +1,5 @@
-import { Tooltip } from "@material-tailwind/react";
 import { ProjectType } from "@models/Project";
+import { Tooltip } from "@nextui-org/tooltip";
 import {
   getASEimpact,
   getCO2impact,
@@ -47,25 +47,23 @@ export const CardImpactProject = (props: CardImpactProjectProps) => {
   });
 
   return (
-    <Tooltip content="Bonjour">
-      <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
-        <h3 className="uppercase font-semibold text-2xl text-black opacity-95">
-          {project.name}
-        </h3>
-        <div className="flex items-center gap-5">
-          <Image
-            src={image}
-            alt="Ecologie"
-            width={60}
-            height={60}
-            className="drop-shadow-lg"
-          />
-          <div className="flex items-end gap-3">
-            <p className="text-black font-bold text-4xl">{result}</p>
-            <p className="text-black font-regular text-xl">{unit}</p>
-          </div>
+    <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
+      <h3 className="uppercase font-semibold text-2xl text-black opacity-95">
+        {project.name}
+      </h3>
+      <div className="flex items-center gap-5">
+        <Image
+          src={image}
+          alt="Ecologie"
+          width={60}
+          height={60}
+          className="drop-shadow-lg"
+        />
+        <div className="flex items-end gap-3">
+          <p className="text-black font-bold text-4xl">{result}</p>
+          <p className="text-black font-regular text-xl">{unit}</p>
         </div>
       </div>
-    </Tooltip>
+    </div>
   );
 };
