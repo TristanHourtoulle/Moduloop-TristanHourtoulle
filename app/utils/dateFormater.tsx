@@ -1,4 +1,4 @@
-export default function dateFormater(date: string) {
+export function dateFormater(date: string) {
   let cleanedDate = date.replace("Z", ""); // remove the Z at the end
   let dateTimeParts = cleanedDate.split("T"); // split the date and time part
 
@@ -22,4 +22,52 @@ export default function dateFormater(date: string) {
   };
 
   return result;
+}
+
+export function convertTime(days: number) {
+  const years = Math.floor(days / 365);
+  let remainingDays = days % 365;
+  const months = Math.floor(remainingDays / 30);
+  remainingDays %= 30;
+  const weeks = Math.floor(remainingDays / 7);
+  remainingDays %= 7;
+
+  let result = "";
+
+  if (years > 0) {
+    result = `${years} année${years > 1 ? "s" : ""}`;
+    console.log("result ConvertTime", result);
+    return result;
+  }
+
+  if (months > 0) {
+    result = `${months} mois`;
+    console.log("result ConvertTime", result);
+    return result;
+  }
+
+  if (weeks > 0) {
+    result = `${weeks} semaine${weeks > 1 ? "s" : ""}`;
+    console.log("result ConvertTime", result);
+    return result;
+  }
+
+  if (remainingDays > 0) {
+    result = `${remainingDays} jour${remainingDays > 1 ? "s" : ""}`;
+    console.log("result ConvertTime", result);
+    return result;
+  }
+
+  console.log("result ConvertTime", result);
+  return result;
+}
+
+export function getNumbersOnly(result: string) {
+  console.log("Only numbers", result.replace(/\D/g, ""));
+  return result.replace(/\D/g, "");
+}
+
+export function getNonNumbers(result: string) {
+  console.log("Non numbers", result.replace(/\d/g, ""));
+  return result.replace(/\d/g, "");
 }
