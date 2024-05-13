@@ -53,6 +53,8 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
     getCO2impact(project).toString()
   );
 
+  console.log("Data Received in EquivalenceImpact: ", title3, value3, unit3);
+
   useEffect(() => {
     if (impactType === "RC" && type && type != undefined) {
       setImpactValue(getCO2impact(project).toString());

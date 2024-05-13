@@ -1,5 +1,4 @@
 import { ProjectType } from "@models/Project";
-import { numberFormater } from "@utils/numberFormater";
 import Image from "next/image";
 
 export type CardEquivalenceImpactProps = {
@@ -13,6 +12,8 @@ export type CardEquivalenceImpactProps = {
 
 export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
   const { project, title, image, value, unit, worstProject } = props;
+
+  console.log("Data received: ", title, value, unit);
   return (
     <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
       <h3 className="uppercase font-semibold text-2xl text-black opacity-95">
@@ -27,9 +28,7 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
           className="drop-shadow-lg"
         />
         <div className="flex items-end gap-3">
-          <p className="text-black font-bold text-4xl">
-            {numberFormater(value, false)}
-          </p>
+          <p className="text-black font-bold text-4xl">{value}</p>
           <p className="text-black font-regular text-xl">{unit}</p>
         </div>
       </div>

@@ -5,6 +5,11 @@ import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
 import { getProjectsByUserId } from "@utils/database/project";
 import {
+  convertTime,
+  getNonNumbers,
+  getNumbersOnly,
+} from "@utils/dateFormater";
+import {
   getASEimpact,
   getCO2impact,
   getEMimpact,
@@ -457,13 +462,13 @@ const ImpactSection = (props: {
               worstProject={project}
               value1={petrolEquivalent}
               value2={lampEquivalent}
-              value3={houseEquivalent}
+              value3={Number(getNumbersOnly(convertTime(houseEquivalent)))}
               title1="pétrol brut"
               title2="éclairage d'un lampadaire"
               title3="Consommation électrique d'un foyer"
               unit1="Barils"
               unit2="Années"
-              unit3="Jours"
+              unit3={getNonNumbers(convertTime(houseEquivalent))}
               type="Don't compare"
               impactType="ERF"
               impactUnit="MJ"
