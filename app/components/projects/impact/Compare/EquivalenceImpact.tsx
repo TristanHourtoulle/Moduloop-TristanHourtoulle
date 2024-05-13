@@ -5,6 +5,7 @@ import {
   getERFimpact,
   getERFimpactBetweenTwoProjects,
 } from "@utils/getImpact";
+import { numberFormater } from "@utils/numberFormater";
 import { useEffect, useState } from "react";
 import { CardEquivalenceImpact } from "../Card/CardEquivalenceImpact";
 
@@ -96,7 +97,9 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
             ? `En choisissant ${project.name}, `
             : " "}
           {type && type != undefined ? "Vous consommez" : "vous évitez:"}{" "}
-          <span className={colorImpactValue}>{impactValue}</span>{" "}
+          <span className={colorImpactValue}>
+            {numberFormater(Number(impactValue), false)}
+          </span>{" "}
           <span className={"text-lg opacity-75"}>{impactUnit}</span>, équivaut
           à:
         </h2>

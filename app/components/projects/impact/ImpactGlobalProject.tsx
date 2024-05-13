@@ -5,6 +5,7 @@ import {
   getEMimpact,
   getERFimpact,
 } from "@utils/getImpact";
+import { numberFormater } from "@utils/numberFormater";
 import { CardImpactGlobal } from "./Card/CardImpactGlobal";
 
 export type ImpactGlobalProjectProps = {
@@ -27,7 +28,7 @@ export const ImpactGlobalProject = (props: ImpactGlobalProjectProps) => {
           image="/icons/climate-change.svg"
           subtitle="Réchauffement climatique"
           color="#FF8A00"
-          value={Number(valueCO2)}
+          value={numberFormater(Number(valueCO2), false)}
           unit="kg éq. CO2"
         />
         <CardImpactGlobal
@@ -35,8 +36,8 @@ export const ImpactGlobalProject = (props: ImpactGlobalProjectProps) => {
           image="/icons/acidification.svg"
           subtitle="Acidifications des Sols et Eaux"
           color="#00A410"
-          value={Number(valueASE)}
-          value2={Number(valueEM)}
+          value={numberFormater(Number(valueASE), true)}
+          value2={numberFormater(Number(valueEM), true)}
           unit="mol H+ éq."
         />
         <CardImpactGlobal
@@ -44,7 +45,7 @@ export const ImpactGlobalProject = (props: ImpactGlobalProjectProps) => {
           image="/icons/resource-depletion.svg"
           subtitle="Epuisement des Ressources Fossiles"
           color="#FF3030"
-          value={Number(valueERF)}
+          value={numberFormater(Number(valueERF), false)}
           unit="MJ"
         />
       </div>

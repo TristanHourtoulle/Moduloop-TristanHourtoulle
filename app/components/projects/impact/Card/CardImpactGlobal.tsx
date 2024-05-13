@@ -5,9 +5,9 @@ export type CardImpactGlobalProps = {
   image: string;
   subtitle: string;
   color: string;
-  value: number;
+  value: string;
   unit: string;
-  value2?: number;
+  value2?: string;
 };
 
 export const CardImpactGlobal = (props: CardImpactGlobalProps) => {
