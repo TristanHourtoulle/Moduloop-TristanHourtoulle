@@ -244,6 +244,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               : [projectData.products];
             if (products && products.length > 0) {
               setProductsInProject(products.reverse());
+              console.log("Products in project:", products.reverse());
               setProductsImpact(products as AddProductType | null);
             } else {
               setProductsInProject([]);
