@@ -93,7 +93,8 @@ export const CompareImpact = (props: CompareImpactProps) => {
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
       <h2 className="title">
-        Impact de vos projets <span className="opacity-50">{type}</span>
+        Estimatif d'impact de vos projets{" "}
+        <span className="opacity-50">{type}</span>
       </h2>
       <div className="flex flex-col sm:flex-row items-center gap-10">
         {/* Ecologie Card */}

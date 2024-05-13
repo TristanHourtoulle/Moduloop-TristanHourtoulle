@@ -20,7 +20,7 @@ export const ImpactGlobalProject = (props: ImpactGlobalProjectProps) => {
 
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card bg-[#e9e9e9] bg-opacity-90">
-      <h2 className="title">Impact global de {project_one.name}</h2>
+      <h2 className="title">Estimatif d'Impact global de {project_one.name}</h2>
       <div className="flex  flex-col sm:flex-row sm:items-start items-center justify-center sm:justify-between">
         <CardImpactGlobal
           title="Santé Humaine"
