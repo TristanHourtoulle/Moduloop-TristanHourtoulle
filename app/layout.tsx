@@ -1,4 +1,5 @@
 import Header from "@components/Header";
+import { NextUIProvider } from "@nextui-org/react";
 import "@styles/globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
@@ -31,7 +32,7 @@ export default function RootLayout({
           <Header />
         </div>
         <Toaster richColors position="top-center" expand={false} />
-        {children}
+        <NextUIProvider>{children}</NextUIProvider>
       </body>
     </html>
   );
