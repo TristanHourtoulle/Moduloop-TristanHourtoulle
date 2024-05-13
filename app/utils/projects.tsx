@@ -66,7 +66,7 @@ export function convertProjectToUsedProducts(
       item.qNew = 0;
     }
     tempProject.products = tempProducts;
-    tempProject.name = tempProject.name + " (REEMPLOI)";
+    tempProject.name = tempProject.name + " (TOUT EN REEMPLOI)";
   }
   return tempProject;
 }
@@ -86,7 +86,7 @@ export function convertProjectToNewProducts(products: any, project: any) {
       item.qUsed = 0;
     }
     tempProject.products = tempProducts;
-    tempProject.name = tempProject.name + " (NEUF)";
+    tempProject.name = tempProject.name + " (TOUT EN NEUF)";
   }
   return tempProject;
 }
