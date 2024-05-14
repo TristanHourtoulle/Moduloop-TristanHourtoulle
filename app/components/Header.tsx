@@ -73,7 +73,7 @@ const Header = () => {
   }, [session]);
 
   return session ? (
-    <div className="flex items-center justify-between h-24 w-full px-7 py-2">
+    <div className="flex items-center justify-between h-24 w-full px-4 py-2">
       <Logo />
 
       {/* Desktop View */}
