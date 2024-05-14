@@ -28,6 +28,16 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [
+    nextui({
+      prefix: "nextui",
+      addCommonColors: false,
+      defaultTheme: "light",
+      defaultExtendTheme: "light",
+      colors: {
+        background: "#f6f6f6",
+      },
+    }),
+  ],
 };
 export default config;
