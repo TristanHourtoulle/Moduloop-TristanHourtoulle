@@ -13,14 +13,17 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between">
-      <h1 className="text-5xl">
+    <div className="flex flex-col items-center justify-between text-center">
+      <h1 className="text-2xl md:text-5xl lg:text-5xl text-center">
         Bonjour<strong>{initials}</strong>,
       </h1>
-      <h2 className="text-6xl mb-[5%]">
+      <h2 className="text-3xl md:text-6xl lg:text-6xl mb-[5%]">
         {" "}
         Bienvenue sur l'outil{" "}
-        <span className="text-7xl font-bold text-[#30c1bd]">Moduloop</span> !
+        <span className="text-4xl md:text-7xl lg:text-7xl font-bold text-[#30c1bd]">
+          Moduloop
+        </span>{" "}
+        !
       </h2>
 
       {!session && (
