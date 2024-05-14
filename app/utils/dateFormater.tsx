@@ -14,7 +14,7 @@ export function dateFormater(date: string) {
   // Format the time string with the new hour
   let hours = dateObject.getHours().toString().padStart(2, "0");
   let minutes = dateObject.getMinutes().toString().padStart(2, "0");
-  let newTime = `${Number(hours) + 1}:${minutes}`;
+  let newTime = `${Number(hours) + 3}:${minutes}`;
 
   let result = {
     date: dateTimeParts[0], // assign the date part
