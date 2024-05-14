@@ -10,7 +10,7 @@ export type CardMostImpactProps = {
   title: string;
   ranking: number;
 };
-const labels = ["Manufacturing", "Installation", "Usage", "End of Life"];
+const labels = ["Fabrication", "Installation", "Utilisation", "Fin de vie"];
 
 export const CardMostImpact = (props: CardMostImpactProps) => {
   const {
