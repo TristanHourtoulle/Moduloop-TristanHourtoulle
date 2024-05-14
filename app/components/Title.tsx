@@ -54,7 +54,7 @@ export const Title = (title: TitleType) => {
   };
 
   return (
-    <div className="flex ml-5 gap-5 items-center">
+    <div className="flex ml-5 mr-5 gap-5 items-center md:mr-0 lg:mr-0">
       <div
         className="cursor-pointer"
         onClick={() => {
@@ -66,11 +66,13 @@ export const Title = (title: TitleType) => {
           alt="Page Logo"
           width={50}
           height={50}
-          className="object-contain title-image"
+          className=""
         />
       </div>
 
-      <h1 className="page-title">{title.title}</h1>
+      <h1 className="font-bold text-[1.5rem] md:text-[3rem] lg:text-[3rem]">
+        {title.title}
+      </h1>
 
       {title.canChange && (
         <div className="flex gap-5">
@@ -108,7 +110,11 @@ export const Title = (title: TitleType) => {
         </div>
       )}
 
-      {!title.canChange && <p className="page-number">{title.number}</p>}
+      {!title.canChange && (
+        <p className="page-number font-bold text-[1.5rem] md:text-[3rem] lg:text-[3rem] ml-auto">
+          {title.number}
+        </p>
+      )}
     </div>
   );
 };
