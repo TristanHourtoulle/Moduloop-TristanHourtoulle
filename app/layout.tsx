@@ -24,7 +24,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icons/logoImage.png" />
       </head>
-      <body>
+      <body className="h-screen">
         <div
           className="mb-10"
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
