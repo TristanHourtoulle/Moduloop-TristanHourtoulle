@@ -24,7 +24,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icons/logoImage.png" />
       </head>
-      <body className="h-screen">
+      <body className="min-h-[100vh]">
         <div
           className="mb-10"
           style={{ display: "flex", justifyContent: "center", width: "100%" }}
@@ -32,7 +32,7 @@ export default function RootLayout({
           <Header />
         </div>
         <Toaster richColors position="top-center" expand={false} />
-        <NextUIProvider>{children}</NextUIProvider>
+        <NextUIProvider className="pb-10">{children}</NextUIProvider>
       </body>
     </html>
   );
