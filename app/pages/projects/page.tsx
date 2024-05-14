@@ -1,12 +1,13 @@
 "use client";
 
 import { Title } from "@components/Title";
-import { Button } from "@components/button/Button";
 import { ProjectCard } from "@components/projects/ProjectCard";
 import { getSession } from "@lib/session";
 import { GroupType } from "@models/Group";
 import { ProjectType } from "@models/Project";
 import { TitleType } from "@models/Title";
+import { Button } from "@nextui-org/button";
+import { Select, SelectItem } from "@nextui-org/select";
 import {
   databaseToGroupModel,
   databaseToProjectModel,
@@ -14,6 +15,7 @@ import {
 } from "@utils/convert";
 import { getGroupById, getGroupsByUserId } from "@utils/database/group";
 import { getProjectsByUserId } from "@utils/database/project";
+import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function page() {
@@ -213,43 +215,42 @@ export default function page() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex flex-col lg:flex-row md:flex-row md:items-center justify-between lg:items-center mb-5">
         <Title {...title} />
         <Button
-          variant="primary"
+          className="ml-[5%] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 md:mr-5 lg:mr-5 w-fit max-w-[150px] text-lg"
+          color="primary"
+          size="lg"
           onClick={() => (window.location.href = "/pages/projects/create")}
-          content="Créer un projet"
-          image={"/icons/plus-blanc.svg"}
-          size="large"
-          disabled={false}
-          moreClasses="mr-5"
-        />
+          startContent={<Plus />}
+          variant="solid"
+        >
+          Créer
+        </Button>
       </div>
 
-      <div className="ml-[6%] flex gap-5 items-center w-[40%]">
-        <label hidden htmlFor="selectedGroup" className="text-lg font-medium">
-          Filtrer par groupe
-        </label>
-        <select
+      <div className="text-lg">
+        <Select
+          items={groups}
+          labelPlacement="inside"
+          label="Filtrer par groupe"
+          size="md"
+          color="primary"
+          variant="flat"
+          className="ml-[6%] w-[350px] max-w-[50%] text-lg"
           onChange={(event) => {
             setSelectedGroup(parseInt(event.target.value));
           }}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[65%] p-2.5 "
         >
-          <option className="" value={-1}>
-            Tous les groupes
-          </option>
-
-          {groups.length > 0 &&
-            groups.map((group, index) => (
-              <option key={index} value={group.id || -10}>
-                {group.name}
-              </option>
-            ))}
-        </select>
+          {(group) => (
+            <SelectItem key={group.id ?? -1} value={group.id ?? -1}>
+              {group.name}
+            </SelectItem>
+          )}
+        </Select>
       </div>
 
-      <div className="flex items-center justify-center gap-4 mt-[2%] flex-wrap ml-10 projects-container">
+      <div className="flex items-center justify-center gap-4 mt-[2%] ml-auto mr-auto flex-wrap">
         {projects && projects.length > 0 ? (
           projects.map((project, index) => {
             return (

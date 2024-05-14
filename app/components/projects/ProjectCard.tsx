@@ -1,8 +1,9 @@
-import { Button } from "@components/button/Button";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
+import { Button } from "@nextui-org/button";
+import { Divider } from "@nextui-org/divider";
 import { deleteProject, duplicateProject } from "@utils/database/project";
 import { dateFormater } from "@utils/dateFormater";
-import Image from "next/image";
+import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
 export type ProjectCardProps = {
@@ -48,48 +49,63 @@ export const ProjectCard = (props: ProjectCardProps) => {
   };
 
   return (
-    <div className="flex flex-col project-card gap-2 project-zoom">
+    <div className="flex flex-col justify-between gap-1 bg-white px-8 py-6 rounded-[16px] shadow-lg w-[300px] md:w-[350px] lg:w-[350px] h-[290px]">
       {group && group.name !== "Aucun Groupe" ? (
-        <p className="text-in-single-line text-lg opacity-80">{group.name}</p>
+        <p className="text-in-single-line text-md md:text-lg lg:text-lg opacity-80">
+          {group.name}
+        </p>
       ) : (
         <p className="text-in-single-line text-lg opacity-80">Aucun Groupe</p>
       )}
-      <p className="name text-in-single-line">{project.name}</p>
-      <p className="description text-in-single-line">
+      <p className="text-[1rem] md:text-[2rem] lg:text-[2rem] font-bold">
+        {project.name}
+      </p>
+      <p className="text-md md:text-lg lg:text-lg">
         {project.description ? project.description : "Aucune description"}
       </p>
-      <div className="flex">
-        <p className="date mr-auto">Dernières modifications:</p>
-        <p className="date mr-5">
-          {project.updated_at && dateFormater(project.updated_at).date} à{" "}
-          {project.updated_at && dateFormater(project.updated_at).time}
+      <div className="flex items-center justify-between gap-3">
+        <p className="mr-auto text-xs md:text-sm lg:text-sm opacity-65">
+          Dernières modifications:
         </p>
-      </div>
-      <div className="line"></div>
-      <div className="flex justify-center items-center gap-5">
-        <div
-          className="flex items-center gap-2 delete-btn cursor-pointer"
-          onClick={() => setIsOpenDialog(true)}
-        >
-          <Image
-            src="/icons/trash-can.svg"
-            alt="Supprimer le projet"
-            width={30}
-            height={30}
-          />
+        <div className="opacity-65 text-xs md:text-sm lg:text-sm flex flex-col items-center">
+          <p>{project.updated_at && dateFormater(project.updated_at).date}</p>
+          <p>à {project.updated_at && dateFormater(project.updated_at).time}</p>
         </div>
+      </div>
+      <Divider className="my-3" />
+      <div className="flex justify-center items-center gap-5 max-w-[75%] ml-auto mr-auto">
         <Button
-          variant="secondary"
+          isIconOnly
+          aria-label="Supprimer"
+          color="danger"
+          onClick={() => setIsOpenDialog(true)}
+          className="transition-all duration-300 ease-in-out hover:rotate-12 text-md md:text-lg lg:text-lg"
+          size="lg"
+          variant="solid"
+        >
+          <Trash2 />
+        </Button>
+        <Button
+          color="primary"
+          variant="ghost"
           onClick={() => {
             handleDuplicateProject(project.id ?? -1);
           }}
-          content="Dupliquer"
-          disabled={false}
-          image={null}
-          size="medium"
-          moreClasses="font-bold border-3"
-        />
+          size="lg"
+          className="text-md md:text-lg lg:text-lg"
+        >
+          Dupliquer
+        </Button>
         <Button
+          color="primary"
+          variant="ghost"
+          onClick={() => (window.location.href = showProjectUrl)}
+          className="text-md md:text-lg lg:text-lg"
+          size="lg"
+        >
+          Ouvrir
+        </Button>
+        {/* <Button
           variant="secondary"
           onClick={() => (window.location.href = showProjectUrl)}
           content="Ouvrir"
@@ -97,7 +113,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
           image={null}
           size="medium"
           moreClasses="font-bold border-3"
-        />
+        /> */}
       </div>
 
       {isOpenDialog && <Dialogs {...dialogProps} />}
