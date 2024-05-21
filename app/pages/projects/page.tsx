@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@components/Loader";
 import { Title } from "@components/Title";
 import { ProjectCard } from "@components/projects/ProjectCard";
 import { getSession } from "@lib/session";
@@ -7,7 +8,7 @@ import { GroupType } from "@models/Group";
 import { ProjectType } from "@models/Project";
 import { TitleType } from "@models/Title";
 import { Button } from "@nextui-org/button";
-import { Select, SelectItem } from "@nextui-org/select";
+import { Select, SelectItem, SelectSection } from "@nextui-org/select";
 import {
   databaseToGroupModel,
   databaseToProjectModel,
@@ -30,7 +31,9 @@ export default function page() {
   const [userSession, getUserSession] = useState(null);
 
   useEffect(() => {
+    console.log("1 1");
     if (backupProjects !== null) {
+      console.log("1 2");
       setProjects(filterProjects());
     }
   }, [selectedGroup, backupProjects]);
@@ -40,7 +43,16 @@ export default function page() {
       let res = await getGroupsByUserId(Number(id_user));
       if (res) {
         let groupData = databaseToSeveralGroupModel(res);
-        await setGroups(groupData);
+        const backupGroup = {
+          id: -1,
+          name: "Tous les groupes",
+          description: "",
+          budget: "0",
+          user_id: Number(id_user),
+          image: "",
+        };
+        groupData.push(backupGroup);
+        await setGroups(groupData.reverse());
       } else {
         console.error("Failed to fetch groups:", res.error);
       }
@@ -93,10 +105,12 @@ export default function page() {
         }
         setProjects(projectsData);
         setBackupProjects(projectsData); // Sauvegarder les projets initiaux
+        setIsLoading(false);
       } else {
         // pas de projet créé
         setProjects([]);
         setBackupProjects([]);
+        setIsLoading(false);
       }
     }
   };
@@ -118,7 +132,16 @@ export default function page() {
       const data = await res;
       if (data) {
         let groupData = databaseToSeveralGroupModel(data);
-        await setGroups(groupData);
+        const backupGroup = {
+          id: -1,
+          name: "Aucun Groupe",
+          description: "",
+          budget: "0",
+          user_id: Number(id_user),
+          image: "",
+        };
+        groupData.push(backupGroup);
+        await setGroups(groupData.reverse());
       } else {
         // pas de groupe créé
       }
@@ -181,7 +204,9 @@ export default function page() {
       setIsLoading(false);
     };
 
+    setIsLoading(true);
     fetchSession();
+    setIsLoading(false);
   }, []);
 
   const filterProjects = () => {
@@ -218,7 +243,7 @@ export default function page() {
       <div className="flex flex-col lg:flex-row md:flex-row md:items-center justify-between lg:items-center mb-5">
         <Title {...title} />
         <Button
-          className="ml-[5%] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 md:mr-5 lg:mr-5 w-fit max-w-[150px] text-lg"
+          className="mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit max-w-[150px] text-lg"
           color="primary"
           size="lg"
           onClick={() => (window.location.href = "/pages/projects/create")}
@@ -237,21 +262,37 @@ export default function page() {
           size="md"
           color="primary"
           variant="flat"
-          className="ml-[6%] w-[350px] max-w-[50%] text-lg"
+          className="w-[350px] max-w-[50%] text-lg"
+          defaultOpen={false}
           onChange={(event) => {
-            setSelectedGroup(parseInt(event.target.value));
+            console.log("selectedGroup", event.target.value);
+            setSelectedGroup(Number(event.target.value));
+            console.log("selectedGroup", Number(event.target.value));
           }}
         >
-          {(group) => (
-            <SelectItem key={group.id ?? -1} value={group.id ?? -1}>
-              {group.name}
-            </SelectItem>
-          )}
+          <SelectSection title={"Vos groupes"}>
+            {/* <SelectItem key={-1} value={-1}>
+              Tous les groupes
+            </SelectItem> */}
+            {groups.map((group) => (
+              <SelectItem key={group.id ?? "-2"} value={group.id ?? "-3"}>
+                {group.name ?? "Aucun nom"}
+              </SelectItem>
+            ))}
+          </SelectSection>
         </Select>
       </div>
 
-      <div className="flex items-center justify-center gap-4 mt-[2%] ml-auto mr-auto flex-wrap">
-        {projects && projects.length > 0 ? (
+      <div
+        className={`flex items-center gap-4 md:gap-8 mt-[5%] md:mt-[2%] flex-wrap ${
+          isLoading ? "justify-center" : "justify-start"
+        }`}
+      >
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <Loader />
+          </div>
+        ) : projects && projects.length > 0 ? (
           projects.map((project, index) => {
             return (
               <ProjectCard

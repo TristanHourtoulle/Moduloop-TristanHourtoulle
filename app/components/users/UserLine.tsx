@@ -80,7 +80,7 @@ export const UserLine = (props: UserLineProps) => {
       <td className="px-6 py-4">
         <Link
           href={`/pages/users/${user.id}`}
-          className="transition-all ease-in-out delay-50 text-white opacity-50 hover:opacity-100 flex items-center gap-2"
+          className="transition-all ease-in-out delay-50 text-black opacity-50 hover:opacity-100 flex items-center gap-2"
         >
           <Pencil />
         </Link>

@@ -42,9 +42,9 @@ export default function Register() {
   };
 
   return (
-    <div className="w-[900px] h-[550px] bg-white flex shadow-lg items-center ml-auto mr-auto rounded-lg">
+    <div className="bg-white w-full md:w-full md:h-[400px] lg:h-[450px] xl:h-[600px] 2xl:h-[700px] flex shadow-lg items-center ml-auto mr-auto rounded-lg overflow-hidden">
       {/* Left Side */}
-      <div className="flex flex-col gap-3 items-start justify-center bg-[#0A726F] w-[40%] h-full px-[4%] rounded-l-lg shadow-lg">
+      <div className="hidden md:flex h-full flex-col gap-3 items-start justify-center bg-[#0A726F] w-[40%] px-[4%] rounded-l-lg shadow-lg">
         <h2 className="font-outfit font-bold text-white text-4xl">
           Bienvenue sur{" "}
           <span className="text-5xl text-[#30C1BD]">Moduloop</span>
@@ -57,20 +57,20 @@ export default function Register() {
       </div>
 
       {/* Right Side */}
-      <div className="flex flex-col gap-10 items-center justify-center w-[60%] h-full">
+      <div className="flex flex-col gap-5 md:gap-10 items-center justify-center w-full md:w-[60%] px-4 my-[7%] md:my-0">
         {/* Head Section */}
         <div className="flex flex-col items-center justify-center">
-          <h2 className="text-black font-outfit font-bold text-5xl">
+          <h2 className="text-black font-outfit font-bold text-2xl md:text-5xl">
             S'inscrire
           </h2>
-          <p className="mt-2 text-black font-outfit text-md">
+          <p className="mt-2 text-black font-outfit text-sm md:text-md">
             Vous avez déjà un compte ?
           </p>
           <p
             onClick={() => {
               window.location.href = "/pages/login";
             }}
-            className="cursor-pointer text-black font-outfit text-md font-bold transition-all hover:opacity-[75%]"
+            className="cursor-pointer text-black font-outfit text-md md:text-md font-bold transition-all hover:opacity-[75%]"
           >
             Connectez-vous
           </p>
@@ -83,34 +83,34 @@ export default function Register() {
             id="firstName"
             type="text"
             placeholder="Prénom"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           ></input>
           <input
             style={{ width: "75%" }}
             id="name"
             type="text"
             placeholder="Nom"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           ></input>
           <input
             style={{ width: "75%" }}
             id="email"
             type="text"
             placeholder="Addresse Mail"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           ></input>
           <input
             style={{ width: "75%" }}
             id="password"
             type="password"
             placeholder="Mot de passe"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           ></input>
 
           {/* Submit Button */}
           <div
             onClick={handleSubmit}
-            className="mt-3 bg-[#0A726F] px-8 py-4 rounded-lg text-white font-outfit text-lg w-[75%] text-center transition-all cursor-pointer hover:opacity-[75%]"
+            className="mt-[10%] md:mt-3 bg-[#0A726F] px-4 py-3 md:px-8 md:py-4 rounded-lg text-white font-outfit text-md md:text-lg w-fit md:w-[75%] text-center transition-all cursor-pointer hover:opacity-[75%]"
           >
             Inscription
           </div>
@@ -119,7 +119,7 @@ export default function Register() {
             onClick={() => {
               alert("Fonctionnalité encore en développement");
             }}
-            className="cursor-pointer transition-all hover:opacity-[75%] text-left text-[#0A726F] font-bold text-md"
+            className="cursor-pointer transition-all hover:opacity-[75%] text-left text-[#0A726F] font-bold text-md mt-[5%] md:mt-0"
           >
             Mot de passe oublié ?
           </p>

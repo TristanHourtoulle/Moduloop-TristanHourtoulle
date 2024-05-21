@@ -109,8 +109,8 @@ export const ShowInformations = ({
         <Image
           src="/icons/Edit.svg"
           alt="Change"
-          width={50}
-          height={50}
+          width={40}
+          height={40}
           className="cursor-pointer hover:opacity-50 transition-opacity duration-200"
         />
       </SheetTrigger>

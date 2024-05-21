@@ -54,28 +54,22 @@ export const Title = (title: TitleType) => {
   };
 
   return (
-    <div className="flex ml-5 mr-5 gap-5 items-center md:mr-0 lg:mr-0">
+    <div className="flex gap-5 items-center md:mr-0 lg:mr-0 max-h-[75px]">
       <div
         className="cursor-pointer"
         onClick={() => {
           router.back();
         }}
       >
-        <Image
-          src={title.image || ""}
-          alt="Page Logo"
-          width={50}
-          height={50}
-          className=""
-        />
+        <Image src={title.image || ""} alt="Page Logo" width={40} height={40} />
       </div>
 
-      <h1 className="font-bold text-[1.5rem] md:text-[3rem] lg:text-[3rem]">
+      <h1 className="font-bold text-lg md:text-[3rem] lg:text-[3rem]">
         {title.title}
       </h1>
 
       {title.canChange && (
-        <div className="flex gap-5">
+        <div className="flex flex-col md:flex-row lg:flex-row gap-5">
           {displayChange ? (
             <input
               onChange={handleChange}
@@ -84,7 +78,9 @@ export const Title = (title: TitleType) => {
               value={nameOfPage}
             />
           ) : (
-            <p className="page-number">{nameOfPage}</p>
+            <p className="text-[2rem] md:text-[3rem] lg:text-[3rem]">
+              {nameOfPage}
+            </p>
           )}
 
           {!displayChange ? null : (
@@ -111,7 +107,7 @@ export const Title = (title: TitleType) => {
       )}
 
       {!title.canChange && (
-        <p className="page-number font-bold text-[1.5rem] md:text-[3rem] lg:text-[3rem] ml-auto">
+        <p className="page-number font-bold text-lg md:text-[3rem] lg:text-[3rem]">
           {title.number}
         </p>
       )}

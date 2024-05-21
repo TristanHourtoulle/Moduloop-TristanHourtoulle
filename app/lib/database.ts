@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
 
 const pool = new Pool({
-  host: "localhost",
+  host: "185.158.132.197",
   user: "postgres",
   password: "root",
   database: "moduloop",

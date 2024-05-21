@@ -8,6 +8,7 @@ import { Logo } from "./header/Logo";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { getSession, logout } from "@lib/session";
+import { LogoIcon } from "./header/LogoIcon";
 
 const Header = () => {
   const navigation = usePathname();
@@ -73,11 +74,11 @@ const Header = () => {
   }, [session]);
 
   return session ? (
-    <div className="flex items-center justify-between h-24 w-full px-4 py-2">
+    <div className="flex items-center justify-between h-24 w-full py-2">
       <Logo />
 
       {/* Desktop View */}
-      <div className="hidden sm:flex">
+      <div className="hidden md:flex">
         <div className="flex items-center gap-7">
           <a
             href="/"
@@ -168,7 +169,7 @@ const Header = () => {
       </div>
 
       {/* Mobile View */}
-      <div className="flex grow items-center justify-end sm:hidden mr-3">
+      <div className="flex grow items-center justify-end md:hidden">
         <button
           className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400
             hover:bg-gray-100 hover/text-gray-500 focus:outline-none focus:ring-inset focus:ring-indigo-500"
@@ -180,12 +181,12 @@ const Header = () => {
       </div>
       {isMenuOpen && <div className="fixed inset-0 bg-black opacity-30" />}
       {isMenuOpen && (
-        <div className="absolute inset-x-0 top-0 transform p-2 transition md:hidden rounded-xl mobile-menu">
+        <div className="absolute z-50 items-center justify-center inset-x-0 top-0 transform p-2 transition-all md:hidden rounded-xl mobile-menu w-full">
           <div className="rounder-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 divide-y-2 divide-gray-50 mobile-menu">
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
-                <Logo />
-                <div className="-mr-2">
+                <LogoIcon />
+                <div className="">
                   <button
                     className="inline-flex items-center justify-center rounded-md bg-white p-2
                       text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset
@@ -200,18 +201,18 @@ const Header = () => {
               <div className="mt-6 ml-3">
                 <nav className="grid gap-y-8">
                   <a href="/" className="">
-                    <p className="text">Accueil</p>
+                    <p className="text-lg">Accueil</p>
                   </a>
                   <a href="/pages/projects" className="">
-                    <p className="text">Projets</p>
+                    <p className="text-lg">Projets</p>
                   </a>
                   {isAdmin && (
-                    <a href="/pages/products" className="">
+                    <a href="/pages/products" className="text-lg">
                       Produits
                     </a>
                   )}
                   {isAdmin && (
-                    <a href="/pages/users" className="">
+                    <a href="/pages/users" className="text-lg">
                       Utilisateurs
                     </a>
                   )}
@@ -227,7 +228,17 @@ const Header = () => {
                       window.location.href = "/";
                     }}
                   >
-                    <p className="">Contact</p>
+                    <p className="text-lg">Contact</p>
+                  </a>
+                  <a
+                    href=""
+                    onClick={() => {
+                      // setSelectedLink("/pages/users");
+                      handleLogout();
+                    }}
+                    className="text-lg"
+                  >
+                    Déconnexion
                   </a>
                 </nav>
               </div>

@@ -13,7 +13,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-between text-center">
+    <div className="flex flex-col items-center justify-between text-center w-full h-full">
       <h1 className="text-2xl md:text-5xl lg:text-5xl text-center">
         Bonjour<strong>{initials}</strong>,
       </h1>

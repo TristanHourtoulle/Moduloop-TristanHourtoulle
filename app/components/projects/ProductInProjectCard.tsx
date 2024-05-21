@@ -1,6 +1,8 @@
 import { AddProductType } from "@/models/AddProduct";
 import TrashCan from "@components/button/TrashCan";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
 import {
   deleteProductInProject,
   updateProductInProject,
@@ -129,17 +131,17 @@ const ProductInProjectCard = (props: {
   }, []);
 
   return (
-    <div className="product-in-project-card w-[30%] px-[2%] py-[2%] flex flex-col justify-between">
+    <div className="px-6 py-6 w-[300px] md:w-auto h-auto flex flex-col justify-between bg-white rounded-[16px] shadow-md transition-all duration-400">
       {/* Header */}
-      <div className="flex item-center justify-between">
+      <div className="flex flex-wrap gap-5 item-center justify-between">
         <div className="flex flex-col items-start">
-          <p className="name">
+          <p className="text-lg font-bold md:text-xl">
             {product.product?.[0]?.name?.replace("Inies - ", "")}
           </p>
-          <div className="flex items-center gap-2">
-            <p className="base text-lg">{product.product?.[0]?.unit}</p>
-            <p className="base text-lg"> - </p>
-            <p className="base text-lg">{base}</p>
+          <div className="flex items-center gap-2 text-md md:text-lg font-bold opacity-75">
+            <p>{product.product?.[0]?.unit}</p>
+            <p> - </p>
+            <p>{base}</p>
           </div>
         </div>
         <div onClick={handleDeleteProduct} className="cursor-pointer">
@@ -147,69 +149,67 @@ const ProductInProjectCard = (props: {
         </div>
       </div>
 
+      {/* <Divider className="opacity-75 my-[5%] md:my-[4%] max-w-[75%] ml-auto mr-auto" /> */}
+
       {/* Image */}
       <div className="flex justify-center">
         <Image
           src={product.product?.[0]?.image ?? "/icons/no-image.png"}
           alt={product.product?.[0]?.name ?? ""}
-          width={150}
-          height={150}
+          width={100}
+          height={100}
         />
       </div>
 
       {/* Quantity */}
-      <div className="flex items-center justify-between">
-        <div>
-          <label
-            htmlFor={`new`}
-            className="block mb-1 text-sm font-medium text-gray-900 opacity-75"
-          >
-            Neuf
-          </label>
-          <input
-            style={{ width: "75px" }}
-            min={0}
-            type="number"
-            name={`new`}
-            id={`new`}
-            value={qNew}
-            onChange={handleQNewChange}
-            className="text-right bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
-          ></input>
-        </div>
+      <div className="flex items-center justify-between mt-[5%] md:mt-[2%] gap-2">
+        <Input
+          type="number"
+          label="Neuf"
+          labelPlacement="inside"
+          value={qNew.toString()}
+          onChange={handleQNewChange}
+          min={0}
+          variant="flat"
+          color="primary"
+          size="md"
+          className="max-w-[50%]"
+        />
 
-        <div className="w-auto pt-[5%]">
-          <button
-            onClick={handleAdd}
-            className={
-              isDifferent
-                ? "project-product-button"
-                : "hidden project-product-button"
-            }
-          >
-            Modifier
-          </button>
-        </div>
-
-        <div>
-          <label
-            htmlFor={`reuse`}
-            className="block mb-1 text-sm font-medium text-gray-900 opacity-75"
-          >
-            Réemploi
-          </label>
-          <input
-            style={{ width: "75px" }}
-            min={0}
-            type="number"
-            name={`reuse`}
-            id={`reuse`}
-            value={qUsed}
-            onChange={handleQUsedChange}
-            className="text-right bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-1"
-          ></input>
-        </div>
+        <Input
+          type="number"
+          label="Réemploi"
+          labelPlacement="inside"
+          value={qUsed.toString()}
+          onChange={handleQUsedChange}
+          min={0}
+          variant="flat"
+          color="primary"
+          size="md"
+          className="max-w-[50%]"
+        />
       </div>
+      {/* <div className="w-auto pt-[5%] ml-auto mr-auto">
+        <button
+          onClick={handleAdd}
+          className={
+            isDifferent
+              ? "project-product-button"
+              : "hidden project-product-button"
+          }
+        >
+          Modifier
+        </button>
+      </div> */}
+      <Button
+        color="primary"
+        variant="ghost"
+        size="md"
+        className={"ml-auto mr-auto mt-[5%]" + (isDifferent ? "" : " hidden")}
+        onClick={handleAdd}
+      >
+        Modifier
+      </Button>
 
       {dialogOpen && <Dialogs {...dialogProps} />}
     </div>

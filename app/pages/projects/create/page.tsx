@@ -95,10 +95,10 @@ function page() {
 
         if (data) {
           const createdProject = data;
-          toast.success("Le projet à bien été créé, vous allez être redirigé.");
+          toast.success("Le projet a bien été créé !");
           setTimeout(() => {
             window.location.href = "/pages/projects/" + createdProject.id;
-          }, 2000);
+          }, 1000);
         } else {
           alert("Failed to create project.");
         }
@@ -106,8 +106,6 @@ function page() {
     } catch (error) {
       console.error("Failed to create project:", error);
     } finally {
-      //   window.location.href = "/pages/projects";
-      // TODO: redirect to the project page just created ! :)
     }
   };
 
@@ -128,7 +126,7 @@ function page() {
     <div>
       <Title {...title} />
 
-      <div className="mt-[3%] flex flex-col gap-5 px-8 py-4 bg-white items-center justify-center w-[50%] rounded-[16px] ml-auto mr-auto">
+      <div className="mt-[10%] md:mt-[3%] flex flex-col gap-5 px-8 py-4 bg-white items-center justify-center w-[75%] md:w-[50%] lg-[50%] rounded-[16px] mt-auto mb-auto ml-auto mr-auto">
         {/* Header */}
         {/* Input */}
         <div className="w-[100%]">
@@ -143,7 +141,7 @@ function page() {
             id="name-createProject"
             type="text"
             placeholder="Quel est le nom de votre projet ?"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
           ></input>
         </div>
 
@@ -159,7 +157,7 @@ function page() {
             <select
               onChange={handleGroupChange}
               id="group-createProject"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
             >
               <option className="" value={-1}>
                 Aucun Groupe
@@ -195,7 +193,7 @@ function page() {
           onClick={createProject}
           className="py-2 px-4 border-2 border-[#30C1BD] rounded-[8px] bg-primary-transparent cursor-pointer transition-all duration-250 hover:opacity-50"
         >
-          <p className="text-lg font-bold text-[#30C1BD]">Créer</p>
+          <p className="text-md md:text-lg font-bold text-[#30C1BD]">Créer</p>
         </div>
       </div>
     </div>

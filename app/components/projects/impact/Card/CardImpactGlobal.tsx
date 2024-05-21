@@ -27,7 +27,7 @@ export const CardImpactGlobal = (props: CardImpactGlobalProps) => {
         <p className="text-lg">{subtitle}</p>
       </div>
       <div className="flex items-center justify-center gap-4">
-        <p className="font-bold text-5xl" style={{ color: color }}>
+        <p className="font-bold text-3xl md:text-5xl" style={{ color: color }}>
           {value}
         </p>
         <p>{unit}</p>
@@ -44,7 +44,10 @@ export const CardImpactGlobal = (props: CardImpactGlobalProps) => {
             <p className="text-lg">Eutrophisation Marine</p>
           </div>
           <div className="flex items-center justify-center gap-4">
-            <p className="font-bold text-5xl" style={{ color: color }}>
+            <p
+              className="font-bold text-3xl md:text-5xl"
+              style={{ color: color }}
+            >
               {value2}
             </p>
             <p>kg P éq.</p>

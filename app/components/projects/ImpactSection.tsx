@@ -238,12 +238,12 @@ const ImpactSection = (props: {
   };
 
   return (
-    <div className="impact flex flex-col items-start gap-5 mx-[5%]">
-      <div className="w-full flex flex-col gap-6">
+    <div className="impact flex flex-col items-start gap-5">
+      <div className="w-full flex flex-col gap-2 md:gap-6">
         {/* Select project for compare */}
-        <div className="flex items-center gap-5">
-          <p className="font-bold text-lg">Comparer</p>
-          <p className="font-bold text-lg">avec</p>
+        <div className="flex flex-wrap items-start justify-start gap-1 md:gap-5">
+          <p className="font-bold text-md md:text-lg">Comparer</p>
+          <p className="font-bold text-md md:text-lg">avec</p>
           <div className="h-10 w-72 min-w-[200px]">
             <select
               id="projectSelect"
@@ -316,6 +316,7 @@ const ImpactSection = (props: {
               size="medium"
               disabled={!isCompareWithTemplate}
               image={null}
+              moreClasses="mt-[5%] md:mt-0"
             />
           )}
         </div>
@@ -328,12 +329,13 @@ const ImpactSection = (props: {
             size="medium"
             disabled={false}
             image={null}
+            moreClasses="mb-[5%] md:mb-0"
           />
         </div>
 
         {isLoaded && isCompare && compareWith && (
           <div
-            className="p-[20px] rounded-[16px]"
+            className="p-[10px] md:p-[20px] rounded-[16px]"
             style={{ backgroundColor: "rgba(255, 138, 0, 0.25)" }}
           >
             {isCompare && compareWith && (
@@ -430,7 +432,7 @@ const ImpactSection = (props: {
 
         {isLoaded && !isCompare && (
           <div
-            className="p-[20px] rounded-[16px]"
+            className="p-[10px] md:p-[20px] rounded-[16px]"
             style={{ backgroundColor: "rgba(255, 138, 0, 0.25)" }}
           >
             <EquivalenceImpact
@@ -442,7 +444,7 @@ const ImpactSection = (props: {
               title1="paris - nice"
               title2="émission journalière"
               title3="kms parcourus"
-              unit1="Aller - Retour"
+              unit1="Aller-Retour"
               unit2="Français"
               unit3="Kms"
               type="Don't compare"
@@ -454,7 +456,7 @@ const ImpactSection = (props: {
 
         {isLoaded && !isCompare && (
           <div
-            className="p-[20px] rounded-[16px]"
+            className="p-[10px] md:p-[20px] rounded-[16px]"
             style={{ backgroundColor: "rgba(255, 48, 48, 0.25)" }}
           >
             <EquivalenceImpact

@@ -82,19 +82,19 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
   }, [project, worstProject, impactType, type, value1, value2, value3]);
 
   return (
-    <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
-      <div className="flex flex-col">
+    <div className="w-full min-h-60 flex flex-col gap-2 md:gap-5 items-center md:items-start">
+      <div className="flex flex-col items-center md:items-start">
         {type && type != undefined && impactType === "RC" && (
-          <p className="text-3xl font-bold opacity-70">
+          <p className="text-lg lg:text-2xl xl:text-3xl font-bold opacity-70">
             Réchauffement climatique
           </p>
         )}
         {type && type != undefined && impactType === "ERF" && (
-          <p className="text-3xl font-bold opacity-70">
+          <p className="text-lg lg:text-2xl xl:text-3xl font-bold opacity-70 text-center">
             Epuisement des Ressources Fossiles
           </p>
         )}
-        <h2 className="title">
+        <h2 className="text-lg lg:text-2xl xl:text-3xl mt-[5%] font-bold text-center">
           {!type || type === undefined
             ? `En choisissant ${project.name}, `
             : " "}
@@ -106,7 +106,7 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
           à:
         </h2>
       </div>
-      <div className="flex flex-col sm:flex-row items-center gap-5">
+      <div className="flex flex-wrap items-center w-full justify-center gap-2 md:gap-5 mb-[5%]">
         <CardEquivalenceImpact
           project={project}
           title={title1}
@@ -117,7 +117,7 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
         />
         {impactType === "ERF" ? null : (
           <>
-            <p className="text-lg font-bold">ou</p>
+            {/* <p className="text-lg font-bold">ou</p> */}
             <CardEquivalenceImpact
               project={project}
               title={title2}
@@ -128,7 +128,7 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
             />
           </>
         )}
-        <p className="text-lg font-bold">ou</p>
+        {/* <p className="text-lg font-bold">ou</p> */}
         <CardEquivalenceImpact
           project={project}
           title={title3}

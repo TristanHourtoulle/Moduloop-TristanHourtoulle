@@ -39,60 +39,60 @@ export default function Login() {
   };
 
   return (
-    <div className="w-[900px] h-[500px] bg-white flex shadow-lg items-center ml-auto mr-auto rounded-lg">
+    <div className="bg-white w-full md:w-full md:h-[400px] lg:h-[450px] xl:h-[600px] 2xl:h-[700px] flex shadow-lg items-center ml-auto mr-auto rounded-lg overflow-hidden">
       {/* Left Side */}
-      <div className="flex flex-col gap-3 items-start justify-center bg-[#0A726F] w-[40%] h-full px-[4%] rounded-l-lg shadow-lg">
+      <div className="hidden md:flex h-full flex-col gap-3 items-start justify-center bg-[#0A726F] w-[40%] px-[4%] rounded-l-lg shadow-lg">
         <h2 className="font-outfit font-bold text-white text-4xl">
           Bon retour sur{" "}
           <span className="text-5xl text-[#30C1BD]">Moduloop</span>
         </h2>
-        <hr className="w-48 h-2 px-[4%] my-4 bg-[#30C1BD] border-0 rounded dark:bg-bg-[#30C1BD]"></hr>
+        <hr className="w-48 h-2 my-4 bg-[#30C1BD] border-0 rounded"></hr>
         <p className="font-outfit text-white text-base opacity-[90%]">
           Connectez-vous à votre compte pour continuer.
         </p>
       </div>
 
       {/* Right Side */}
-      <div className="flex flex-col gap-10 items-center justify-center w-[60%] h-full">
+      <div className="flex flex-col gap-5 md:gap-10 items-center justify-center w-full md:w-[60%] px-4 my-[7%] md:my-0">
         {/* Head Section */}
-        <div className="flex flex-col items-center justify-center">
-          <h2 className="text-black font-outfit font-bold text-5xl">
+        <div className="flex flex-col items-center justify-center text-center">
+          <h2 className="text-black font-outfit font-bold text-2xl md:text-5xl">
             Se connecter
           </h2>
-          <p className="mt-2 text-black font-outfit text-md">
+          <p className="mt-2 text-black font-outfit text-sm md:text-md">
             Vous n'avez pas encore de compte ?
           </p>
           <p
             onClick={() => {
               window.location.href = "/pages/register";
             }}
-            className="cursor-pointer text-black font-outfit text-md font-bold transition-all hover:opacity-[75%]"
+            className="cursor-pointer text-black font-outfit text-md md:text-md font-bold transition-all hover:opacity-[75%]"
           >
             Créer un compte
           </p>
         </div>
 
         {/* Input Section */}
-        <div className="w-full flex flex-col items-center gap-3">
+        <div className="w-full flex flex-col items-center gap-3 mt-[10%] md:mt-0 ">
           <input
             style={{ width: "75%" }}
             id="email"
             type="text"
             placeholder="Addresse Mail"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           ></input>
           <input
             style={{ width: "75%" }}
             id="password"
             type="password"
             placeholder="Mot de passe"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
+            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
           ></input>
 
           {/* Submit Button */}
           <div
             onClick={handleSubmit}
-            className="mt-3 bg-[#0A726F] px-8 py-4 rounded-lg text-white font-outfit text-lg w-[75%] text-center transition-all cursor-pointer hover:opacity-[75%]"
+            className="mt-[10%] md:mt-3 bg-[#0A726F] px-4 py-3 md:px-8 md:py-4 rounded-lg text-white font-outfit text-md md:text-lg w-fit md:w-[75%] text-center transition-all cursor-pointer hover:opacity-[75%]"
           >
             Connection
           </div>
@@ -101,50 +101,12 @@ export default function Login() {
             onClick={() => {
               alert("Fonctionnalité encore en développement");
             }}
-            className="cursor-pointer transition-all hover:opacity-[75%] text-left text-[#0A726F] font-bold text-md"
+            className="cursor-pointer transition-all hover:opacity-[75%] text-left text-[#0A726F] font-bold text-md mt-[5%] md:mt-0"
           >
             Mot de passe oublié ?
           </p>
         </div>
       </div>
     </div>
-    // <div className='flex justfy-center items-center my-auto mt-20'>
-    //     <div className='flex flex-col items-center mx-auto'>
-    //         <h1 className='text-6xl font-bold mb-10'>Se connecter</h1>
-    //         <form onSubmit={handleSubmit}>
-    //             <div className="mb-5">
-    //                 <label hidden htmlFor="email">Email</label>
-    //                 <input
-    //                     type="text"
-    //                     id="email"
-    //                     name="email"
-    //                     placeholder="Email"
-    //                     className="border-2 border-gray-300 p-2 rounded-md w-96 font-bold font-sans"
-    //                     required
-    //                 />
-    //             </div>
-
-    //             <div className="mb-5">
-    //                 <label hidden htmlFor="password">Mot de passe</label>
-    //                 <input
-    //                     type="password"
-    //                     id="password"
-    //                     name="password"
-    //                     placeholder="Mot de passe"
-    //                     className="border-2 border-gray-300 p-2 rounded-md w-96 font-bold font-sans"
-    //                     required
-    //                 />
-    //             </div>
-
-    //             <div className="items-center justify-center ml-20">
-    //                 <button
-    //                     type="submit"
-    //                     className="bg-blue-500 text-white p-2 rounded-md w-48">
-    //                         <p className="text-xl">Valider</p>
-    //                 </button>
-    //             </div>
-    //         </form>
-    //     </div>
-    // </div>
   );
 }

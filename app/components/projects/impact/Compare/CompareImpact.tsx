@@ -28,11 +28,13 @@ export const CompareImpact = (props: CompareImpactProps) => {
   const [finalPercentage, setFinalPercentage] = useState<string>(
     percentage.toString()
   );
+  const [moreClasses, setMoreClasses] = useState<string>("");
 
   useEffect(() => {
     if (Number(finalPercentage) < 1 && Number(finalPercentage) >= 0) {
       setFinalPercentage("< 1");
     }
+    let additionalClasses = "";
     if (type === "Réchauffement climatique") {
       setTitle("émissions évitées");
       setImpact("rc");
@@ -74,6 +76,7 @@ export const CompareImpact = (props: CompareImpactProps) => {
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
     } else {
+      additionalClasses = "mt-[5%]";
       setTitle("Eutrophisation évitée");
       setImpact("em");
       setImage("/icons/no-em.svg");
@@ -88,18 +91,21 @@ export const CompareImpact = (props: CompareImpactProps) => {
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
     }
+    setMoreClasses(additionalClasses);
   }, [project_one, project_two]);
 
   return (
     <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
-      <h2 className="title">
-        Estimatif d'impact de vos projets{" "}
+      <h2
+        className={`text-lg lg:text-2xl xl:text-3xl font-bold ${moreClasses}`}
+      >
+        Estimatif d'impact de vos projets <br></br>
         <span className="opacity-50">{type}</span>
       </h2>
-      <div className="flex flex-col sm:flex-row items-center gap-10">
+      <div className="flex flex-wrap items-center justify-center gap-5 md:gap-10">
         {/* Ecologie Card */}
-        <div className="px-8 py-4 bg-[#4AD860] flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
-          <h3 className="uppercase font-semibold text-2xl text-white opacity-95">
+        <div className="px-8 py-4 bg-[#4AD860] flex flex-col items-start justify-center gap-2 rounded-[10px] drop-shadow-lg w-[30%] min-w-[250px] ">
+          <h3 className="uppercase font-semibold text-lg lg:text-xl xl:text-2xl text-white opacity-95">
             {title}
           </h3>
           <div className="flex items-center gap-5">
@@ -110,7 +116,7 @@ export const CompareImpact = (props: CompareImpactProps) => {
               height={60}
               className="drop-shadow-lg"
             />
-            <p className="text-white font-bold text-5xl">
+            <p className="text-white font-bold text-3xl lg:text-4xl xl:text-5xl">
               {percentage.toFixed(0)}%
             </p>
           </div>

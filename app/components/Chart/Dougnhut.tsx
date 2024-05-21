@@ -35,7 +35,7 @@ export const Dougnhut = (props: DougnhutProps) => {
     },
   };
   return (
-    <div style={{ width: "150px", height: "150px" }}>
+    <div style={{ width: "125px", height: "125px" }}>
       <Doughnut
         data={{
           ...data,

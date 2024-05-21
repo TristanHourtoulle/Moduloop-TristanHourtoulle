@@ -20,9 +20,11 @@ export const ImpactGlobalProject = (props: ImpactGlobalProjectProps) => {
   const valueEM = getEMimpact(project_one);
 
   return (
-    <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card bg-[#e9e9e9] bg-opacity-90">
-      <h2 className="title">Estimatif d'Impact global de {project_one.name}</h2>
-      <div className="flex  flex-col sm:flex-row sm:items-start items-center justify-center sm:justify-between">
+    <div className="w-full min-h-60 flex flex-col items-center md:items-start gap-5 p-4 rounded-[16px] bg-[#e9e9e9] bg-opacity-90">
+      <h2 className="font-bold text-lg md:text-4xl">
+        Estimatif d'Impact {project_one.name}
+      </h2>
+      <div className="flex flex-col w-full md:my-[1%] gap-5 md:gap-0 md:flex-row md:items-start justify-between md:ml-auto md:mr-auto">
         <CardImpactGlobal
           title="Santé Humaine"
           image="/icons/climate-change.svg"

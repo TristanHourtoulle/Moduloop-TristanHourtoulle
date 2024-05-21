@@ -2,8 +2,6 @@
 
 import Loader from "@components/Loader";
 import { Title } from "@components/Title";
-import { Button } from "@components/button/Button";
-import { DeleteBtn } from "@components/button/DeleteBtn";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import ImpactSection from "@components/projects/ImpactSection";
 import ProductCardWithToaster from "@components/projects/ProductCard";
@@ -14,6 +12,11 @@ import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
 import { ProjectType } from "@models/Project";
 import { TitleType } from "@models/Title";
+import { Button } from "@nextui-org/button";
+import { Chip } from "@nextui-org/chip";
+import { Divider } from "@nextui-org/divider";
+import { Input } from "@nextui-org/input";
+import { Select, SelectItem } from "@nextui-org/select";
 import { getGroupById } from "@utils/database/group";
 import { getProductById, getProducts } from "@utils/database/product";
 import {
@@ -22,8 +25,8 @@ import {
   getProjectById,
 } from "@utils/database/project";
 import { getProductByBase } from "@utils/projects";
+import { Download } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { databaseToGroupModel } from "../../../utils/convert";
@@ -34,9 +37,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [productsInProject, setProductsInProject] = useState<
     AddProductType[] | null
   >(null);
-  const [storeProducts, setStoreProducts] = useState<ProductType[] | null>(
-    null
-  );
+  const [storeProducts, setStoreProducts] = useState<ProductType[]>([]);
   const [productsImpact, setProductsImpact] = useState<AddProductType | null>(
     null
   );
@@ -52,7 +53,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
   const [section, setSection] = useState<string>("products");
   const [kartLoaded, setKartLoaded] = useState<boolean>(false);
-
   // Select Product To add
   const [SelectedProductId, setSelectedProductId] = useState<number | null>(
     null
@@ -60,6 +60,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(
     null
   );
+  const [value, setValue] = useState(new Set([]));
 
   useEffect(() => {
     const fetchSelectedProduct = async () => {
@@ -106,9 +107,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
 
   const addProductWithoutFormSubmit = async () => {
     setAddProductLoader(true);
-    const productId = document.getElementById("products-addProduct") as any;
+    const productId = selectedProduct?.id ? selectedProduct?.id : null;
     const qNew = document.getElementById("qNew-addProduct") as any;
     const qUsed = document.getElementById("qUsed-addProduct") as any;
+
+    console.log("Data received:", productId, qNew, qUsed);
 
     if (
       !productId ||
@@ -120,7 +123,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     }
 
     await addProductSubmitWithoutForm(
-      productId.value,
+      productId,
       Number(qNew.value),
       Number(qUsed.value)
     );
@@ -336,7 +339,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   return (
     <div className="project-page w-full">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap gap-2 items-start md:items-center lg:items-center justify-between">
         <div className="flex items-center gap-3">
           <Title {...title} />
           <ShowInformations
@@ -347,133 +350,94 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           />
         </div>
         <Button
-          variant="primary"
+          color="primary"
+          startContent={<Download />}
           onClick={handleDownloadProject}
-          size="large"
-          image="/icons/telecharger.svg"
-          content="Télécharger"
-          disabled={false}
-          moreClasses="mr-5"
-        />
+          size="lg"
+          className="w-fit-content"
+        >
+          Télécharger
+        </Button>
       </div>
       {/* Group Name And Link */}
-      <div className="flex items-center mb-5">
-        <p className="group-title">Appartient au groupe: </p>
-        <Link href="#" className="group-name">
-          {project && project.groupInfo ? (
-            <div className="flex items-center gap-3">
-              <Image src="/icons/lien.svg" alt="" width={20} height={20} />
-              <p>{project.groupInfo?.name}</p>
-            </div>
-          ) : (
-            project && (
-              <div className="flex items-center gap-3">
-                <p>Aucun Groupe</p>
-              </div>
-            )
-          )}
-        </Link>
+      <div className="flex gap-2 items-center mt-4 mb-1 md:mb-5 lg:mb-5">
+        <p className="text-md md:text-lg lg:text-lg font-bold">Relié à: </p>
+        <Chip size="md" color="primary" variant="flat">
+          {project && project.groupInfo
+            ? project.groupInfo.name
+            : "Aucun Groupe"}
+        </Chip>
       </div>
-      {/* Infos */}
-      <div className="flex items-center justify-center gap-20 section-infos"></div>
       {/* Products */}
       {project && productsInProject ? (
         <div className="mt-5">
-          <div className="px-[5%]">
-            <div className="flex items-end justify-between">
-              <div className="flex items-end w-full">
+          <div className="px-0 lg:px-0">
+            <div className="flex md:items-end justify-between">
+              <div className="flex flex-wrap md:items-end w-full">
                 {section === "products" && (
-                  <div className="flex items-center gap-8">
-                    <div>
-                      <label
-                        htmlFor="products-addProduct"
-                        className="block mb-2 text-sm font-medium text-gray-900"
+                  <div className="flex flex-wrap gap-3 max-w-[300px] md:max-w-full">
+                    <div className="text-lg flex flex-wrap items-center gap-2">
+                      <Select
+                        items={storeProducts}
+                        labelPlacement="inside"
+                        label="Produit"
+                        size="md"
+                        color="default"
+                        variant="bordered"
+                        className="w-[250px] max-w-[75%] text-lg bg-white rounded-[16px]"
+                        onChange={(event) => {
+                          setSelectedProductId(parseInt(event.target.value));
+                        }}
                       >
-                        Choisissez un produit
-                      </label>
-                      <select
-                        onChange={(e) =>
-                          setSelectedProductId(e.target.value as any)
-                        }
-                        id="products-addProduct"
-                        className="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                      >
-                        {storeProducts &&
-                          storeProducts.map((product, index) => (
-                            <option
-                              className=""
-                              key={index}
-                              value={product.id || -1}
-                            >
-                              <span className="font-bold opacity-50">
-                                {product.base} -{" "}
-                              </span>{" "}
-                              {product.name?.replace("Inies - ", "")}
-                              {" ("}
-                              {product.unit}
-                              {")"}
-                            </option>
-                          ))}
-                      </select>
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="unit-addProduct"
-                        className="block mb-2 text-sm font-medium text-gray-900"
-                      >
-                        Unité
-                      </label>
-                      <input
-                        disabled
-                        style={{ width: "100px" }}
-                        id="unit-addProduct"
+                        {(product) => (
+                          <SelectItem
+                            key={product.id ?? -1}
+                            value={product.id ?? -1}
+                          >
+                            {product.name?.replace("Inies - ", "")}
+                          </SelectItem>
+                        )}
+                      </Select>
+                      <Input
                         type="text"
-                        value={selectedProduct?.unit || ""}
-                        className="cursor-not-allowed text-center bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
-                      ></input>
-                    </div>
+                        isReadOnly
+                        label="Unité"
+                        labelPlacement="inside"
+                        value={selectedProduct?.unit ?? ""}
+                        variant="bordered"
+                        size="md"
+                        className="w-[150px] max-w-[20%] text-lg bg-white rounded-[16px]"
+                      />
+                      <Input
+                        type="number"
+                        label="Quantité Neuve"
+                        labelPlacement="inside"
+                        id="qNew-addProduct"
+                        min={0}
+                        placeholder="0"
+                        variant="bordered"
+                        className="w-[150px] text-lg bg-white rounded-[16px]"
+                      />
 
-                    <div className="flex items-end gap-8">
-                      <div>
-                        <label
-                          htmlFor="qNew-addProduct"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Quantité Neuve
-                        </label>
-                        <input
-                          style={{ width: "150px" }}
-                          id="qNew-addProduct"
-                          type="number"
-                          min={0}
-                          placeholder="0"
-                          className="text-right bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
-                        ></input>
-                      </div>
-
-                      <div>
-                        <label
-                          htmlFor="qUsed-addProduct"
-                          className="block mb-2 text-sm font-medium text-gray-900"
-                        >
-                          Quantité Réemploi
-                        </label>
-                        <input
-                          style={{ width: "150px" }}
-                          id="qUsed-addProduct"
-                          type="number"
-                          min={0}
-                          placeholder="0"
-                          className="text-right bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
-                        ></input>
-                      </div>
+                      <Input
+                        type="number"
+                        label="Quantité Réemploi"
+                        labelPlacement="inside"
+                        id="qUsed-addProduct"
+                        min={0}
+                        placeholder="0"
+                        variant="bordered"
+                        className="w-[150px] text-md bg-white rounded-[16px]"
+                      />
 
                       {addProductLoader ? (
                         <Loader />
                       ) : (
                         <Button
-                          variant="primary"
+                          color="primary"
+                          variant="ghost"
+                          className="mt-3"
+                          size="lg"
                           onClick={() => {
                             const qNew = document.getElementById(
                               "qNew-addProduct"
@@ -492,141 +456,76 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                             }
                             addProductWithoutFormSubmit();
                           }}
-                          size="medium"
-                          image={null}
-                          content="Ajouter"
-                          disabled={false}
-                        />
+                        >
+                          Ajouter
+                        </Button>
                       )}
                     </div>
+
+                    <div className="flex flex-wrap items-center justify-center md:items-end md:gap-8"></div>
                   </div>
                 )}
               </div>
               {/* Dialog */}
               {dialogOpen && <Dialogs {...dialogProps} />}
             </div>
-            <div className="flex items-center gap-5 mt-5">
+
+            {section === "products" && (
+              <div className="flex items-center justify-center my-[5%] md:my-[2%]">
+                <Divider />
+              </div>
+            )}
+
+            <div className="flex flex-wrap items-center gap-1 md:gap-5 text-lg">
               {section === "products" &&
                 productsInProject &&
                 productsInProject.length > 0 &&
                 productsInProject[0] && (
                   <Button
-                    variant="secondary"
-                    image={null}
+                    color="primary"
+                    variant="bordered"
+                    size="md"
                     onClick={() => {
                       section === "products"
                         ? setSection("impact")
                         : setSection("products");
                     }}
-                    size="medium"
-                    content={
-                      section === "products"
-                        ? "Afficher l'impact"
-                        : "Afficher les produits"
-                    }
-                    disabled={false}
-                  />
+                    className="text-lg w-fit-content"
+                  >
+                    {section === "products"
+                      ? "Afficher l'impact"
+                      : "Afficher les produits"}
+                  </Button>
                 )}
               {section === "products" &&
                 productsInProject &&
                 productsInProject.length > 0 &&
                 productsInProject !== undefined &&
                 productsInProject[0] && (
-                  <DeleteBtn
-                    text="Supprimer tous les produits"
-                    cta={() => {
+                  <Button
+                    color="danger"
+                    variant="bordered"
+                    size="md"
+                    onClick={() => {
                       setDialogOpen(true);
                       updateProductsInProject();
                     }}
-                  />
+                    className="text-lg w-fit-content"
+                  >
+                    Supprimer tous les produits
+                  </Button>
+                  // <DeleteBtn
+                  //   text="Supprimer tous les produits"
+                  //   cta={() => {
+                  //     setDialogOpen(true);
+                  //     updateProductsInProject();
+                  //   }}
+                  // />
                 )}
             </div>
           </div>
-          {isPopupOpen && (
-            <div className="popup-section w-full">
-              <div className="popup-content">
-                <div className="header flex items-center">
-                  <button onClick={addProductSubmit} className="mr-auto">
-                    <Image
-                      src="/icons/close.svg"
-                      alt="Fermer"
-                      width={40}
-                      height={40}
-                    ></Image>
-                  </button>
-                  <h2 className="title mr-auto">Ajouter un produit</h2>
-                </div>
-                <div className="flex items-center">
-                  <div className="flex flex-col items-center form">
-                    <div className="flex items-center gap-2">
-                      {/* Input */}
-                      <div className="flex items-center search-bar-input">
-                        <input
-                          className="input"
-                          type="text"
-                          value=""
-                          placeholder="Chercher un produit dans votre projet..."
-                        />
-                        <Image
-                          src="/icons/chercher.svg"
-                          alt="Rechercher"
-                          width={20}
-                          height={20}
-                        ></Image>
-                      </div>
-                      {/* Filter btn */}
-                      <button className="filter-btn">
-                        <Image
-                          src="/icons/filtre.svg"
-                          alt="Filtrer"
-                          width={30}
-                          height={30}
-                        ></Image>
-                      </button>
-                    </div>
-                    <div
-                      className="products-section scroll-view max-h-[200%]"
-                      style={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        flexDirection: "row",
-                        gap: "2px",
-                        margin: "1rem",
-                        justifyContent: "center",
-                      }}
-                    >
-                      {kartLoaded ? (
-                        <Loader />
-                      ) : (
-                        storeProducts &&
-                        storeProducts.map((product, index) => (
-                          <ProductCardWithToaster
-                            key={index}
-                            product={product}
-                            idProject={Number(id)}
-                            cta={() => {
-                              updateProductsInProject();
-                            }}
-                          />
-                        ))
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
           {section === "products" ? (
-            <div
-              className="products-section my-[2%] mx-[5%]"
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                flexDirection: "row",
-                gap: "25px",
-                justifyContent: "space-between",
-              }}
-            >
+            <div className="my-[5%] md:my-[2%] flex flex-wrap items-center justify-center gap-y-3 md:gap-5">
               {kartLoaded ? (
                 <Loader />
               ) : /* productCards */

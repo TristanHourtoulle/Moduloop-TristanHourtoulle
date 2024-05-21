@@ -49,34 +49,42 @@ export const CardMostImpact = (props: CardMostImpactProps) => {
   return (
     <>
       {percentage > 0 ? (
-        <div className="most-impact-card flex flex-col gap-2 md:w-[33%] max-w-md">
-          <h4 className="text-lg">
+        <div className="flex flex-col gap-2 w-[250px] md:w-[50%] lg:w-[33%] p-4 bg-white rounded-[16px] md:w-[33%] shadow-md">
+          <h4 className="text-md text-semibold md:text-lg">
             Représente <span className="font-bold">{percentage}%</span> de
             l'impact total
           </h4>
-          <h2 className="font-bold text-3xl">{title}</h2>
-          <div className="doughnut-container flex items-center justify-between">
-            <div className="flex flex-col gap-2">
+          <h2 className="font-bold text-xl md:text-3xl">{title}</h2>
+          <div className="flex gap-3 lg:gap-0 items-center justify-between">
+            <div className="flex flex-col gap-1 md:gap-2">
               {/* Ici, vous pouvez créer votre légende personnalisée */}
-              <p className="text-lg font-bold">Cycle de vie</p>
-              <div className="flex gap-4 items-center">
-                <div className="px-5 py-2 bg-[#FF6384]/20 rounded-[5px] border-solid border-2 border-[#FF6384] w-[20%] h-[10%]"></div>
-                <p className="text-sm font-semibold opacity-75">Fabrication</p>
+              <p className="text-md md:text-lg font-bold">Cycle de vie</p>
+              <div className="flex gap-1 md:gap-4 items-center">
+                <div className="px-2 py-2 md:px-5 bg-[#FF6384]/20 rounded-[5px] border-solid border-2 border-[#FF6384] w-[10%] md:w-[20%] h-[10%]"></div>
+                <p className="text-xs md:text-sm font-semibold opacity-75">
+                  Fabrication
+                </p>
               </div>
 
-              <div className="flex gap-4 items-center">
-                <div className="px-5 py-2 bg-[#FF9F40]/20 rounded-[5px] border-solid border-2 border-[#FF9F40] w-[20%] h-[10%]"></div>
-                <p className="text-sm font-semibold opacity-75">Installation</p>
+              <div className="flex gap-1 md:gap-4 items-center">
+                <div className="px-2 py-2 md:px-5 bg-[#FF9F40]/20 rounded-[5px] border-solid border-2 border-[#FF9F40] w-[20%] h-[10%]"></div>
+                <p className="text-xs md:text-sm font-semibold opacity-75">
+                  Installation
+                </p>
               </div>
 
-              <div className="flex gap-4 items-center">
-                <div className="px-5 py-2 bg-[#FFCD56]/20 rounded-[5px] border-solid border-2 border-[#FFCD56] w-[20%] h-[10%]"></div>
-                <p className="text-sm font-semibold opacity-75">Utilisation</p>
+              <div className="flex gap-1 md:gap-4 items-center">
+                <div className="px-2 py-2 md:px-5 bg-[#FFCD56]/20 rounded-[5px] border-solid border-2 border-[#FFCD56] w-[20%] h-[10%]"></div>
+                <p className="text-xs md:text-sm font-semibold opacity-75">
+                  Utilisation
+                </p>
               </div>
 
-              <div className="flex gap-4 items-center">
-                <div className="px-5 py-2 bg-[#4BC0C0]/20 rounded-[5px] border-solid border-2 border-[#4BC0C0] w-[20%] h-[10%]"></div>
-                <p className="text-sm font-semibold opacity-75">Fin de vie</p>
+              <div className="flex gap-1 md:gap-4 items-center">
+                <div className="px-2 py-2 md:px-5 bg-[#4BC0C0]/20 rounded-[5px] border-solid border-2 border-[#4BC0C0] w-[20%] h-[10%]"></div>
+                <p className="text-xs md:text-sm font-semibold opacity-75">
+                  Fin de vie
+                </p>
               </div>
             </div>
 

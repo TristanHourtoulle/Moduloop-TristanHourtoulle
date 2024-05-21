@@ -303,14 +303,14 @@ export default function Page({
                     {projects && projects[0] ? (
                       <span>
                         {formatDate(projects[0].updated_at || "")}
-                        <span className="text-gray-500">
+                        <span className="text-gray-500 ml-[2%]">
                           ({getElapsedTime(projects[0].updated_at || "")})
                         </span>
                       </span>
                     ) : (
                       <span>
                         {formatDate(user.updatedAt || "")}
-                        <span className="text-gray-500">
+                        <span className="text-gray-500 ml-[2%]">
                           ({getElapsedTime(user.updatedAt || "")})
                         </span>
                       </span>

@@ -1,5 +1,4 @@
 import { ProjectType } from "@models/Project";
-import { Tooltip } from "@nextui-org/tooltip";
 import {
   getASEimpact,
   getCO2impact,
@@ -47,8 +46,8 @@ export const CardImpactProject = (props: CardImpactProjectProps) => {
   });
 
   return (
-    <div className="px-8 py-4 bg-white flex flex-col gap-2 rounded-[10px] drop-shadow-lg w-full">
-      <h3 className="uppercase font-semibold text-2xl text-black opacity-95">
+    <div className="px-8 py-4 bg-white flex flex-col justify-center gap-2 rounded-[10px] drop-shadow-lg w-[30%] min-w-[250px] ">
+      <h3 className="uppercase font-semibold text-lg lg:text-xl xl:text-2xl text-black opacity-95">
         {project.name}
       </h3>
       <div className="flex items-center gap-5">
@@ -59,9 +58,11 @@ export const CardImpactProject = (props: CardImpactProjectProps) => {
           height={60}
           className="drop-shadow-lg"
         />
-        <div className="flex items-end gap-3">
-          <p className="text-black font-bold text-4xl">{result}</p>
-          <p className="text-black font-regular text-xl">{unit}</p>
+        <div className="flex flex-wrap items-end gap-2">
+          <p className="text-black font-bold text-xl lg:text-2xl xl:text-4xl">
+            {result.replace(".", ",")}
+          </p>
+          <p className="text-black font-regular text-md xl:text-xl">{unit}</p>
         </div>
       </div>
     </div>

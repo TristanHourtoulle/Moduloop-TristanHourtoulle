@@ -49,7 +49,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-between gap-1 bg-white px-8 py-6 rounded-[16px] shadow-lg w-[300px] md:w-[350px] lg:w-[350px] h-[290px]">
+    <div className="flex flex-col justify-center gap-1 bg-white px-4 py-4 md:px-8 md:py-6 rounded-[16px] shadow-lg w-[100%] md:w-[350px] lg:w-[350px] h-auto">
       {group && group.name !== "Aucun Groupe" ? (
         <p className="text-in-single-line text-md md:text-lg lg:text-lg opacity-80">
           {group.name}
@@ -57,7 +57,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
       ) : (
         <p className="text-in-single-line text-lg opacity-80">Aucun Groupe</p>
       )}
-      <p className="text-[1rem] md:text-[2rem] lg:text-[2rem] font-bold">
+      <p className="text-[1.5rem] md:text-[2rem] lg:text-[2rem] font-bold">
         {project.name}
       </p>
       <p className="text-md md:text-lg lg:text-lg">
@@ -91,17 +91,17 @@ export const ProjectCard = (props: ProjectCardProps) => {
           onClick={() => {
             handleDuplicateProject(project.id ?? -1);
           }}
-          size="lg"
+          size="md"
           className="text-md md:text-lg lg:text-lg"
         >
-          Dupliquer
+          Copier
         </Button>
         <Button
           color="primary"
           variant="ghost"
           onClick={() => (window.location.href = showProjectUrl)}
           className="text-md md:text-lg lg:text-lg"
-          size="lg"
+          size="md"
         >
           Ouvrir
         </Button>

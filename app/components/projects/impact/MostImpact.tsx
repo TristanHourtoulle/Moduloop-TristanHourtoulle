@@ -147,13 +147,13 @@ export const MostImpact = (props: MostImpactProps) => {
   };
 
   return (
-    <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card bg-[#e9e9e9]">
+    <div className="w-full min-h-60 flex flex-col gap-2 md:gap-5 p-6 bg-[#e9e9e9] rounded-[16px]">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="font-bold text-4xl opacity-90">
+      <div className="flex flex-wrap text-center md:text-start gap-2 md:gap-0 items-center justify-between">
+        <h2 className="font-bold text-xl md:text-4xl opacity-90">
           Les produits les plus impactants
         </h2>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-5">
           <Button
             variant="primary"
             onClick={() => {
@@ -178,7 +178,7 @@ export const MostImpact = (props: MostImpactProps) => {
       </div>
 
       {/* Nav */}
-      <div className="flex items-center gap-10">
+      <div className="flex flex-wrap items-center gap-2 md:gap-10">
         <p
           className={`font-bold transition-all text-lg ${getOpacity("rc")}`}
           onClick={() => {
@@ -215,7 +215,7 @@ export const MostImpact = (props: MostImpactProps) => {
 
       {/* All cards */}
       {productWithMostImpact !== null && (
-        <div className="flex flex-col sm:flex-row items-center justify-between">
+        <div className="flex flex-wrap gap-3 md:gap-1 items-center justify-center mt-4 md:mt-0">
           {productWithMostImpact[0] &&
             productWithMostImpact[0].product &&
             productWithMostImpact[0].product.product && (
