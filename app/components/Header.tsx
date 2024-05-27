@@ -12,7 +12,7 @@ import { LogoIcon } from "./header/LogoIcon";
 
 const Header = () => {
   const navigation = usePathname();
-  const [selectedLink, setSelectedLink] = useState("/");
+  const [selectedLink, setSelectedLink] = useState("/pages/projects");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [session, setSession] = useState<SessionType | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -80,7 +80,7 @@ const Header = () => {
       {/* Desktop View */}
       <div className="hidden md:flex">
         <div className="flex items-center gap-7">
-          <a
+          {/* <a
             href="/"
             onClick={() => {
               setSelectedLink("/");
@@ -90,7 +90,7 @@ const Header = () => {
             }`}
           >
             Accueil
-          </a>
+          </a> */}
           {session && session.user && (
             <a
               href="/pages/projects"
@@ -145,7 +145,6 @@ const Header = () => {
                 "_blank"
               );
               if (newWindow) newWindow.opener = null;
-              window.location.href = "/";
             }}
           >
             <p className="nav-link">Contact</p>
@@ -200,9 +199,9 @@ const Header = () => {
               </div>
               <div className="mt-6 ml-3">
                 <nav className="grid gap-y-8">
-                  <a href="/" className="">
+                  {/* <a href="/" className="">
                     <p className="text-lg">Accueil</p>
-                  </a>
+                  </a> */}
                   <a href="/pages/projects" className="">
                     <p className="text-lg">Projets</p>
                   </a>
@@ -225,7 +224,6 @@ const Header = () => {
                         "_blank"
                       );
                       if (newWindow) newWindow.opener = null;
-                      window.location.href = "/";
                     }}
                   >
                     <p className="text-lg">Contact</p>

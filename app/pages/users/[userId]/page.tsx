@@ -45,7 +45,7 @@ export default function Page({
         await fetchProjects();
         return;
       }
-      window.location.href = "/";
+      window.location.href = "/pages/projects";
     };
 
     const fetchProjects = async () => {

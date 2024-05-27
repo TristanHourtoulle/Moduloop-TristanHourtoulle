@@ -27,7 +27,7 @@ export default function Page() {
         fetchData();
         return;
       }
-      window.location.href = "/";
+      window.location.href = /pages/projects";
     };
     fetchSession();
   }, []);

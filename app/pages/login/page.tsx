@@ -31,7 +31,7 @@ export default function Login() {
 
       if (response) {
         toast.success("Connexion réussie");
-        window.location.href = "/";
+        window.location.href = "/pages/projects";
       } else {
         toast.error("Email ou mot de passe incorrect");
       }
