@@ -99,7 +99,10 @@ export default function Login() {
           {/* Reset Password */}
           <p
             onClick={() => {
-              alert("Fonctionnalité encore en développement");
+              toast.info(
+                "Redirection vers la page de réinitialisation du mot de passe"
+              );
+              window.location.href = "/pages/login/resetPassword";
             }}
             className="cursor-pointer transition-all hover:opacity-[75%] text-left text-[#0A726F] font-bold text-md mt-[5%] md:mt-0"
           >

@@ -1,5 +1,6 @@
 import { login } from "@lib/session";
 import { unstable_noStore as noStore } from "next/cache";
+import { Resend } from "resend";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +13,38 @@ export const getUserById = async (id: number) => {
     return data.data;
   } else {
     return null;
+  }
+};
+
+export const getUserByEmail = async (email: string) => {
+  const response = await fetch(`/api/user/email/${encodeURIComponent(email)}`, {
+    method: "GET",
+  });
+  const data = await response.json();
+  if (data.success) {
+    return data.data;
+  } else {
+    return null;
+  }
+};
+
+const resend = new Resend("re_Rea6DLxu_EiEtY1JYE1PryLVHim3Ck6X7");
+
+export const sendResetCodeByMail = async (
+  receiver: string,
+  resetCode: string
+) => {
+  try {
+    resend.emails.send({
+      from: "Acme <onboarding@resend.dev>",
+      to: receiver,
+      subject: "Réinitialisation de votre mot de passe Moduloop-Impact",
+      html: `<p>Votre code de réinitialisation de mot de passe est <strong>${resetCode}</strong>!</p>`,
+    });
+    return true;
+  } catch (error) {
+    console.error("Error sending email:", error);
+    return false;
   }
 };
 

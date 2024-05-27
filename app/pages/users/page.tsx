@@ -15,7 +15,7 @@ export default function Page() {
     title: "Utilisateurs",
     image: "/icons/admin.svg",
     number: "...",
-    back: /pages/projects",
+    back: "/pages/projects",
     canChange: false,
     id_project: undefined,
   });
@@ -47,7 +47,7 @@ export default function Page() {
         await updateUsers(); // Met à jour les utilisateurs au chargement de la page
         setIsLoading(false);
       } else {
-        window.location.href = /pages/projects";
+        window.location.href = "/pages/projects";
       }
     };
     fetchSession();
