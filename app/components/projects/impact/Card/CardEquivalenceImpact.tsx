@@ -60,7 +60,6 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
     }
   }, [title]);
 
-  console.log("Data received: ", title, value, unit);
   return (
     <Tooltip
       content={

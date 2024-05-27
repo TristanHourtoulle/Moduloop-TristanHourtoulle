@@ -111,8 +111,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     const qNew = document.getElementById("qNew-addProduct") as any;
     const qUsed = document.getElementById("qUsed-addProduct") as any;
 
-    console.log("Data received:", productId, qNew, qUsed);
-
     if (
       !productId ||
       !qNew ||
@@ -247,7 +245,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
               : [projectData.products];
             if (products && products.length > 0) {
               setProductsInProject(products.reverse());
-              console.log("Products in project:", products.reverse());
               setProductsImpact(products as AddProductType | null);
             } else {
               setProductsInProject([]);

@@ -91,7 +91,6 @@ function page() {
         const response = await createProjectInDatabase(formData);
 
         const data = await response;
-        console.log("Data:", data);
 
         if (data) {
           const createdProject = data;

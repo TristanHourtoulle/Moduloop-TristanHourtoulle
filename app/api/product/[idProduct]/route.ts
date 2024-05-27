@@ -39,21 +39,12 @@ export async function DELETE(request: Request, context: any) {
     // Parse all projects and if we find the product in one of them, we have to delete this product from the project
     let indexProject = 0;
     for (const project of projects) {
-      console.log("Actual project: ", project);
       const products = project.products;
       if (products) {
         for (const product of products) {
-          console.log("Actual product: ", product);
           // Convertir l'ID du produit dans le projet en nombre pour la comparaison
           const productIdInProject = Number(product.product[0].id);
-          console.log(
-            "Product ID in project: ",
-            productIdInProject,
-            "Product ID to delete: ",
-            productId
-          );
           if (productIdInProject == productId) {
-            console.log("I have found the product to delete on this project !");
             // Delete the product from the project
             if (products.length === 1) {
               projects[indexProject].products = null;

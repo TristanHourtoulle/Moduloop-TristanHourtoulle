@@ -31,9 +31,7 @@ export default function page() {
   const [userSession, getUserSession] = useState(null);
 
   useEffect(() => {
-    console.log("1 1");
     if (backupProjects !== null) {
-      console.log("1 2");
       setProjects(filterProjects());
     }
   }, [selectedGroup, backupProjects]);
@@ -265,9 +263,7 @@ export default function page() {
           className="w-[350px] max-w-[50%] text-lg"
           defaultOpen={false}
           onChange={(event) => {
-            console.log("selectedGroup", event.target.value);
             setSelectedGroup(Number(event.target.value));
-            console.log("selectedGroup", Number(event.target.value));
           }}
         >
           <SelectSection title={"Vos groupes"}>

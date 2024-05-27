@@ -53,7 +53,6 @@ export async function POST(request: NextRequest) {
     );
     if (result.rowCount === 1) {
       const project = result.rows[0];
-      console.log("Projet inséré avec succès:", project);
       return Response.json(
         { success: true, project: project },
         { status: 200 }

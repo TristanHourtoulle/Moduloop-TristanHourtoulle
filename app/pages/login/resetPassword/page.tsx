@@ -31,11 +31,9 @@ const page = () => {
     // Check if user exists
     if (user) {
       setUserEmail(email);
-      console.log("User found:", user);
       // Generate reset code
       const tempResetCode = Math.floor(1000 + Math.random() * 9000).toString();
       setResetCode(tempResetCode);
-      console.log("Reset code:", tempResetCode);
       // Send email to user
       let res = await sendResetCodeByMail(email, tempResetCode, user.firstName);
       if (!res) {
