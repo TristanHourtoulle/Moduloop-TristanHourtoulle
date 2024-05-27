@@ -1,6 +1,5 @@
 import { login } from "@lib/session";
 import { unstable_noStore as noStore } from "next/cache";
-import { Resend } from "resend";
 
 export const dynamic = "force-dynamic";
 
@@ -28,24 +27,46 @@ export const getUserByEmail = async (email: string) => {
   }
 };
 
-const resend = new Resend("re_Rea6DLxu_EiEtY1JYE1PryLVHim3Ck6X7");
-
 export const sendResetCodeByMail = async (
   receiver: string,
-  resetCode: string
+  resetCode: string,
+  firstname: string
 ) => {
   try {
-    resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: receiver,
-      subject: "Réinitialisation de votre mot de passe Moduloop-Impact",
-      html: `<p>Votre code de réinitialisation de mot de passe est <strong>${resetCode}</strong>!</p>`,
+    const response = await fetch("/api/sendMail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ receiver, resetCode, firstname }),
     });
-    return true;
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Erreur inconnue");
+    }
+
+    const data = await response.json();
+    return data.success;
   } catch (error) {
     console.error("Error sending email:", error);
     return false;
   }
+};
+
+export const updateUserPassword = async (email: string, password: string) => {
+  const response = await fetch("/api/user/password", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await response.json();
+  if (data.success) {
+    return true;
+  }
+  return false;
 };
 
 export const requiredUser = async (id: number) => {
