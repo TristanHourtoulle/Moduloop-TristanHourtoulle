@@ -37,7 +37,7 @@ const page = () => {
       setResetCode(tempResetCode);
       console.log("Reset code:", tempResetCode);
       // Send email to user
-      let res = await sendResetCodeByMail(email, tempResetCode, user.firstname);
+      let res = await sendResetCodeByMail(email, tempResetCode, user.firstName);
       if (!res) {
         toast.error(
           "Erreur lors de l'envoi de l'email de réinitialisation de mot de passe"
