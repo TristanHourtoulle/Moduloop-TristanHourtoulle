@@ -27,7 +27,13 @@ interface WorkerResponse {
   blob: Blob;
 }
 
-export function useRenderPNG({ project }: { project: any }) {
+export function useRenderPNG({
+  project,
+  setIsLoading,
+}: {
+  project: any;
+  setIsLoading: (isLoading: boolean) => void;
+}) {
   const fontsRef = useRef<Fonts | undefined>(undefined);
 
   useEffect(() => {
@@ -143,7 +149,10 @@ export function useRenderPNG({ project }: { project: any }) {
   };
 
   const downloadPNG = useLatestCallback(async () => {
-    toast.info("Téléchargement en cours...");
+    setIsLoading(true);
+    toast.info(
+      "Téléchargement en cours. cette opération prendra environ 10 secondes."
+    );
     const blob = await renderPNGToBlob();
     if (!blob) {
       return;
@@ -153,6 +162,7 @@ export function useRenderPNG({ project }: { project: any }) {
     a.href = url;
     a.download = `${project.name}.png`;
     a.click();
+    setIsLoading(false);
     toast.success("Téléchargement terminé");
   });
 

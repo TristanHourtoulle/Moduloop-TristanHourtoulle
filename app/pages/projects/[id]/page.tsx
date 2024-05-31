@@ -18,6 +18,7 @@ import { Chip } from "@nextui-org/chip";
 import { Divider } from "@nextui-org/divider";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
+import { Spinner } from "@nextui-org/spinner";
 import { getGroupById } from "@utils/database/group";
 import { getProductById, getProducts } from "@utils/database/product";
 import {
@@ -62,8 +63,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     null
   );
   const [value, setValue] = useState(new Set([]));
+  const [isDownloadLoading, setIsDownloadLoading] = useState(false);
 
-  const { downloadPNG } = useRenderPNG({ project });
+  const { downloadPNG } = useRenderPNG({
+    project,
+    setIsLoading: setIsDownloadLoading,
+  });
 
   useEffect(() => {
     const fetchSelectedProduct = async () => {
@@ -351,7 +356,13 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         </div>
         <Button
           color="primary"
-          startContent={<Download />}
+          startContent={
+            isDownloadLoading ? (
+              <Spinner color="default" labelColor="foreground" />
+            ) : (
+              <Download />
+            )
+          }
           onClick={downloadPNG}
           size="lg"
           className="w-fit-content"
