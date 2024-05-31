@@ -12,41 +12,41 @@ const carouselProducts = [
     id: 1,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/Bureau - 1.svg",
+    imageUrl: "/icons/Carrousels/1.svg",
     link: "",
   },
   {
     id: 2,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/Carroussel - 2-1.svg",
+    imageUrl: "/icons/Carrousels/2.svg",
     link: "",
   },
   {
     id: 3,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/Carroussel - 2-2.svg",
+    imageUrl: "/icons/Carrousels/3.svg",
     link: "",
   },
   {
     id: 4,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/Carroussel - 2.svg",
+    imageUrl: "/icons/Carrousels/4.svg",
     link: "",
   },
 ];
 
 export function Carousel() {
   return (
-    <section className="py-12 w-[80%] md:w-[40%] ml-5">
+    <section className="py-12 w-[80%] md:w-[40%]">
       <div className=" w-full">
         <Swiper
           className="rounded-lg w-full w-[100%]"
           loop={true}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
-          cardsEffect={{ slideShadows: true }}
+          cardsEffect={{ slideShadows: false }}
           effect={"cards"}
           grabCursor={true}
           modules={[Autoplay, EffectCards]}
@@ -57,7 +57,7 @@ export function Carousel() {
                 <Image
                   src={image.imageUrl}
                   alt={image.name}
-                  className="rounded-lg shadow-lg"
+                  className=""
                   width={450}
                 />
               </div>
