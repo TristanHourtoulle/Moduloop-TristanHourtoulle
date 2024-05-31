@@ -40,21 +40,20 @@ const carouselProducts = [
 
 export function Carousel() {
   return (
-    <section className="py-12 w-[40%] ml-5">
+    <section className="py-12 w-[80%] md:w-[40%] ml-5">
       <div className=" w-full">
         <Swiper
           className="rounded-lg w-full w-[100%]"
           loop={true}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
           cardsEffect={{ slideShadows: true }}
-          // fadeEffect={{ crossFade: true }}
           effect={"cards"}
           grabCursor={true}
           modules={[Autoplay, EffectCards]}
         >
           {carouselProducts.map((image, index) => (
             <SwiperSlide key={index} className="">
-              <div className="flex items-center justify-end">
+              <div className="flex items-center justify-start md:justify-end">
                 <Image
                   src={image.imageUrl}
                   alt={image.name}

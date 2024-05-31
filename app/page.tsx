@@ -18,7 +18,7 @@ export default async function Home() {
   return (
     <div className="w-full">
       <div className="flex flex-col md:flex-row items-center justify-center gap-5 h-screen pb-[15%] w-full">
-        <div className="flex flex-col gap-4 items-start justify-center h-full w-[55%]">
+        <div className="flex flex-col gap-4 items-start md:justify-center h-full w-full md:w-[55%]">
           <h1 className="w-full text-2xl md:text-5xl lg:text-5xl font-semibold leading-loose text-center md:text-left">
             Calculez le réel <strong className="text-[#30c1bd]">impact</strong>{" "}
             de vos projets d'aménagement sur{" "}
@@ -35,30 +35,30 @@ export default async function Home() {
         <Carousel />
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-6">
-        <h1 className="text-[#30c1bd] text-5xl font-medium">
+      <div className="flex flex-col items-center justify-center gap-6 text-center">
+        <h1 className="text-[#30c1bd] text-2xl md:text-5xl font-semibold">
           Comment ça fonctionne
         </h1>
-        <p className="text-2xl">Créer un projet</p>
+        <p className="text-xl md:text-2xl">Créer un projet</p>
         <hr className="w-[10%] border-[#30c1bd] border-1 rounded-full opacity-30" />
-        <p className="text-2xl">
+        <p className="text-xl md:text-2xl">
           Ajouter des produits à ce projet en choisissant les quantité neuves et
           de réemplois
         </p>
         <hr className="w-[10%] border-[#30c1bd] border-1 rounded-full opacity-30" />
 
-        <p className="text-2xl">Calculer l'impact environnemental</p>
+        <p className="text-xl md:text-2xl">Calculer l'impact environnemental</p>
         <hr className="w-[10%] border-[#30c1bd] border-1 rounded-full opacity-30" />
-        <p className="text-2xl">
+        <p className="text-xl md:text-2xl">
           Télécharger la fiche projet afin de la partager
         </p>
       </div>
 
       <div className="flex flex-col items-center justify-center gap-8 mt-[10%]">
-        <h1 className="text-[#30c1bd] text-5xl font-medium">
+        <h1 className="text-[#30c1bd] text-2xl md:text-5xl font-semibold text-center">
           Comment est calculé l’impact de vos projets ?
         </h1>
-        <p className="text-2xl text-justify max-w-[70%]">
+        <p className="text-xl md:text-2xl text-justify max-w-[70%]">
           Tous les produits que nous vous proposons sur cet outil dispose de
           fiche Inies et Impact qui nous permet de récupérer toutes les
           informations nécessaire comme l’impact sur l’environnement tout au
@@ -71,8 +71,9 @@ export default async function Home() {
             src="/icons/AlertIcon.svg"
             width={100}
             height={100}
+            className="max-w-[50%] md:max-w-full"
           />
-          <p className="text-[#FF4040] text-xl text-justify max-w-[50%]">
+          <p className="text-[#FF4040] text-md md:text-xl text-left md:text-justify max-w-[50%]">
             Les valeurs que nous récupérons sont des <strong>moyennes</strong>.
             Ainsi, les résultats que nous vous apportons sont des{" "}
             <strong>estimatifs d'impact</strong>.

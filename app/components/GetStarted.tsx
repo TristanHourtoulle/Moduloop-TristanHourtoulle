@@ -21,7 +21,7 @@ export const GetStarted = () => {
   };
 
   return (
-    <div className="flex items-center gap-5 mx-auto md:mx-0">
+    <div className="flex flex-wrap items-center justify-center md:justify-start gap-5 mx-auto md:mx-0">
       <Button
         color="primary"
         variant="shadow"
