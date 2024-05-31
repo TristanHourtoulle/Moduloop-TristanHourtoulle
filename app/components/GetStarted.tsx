@@ -1,9 +1,25 @@
 "use client";
 
 import { Button } from "@nextui-org/button";
-import { toast } from "sonner";
+import { Download, Loader } from "lucide-react";
+import { useState } from "react";
 
 export const GetStarted = () => {
+  const [isDownloadLoading, setIsDownloadLoading] = useState<boolean>(false);
+
+  const handleDownloadGuideline = async () => {
+    setIsDownloadLoading(true);
+    setTimeout(() => {
+      // Faire télécharger le fichier /public/guideline/Goodwill.pptx
+      const a = document.createElement("a");
+      a.href = "/guideline/Goodwill.pptx";
+      a.download = "Méthodologie.pptx";
+      a.click();
+      a.remove();
+      setIsDownloadLoading(false);
+    }, 1000);
+  };
+
   return (
     <div className="flex items-center gap-5 mx-auto md:mx-0">
       <Button
@@ -20,10 +36,20 @@ export const GetStarted = () => {
       <Button
         color="primary"
         variant="bordered"
+        startContent={
+          isDownloadLoading ? (
+            // <Spinner color="primary" labelColor="foreground" />
+            <div className="loader">
+              <Loader />
+            </div>
+          ) : (
+            <Download />
+          )
+        }
         size="lg"
-        className="text-lg border-[#30c1bd] text-[#30c1bd]"
+        className="text-lg border-[#30c1bd] text-[#30c1bd] color-[#30c1bd]"
         onClick={() => {
-          toast.info("La méthodologie est en cours de développement ! :)");
+          handleDownloadGuideline();
         }}
       >
         Méthodologie
