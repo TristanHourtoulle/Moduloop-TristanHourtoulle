@@ -1,17 +1,27 @@
-import React from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import Image from "next/image";
+import Link from "next/link";
 
 export const Logo = () => {
   return (
-    <Link href='/' className='flex gap-2 flex-center nav-logo'>
+    <div>
+      <Link href="/" className="flex md:hidden gap-2">
         <Image
-            src="/icons/logo.png"
-            alt="Moduloop Logo"
-            width={150}
-            height={150}
-            className='object-contain'
+          src="/icons/logoImage.svg"
+          alt="Moduloop Logo"
+          width={50}
+          height={50}
+          className="object-contain"
         />
-    </Link>
-  )
-}
+      </Link>
+      <Link href="/" className="hidden md:flex gap-2">
+        <Image
+          src="/icons/logo.png"
+          alt="Moduloop Logo"
+          width={150}
+          height={150}
+          className="object-contain"
+        />
+      </Link>
+    </div>
+  );
+};

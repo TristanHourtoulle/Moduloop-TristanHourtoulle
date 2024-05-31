@@ -60,7 +60,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
       <p className="text-[1.5rem] md:text-[2rem] lg:text-[2rem] font-bold">
         {project.name}
       </p>
-      <p className="text-md md:text-lg lg:text-lg">
+      <p className="text-md md:text-lg lg:text-lg line-clamp-3">
         {project.description ? project.description : "Aucune description"}
       </p>
       <div className="flex items-center justify-between gap-3">
