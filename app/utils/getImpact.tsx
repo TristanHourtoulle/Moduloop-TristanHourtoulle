@@ -1,3 +1,42 @@
+export function getPlaneEquivalence(value: any) {
+  let delta = value / 100; // Convertir kg en tonnes
+  let result = delta / 0.524;
+  return result.toFixed(0);
+}
+
+export function getPersonEquivalence(value: any) {
+  let result = value / 24.38;
+  return result.toFixed(0);
+}
+
+export function getKilometersEquivalence(value: any) {
+  let result = value * 0.17;
+  return result.toFixed(0);
+}
+
+export function getPetrolEquivalence(value: any) {
+  let result = value / 5861.52;
+  return result.toFixed(0);
+}
+
+export function getHouseEquivalence(value: any) {
+  let result = value * 0.2778; // Convert MJ to kWh
+  result = result / (2223 / 365);
+  return result.toFixed(0);
+}
+
+export function getPercentage(valueOne: any, valueTwo: any) {
+  if (valueOne >= valueTwo) {
+    let delta = valueOne - valueTwo;
+    let result = (delta / valueOne) * 100;
+    return result.toFixed(0);
+  } else {
+    let delta = valueTwo - valueOne;
+    let result = (delta / valueTwo) * 100;
+    return result.toFixed(0);
+  }
+}
+
 export function getC02manufacturing(product: any) {
   let result = 0.0;
   if (product === undefined || product === null) return (result = 0.0);

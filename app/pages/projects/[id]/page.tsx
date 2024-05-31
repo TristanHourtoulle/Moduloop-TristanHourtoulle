@@ -7,6 +7,7 @@ import ImpactSection from "@components/projects/ImpactSection";
 import ProductCardWithToaster from "@components/projects/ProductCard";
 import ProductInProjectCard from "@components/projects/ProductInProjectCard";
 import { ShowInformations } from "@components/projects/ShowInformations";
+import { useRenderPNG } from "@components/projects/download/UseRenderPng";
 import { getSession } from "@lib/session";
 import { AddProductType } from "@models/AddProduct";
 import { ProductType } from "@models/Product";
@@ -61,6 +62,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     null
   );
   const [value, setValue] = useState(new Set([]));
+
+  const { downloadPNG } = useRenderPNG({ project });
 
   useEffect(() => {
     const fetchSelectedProduct = async () => {
@@ -349,7 +352,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         <Button
           color="primary"
           startContent={<Download />}
-          onClick={handleDownloadProject}
+          onClick={downloadPNG}
           size="lg"
           className="w-fit-content"
         >

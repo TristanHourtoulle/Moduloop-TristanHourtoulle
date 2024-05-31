@@ -36,7 +36,7 @@ export default function RootLayout({
             richColors
             position="top-center"
             expand={false}
-            className="max-w-[300px]"
+            className="w-full"
           />
           <NextUIProvider className="pb-10">{children}</NextUIProvider>
         </div>
