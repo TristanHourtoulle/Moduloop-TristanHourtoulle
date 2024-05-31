@@ -1,3 +1,4 @@
+import { Carousel } from "@components/Carousel";
 import { GetStarted } from "@components/GetStarted";
 import { LoginButton } from "@components/header/LoginButton";
 import { RegisterButton } from "@components/header/RegisterButton";
@@ -16,8 +17,8 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-5 h-screen pb-[15%]">
-        <div className="flex flex-col gap-4 items-start justify-center h-full">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-5 h-screen pb-[15%] w-full">
+        <div className="flex flex-col gap-4 items-start justify-center h-full w-[55%]">
           <h1 className="w-full text-2xl md:text-5xl lg:text-5xl font-semibold leading-loose text-center md:text-left">
             Calculez le réel <strong className="text-[#30c1bd]">impact</strong>{" "}
             de vos projets d'aménagement sur{" "}
@@ -31,14 +32,7 @@ export default async function Home() {
 
           <GetStarted />
         </div>
-
-        <Image
-          isBlurred
-          alt="Moduloop Work"
-          src="/icons/Carrousels/Bureau - 1.svg"
-          width={800}
-          className="m-5 rounded-lg"
-        />
+        <Carousel />
       </div>
 
       <div className="flex flex-col items-center justify-center gap-6">
