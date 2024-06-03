@@ -4,7 +4,6 @@ import { LoginButton } from "@components/header/LoginButton";
 import { RegisterButton } from "@components/header/RegisterButton";
 import { getSession } from "@lib/session";
 import { SessionType } from "@models/Session";
-import { Image } from "@nextui-org/react";
 
 export default async function Home() {
   const session: SessionType = await getSession();
@@ -19,10 +18,13 @@ export default async function Home() {
     <div className="w-full">
       <div className="flex flex-col md:flex-row items-center justify-center gap-5 h-screen pb-[15%] w-full">
         <div className="flex flex-col gap-4 items-start md:justify-center h-full w-full md:w-[55%]">
-          <h1 className="w-full text-2xl md:text-5xl lg:text-5xl font-semibold leading-loose text-center md:text-left">
-            Calculez le réel <strong className="text-[#30c1bd]">impact</strong>{" "}
-            de vos projets d'aménagement sur{" "}
-            <strong className="text-[#30c1bd]">l'environnement</strong>
+          <h1
+            className="w-full text-2xl md:text-5xl lg:text-5xl font-semibold text-center md:text-left"
+            style={{ lineHeight: "1.25" }}
+          >
+            Calculez le réel <strong className="text-primary">impact</strong> de
+            vos projets d'aménagement sur{" "}
+            <strong className="text-primary">l'environnement</strong>
           </h1>
 
           <p className="text-center md:text-left text-lg opacity-90">
@@ -36,52 +38,49 @@ export default async function Home() {
       </div>
 
       <div className="flex flex-col items-center justify-center gap-6 text-center">
-        <h1 className="text-[#30c1bd] text-2xl md:text-5xl font-semibold">
+        <h1 className="text-primary text-2xl md:text-5xl font-semibold">
           Comment ça fonctionne
         </h1>
         <p className="text-xl md:text-2xl">Créer un projet</p>
-        <hr className="w-[10%] border-[#30c1bd] border-1 rounded-full opacity-30" />
+        <hr className="w-[35%] md:w-[10%] border-primary border-1 rounded-full opacity-30" />
         <p className="text-xl md:text-2xl">
           Ajouter des produits à ce projet en choisissant les quantité neuves et
           de réemplois
         </p>
-        <hr className="w-[10%] border-[#30c1bd] border-1 rounded-full opacity-30" />
+        <hr className="w-[35%] md:w-[10%] border-primary border-1 rounded-full opacity-30" />
 
         <p className="text-xl md:text-2xl">Calculer l'impact environnemental</p>
-        <hr className="w-[10%] border-[#30c1bd] border-1 rounded-full opacity-30" />
+        <hr className="w-[35%] md:w-[10%] border-primary border-1 rounded-full opacity-30" />
+
         <p className="text-xl md:text-2xl">
-          Télécharger la fiche projet afin de la partager
+          Comparer votre projet avec tous vos produits en Neufs ou en Réemplois
+        </p>
+        <hr className="w-[35%] md:w-[10%] border-primary border-1 rounded-full opacity-30" />
+        <p className="text-xl md:text-2xl">
+          Télécharger la fiche projet afin de la partager avec vos
+          collaborateurs !
         </p>
       </div>
 
       <div className="flex flex-col items-center justify-center gap-8 mt-[10%]">
-        <h1 className="text-[#30c1bd] text-2xl md:text-5xl font-semibold text-center">
+        <h1 className="text-primary text-2xl md:text-5xl font-semibold text-center">
           Comment est calculé l’impact de vos projets ?
         </h1>
-        <p className="text-xl md:text-2xl text-justify max-w-[70%]">
+        <p className="text-xl md:text-2xl text-justify max-w-[90%] md:max-w-[70%]">
           Tous les produits que nous vous proposons sur cet outil dispose de
           fiche Inies et Impact qui nous permet de récupérer toutes les
           informations nécessaire comme l’impact sur l’environnement tout au
           long de son cycle de vie (de sa fabrication à sa destruction).
         </p>
 
-        <div className="flex items-center justify-center gap-[3%]">
-          <Image
-            alt="Alerte"
-            src="/icons/AlertIcon.svg"
-            width={100}
-            height={100}
-            className="max-w-[50%] md:max-w-full"
-          />
-          <p className="text-[#FF4040] text-md md:text-xl text-left md:text-justify max-w-[50%]">
-            Les valeurs que nous récupérons sont des <strong>moyennes</strong>.
-            Ainsi, les résultats que nous vous apportons sont des{" "}
-            <strong>estimatifs d'impact</strong>.
-          </p>
-        </div>
+        <p className="text-lg md:text-xl text-justify max-w-[90%] md:max-w-[70%]">
+          Les valeurs que nous récupérons sont des <strong>moyennes</strong>.
+          Ainsi, les résultats que nous vous apportons sont des{" "}
+          <strong>estimatifs d'impact</strong>.
+        </p>
       </div>
 
-      {/* If user is not signed in */}
+      {/* If user is not signed in
       {!session && (
         <div className="flex flex-col justify-center items-center gap-2">
           <p className="text-lg leading-loose">
@@ -93,7 +92,7 @@ export default async function Home() {
             <RegisterButton />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

@@ -205,7 +205,9 @@ const ProductInProjectCard = (props: {
         color="primary"
         variant="ghost"
         size="md"
-        className={"ml-auto mr-auto mt-[5%]" + (isDifferent ? "" : " hidden")}
+        className={
+          "ml-auto mr-auto mt-[5%] rounded-lg" + (isDifferent ? "" : " hidden")
+        }
         onClick={handleAdd}
       >
         Modifier

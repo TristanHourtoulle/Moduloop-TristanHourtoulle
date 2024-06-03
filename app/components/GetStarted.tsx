@@ -26,7 +26,7 @@ export const GetStarted = () => {
         color="primary"
         variant="shadow"
         size="lg"
-        className="text-lg bg-[#30c1bd]"
+        className="text-lg rounded-lg"
         onClick={() => {
           window.location.href = "/pages/projects";
         }}
@@ -47,7 +47,7 @@ export const GetStarted = () => {
           )
         }
         size="lg"
-        className="text-lg border-[#30c1bd] text-[#30c1bd] color-[#30c1bd]"
+        className="text-lg rounded-lg"
         onClick={() => {
           handleDownloadGuideline();
         }}

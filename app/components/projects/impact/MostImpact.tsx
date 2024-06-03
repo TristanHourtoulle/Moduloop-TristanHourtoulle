@@ -153,7 +153,7 @@ export const MostImpact = (props: MostImpactProps) => {
         <h2 className="font-bold text-xl md:text-4xl opacity-90">
           Les produits les plus impactants
         </h2>
-        <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-5">
+        <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-5 md:mt-4 xl:mt-0">
           <Button
             variant="primary"
             onClick={() => {

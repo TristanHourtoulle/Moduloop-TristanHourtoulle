@@ -8,6 +8,7 @@ import { Logo } from "./header/Logo";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { getSession, logout } from "@lib/session";
+import { LoginButton } from "./header/LoginButton";
 import { LogoIcon } from "./header/LogoIcon";
 
 const Header = () => {
@@ -248,6 +249,7 @@ const Header = () => {
   ) : (
     <div className="flex items-center justify-between h-24 w-full px-7 py-2">
       <Logo />
+      <LoginButton />
     </div>
   );
 };

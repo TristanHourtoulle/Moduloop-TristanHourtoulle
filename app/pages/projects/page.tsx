@@ -19,7 +19,7 @@ import { getProjectsByUserId } from "@utils/database/project";
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function page() {
+export default function Page() {
   const [projects, setProjects] = useState<ProjectType[] | null>(null);
   const [backupProjects, setBackupProjects] = useState<ProjectType[] | null>(
     null
@@ -241,7 +241,7 @@ export default function page() {
       <div className="flex flex-col lg:flex-row md:flex-row md:items-center justify-between lg:items-center mb-5">
         <Title {...title} />
         <Button
-          className="mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit max-w-[150px] text-lg"
+          className="mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-full md:w-[30%] lg:w-[10%] text-lg rounded-lg"
           color="primary"
           size="lg"
           onClick={() => (window.location.href = "/pages/projects/create")}
@@ -257,21 +257,24 @@ export default function page() {
           items={groups}
           labelPlacement="inside"
           label="Filtrer par groupe"
-          size="md"
+          size="lg"
           color="primary"
-          variant="flat"
-          className="w-[350px] max-w-[50%] text-lg"
+          className="w-full md:w-[50%] lg:w-[30%] font-medium"
           defaultOpen={false}
           onChange={(event) => {
             setSelectedGroup(Number(event.target.value));
           }}
         >
-          <SelectSection title={"Vos groupes"}>
+          <SelectSection title={"Vos groupes"} className="text-black">
             {/* <SelectItem key={-1} value={-1}>
               Tous les groupes
             </SelectItem> */}
             {groups.map((group) => (
-              <SelectItem key={group.id ?? "-2"} value={group.id ?? "-3"}>
+              <SelectItem
+                key={group.id ?? "-2"}
+                value={group.id ?? "-3"}
+                className="text-black font-outfit text-lg"
+              >
                 {group.name ?? "Aucun nom"}
               </SelectItem>
             ))}

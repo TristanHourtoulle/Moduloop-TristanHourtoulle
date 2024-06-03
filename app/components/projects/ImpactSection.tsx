@@ -1,8 +1,11 @@
+"use client";
+
 import Loader from "@components/Loader";
-import { Button } from "@components/button/Button";
 import { getSession } from "@lib/session";
 import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
+import { Button } from "@nextui-org/button";
+import { Select, SelectItem, SelectSection } from "@nextui-org/select";
 import { getProjectsByUserId } from "@utils/database/project";
 import {
   convertTime,
@@ -26,6 +29,20 @@ import { EquivalenceImpact } from "./impact/Compare/EquivalenceImpact";
 import { ImpactGlobalProject } from "./impact/ImpactGlobalProject";
 import { MostImpact } from "./impact/MostImpact";
 
+function initCompareWithProjects(project: ProjectType) {
+  const result: ProjectType[] = [];
+  const newProject: ProjectType = project;
+  const usedProject: ProjectType = project;
+
+  newProject.name = project.name + " (tout en neuf)";
+  newProject.id = -2;
+  usedProject.name = project.name + " (tout en réemploi)";
+  usedProject.id = -3;
+  result.push(newProject);
+  result.push(usedProject);
+  return result;
+}
+
 const ImpactSection = (props: {
   products: AddProductType[];
   project: ProjectType;
@@ -34,7 +51,7 @@ const ImpactSection = (props: {
   const { products, project, ctaView } = props;
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [projects, setProjects] = useState<ProjectType[] | null>(null);
+  const [projects, setProjects] = useState<ProjectType[]>([]);
   const [isCompare, setIsCompare] = useState(false);
   const [isCompareWithTemplate, setIsCompareWithTemplate] =
     useState<boolean>(false);
@@ -90,7 +107,7 @@ const ImpactSection = (props: {
       setSession(data);
       response = await getProjectsByUserId(data.user.id);
       if (response) {
-        setProjects(response);
+        setProjects(response); // Fix: Pass response as a spread argument
       }
       await getEquivalenceWithoutCompare();
       setIsLoaded(true);
@@ -242,12 +259,36 @@ const ImpactSection = (props: {
       <div className="w-full flex flex-col gap-2 md:gap-6">
         {/* Select project for compare */}
         <div className="flex flex-wrap items-start justify-start gap-1 md:gap-5">
-          <p className="font-bold text-md md:text-lg">Comparer</p>
-          <p className="font-bold text-md md:text-lg">avec</p>
-          <div className="h-10 w-72 min-w-[200px]">
-            <select
-              id="projectSelect"
-              className="w-[100%] h-full rounded-[8px] font-bold text-lg px-[5%]"
+          <div className="flex flex-wrap items-center w-full gap-5">
+            {/* <Button
+              onClick={() => ctaView("products")}
+              content="Afficher les produits"
+              variant="secondary"
+              size="medium"
+              disabled={false}
+              image={null}
+              moreClasses="mb-[5%] md:mb-0"
+            /> */}
+            <Button
+              color="primary"
+              variant="flat"
+              size="lg"
+              onClick={() => {
+                ctaView("products");
+              }}
+              className="text-lg px-7 rounded-lg border-1 border-primary-500"
+            >
+              Afficher les produits
+            </Button>
+
+            <Select
+              items={projects ?? []}
+              labelPlacement="inside"
+              label="Comparer avec un autre projet"
+              size="md"
+              color="primary"
+              className="font-medium max-w-[300px]"
+              defaultOpen={false}
               onChange={(event) => {
                 if (projects === null) return;
                 if (event.target.value === "-1") {
@@ -277,6 +318,7 @@ const ImpactSection = (props: {
                     setIsCompareWithTemplate(true);
                     return;
                   }
+                  setIsCompareWithTemplate(false);
                   for (let i = 0; i < projects.length; i++) {
                     if (
                       projects &&
@@ -290,47 +332,51 @@ const ImpactSection = (props: {
                 }
               }}
             >
-              <option value="-2">{project.name} (tout en neuf)</option>
-              <option value="-3">{project.name} (tout en réemploi)</option>
-              <option selected value="-1">
-                Aucun Projet
-              </option>
-              {projects?.map(
-                (temp) =>
-                  temp.id &&
-                  temp.id !== project.id && (
-                    <option key={temp.id} value={temp.id}>
-                      {temp.name}
-                    </option>
-                  )
-              )}
-            </select>
+              <SelectSection title={"Templates"} className="text-black text-lg">
+                <SelectItem
+                  key={-2}
+                  value={-2}
+                  className="text-black font-outfit text-lg"
+                >
+                  {project.name + " (Tout en neuf)"}
+                </SelectItem>
+                <SelectItem
+                  key={-3}
+                  value={-3}
+                  className="text-black font-outfit text-lg"
+                >
+                  {project.name + " (Tout en réemploi)"}
+                </SelectItem>
+              </SelectSection>
+              <SelectSection
+                title={"Vos projets"}
+                className="text-black text-lg"
+              >
+                {projects &&
+                  projects.map((temp) => (
+                    <SelectItem
+                      key={temp.id ?? "-2"}
+                      value={temp.id ?? "-3"}
+                      className="text-black font-outfit text-lg"
+                    >
+                      {temp.name ?? "Aucun nom"}
+                    </SelectItem>
+                  ))}
+              </SelectSection>
+            </Select>
+            {/* If the compareWith are actualProjectNew or actualProjectReuse, we have to permit the creation of that project */}
+            {isCompareWithTemplate && (
+              <Button
+                color="primary"
+                variant="light"
+                size="md"
+                onClick={handleCreateProjectFromTemplate}
+                className="text-lg w-fit-content rounded-lg"
+              >
+                Créer ce projet
+              </Button>
+            )}
           </div>
-
-          {/* If the compareWith are actualProjectNew or actualProjectReuse, we have to permit the creation of that project */}
-          {isCompareWithTemplate && (
-            <Button
-              variant="secondary"
-              content="Créer ce projet"
-              onClick={handleCreateProjectFromTemplate}
-              size="medium"
-              disabled={!isCompareWithTemplate}
-              image={null}
-              moreClasses="mt-[5%] md:mt-0"
-            />
-          )}
-        </div>
-
-        <div className="flex items-center">
-          <Button
-            onClick={() => ctaView("products")}
-            content="Afficher les produits"
-            variant="secondary"
-            size="medium"
-            disabled={false}
-            image={null}
-            moreClasses="mb-[5%] md:mb-0"
-          />
         </div>
 
         {isLoaded && isCompare && compareWith && (

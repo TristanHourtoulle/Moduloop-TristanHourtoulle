@@ -26,8 +26,11 @@ export const CardImpactGlobal = (props: CardImpactGlobalProps) => {
         <Image src={image} alt={title} width={40} height={40} />
         <p className="text-lg">{subtitle}</p>
       </div>
-      <div className="flex items-center justify-center gap-4">
-        <p className="font-bold text-3xl md:text-5xl" style={{ color: color }}>
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        <p
+          className="font-bold text-3xl md:text-5xl whitespace-nowrap"
+          style={{ color: color }}
+        >
           {value}
         </p>
         <p>{unit}</p>

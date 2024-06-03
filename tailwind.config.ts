@@ -1,4 +1,3 @@
-import type { Config } from "tailwindcss";
 const { nextui } = require("@nextui-org/react");
 const withMT = require("@material-tailwind/react/utils/withMT");
 
@@ -13,6 +12,9 @@ const config = withMT({
   ],
   theme: {
     extend: {
+      lineHeight: {
+        "extra-loose": "5", // Example custom line height
+      },
       colors: {
         "red-custom": "rgb(255, 0, 0)",
         "red-custom-transparent": "rgba(255, 0, 0, 0.19)",
@@ -37,8 +39,40 @@ const config = withMT({
       addCommonColors: false,
       defaultTheme: "light",
       defaultExtendTheme: "light",
-      colors: {
-        background: "#f6f6f6",
+      colors: {},
+      themes: {
+        light: {
+          colors: {
+            background: "#F6F6F6",
+            foreground: "#11181C",
+            primary: {
+              50: "#F0F9F8",
+              100: "#D2FAEB",
+              200: "#A6F6DF",
+              300: "#75E6CF",
+              400: "#4FCDBE",
+              500: "#30C1BD",
+              600: "#178C93",
+              700: "#106B7B",
+              800: "#0A4E63",
+              900: "#063952",
+              DEFAULT: "#30C1BD",
+            },
+            danger: {
+              50: "#FEEFEE",
+              100: "#FFE3D5",
+              200: "#FFC1AC",
+              300: "#FF9882",
+              400: "#FF7163",
+              500: "#FF3030",
+              600: "#DB2333",
+              700: "#B71833",
+              800: "#930F31",
+              900: "#7A0930",
+              DEFAULT: "#FF3030",
+            },
+          },
+        },
       },
     }),
   ],

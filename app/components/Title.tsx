@@ -64,7 +64,7 @@ export const Title = (title: TitleType) => {
         <Image src={title.image || ""} alt="Page Logo" width={40} height={40} />
       </div>
 
-      <h1 className="font-bold text-lg md:text-[3rem] lg:text-[3rem]">
+      <h1 className="font-bold text-lg md:text-[3rem] lg:text-[3rem] whitespace-nowrap">
         {title.title}
       </h1>
 
@@ -78,7 +78,7 @@ export const Title = (title: TitleType) => {
               value={nameOfPage}
             />
           ) : (
-            <p className="text-[2rem] md:text-[3rem] lg:text-[3rem]">
+            <p className="text-[1rem] md:text-[3rem] lg:text-[3rem] line-clamp-1">
               {nameOfPage}
             </p>
           )}
@@ -107,7 +107,7 @@ export const Title = (title: TitleType) => {
       )}
 
       {!title.canChange && (
-        <p className="page-number font-bold text-lg md:text-[3rem] lg:text-[3rem]">
+        <p className="page-number font-bold text-[1rem] md:text-[3rem] lg:text-[3rem] line-clamp-1">
           {title.number}
         </p>
       )}

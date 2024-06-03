@@ -123,6 +123,28 @@
   transition: transform 0.25s;
 }
 
+.custom-select {
+  --tw-bg-opacity: 1;
+  background-color: rgba(
+    32,
+    172,
+    168,
+    var(--tw-bg-opacity)
+  ); /* Primary color */
+  color: #ffffff; /* Text color */
+}
+
+.custom-select .nextui-select-item {
+  --tw-bg-opacity: 1;
+  background-color: rgba(
+    32,
+    172,
+    168,
+    var(--tw-bg-opacity)
+  ); /* Primary color for items */
+  color: #ffffff; /* Text color for items */
+}
+
 .handle-product-text {
   color: white;
   font-size: 1.25rem;

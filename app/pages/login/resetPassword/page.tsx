@@ -112,7 +112,7 @@ const page = () => {
           />
 
           <Button
-            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg"
+            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg rounded-lg"
             color="primary"
             size="lg"
             onClick={handleSubmit}
@@ -135,7 +135,7 @@ const page = () => {
           />
 
           <Button
-            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg"
+            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg rounded-lg"
             color="primary"
             size="lg"
             onClick={handleSubmitResetCode}
@@ -159,7 +159,7 @@ const page = () => {
           />
 
           <Button
-            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg"
+            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg rounded-lg"
             color="primary"
             size="lg"
             onClick={handleSubmitPassword}

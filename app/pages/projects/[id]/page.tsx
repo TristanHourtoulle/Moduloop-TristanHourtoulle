@@ -358,22 +358,22 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
           color="primary"
           startContent={
             isDownloadLoading ? (
-              <Spinner color="default" labelColor="foreground" />
+              <Spinner color="white" labelColor="foreground" size="sm" />
             ) : (
               <Download />
             )
           }
           onClick={downloadPNG}
           size="lg"
-          className="w-fit-content"
+          className="w-fit-content text-lg rounded-lg"
         >
           Télécharger
         </Button>
       </div>
       {/* Group Name And Link */}
       <div className="flex gap-2 items-center mt-4 mb-1 md:mb-5 lg:mb-5">
-        <p className="text-md md:text-lg lg:text-lg font-bold">Relié à: </p>
-        <Chip size="md" color="primary" variant="flat">
+        <p className="text-md md:text-lg lg:text-lg font-bold">Groupe: </p>
+        <Chip size="lg" color="primary" variant="flat">
           {project && project.groupInfo
             ? project.groupInfo.name
             : "Aucun Groupe"}
@@ -391,11 +391,11 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                       <Select
                         items={storeProducts}
                         labelPlacement="inside"
-                        label="Produit"
-                        size="md"
+                        label="Choisir un produit"
+                        size="sm"
                         color="default"
                         variant="bordered"
-                        className="w-[250px] max-w-[75%] text-lg bg-white rounded-[16px]"
+                        className="w-[250px] max-w-[75%] text-lg bg-white rounded-[16px] font-outfit"
                         onChange={(event) => {
                           setSelectedProductId(parseInt(event.target.value));
                         }}
@@ -404,6 +404,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                           <SelectItem
                             key={product.id ?? -1}
                             value={product.id ?? -1}
+                            className="text-black font-outfit text-lg"
                           >
                             {product.name?.replace("Inies - ", "")}
                           </SelectItem>
@@ -416,13 +417,14 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         labelPlacement="inside"
                         value={selectedProduct?.unit ?? ""}
                         variant="bordered"
-                        size="md"
+                        size="sm"
                         className="w-[150px] max-w-[20%] text-lg bg-white rounded-[16px]"
                       />
                       <Input
                         type="number"
                         label="Quantité Neuve"
                         labelPlacement="inside"
+                        size="sm"
                         id="qNew-addProduct"
                         min={0}
                         placeholder="0"
@@ -435,6 +437,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         label="Quantité Réemploi"
                         labelPlacement="inside"
                         id="qUsed-addProduct"
+                        size="sm"
                         min={0}
                         placeholder="0"
                         variant="bordered"
@@ -447,8 +450,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         <Button
                           color="primary"
                           variant="ghost"
-                          className="mt-3"
-                          size="lg"
+                          className="mt-3 md:mt-0 rounded-lg"
+                          size="md"
                           onClick={() => {
                             const qNew = document.getElementById(
                               "qNew-addProduct"
@@ -494,14 +497,14 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                 productsInProject[0] && (
                   <Button
                     color="primary"
-                    variant="bordered"
+                    variant="flat"
                     size="md"
                     onClick={() => {
                       section === "products"
                         ? setSection("impact")
                         : setSection("products");
                     }}
-                    className="text-lg w-fit-content"
+                    className="text-lg w-fit-content rounded-lg border-1 border-primary-500"
                   >
                     {section === "products"
                       ? "Afficher l'impact"
@@ -515,13 +518,13 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                 productsInProject[0] && (
                   <Button
                     color="danger"
-                    variant="bordered"
+                    variant="flat"
                     size="md"
                     onClick={() => {
                       setDialogOpen(true);
                       updateProductsInProject();
                     }}
-                    className="text-lg w-fit-content"
+                    className="text-lg w-fit-content rounded-lg border-1 border-danger-500"
                   >
                     Supprimer tous les produits
                   </Button>

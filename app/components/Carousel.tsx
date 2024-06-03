@@ -40,7 +40,7 @@ const carouselProducts = [
 
 export function Carousel() {
   return (
-    <section className="py-12 w-[80%] md:w-[40%]">
+    <section className="py-12 w-[80%] md:w-[45%] md:mr-[2.5%]">
       <div className=" w-full">
         <Swiper
           className="rounded-lg w-full w-[100%]"

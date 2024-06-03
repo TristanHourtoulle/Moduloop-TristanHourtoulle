@@ -49,7 +49,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
   };
 
   return (
-    <div className="flex flex-col justify-center gap-1 bg-white px-4 py-4 md:px-8 md:py-6 rounded-[16px] shadow-lg w-[100%] md:w-[350px] lg:w-[350px] h-auto">
+    <div className="flex flex-col justify-between gap-1 bg-white px-4 py-4 md:px-8 md:py-6 rounded-[16px] shadow-lg w-[100%] md:w-[350px] lg:w-[350px] h-[333px]">
       {group && group.name !== "Aucun Groupe" ? (
         <p className="text-in-single-line text-md md:text-lg lg:text-lg opacity-80">
           {group.name}
@@ -79,8 +79,8 @@ export const ProjectCard = (props: ProjectCardProps) => {
           aria-label="Supprimer"
           color="danger"
           onClick={() => setIsOpenDialog(true)}
-          className="transition-all duration-300 ease-in-out hover:rotate-12 text-md md:text-lg lg:text-lg"
-          size="lg"
+          className="rounded-lg transition-all duration-300 ease-in-out hover:rotate-12 text-md md:text-lg lg:text-lg"
+          size="md"
           variant="solid"
         >
           <Trash2 />
@@ -92,7 +92,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
             handleDuplicateProject(project.id ?? -1);
           }}
           size="md"
-          className="text-md md:text-lg lg:text-lg"
+          className="rounded-lg text-md md:text-lg lg:text-lg"
         >
           Copier
         </Button>
@@ -100,7 +100,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
           color="primary"
           variant="ghost"
           onClick={() => (window.location.href = showProjectUrl)}
-          className="text-md md:text-lg lg:text-lg"
+          className="rounded-lg text-md md:text-lg lg:text-lg"
           size="md"
         >
           Ouvrir

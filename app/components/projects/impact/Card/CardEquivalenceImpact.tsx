@@ -76,7 +76,7 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
       color="default"
       className="categorize"
     >
-      <div className="px-4 py-2 md:px-8 md:py-4 bg-white flex flex-col justify-center gap-2 rounded-[10px] drop-shadow-lg w-[30%] min-w-[250px] ">
+      <div className="px-4 py-2 md:px-8 md:py-4 bg-white flex flex-col justify-center gap-2 rounded-[10px] drop-shadow-lg w-[30%] min-w-[275px] ">
         <h3 className="uppercase font-semibold text-lg lg:text-xl xl:text-2xl text-black opacity-95">
           {title}
         </h3>
