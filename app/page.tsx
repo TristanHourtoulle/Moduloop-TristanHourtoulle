@@ -1,7 +1,5 @@
 import { Carousel } from "@components/Carousel";
 import { GetStarted } from "@components/GetStarted";
-import { LoginButton } from "@components/header/LoginButton";
-import { RegisterButton } from "@components/header/RegisterButton";
 import { getSession } from "@lib/session";
 import { SessionType } from "@models/Session";
 
@@ -16,15 +14,15 @@ export default async function Home() {
 
   return (
     <div className="w-full">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-5 h-screen pb-[15%] w-full">
-        <div className="flex flex-col gap-4 items-start md:justify-center h-full w-full md:w-[55%]">
+      <div className="flex flex-col md:flex-row items-center md:justify-center gap-5 h-screen pb-[15%] w-full">
+        <div className="flex flex-col gap-4 items-start mb-auto md:mb-0 md:justify-center w-full md:w-[55%]">
           <h1
             className="w-full text-2xl md:text-5xl lg:text-5xl font-semibold text-center md:text-left"
             style={{ lineHeight: "1.25" }}
           >
             Calculez le réel <strong className="text-primary">impact</strong> de
-            vos projets d'aménagement sur{" "}
-            <strong className="text-primary">l'environnement</strong>
+            vos projets d&apos;aménagement sur{" "}
+            <strong className="text-primary">l&apos;environnement</strong>
           </h1>
 
           <p className="text-center md:text-left text-lg opacity-90">
@@ -49,7 +47,9 @@ export default async function Home() {
         </p>
         <hr className="w-[35%] md:w-[10%] border-primary border-1 rounded-full opacity-30" />
 
-        <p className="text-xl md:text-2xl">Calculer l'impact environnemental</p>
+        <p className="text-xl md:text-2xl">
+          Calculer l&apos;impact environnemental
+        </p>
         <hr className="w-[35%] md:w-[10%] border-primary border-1 rounded-full opacity-30" />
 
         <p className="text-xl md:text-2xl">
@@ -76,23 +76,9 @@ export default async function Home() {
         <p className="text-lg md:text-xl text-justify max-w-[90%] md:max-w-[70%]">
           Les valeurs que nous récupérons sont des <strong>moyennes</strong>.
           Ainsi, les résultats que nous vous apportons sont des{" "}
-          <strong>estimatifs d'impact</strong>.
+          <strong>estimatifs d&apos;impact</strong>.
         </p>
       </div>
-
-      {/* If user is not signed in
-      {!session && (
-        <div className="flex flex-col justify-center items-center gap-2">
-          <p className="text-lg leading-loose">
-            Vous avez besoin d'avoir un compte pour utiliser{" "}
-            <strong>gratuitement</strong> notre outil.
-          </p>
-          <div className="flex gap-4">
-            <LoginButton />
-            <RegisterButton />
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }

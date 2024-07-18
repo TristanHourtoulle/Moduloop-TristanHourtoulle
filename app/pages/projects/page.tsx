@@ -257,7 +257,7 @@ export default function Page() {
           items={groups}
           labelPlacement="inside"
           label="Filtrer par groupe"
-          size="lg"
+          size="md"
           color="primary"
           className="w-full md:w-[50%] lg:w-[30%] font-medium"
           defaultOpen={false}

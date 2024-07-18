@@ -32,7 +32,7 @@ const getLastActivity = (date: string | null, userCreatedAt: string) => {
   const hours = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
   const minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
 
-  return `${day}/${month}/${year} à ${hours}:${minutes}`;
+  return `${day}/${month}/${year} à ${String(Number(hours) + 2)}:${minutes}`;
 };
 
 export const UserLine = (props: UserLineProps) => {
