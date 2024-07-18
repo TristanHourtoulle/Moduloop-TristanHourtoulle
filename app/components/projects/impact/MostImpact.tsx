@@ -3,6 +3,7 @@
 import { Button } from "@components/button/Button";
 import { ProductImpact } from "@models/Impact";
 import { ProjectType } from "@models/Project";
+import { Select, SelectItem, SelectSection } from "@nextui-org/select";
 import {
   getASEendOfLife,
   getASEimpact,
@@ -106,6 +107,12 @@ export const MostImpact = (props: MostImpactProps) => {
   const [productWithMostImpact, setProductWithMostImpact] = useState<
     ProductImpact[] | null
   >(null);
+  const [listImpact, setListImpact] = useState<String[]>([
+    "Réchauffement Climatique",
+    "Epuisement des Ressources Fossiles",
+    "Acidification des Sols et des Eaux",
+    "Eutrophisation Marine",
+  ]);
 
   useEffect(() => {
     if (!project.products) return;
@@ -149,11 +156,11 @@ export const MostImpact = (props: MostImpactProps) => {
   return (
     <div className="w-full min-h-60 flex flex-col gap-2 md:gap-5 p-6 bg-[#e9e9e9] rounded-[16px]">
       {/* Header */}
-      <div className="flex flex-wrap text-center md:text-start gap-2 md:gap-0 items-center justify-between">
-        <h2 className="font-bold text-xl md:text-4xl opacity-90">
+      <div className="flex flex-wrap items-center justify-between gap-2 text-center md:text-start md:gap-0">
+        <h2 className="text-xl font-bold md:text-4xl opacity-90">
           Les produits les plus impactants
         </h2>
-        <div className="flex flex-wrap justify-center md:justify-start items-center gap-2 md:gap-5 md:mt-4 xl:mt-0">
+        <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start md:gap-5 md:mt-4 xl:mt-0">
           <Button
             variant="primary"
             onClick={() => {
@@ -177,8 +184,50 @@ export const MostImpact = (props: MostImpactProps) => {
         </div>
       </div>
 
+      {/* TODO: Replace this by a select option like on the projects page */}
       {/* Nav */}
-      <div className="flex flex-wrap items-center gap-2 md:gap-10">
+      <div className="text-lg">
+        <Select
+          items={listImpact}
+          labelPlacement="inside"
+          label="Impact Choisi"
+          size="lg"
+          color="primary"
+          className="w-full md:w-[50%] lg:w-[30%] font-medium text-lg"
+          defaultOpen={false}
+          defaultSelectedKeys={"rc"}
+          onChange={(event: any) => {
+            if (event.target.value === "Réchauffement Climatique")
+              setView("rc");
+            else if (
+              event.target.value === "Epuisement des Ressources Fossiles"
+            )
+              setView("erf");
+            else if (
+              event.target.value === "Acidification des Sols et des Eaux"
+            )
+              setView("ase");
+            else if (event.target.value === "Eutrophisation Marine")
+              setView("em");
+          }}
+        >
+          <SelectSection title={"Vos groupes"} className="text-black">
+            {/* <SelectItem key={-1} value={-1}>
+              Tous les groupes
+            </SelectItem> */}
+            {listImpact.map((impact) => (
+              <SelectItem
+                key={impact.toString() ?? "-2"}
+                value={impact.toString() ?? "-3"}
+                className="text-lg text-black font-outfit"
+              >
+                {impact ?? "Aucun nom"}
+              </SelectItem>
+            ))}
+          </SelectSection>
+        </Select>
+      </div>
+      {/* <div className="flex flex-wrap items-center gap-2 md:gap-10">
         <p
           className={`font-bold transition-all text-lg ${getOpacity("rc")}`}
           onClick={() => {
@@ -211,11 +260,11 @@ export const MostImpact = (props: MostImpactProps) => {
         >
           Eutrophisation Marine
         </p>
-      </div>
+      </div> */}
 
       {/* All cards */}
       {productWithMostImpact !== null && (
-        <div className="flex flex-wrap gap-3 md:gap-1 items-center justify-center mt-4 md:mt-0">
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-4 md:gap-1 md:mt-0">
           {productWithMostImpact[0] &&
             productWithMostImpact[0].product &&
             productWithMostImpact[0].product.product && (

@@ -145,7 +145,6 @@ const ImpactSection = (props: {
 
         setCompareWith(null);
         setIsCompare(false);
-        // TODO: display an warning toast to inform the user that the projects have the same impact
         toast.warning(
           "Inutile de comparer ces projets car les impacts sont équivalents."
         );
@@ -260,15 +259,6 @@ const ImpactSection = (props: {
         {/* Select project for compare */}
         <div className="flex flex-wrap items-start justify-start gap-1 md:gap-5">
           <div className="flex flex-wrap items-center w-full gap-5">
-            {/* <Button
-              onClick={() => ctaView("products")}
-              content="Afficher les produits"
-              variant="secondary"
-              size="medium"
-              disabled={false}
-              image={null}
-              moreClasses="mb-[5%] md:mb-0"
-            /> */}
             <Button
               color="primary"
               variant="flat"
@@ -333,6 +323,13 @@ const ImpactSection = (props: {
               }}
             >
               <SelectSection title={"Templates"} className="text-black text-lg">
+                <SelectItem
+                  key={-1}
+                  value={-1}
+                  className="text-black font-outfit text-lg"
+                >
+                  Aucun projet
+                </SelectItem>
                 <SelectItem
                   key={-2}
                   value={-2}

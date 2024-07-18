@@ -80,7 +80,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
           color="danger"
           onClick={() => setIsOpenDialog(true)}
           className="rounded-lg transition-all duration-300 ease-in-out hover:rotate-12 text-md md:text-lg lg:text-lg"
-          size="md"
+          size="lg"
           variant="solid"
         >
           <Trash2 />
@@ -91,7 +91,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
           onClick={() => {
             handleDuplicateProject(project.id ?? -1);
           }}
-          size="md"
+          size="lg"
           className="rounded-lg text-md md:text-lg lg:text-lg"
         >
           Copier
@@ -101,7 +101,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
           variant="ghost"
           onClick={() => (window.location.href = showProjectUrl)}
           className="rounded-lg text-md md:text-lg lg:text-lg"
-          size="md"
+          size="lg"
         >
           Ouvrir
         </Button>
