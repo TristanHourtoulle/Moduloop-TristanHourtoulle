@@ -2,7 +2,7 @@ import Header from "@components/Header";
 import { NextUIProvider } from "@nextui-org/react";
 import "@styles/globals.css";
 import type { Metadata } from "next";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/toaster";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -32,12 +32,7 @@ export default function RootLayout({
           <Header />
         </div>
         <div className="">
-          <Toaster
-            richColors
-            position="top-center"
-            expand={false}
-            className="w-full"
-          />
+          <Toaster />
           <NextUIProvider className="pb-10">{children}</NextUIProvider>
         </div>
       </body>
