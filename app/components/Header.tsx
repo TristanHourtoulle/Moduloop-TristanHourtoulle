@@ -57,6 +57,8 @@ const Header = () => {
         setSelectedLink("/pages/products");
       } else if (actualPage.includes("users")) {
         setSelectedLink("/pages/users");
+      } else if (actualPage.includes("methodology")) {
+        setSelectedLink("/methodology");
       } else {
         setSelectedLink("/");
       }
@@ -105,6 +107,21 @@ const Header = () => {
               }`}
             >
               Projets
+            </a>
+          )}
+          {session && session.user && (
+            <a
+              href="/pages/methodology"
+              onClick={() => {
+                setSelectedLink("/pages/methodology");
+              }}
+              className={`nav-link ${
+                selectedLink === "/pages/methodology"
+                  ? "nav-link-selected"
+                  : "link-to-scale"
+              }`}
+            >
+              Méthodologie
             </a>
           )}
           {isAdmin && (
@@ -205,6 +222,9 @@ const Header = () => {
                   </a>
                   <a href="/pages/projects" className="">
                     <p className="text-lg">Projets</p>
+                  </a>
+                  <a href="/pages/methodology" className="">
+                    <p className="text-lg">Méthodologie</p>
                   </a>
                   {isAdmin && (
                     <a href="/pages/products" className="text-lg">
