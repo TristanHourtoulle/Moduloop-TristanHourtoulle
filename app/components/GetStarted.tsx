@@ -31,7 +31,7 @@ export const GetStarted = () => {
           window.location.href = "/pages/projects";
         }}
       >
-        Essayer l'outil
+        Essayer l&apos;outil
       </Button>
       <Button
         color="primary"

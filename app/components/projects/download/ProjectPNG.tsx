@@ -1279,7 +1279,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -1681,7 +1681,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -2028,7 +2028,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -2223,7 +2223,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -2469,7 +2469,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -2872,7 +2872,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -3221,7 +3221,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
@@ -3417,7 +3417,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               fontSize: "40px",
             }}
           >
-            Estimatif d'impact de vos projets
+            Estimatif d&apos;impact de vos projets
           </h2>
           <h2
             style={{
