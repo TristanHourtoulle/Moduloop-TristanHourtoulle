@@ -4,7 +4,7 @@ import { Image } from "@nextui-org/react";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-cards";
-import { Autoplay, EffectCards } from "swiper/modules";
+import { Autoplay, EffectCreative } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const carouselProducts = [
@@ -40,16 +40,16 @@ const carouselProducts = [
 
 export function Carousel() {
   return (
-    <section className="py-12 w-[80%] md:w-[45%] md:mr-[2.5%]">
+    <section className="py-12 w-[80%] md:w-[45%] md:mr-[2.5%] mb-[50%] md:mb-0">
       <div className=" w-full">
         <Swiper
-          className="rounded-lg w-full w-[100%]"
+          className="rounded-lg w-full w-[90%]"
           loop={true}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
           cardsEffect={{ slideShadows: false }}
           effect={"cards"}
           grabCursor={true}
-          modules={[Autoplay, EffectCards]}
+          modules={[Autoplay, EffectCreative]}
         >
           {carouselProducts.map((image, index) => (
             <SwiperSlide key={index} className="">
@@ -58,7 +58,7 @@ export function Carousel() {
                   src={image.imageUrl}
                   alt={image.name}
                   className=""
-                  width={450}
+                  width={500}
                 />
               </div>
             </SwiperSlide>
