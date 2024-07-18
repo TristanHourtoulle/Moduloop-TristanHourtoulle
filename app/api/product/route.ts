@@ -9,32 +9,28 @@ function substituteNewValuesFromReuseValues(
 ) {
   reuseProduct.reuse = {
     rc: {
-      manufacturing:
-        reuseProduct.rc.manufacturing - newProduct.rc.manufacturing,
-      installation: reuseProduct.rc.installation - newProduct.rc.installation,
-      usage: reuseProduct.rc.usage - newProduct.rc.usage,
-      endOfLife: reuseProduct.rc.endOfLife - newProduct.rc.endOfLife,
+      manufacturing: reuseProduct.rc.manufacturing,
+      installation: reuseProduct.rc.installation,
+      usage: reuseProduct.rc.usage,
+      endOfLife: reuseProduct.rc.endOfLife,
     },
     erf: {
-      manufacturing:
-        reuseProduct.erf.manufacturing - newProduct.erf.manufacturing,
-      installation: reuseProduct.erf.installation - newProduct.erf.installation,
-      usage: reuseProduct.erf.usage - newProduct.erf.usage,
-      endOfLife: reuseProduct.erf.endOfLife - newProduct.erf.endOfLife,
+      manufacturing: reuseProduct.erf.manufacturing,
+      installation: reuseProduct.erf.installation,
+      usage: reuseProduct.erf.usage,
+      endOfLife: reuseProduct.erf.endOfLife,
     },
     ase: {
-      manufacturing:
-        reuseProduct.ase.manufacturing - newProduct.ase.manufacturing,
-      installation: reuseProduct.ase.installation - newProduct.ase.installation,
-      usage: reuseProduct.ase.usage - newProduct.ase.usage,
-      endOfLife: reuseProduct.ase.endOfLife - newProduct.ase.endOfLife,
+      manufacturing: reuseProduct.ase.manufacturing,
+      installation: reuseProduct.ase.installation,
+      usage: reuseProduct.ase.usage,
+      endOfLife: reuseProduct.ase.endOfLife,
     },
     em: {
-      manufacturing:
-        reuseProduct.em.manufacturing - newProduct.em.manufacturing,
-      installation: reuseProduct.em.installation - newProduct.em.installation,
-      usage: reuseProduct.em.usage - newProduct.em.usage,
-      endOfLife: reuseProduct.em.endOfLife - newProduct.em.endOfLife,
+      manufacturing: reuseProduct.em.manufacturing,
+      installation: reuseProduct.em.installation,
+      usage: reuseProduct.em.usage,
+      endOfLife: reuseProduct.em.endOfLife,
     },
   };
   return reuseProduct.reuse;
