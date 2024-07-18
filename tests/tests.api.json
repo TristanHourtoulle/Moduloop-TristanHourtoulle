@@ -1,0 +1,531 @@
+{
+  "1": {
+    "title": "/api/user/list",
+    "url": "/api/user/list",
+    "method": "GET",
+    "description": "Get all users",
+    "statusCode": 200,
+    "data": {}
+  },
+  "2": {
+    "title": "/api/user/password",
+    "url": "/api/user/password",
+    "method": "POST",
+    "description": "Post new password",
+    "statusCode": 500,
+    "data": {}
+  },
+  "3": {
+    "title": "/api/user/email/tristan68420@gmail.com",
+    "url": "/api/user/email/tristan68420@gmail.com",
+    "method": "GET",
+    "description": "Get user by Email",
+    "statusCode": 200,
+    "data": {}
+  },
+  "4": {
+    "title": "/api/user/10",
+    "url": "/api/user/10",
+    "method": "GET",
+    "description": "Get user by Id",
+    "statusCode": 200,
+    "data": {}
+  },
+  "5": {
+    "title": "/api/sendMail",
+    "url": "/api/sendMail",
+    "method": "POST",
+    "body": {
+      "receiver": "tristan68420@gmail.com",
+      "resetCode": "123456",
+      "firstname": "Unit Test"
+    },
+    "description": "Send email to a client / user",
+    "statusCode": 200,
+    "data": {}
+  },
+  "6": {
+    "title": "/api/project/69",
+    "url": "/api/project/69",
+    "method": "GET",
+    "description": "Get project by Id",
+    "statusCode": 200,
+    "data": {}
+  },
+  "7": {
+    "title": "/api/project/addProduct",
+    "url": "/api/project/addProduct",
+    "method": "POST",
+    "body": {
+      "product": [
+        {
+          "id": 36,
+          "name": "Canapé cuir",
+          "image": "/products/Canapé_cuir.png",
+          "unit": "pièce",
+          "base": "Autre",
+          "new": {
+            "rc": {
+              "manufacturing": 146.95820501579783,
+              "installation": 58.53253639752715,
+              "usage": 0,
+              "endOfLife": 74.66784388980078
+            },
+            "erf": {
+              "manufacturing": 2125.0150697638187,
+              "installation": 715.4575947864357,
+              "usage": 0,
+              "endOfLife": 112.32202320398797
+            },
+            "ase": {
+              "manufacturing": 7.0295043491950615,
+              "installation": 0.5676245332743072,
+              "usage": 0,
+              "endOfLife": 0.0526745001327221
+            },
+            "em": {
+              "manufacturing": 0.006322602022868243,
+              "installation": 0.00009530689361187606,
+              "usage": 0,
+              "endOfLife": 0.0009910787973587173
+            }
+          },
+          "reuse": {
+            "rc": {
+              "manufacturing": 0,
+              "installation": 32.091668665,
+              "usage": 0,
+              "endOfLife": 79.65809834400078
+            },
+            "erf": {
+              "manufacturing": 0,
+              "installation": 442.9148934799998,
+              "usage": 0,
+              "endOfLife": 113.90689816068799
+            },
+            "ase": {
+              "manufacturing": 0,
+              "installation": 0.24341138970999998,
+              "usage": 0,
+              "endOfLife": 0.053337223729522105
+            },
+            "em": {
+              "manufacturing": 0,
+              "installation": 0.0001189833965325,
+              "usage": 0,
+              "endOfLife": 0.0010100222713069274
+            }
+          }
+        }
+      ],
+      "idProject": 69,
+      "qNew": 1,
+      "qUsed": 1,
+      "addOn": null,
+      "updatedOn": null
+    },
+    "description": "Add products to a project",
+    "statusCode": 200,
+    "data": {}
+  },
+  "8": {
+    "title": "/api/project/byUser/10",
+    "url": "/api/project/byUser/10",
+    "method": "GET",
+    "description": "Get all projects by user Id",
+    "statusCode": 200,
+    "data": {}
+  },
+  "9": {
+    "title": "/api/project/changeProduct",
+    "url": "/api/project/changeProduct",
+    "method": "POST",
+    "body": {
+      "product": [
+        {
+          "id": 36,
+          "name": "Canapé cuir",
+          "image": "/products/Canapé_cuir.png",
+          "unit": "pièce",
+          "base": "Autre",
+          "new": {
+            "rc": {
+              "manufacturing": 146.95820501579783,
+              "installation": 58.53253639752715,
+              "usage": 0,
+              "endOfLife": 74.66784388980078
+            },
+            "erf": {
+              "manufacturing": 2125.0150697638187,
+              "installation": 715.4575947864357,
+              "usage": 0,
+              "endOfLife": 112.32202320398797
+            },
+            "ase": {
+              "manufacturing": 7.0295043491950615,
+              "installation": 0.5676245332743072,
+              "usage": 0,
+              "endOfLife": 0.0526745001327221
+            },
+            "em": {
+              "manufacturing": 0.006322602022868243,
+              "installation": 0.00009530689361187606,
+              "usage": 0,
+              "endOfLife": 0.0009910787973587173
+            }
+          },
+          "reuse": {
+            "rc": {
+              "manufacturing": 0,
+              "installation": 32.091668665,
+              "usage": 0,
+              "endOfLife": 79.65809834400078
+            },
+            "erf": {
+              "manufacturing": 0,
+              "installation": 442.9148934799998,
+              "usage": 0,
+              "endOfLife": 113.90689816068799
+            },
+            "ase": {
+              "manufacturing": 0,
+              "installation": 0.24341138970999998,
+              "usage": 0,
+              "endOfLife": 0.053337223729522105
+            },
+            "em": {
+              "manufacturing": 0,
+              "installation": 0.0001189833965325,
+              "usage": 0,
+              "endOfLife": 0.0010100222713069274
+            }
+          }
+        }
+      ],
+      "idProject": 69,
+      "qNew": 1,
+      "qUsed": 0,
+      "addOn": null,
+      "updatedOn": null
+    },
+    "description": "Add quantity to an existing product in a project",
+    "statusCode": 200,
+    "data": {}
+  },
+  "10": {
+    "title": "/api/project/list?id_project=69&id_product=36",
+    "url": "/api/project/list?id_project=69&id_product=36",
+    "method": "DELETE",
+    "description": "Delete a product from a project",
+    "statusCode": 200,
+    "data": {}
+  },
+  "11": {
+    "title": "/api/project/product/69",
+    "url": "/api/project/product/69",
+    "method": "DELETE",
+    "description": "Delete all products in a project",
+    "statusCode": 200,
+    "data": {}
+  },
+  "12": {
+    "title": "/api/product/36",
+    "url": "/api/product/36",
+    "method": "GET",
+    "description": "Get a product by ID",
+    "statusCode": 200,
+    "data": {}
+  },
+  "13": {
+    "title": "/api/product/list",
+    "url": "/api/product/list",
+    "method": "GET",
+    "description": "Get all products",
+    "statusCode": 200,
+    "data": {}
+  },
+  "14": {
+    "title": "/api/group/10",
+    "url": "/api/group/10",
+    "method": "GET",
+    "description": "Get groups by userId",
+    "statusCode": 200,
+    "data": {}
+  },
+  "15": {
+    "title": "/api/user/email/tristan68420@gmail.com12",
+    "url": "/api/user/email/tristan68420@gmail.com12",
+    "method": "GET",
+    "description": "Get user by Email - Error Check",
+    "statusCode": 500,
+    "data": {}
+  },
+  "16": {
+    "title": "/api/user/email/",
+    "url": "/api/user/email/",
+    "method": "GET",
+    "description": "Get user by Email - No parameters",
+    "statusCode": 500,
+    "data": {}
+  },
+  "17": {
+    "title": "/api/user/-2",
+    "url": "/api/user/-2",
+    "method": "GET",
+    "description": "Get user by Id - Negative Number",
+    "statusCode": 500,
+    "data": {}
+  },
+  "18": {
+    "title": "/api/user/1500",
+    "url": "/api/user/1500",
+    "method": "GET",
+    "description": "Get user by Id - Don't exist",
+    "statusCode": 500,
+    "data": {}
+  },
+  "19": {
+    "title": "/api/user/abcdefg",
+    "url": "/api/user/abcdefg",
+    "method": "GET",
+    "description": "Get user by Id - Not a number",
+    "statusCode": 500,
+    "data": {}
+  },
+  "20": {
+    "title": "/api/user/",
+    "url": "/api/user/",
+    "method": "GET",
+    "description": "Get user by Id - No parameters",
+    "statusCode": 500,
+    "data": {}
+  },
+  "21": {
+    "title": "/api/sendMail",
+    "url": "/api/sendMail",
+    "method": "POST",
+    "body": {
+      "receiver": "tristan68420@gmail.com",
+      "resetCode": null,
+      "firstname": "Unit Test"
+    },
+    "description": "Send email to a client / user - ResetCode null",
+    "statusCode": 200,
+    "data": {}
+  },
+  "22": {
+    "title": "/api/sendMail",
+    "url": "/api/sendMail",
+    "method": "POST",
+    "body": {
+      "receiver": "tristan68420@gmail.comGDHEBZBDUYUHIDU3HUDHIU",
+      "resetCode": null,
+      "firstname": "Unit Test"
+    },
+    "description": "Send email to a client / user - Wrong Adresse",
+    "statusCode": 200,
+    "data": {}
+  },
+  "23": {
+    "title": "/api/sendMail",
+    "url": "/api/sendMail",
+    "method": "POST",
+    "body": {
+      "receiver": "tristan68420@gmail.com",
+      "resetCode": null,
+      "firstname": null
+    },
+    "description": "Send email to a client / user - Firstnam null",
+    "statusCode": 200,
+    "data": {}
+  },
+  "24": {
+    "title": "/api/sendMail",
+    "url": "/api/sendMail",
+    "method": "POST",
+    "body": {
+      "receiver": null,
+      "resetCode": null,
+      "firstname": null
+    },
+    "description": "Send email to a client / user - Receiver null",
+    "statusCode": 200,
+    "data": {}
+  },
+  "25": {
+    "title": "/api/project/",
+    "url": "/api/project/",
+    "method": "GET",
+    "description": "Get project by Id - No parameters",
+    "statusCode": 405,
+    "data": {}
+  },
+  "26": {
+    "title": "/api/project/-1",
+    "url": "/api/project/-1",
+    "method": "GET",
+    "description": "Get project by Id - Negative Number",
+    "statusCode": 404,
+    "data": {}
+  },
+  "27": {
+    "title": "/api/project/1600",
+    "url": "/api/project/1600",
+    "method": "GET",
+    "description": "Get project by Id - Don't Exist",
+    "statusCode": 404,
+    "data": {}
+  },
+  "28": {
+    "title": "/api/project/abcdefghijkl",
+    "url": "/api/project/abcdefghijkl",
+    "method": "GET",
+    "description": "Get project by Id - Not a Number",
+    "statusCode": 400,
+    "data": {}
+  },
+  "29": {
+    "title": "/api/project/list?id_project=2&id_product=36",
+    "url": "/api/project/list?id_project=2&id_product=36",
+    "method": "DELETE",
+    "description": "Delete a product from a project - Project Don't Exist",
+    "statusCode": 500,
+    "data": {}
+  },
+  "30": {
+    "title": "/api/project/list?id_project=69&id_product=1",
+    "url": "/api/project/list?id_project=69&id_product=1",
+    "method": "DELETE",
+    "description": "Delete a product from a project - Product Don't Exist",
+    "statusCode": 500,
+    "data": {}
+  },
+  "31": {
+    "title": "/api/project/list?id_project=a&id_product=36",
+    "url": "/api/project/list?id_project=a&id_product=36",
+    "method": "DELETE",
+    "description": "Delete a product from a project - Not a Number",
+    "statusCode": 500,
+    "data": {}
+  },
+  "32": {
+    "title": "/api/project/list",
+    "url": "/api/project/list",
+    "method": "DELETE",
+    "description": "Delete a product from a project - No parameters",
+    "statusCode": 500,
+    "data": {}
+  },
+  "33": {
+    "title": "/api/project/product/1",
+    "url": "/api/project/product/1",
+    "method": "DELETE",
+    "description": "Delete all products in a project - Project Don't Exist",
+    "statusCode": 500,
+    "data": {}
+  },
+  "34": {
+    "title": "/api/project/product/abcdefghijklmnop",
+    "url": "/api/project/product/abcdefghijklmnop",
+    "method": "DELETE",
+    "description": "Delete all products in a project - Not a Number",
+    "statusCode": 500,
+    "data": {}
+  },
+  "35": {
+    "title": "/api/project/product/",
+    "url": "/api/project/product/",
+    "method": "DELETE",
+    "description": "Delete all products in a project - No parameters",
+    "statusCode": 500,
+    "data": {}
+  },
+  "36": {
+    "title": "/api/product/",
+    "url": "/api/product/",
+    "method": "GET",
+    "description": "Get a product by ID - No parameters",
+    "statusCode": 405,
+    "data": {}
+  },
+  "37": {
+    "title": "/api/product/-1",
+    "url": "/api/product/-1",
+    "method": "GET",
+    "description": "Get a product by ID - Negative Number",
+    "statusCode": 404,
+    "data": {}
+  },
+  "38": {
+    "title": "/api/product/1600",
+    "url": "/api/product/1600",
+    "method": "GET",
+    "description": "Get a product by ID - Don't Exist",
+    "statusCode": 404,
+    "data": {}
+  },
+  "39": {
+    "title": "/api/product/abcdefghijkl",
+    "url": "/api/product/abcdefghijkl",
+    "method": "GET",
+    "description": "Get a product by ID - Not a Number",
+    "statusCode": 400,
+    "data": {}
+  },
+  "40": {
+    "title": "/api/group/",
+    "url": "/api/group/",
+    "method": "GET",
+    "description": "Get groups by userId - No parameters",
+    "statusCode": 404,
+    "data": {}
+  },
+  "41": {
+    "title": "/api/group/-1",
+    "url": "/api/group/-1",
+    "method": "GET",
+    "description": "Get groups by userId - Negative Number",
+    "statusCode": 200,
+    "data": {}
+  },
+  "42": {
+    "title": "/api/group/1600",
+    "url": "/api/group/1600",
+    "method": "GET",
+    "description": "Get groups by userId - Don't Exist",
+    "statusCode": 200,
+    "data": {}
+  },
+  "43": {
+    "title": "/api/group/abcdefghijkl",
+    "url": "/api/group/abcdefghijkl",
+    "method": "GET",
+    "description": "Get groups by userId - Not a Number",
+    "statusCode": 400,
+    "data": {}
+  },
+  "44": {
+    "title": "/api/group/10",
+    "url": "/api/group/10",
+    "method": "GET",
+    "description": "Get groups by userId - No groups",
+    "statusCode": 200,
+    "data": {}
+  },
+  "45": {
+    "title": "/api/user/list",
+    "url": "/api/user/list",
+    "method": "GET",
+    "description": "Get all users - No users",
+    "statusCode": 200,
+    "data": {}
+  },
+  "46": {
+    "title": "/api/user/password",
+    "url": "/api/user/password",
+    "method": "POST",
+    "description": "Post new password - No parameters",
+    "statusCode": 500,
+    "data": {}
+  }
+}
