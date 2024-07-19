@@ -14,7 +14,8 @@ const page = () => {
     setTimeout(() => {
       // Faire télécharger le fichier /public/guideline/Goodwill.pptx
       const a = document.createElement("a");
-      a.href = "/guideline/Goodwill.pdf";
+      a.href =
+        "/guideline/Slides méthodologies outil d'impact aménagement VF 2 (240718).pdf";
       a.download = "Méthodologie.pdf";
       a.click();
       a.remove();
@@ -58,7 +59,7 @@ const page = () => {
 
       <div className="w-full h-full">
         <iframe
-          src="/guideline/Goodwill.pdf"
+          src="/guideline/Slides méthodologies outil d'impact aménagement VF 2 (240718).pdf"
           className="w-full"
           height={23760}
         ></iframe>

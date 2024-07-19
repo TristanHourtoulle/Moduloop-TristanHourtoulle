@@ -12,8 +12,9 @@ export const GetStarted = () => {
     setTimeout(() => {
       // Faire télécharger le fichier /public/guideline/Goodwill.pptx
       const a = document.createElement("a");
-      a.href = "/guideline/Goodwill.pptx";
-      a.download = "Méthodologie.pptx";
+      a.href =
+        "/guideline/Slides méthodologies outil d'impact aménagement VF 2 (240718).pdf";
+      a.download = "Méthodologie.pdf";
       a.click();
       a.remove();
       setIsDownloadLoading(false);
