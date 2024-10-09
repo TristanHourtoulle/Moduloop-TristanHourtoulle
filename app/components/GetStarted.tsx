@@ -25,7 +25,7 @@ export const GetStarted = () => {
       color="primary"
       variant="shadow"
       size="lg"
-      className="text-md rounded-full outfit-regular px-[1.5%]"
+      className="text-md rounded-full outfit-regular px-[10%] lg:px-[1.5%]"
       onClick={() => {
         window.location.href = "/pages/projects/create";
       }}

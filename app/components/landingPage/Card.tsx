@@ -8,7 +8,7 @@ export type CardProps = {
 
 export const Card = ({ icon, title, description }: CardProps) => {
   return (
-    <div className="w-[450px] bg-white rounded-xl flex flex-col gap-4 items-start px-[5%] py-[5%] lg:px-[1.5%] lg:py-[1.5%] border-[1.5px] border-[#D0D0D0]">
+    <div className="w-full lg:w-[450px] bg-white rounded-xl flex flex-col gap-4 items-start px-[5%] py-[5%] lg:px-[1.5%] lg:py-[1.5%] border-[1.5px] border-[#D0D0D0]">
       {icon}
       <h1 className="w-full text-xl lg:text-2xl outfit-semibold text-start tertiary-color">
         {title.toUpperCase()}
