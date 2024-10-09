@@ -82,7 +82,7 @@ const Header = () => {
       <Logo />
 
       {/* Desktop View */}
-      <div className="hidden md:flex md:justify-between w-full">
+      <div className="hidden lg:flex lg:justify-between w-full">
         <div className="flex items-center justify-center w-full gap-7">
           <a
             href="/"
@@ -198,7 +198,7 @@ const Header = () => {
       </div>
 
       {/* Mobile View */}
-      <div className="flex grow items-center justify-end md:hidden">
+      <div className="flex grow items-center justify-end lg:hidden">
         <button
           className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400
             hover:bg-gray-100 hover/text-gray-500 focus:outline-none focus:ring-inset focus:ring-indigo-500"
@@ -210,7 +210,7 @@ const Header = () => {
       </div>
       {isMenuOpen && <div className="fixed inset-0 bg-black opacity-30" />}
       {isMenuOpen && (
-        <div className="absolute z-50 items-center justify-center inset-x-0 top-0 transform p-2 transition-all md:hidden rounded-xl mobile-menu w-full">
+        <div className="absolute z-50 items-center justify-center inset-x-0 top-0 transform p-2 transition-all lg:hidden rounded-xl mobile-menu w-full">
           <div className="rounder-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5 divide-y-2 divide-gray-50 mobile-menu">
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
