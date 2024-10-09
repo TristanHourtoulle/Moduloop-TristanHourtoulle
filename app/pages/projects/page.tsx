@@ -1,7 +1,6 @@
 "use client";
 
 import Loader from "@components/Loader";
-import { Title } from "@components/Title";
 import { ProjectCard } from "@components/projects/ProjectCard";
 import { getSession } from "@lib/session";
 import { GroupType } from "@models/Group";
@@ -16,7 +15,6 @@ import {
 } from "@utils/convert";
 import { getGroupById, getGroupsByUserId } from "@utils/database/group";
 import { getProjectsByUserId } from "@utils/database/project";
-import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -238,7 +236,16 @@ export default function Page() {
 
   return (
     <div>
-      <div className="flex flex-col lg:flex-row md:flex-row md:items-center justify-between lg:items-center mb-5">
+      <div className="flex flex-col items-start gap-2 mb-5">
+        <h1 className="outfit-semibold tertiary-color text-xl lg:text-4xl">
+          Vos projets d'aménagement
+        </h1>
+        <p className="outfit-regular text-md lg:text-lg tertiary-color">
+          Vous avez actuellement {projects ? projects.length.toString() : "0"}{" "}
+          projet(s).
+        </p>
+      </div>
+      {/* <div className="flex flex-col lg:flex-row md:flex-row md:items-center justify-between lg:items-center mb-5">
         <Title {...title} />
         <Button
           className="mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-full md:w-[30%] lg:w-[10%] text-lg rounded-lg"
@@ -250,7 +257,7 @@ export default function Page() {
         >
           Créer
         </Button>
-      </div>
+      </div> */}
 
       <div className="text-lg">
         <Select
@@ -258,8 +265,9 @@ export default function Page() {
           labelPlacement="inside"
           label="Filtrer par groupe"
           size="md"
-          color="primary"
-          className="w-full md:w-[50%] lg:w-[30%] font-medium"
+          color="secondary"
+          radius="full"
+          className="w-full lg:w-[30%] text-lg font-medium bg-white border-2 border-[#e54600] rounded-full !important outfit-regular"
           defaultOpen={false}
           onChange={(event) => {
             setSelectedGroup(Number(event.target.value));
@@ -273,7 +281,7 @@ export default function Page() {
               <SelectItem
                 key={group.id ?? "-2"}
                 value={group.id ?? "-3"}
-                className="text-black font-outfit text-lg"
+                className="text-black font-outfit text-xl"
               >
                 {group.name ?? "Aucun nom"}
               </SelectItem>
@@ -281,6 +289,18 @@ export default function Page() {
           </SelectSection>
         </Select>
       </div>
+
+      <Button
+        color="secondary"
+        variant="shadow"
+        size="lg"
+        className="flex lg:hidden text-md rounded-full w-full outfit-regular px-[10%] mt-2"
+        onClick={() => {
+          window.location.href = "/pages/projects/create";
+        }}
+      >
+        Créer mon projet
+      </Button>
 
       <div
         className={`flex items-center gap-4 md:gap-8 mt-[5%] md:mt-[2%] flex-wrap ${
