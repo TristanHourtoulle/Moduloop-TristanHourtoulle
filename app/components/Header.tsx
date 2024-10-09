@@ -8,6 +8,7 @@ import { Logo } from "./header/Logo";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { getSession, logout } from "@lib/session";
+import { Button } from "@nextui-org/button";
 import { LoginButton } from "./header/LoginButton";
 import { LogoIcon } from "./header/LogoIcon";
 
@@ -81,29 +82,31 @@ const Header = () => {
       <Logo />
 
       {/* Desktop View */}
-      <div className="hidden md:flex">
-        <div className="flex items-center gap-7">
+      <div className="hidden md:flex md:justify-between w-full">
+        <div className="flex items-center justify-center w-full gap-7">
           <a
             href="/"
             onClick={() => {
               setSelectedLink("/");
             }}
-            className={`nav-link ${
-              selectedLink === "/" ? "nav-link-selected" : "link-to-scale"
+            className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd] ${
+              selectedLink === "/"
+                ? "after:content-[''] after:absolute after:left-0 after:mx-auto after:bottom-[-4px] after:w-[75%] after:border-b-3 after:border-[#30c1bd] after:rounded-full"
+                : ""
             }`}
           >
             Accueil
           </a>
           {session && session.user && (
             <a
-              href="/pages/projects"
+              href="/"
               onClick={() => {
                 setSelectedLink("/pages/projects");
               }}
-              className={`nav-link ${
+              className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd] ${
                 selectedLink === "/pages/projects"
-                  ? "nav-link-selected"
-                  : "link-to-scale"
+                  ? "after:content-[''] after:absolute after:left-0 after:mx-auto after:bottom-[-4px] after:w-[75%] after:border-b-3 after:border-[#30c1bd] after:rounded-full"
+                  : ""
               }`}
             >
               Projets
@@ -111,14 +114,14 @@ const Header = () => {
           )}
           {session && session.user && (
             <a
-              href="/pages/methodology"
+              href="/"
               onClick={() => {
                 setSelectedLink("/pages/methodology");
               }}
-              className={`nav-link ${
+              className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd] ${
                 selectedLink === "/pages/methodology"
-                  ? "nav-link-selected"
-                  : "link-to-scale"
+                  ? "after:content-[''] after:absolute after:left-0 after:mx-auto after:bottom-[-4px] after:w-[75%] after:border-b-3 after:border-[#30c1bd] after:rounded-full"
+                  : ""
               }`}
             >
               Méthodologie
@@ -126,14 +129,14 @@ const Header = () => {
           )}
           {isAdmin && (
             <a
-              href="/pages/products"
+              href="/"
               onClick={() => {
                 setSelectedLink("/pages/products");
               }}
-              className={`nav-link ${
+              className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd] ${
                 selectedLink === "/pages/products"
-                  ? "nav-link-selected"
-                  : "link-to-scale"
+                  ? "after:content-[''] after:absolute after:left-0 after:mx-auto after:bottom-[-4px] after:w-[75%] after:border-b-3 after:border-[#30c1bd] after:rounded-full"
+                  : ""
               }`}
             >
               Produits
@@ -141,19 +144,20 @@ const Header = () => {
           )}
           {isAdmin && (
             <a
-              href="/pages/users"
+              href="/"
               onClick={() => {
                 setSelectedLink("/pages/users");
               }}
-              className={`nav-link ${
+              className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd] ${
                 selectedLink === "/pages/users"
-                  ? "nav-link-selected"
-                  : "link-to-scale"
+                  ? "after:content-[''] after:absolute after:left-0 after:mx-auto after:bottom-[-4px] after:w-[75%] after:border-b-3 after:border-[#30c1bd] after:rounded-full"
+                  : ""
               }`}
             >
               Utilisateurs
             </a>
           )}
+
           <a
             href="https://www.moduloop.com/contact/"
             onClick={(e) => {
@@ -164,25 +168,33 @@ const Header = () => {
               );
               if (newWindow) newWindow.opener = null;
             }}
+            className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd]`}
           >
-            <p className="nav-link">Contact</p>
+            Contact
           </a>
 
           <a
-            href=""
+            href="/"
             onClick={() => {
-              // setSelectedLink("/pages/users");
               handleLogout();
             }}
-            className={`nav-link ${
-              selectedLink === "/pages/users"
-                ? "nav-link-selected"
-                : "link-to-scale"
-            }`}
+            className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd]`}
           >
             Déconnexion
           </a>
         </div>
+
+        <Button
+          color="secondary"
+          variant="shadow"
+          size="lg"
+          className="text-md rounded-full outfit-regular px-[2%]"
+          onClick={() => {
+            window.location.href = "/pages/projects/create";
+          }}
+        >
+          Créer mon projet
+        </Button>
       </div>
 
       {/* Mobile View */}
