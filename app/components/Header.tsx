@@ -228,23 +228,35 @@ const Header = () => {
                 </div>
               </div>
               <div className="mt-6 ml-3">
-                <nav className="grid gap-y-8">
+                <nav className="grid gap-y-6">
                   <a href="/" className="">
-                    <p className="text-lg">Accueil</p>
+                    <p className="text-lg outfit-regular tertiary-color">
+                      Accueil
+                    </p>
                   </a>
                   <a href="/pages/projects" className="">
-                    <p className="text-lg">Projets</p>
+                    <p className="text-lg outfit-regular tertiary-color">
+                      Projets
+                    </p>
                   </a>
                   <a href="/pages/methodology" className="">
-                    <p className="text-lg">Méthodologie</p>
+                    <p className="text-lg outfit-regular tertiary-color">
+                      Méthodologie
+                    </p>
                   </a>
                   {isAdmin && (
-                    <a href="/pages/products" className="text-lg">
+                    <a
+                      href="/pages/products"
+                      className="text-lg outfit-regular tertiary-color"
+                    >
                       Produits
                     </a>
                   )}
                   {isAdmin && (
-                    <a href="/pages/users" className="text-lg">
+                    <a
+                      href="/pages/users"
+                      className="text-lg outfit-regular tertiary-color"
+                    >
                       Utilisateurs
                     </a>
                   )}
@@ -259,7 +271,9 @@ const Header = () => {
                       if (newWindow) newWindow.opener = null;
                     }}
                   >
-                    <p className="text-lg">Contact</p>
+                    <p className="text-lg outfit-regular tertiary-color">
+                      Contact
+                    </p>
                   </a>
                   <a
                     href=""
@@ -267,10 +281,21 @@ const Header = () => {
                       // setSelectedLink("/pages/users");
                       handleLogout();
                     }}
-                    className="text-lg"
+                    className="text-lg outfit-regular tertiary-color"
                   >
                     Déconnexion
                   </a>
+                  <Button
+                    color="secondary"
+                    variant="shadow"
+                    size="lg"
+                    className="w-full text-md rounded-full outfit-regular px-[2%]"
+                    onClick={() => {
+                      window.location.href = "/pages/projects/create";
+                    }}
+                  >
+                    Créer mon projet
+                  </Button>
                 </nav>
               </div>
             </div>

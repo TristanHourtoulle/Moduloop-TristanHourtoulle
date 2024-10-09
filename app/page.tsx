@@ -27,10 +27,10 @@ export default async function Home() {
     <div className="w-full">
       <div className="flex flex-col items-center gap-8 h-screen w-full">
         <div className="flex flex-col items-center gap-2 w-full">
-          <h1 className="w-full text-2xl md:text-4xl lg:text-5xl text-center outfit-bold tertiary-color">
+          <h1 className="w-full text-3xl md:text-4xl lg:text-5xl text-center outfit-bold tertiary-color">
             Calculateur d'impact environnemental
           </h1>
-          <p className="w-full text-md text-center outfit-regular tertiary-color">
+          <p className="w-full text-sm lg:text-md text-center outfit-regular tertiary-color">
             Ajoutez vos produits, et obtenez un estimatif de l'impact
             environnemental en quelques secondes.
           </p>
