@@ -99,7 +99,7 @@ const Header = () => {
           </a>
           {session && session.user && (
             <a
-              href="/"
+              href="/pages/projects"
               onClick={() => {
                 setSelectedLink("/pages/projects");
               }}
@@ -114,7 +114,7 @@ const Header = () => {
           )}
           {session && session.user && (
             <a
-              href="/"
+              href="/pages/methodology"
               onClick={() => {
                 setSelectedLink("/pages/methodology");
               }}
@@ -129,7 +129,7 @@ const Header = () => {
           )}
           {isAdmin && (
             <a
-              href="/"
+              href="/pages/products"
               onClick={() => {
                 setSelectedLink("/pages/products");
               }}
@@ -144,7 +144,7 @@ const Header = () => {
           )}
           {isAdmin && (
             <a
-              href="/"
+              href="/pages/users"
               onClick={() => {
                 setSelectedLink("/pages/users");
               }}
