@@ -18,10 +18,6 @@ function page() {
   const [value, setValue] = useState<Iterable<Key> | "all" | undefined>(
     undefined
   );
-  const [selectedKey, setSelectedKey] = useState(null); // Pour afficher la clé
-  const [groupName, setGroupName] = useState("");
-  const [groupDescription, setGroupDescription] = useState("");
-  const [groupBudget, setGroupBudget] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,21 +145,6 @@ function page() {
           </p>
         </div>
         {/* Input */}
-        {/* <div className="w-[100%]">
-          <label
-            htmlFor="name-createProject"
-            className="block mb-2 text-sm font-bold text-gray-900"
-          >
-            Nom
-          </label>
-          <input
-            style={{ width: "100%" }}
-            id="name-createProject"
-            type="text"
-            placeholder="Quel est le nom de votre projet ?"
-            className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
-          ></input>
-        </div> */}
         <Input
           type="text"
           id="name-createProject"
@@ -177,31 +158,6 @@ function page() {
         />
 
         <div className="flex flex-col gap-1 w-[100%]">
-          {/* <div className="w-[100%]">
-            <label
-              htmlFor="group-createProject"
-              className="block mb-2 text-sm font-bold text-gray-900"
-            >
-              Voulez-vous relié ce projet à un groupe ?
-            </label>
-
-            <select
-              onChange={handleGroupChange}
-              id="group-createProject"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-md md:text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-            >
-              <option className="" value={-1}>
-                Aucun Groupe
-              </option>
-              {Array.isArray(groups) &&
-                groups.map((group) => (
-                  <option key={group.id} value={group.id || -10}>
-                    {group.name}
-                  </option>
-                ))}
-              <option value="-2">Créer un nouveau groupe</option>
-            </select>
-          </div> */}
           <div>
             <Select
               items={groups}
@@ -215,7 +171,7 @@ function page() {
               defaultOpen={false}
               onSelectionChange={(selected) => {
                 setValue(selected as Iterable<Key> | "all");
-                const selectedAsString = Array.from(selected).join(","); // Si `selected` est un ensemble, le transformer en chaîne
+                const selectedAsString = Array.from(selected).join(",");
                 handleGroupChange(selectedAsString);
               }}
               selectedKeys={value}
@@ -232,26 +188,9 @@ function page() {
                 ))}
               </SelectSection>
             </Select>
-
-            {/* Affichage de la clé sélectionnée */}
-            {/* {value && (
-              <p className="mt-4">Clé de l'élément sélectionné : {value}</p>
-            )} */}
           </div>
 
           {createGroup && (
-            // <div className=" flex flex-col gap-1">
-            //   <label hidden htmlFor="group-NewGroup" className="form-label">
-            //     Nom du Groupe
-            //   </label>
-            //   <input
-            //     style={{ width: "100%" }}
-            //     id="group-NewGroup"
-            //     type="text"
-            //     placeholder="Quel est le nom de votre nouveau groupe ?"
-            //     className="text-left bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 "
-            //   ></input>
-            // </div>
             <Input
               type="text"
               id="group-NewGroup"
@@ -265,14 +204,6 @@ function page() {
             />
           )}
         </div>
-
-        {/* Cta */}
-        {/* <div
-          onClick={createProject}
-          className="py-2 px-4 border-2 border-[#30C1BD] rounded-[8px] bg-primary-transparent cursor-pointer transition-all duration-250 hover:opacity-50"
-        >
-          <p className="text-md md:text-lg font-bold text-[#30C1BD]">Créer</p>
-        </div> */}
         <div className="flex items-center justify-between w-full">
           <Button
             color="primary"
