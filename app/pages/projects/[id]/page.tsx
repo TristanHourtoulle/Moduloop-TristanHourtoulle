@@ -1,7 +1,6 @@
 "use client";
 
 import Loader from "@components/Loader";
-import { Title } from "@components/Title";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import ImpactSection from "@components/projects/ImpactSection";
 import ProductCardWithToaster from "@components/projects/ProductCard";
@@ -27,7 +26,7 @@ import {
   getProjectById,
 } from "@utils/database/project";
 import { getProductByBase } from "@utils/projects";
-import { Download } from "lucide-react";
+import { Download, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -45,6 +44,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   );
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [addProductLoader, setAddProductLoader] = useState<boolean>(false);
+  const [addProductLoaderAI, setAddProductLoaderAI] = useState<boolean>(false);
   const [storeProductsInies, setStoreProductsInies] = useState<ProductType[]>(
     []
   );
@@ -113,11 +113,17 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     }
   };
 
-  const addProductWithoutFormSubmit = async () => {
-    setAddProductLoader(true);
+  const addProductWithoutFormSubmit = async (origin: string) => {
     const productId = selectedProduct?.id ? selectedProduct?.id : null;
-    const qNew = document.getElementById("qNew-addProduct") as any;
-    const qUsed = document.getElementById("qUsed-addProduct") as any;
+    let qNew = document.getElementById("qNew-addProduct") as any;
+    let qUsed = document.getElementById("qUsed-addProduct") as any;
+    if (origin === "AI") {
+      setAddProductLoaderAI(true);
+      qNew = document.getElementById("qNew-addProduct-AI") as any;
+      qUsed = document.getElementById("qUsed-addProduct-AI") as any;
+    } else {
+      setAddProductLoader(true);
+    }
 
     if (
       !productId ||
@@ -139,6 +145,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
       "0";
     updateProductsInProject();
     setAddProductLoader(false);
+    setAddProductLoaderAI(false);
     toast.success("Le produit a été ajouté avec succès");
   };
 
@@ -179,12 +186,12 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     setStoreProductsAutres([]);
     setStoreProducts([]);
     if (productsData) {
-      let tempInies = getProductByBase(await productsData, "Autre");
+      let tempInies = getProductByBase(await productsData, "Inies");
       setStoreProductsInies(tempInies);
       if (tempInies.length > 0) {
         setSelectedProductId(tempInies[0].id);
       }
-      let tempAutres = getProductByBase(await productsData, "Inies");
+      let tempAutres = getProductByBase(await productsData, "Autre");
       setStoreProductsAutres(tempAutres);
       let tempResProducts: ProductType[] = [];
       tempResProducts.push(...tempInies);
@@ -344,9 +351,48 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   return (
     <div className="project-page w-full">
       {/* Header */}
-      <div className="flex flex-wrap gap-2 items-start md:items-center lg:items-center justify-between">
+      <div className="flex gap-2 items-start md:items-center lg:items-center justify-between w-full">
+        {/* Colonne gauche avec le titre et les informations */}
         <div className="flex items-center gap-3">
-          <Title {...title} />
+          {/* <Title {...title} /> */}
+          <Button
+            isIconOnly
+            color="danger"
+            onClick={handleDownloadProject}
+            size="lg"
+            className="text-md rounded-full outfit-regular w-full"
+          >
+            <X strokeWidth={1.5} />
+          </Button>
+          <h2 className="outfit-semibold text-4xl tertiary-color tracking-wider">
+            {project?.name}
+          </h2>
+          <Chip
+            size="lg"
+            color="primary"
+            variant="flat"
+            className="outfit-regular text-sm"
+          >
+            {project && project.groupInfo
+              ? project.groupInfo.name
+              : "N'appartient à aucun groupe"}
+          </Chip>
+        </div>
+
+        {/* Colonne droite avec les boutons */}
+        <div className="flex items-center gap-3 ml-auto">
+          <Button
+            color="primary"
+            startContent={
+              isDownloadLoading ? <Spinner /> : <Download strokeWidth={1.5} />
+            }
+            onClick={downloadPNG}
+            size="lg"
+            variant="ghost"
+            className="text-md rounded-full outfit-regular w-full"
+          >
+            Télécharger
+          </Button>
           <ShowInformations
             project={project}
             ctaSave={() => {
@@ -354,31 +400,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             }}
           />
         </div>
-        <Button
-          color="primary"
-          startContent={
-            isDownloadLoading ? (
-              <Spinner color="white" labelColor="foreground" size="sm" />
-            ) : (
-              <Download />
-            )
-          }
-          onClick={downloadPNG}
-          size="lg"
-          className="w-fit-content text-lg rounded-lg"
-        >
-          Télécharger
-        </Button>
       </div>
-      {/* Group Name And Link */}
-      <div className="flex gap-2 items-center mt-4 mb-1 md:mb-5 lg:mb-5">
-        <p className="text-md md:text-lg lg:text-lg font-bold">Groupe: </p>
-        <Chip size="lg" color="primary" variant="flat">
-          {project && project.groupInfo
-            ? project.groupInfo.name
-            : "Aucun Groupe"}
-        </Chip>
-      </div>
+
       {/* Products */}
       {project && productsInProject ? (
         <div className="mt-5">
@@ -386,16 +409,17 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
             <div className="flex md:items-end justify-between">
               <div className="flex flex-wrap md:items-end w-full">
                 {section === "products" && (
-                  <div className="flex flex-wrap gap-3 max-w-[300px] md:max-w-full">
-                    <div className="text-lg flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap gap-3 w-full items-center">
+                    <div className="text-lg flex flex-wrap items-center gap-2 w-full">
                       <Select
-                        items={storeProducts}
-                        labelPlacement="inside"
-                        label="Choisir un produit"
-                        size="sm"
-                        color="default"
+                        items={storeProductsInies}
+                        labelPlacement="outside"
+                        label="Aménagement intérieur"
+                        placeholder="ex: Cloison en plâtre"
+                        size="lg"
                         variant="bordered"
-                        className="w-[250px] max-w-[75%] text-lg bg-white rounded-[16px] font-outfit"
+                        radius="full"
+                        className="max-w-xs text-lg rounded-full bg-white font-outfit"
                         onChange={(event) => {
                           setSelectedProductId(parseInt(event.target.value));
                         }}
@@ -414,34 +438,130 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         type="text"
                         isReadOnly
                         label="Unité"
-                        labelPlacement="inside"
+                        labelPlacement="outside"
                         value={selectedProduct?.unit ?? ""}
                         variant="bordered"
-                        size="sm"
-                        className="w-[150px] max-w-[20%] text-lg bg-white rounded-[16px]"
+                        size="lg"
+                        radius="full"
+                        className="w-[150px] max-w-[20%] text-lg bg-white rounded-full outfit-regular"
                       />
                       <Input
                         type="number"
                         label="Quantité Neuve"
-                        labelPlacement="inside"
-                        size="sm"
-                        id="qNew-addProduct"
+                        labelPlacement="outside"
+                        size="lg"
+                        id="qNew-addProduct-AI"
                         min={0}
                         placeholder="0"
                         variant="bordered"
-                        className="w-[150px] text-lg bg-white rounded-[16px]"
+                        radius="full"
+                        className="w-[150px] text-lg bg-white rounded-full outfit-regular"
                       />
 
                       <Input
                         type="number"
                         label="Quantité Réemploi"
-                        labelPlacement="inside"
-                        id="qUsed-addProduct"
-                        size="sm"
+                        labelPlacement="outside"
+                        id="qUsed-addProduct-AI"
+                        size="lg"
                         min={0}
                         placeholder="0"
                         variant="bordered"
-                        className="w-[150px] text-md bg-white rounded-[16px]"
+                        radius="full"
+                        className="w-[150px] text-md bg-white rounded-full outfit-regular"
+                      />
+
+                      {addProductLoaderAI ? (
+                        <Loader />
+                      ) : (
+                        <Button
+                          color="primary"
+                          variant="ghost"
+                          className="text-md rounded-full outfit-regular mt-6"
+                          size="lg"
+                          onClick={() => {
+                            const qNew = document.getElementById(
+                              "qNew-addProduct-AI"
+                            ) as HTMLInputElement;
+                            const qUsed = document.getElementById(
+                              "qUsed-addProduct-AI"
+                            ) as HTMLInputElement;
+                            if (
+                              (qNew?.value === "0" && qUsed?.value === "0") ||
+                              (qNew?.value === "" && qUsed?.value === "")
+                            ) {
+                              toast.error(
+                                "Veuillez saisir une quantité valide"
+                              );
+                              return;
+                            }
+                            addProductWithoutFormSubmit("AI");
+                          }}
+                        >
+                          Ajouter
+                        </Button>
+                      )}
+                    </div>
+
+                    <div className="text-lg flex flex-wrap items-center gap-2 w-full">
+                      <Select
+                        items={storeProductsAutres}
+                        labelPlacement="outside"
+                        label="Mobilier"
+                        placeholder="ex: Chaise en bois et textile"
+                        size="lg"
+                        variant="bordered"
+                        radius="full"
+                        className="max-w-xs text-lg rounded-full bg-white font-outfit"
+                        onChange={(event) => {
+                          setSelectedProductId(parseInt(event.target.value));
+                        }}
+                      >
+                        {(product) => (
+                          <SelectItem
+                            key={product.id ?? -1}
+                            value={product.id ?? -1}
+                            className="text-black font-outfit text-lg"
+                          >
+                            {product.name?.replace("Inies - ", "")}
+                          </SelectItem>
+                        )}
+                      </Select>
+                      <Input
+                        type="text"
+                        isReadOnly
+                        label="Unité"
+                        labelPlacement="outside"
+                        value={selectedProduct?.unit ?? ""}
+                        variant="bordered"
+                        size="lg"
+                        radius="full"
+                        className="w-[150px] max-w-[20%] text-lg bg-white rounded-full outfit-regular"
+                      />
+                      <Input
+                        type="number"
+                        label="Quantité Neuve"
+                        labelPlacement="outside"
+                        size="lg"
+                        id="qNew-addProduct"
+                        min={0}
+                        placeholder="0"
+                        variant="bordered"
+                        radius="full"
+                        className="w-[150px] text-lg bg-white rounded-full outfit-regular"
+                      />
+
+                      <Input
+                        type="number"
+                        label="Quantité Réemploi"
+                        labelPlacement="outside"
+                        id="qUsed-addProduct"
+                        size="lg"
+                        min={0}
+                        placeholder="0"
+                        variant="bordered"
+                        radius="full"
+                        className="w-[150px] text-md bg-white rounded-full outfit-regular"
                       />
 
                       {addProductLoader ? (
@@ -450,8 +570,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                         <Button
                           color="primary"
                           variant="ghost"
-                          className="mt-3 md:mt-0 rounded-lg"
-                          size="md"
+                          className="text-md rounded-full outfit-regular mt-6"
+                          size="lg"
                           onClick={() => {
                             const qNew = document.getElementById(
                               "qNew-addProduct"
@@ -468,7 +588,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                               );
                               return;
                             }
-                            addProductWithoutFormSubmit();
+                            addProductWithoutFormSubmit("");
                           }}
                         >
                           Ajouter
@@ -497,49 +617,24 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                 productsInProject[0] && (
                   <Button
                     color="primary"
-                    variant="flat"
-                    size="md"
+                    size="lg"
+                    radius="full"
                     onClick={() => {
                       section === "products"
                         ? setSection("impact")
                         : setSection("products");
                     }}
-                    className="text-lg w-fit-content rounded-lg border-1 border-primary-500"
+                    className="text-lg w-fit-content rounded-full outfit-regular"
                   >
                     {section === "products"
                       ? "Afficher l'impact"
                       : "Afficher les produits"}
                   </Button>
                 )}
-              {section === "products" &&
-                productsInProject &&
-                productsInProject.length > 0 &&
-                productsInProject !== undefined &&
-                productsInProject[0] && (
-                  <Button
-                    color="danger"
-                    variant="flat"
-                    size="md"
-                    onClick={() => {
-                      setDialogOpen(true);
-                      updateProductsInProject();
-                    }}
-                    className="text-lg w-fit-content rounded-lg border-1 border-danger-500"
-                  >
-                    Supprimer tous les produits
-                  </Button>
-                  // <DeleteBtn
-                  //   text="Supprimer tous les produits"
-                  //   cta={() => {
-                  //     setDialogOpen(true);
-                  //     updateProductsInProject();
-                  //   }}
-                  // />
-                )}
             </div>
           </div>
           {section === "products" ? (
-            <div className="my-[5%] md:my-[2%] flex flex-wrap items-center justify-center gap-y-3 md:gap-5">
+            <div className="my-[5%] md:my-[2%] flex flex-wrap items-center justify-between gap-y-3 md:gap-5">
               {kartLoaded ? (
                 <Loader />
               ) : /* productCards */
@@ -548,7 +643,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                 productsInProject === undefined ||
                 !productsInProject[0] ? (
                 <div className="mt-10 flex flex-col gap-7 items-center justify-center">
-                  <p className="text">
+                  <p className="text outfit-regular">
                     Il n'y a pas de produits dans votre projet...
                   </p>
                 </div>

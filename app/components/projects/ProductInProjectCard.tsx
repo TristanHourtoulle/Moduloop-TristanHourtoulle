@@ -1,13 +1,14 @@
 import { AddProductType } from "@/models/AddProduct";
-import TrashCan from "@components/button/TrashCan";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
 import { Button } from "@nextui-org/button";
+import { Divider } from "@nextui-org/divider";
 import { Input } from "@nextui-org/input";
 import {
   deleteProductInProject,
   updateProductInProject,
 } from "@utils/database/project";
 
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -131,25 +132,31 @@ const ProductInProjectCard = (props: {
   }, []);
 
   return (
-    <div className="px-6 py-6 w-[300px] md:w-auto h-auto flex flex-col justify-between bg-white rounded-[16px] shadow-md transition-all duration-400">
+    <div className="px-6 py-6 max-w-[350px] md:w-auto h-auto flex flex-col justify-between bg-white rounded-[16px] shadow-md transition-all duration-400">
       {/* Header */}
       <div className="flex flex-wrap gap-5 item-center justify-between">
         <div className="flex flex-col items-start">
-          <p className="text-lg font-bold md:text-xl">
+          <p className="text-lg outfit-regular md:text-xl tertiary-color">
             {product.product?.[0]?.name?.replace("Inies - ", "")}
           </p>
-          <div className="flex items-center gap-2 text-md md:text-lg font-bold opacity-75">
+          <div className="flex items-center tertiary-color gap-2 text-md md:text-lg outfit-regular opacity-75">
             <p>{product.product?.[0]?.unit}</p>
             <p> - </p>
             <p>{base}</p>
           </div>
         </div>
-        <div onClick={handleDeleteProduct} className="cursor-pointer">
-          <TrashCan />
-        </div>
+        <Button
+          isIconOnly
+          aria-label="Supprimer"
+          color="danger"
+          onClick={handleDeleteProduct}
+          className="rounded-full bg-white border-[#FF0000] border-2 transition-all duration-300 ease-in-out hover:rotate-12"
+          size="lg"
+          variant="solid"
+        >
+          <Trash2 className="text-[#FF0000]" />
+        </Button>
       </div>
-
-      {/* <Divider className="opacity-75 my-[5%] md:my-[4%] max-w-[75%] ml-auto mr-auto" /> */}
 
       {/* Image */}
       <div className="flex justify-center">
@@ -161,32 +168,38 @@ const ProductInProjectCard = (props: {
         />
       </div>
 
+      <div className="w-full flex items-center justify-between mt-3">
+        <Divider className="flex-1 opacity-50 my-[5%] md:my-[4%]" />
+        <p className="outfit-light tertiary-color opacity-50 mx-10">Quantité</p>
+        <Divider className="flex-1 opacity-50 my-[5%] md:my-[4%]" />
+      </div>
+
       {/* Quantity */}
-      <div className="flex items-center justify-between mt-[5%] md:mt-[2%] gap-2">
+      <div className="flex items-center justify-between mt-[5%] md:mt-[2%] gap-2 tertiary-color">
         <Input
           type="number"
           label="Neuf"
-          labelPlacement="inside"
+          labelPlacement="outside"
           value={qNew.toString()}
           onChange={handleQNewChange}
           min={0}
-          variant="flat"
-          color="primary"
+          variant="bordered"
+          radius="full"
           size="md"
-          className="max-w-[50%]"
+          className=" tertiary-color outfit-regular"
         />
 
         <Input
           type="number"
           label="Réemploi"
-          labelPlacement="inside"
+          labelPlacement="outside"
           value={qUsed.toString()}
           onChange={handleQUsedChange}
           min={0}
-          variant="flat"
-          color="primary"
+          variant="bordered"
           size="md"
-          className="max-w-[50%]"
+          radius="full"
+          className=" tertiary-color outfit-regular text-right"
         />
       </div>
       {/* <div className="w-auto pt-[5%] ml-auto mr-auto">
@@ -206,8 +219,12 @@ const ProductInProjectCard = (props: {
         variant="ghost"
         size="md"
         className={
-          "ml-auto mr-auto mt-[5%] rounded-lg" + (isDifferent ? "" : " hidden")
+          "text-md rounded-full outfit-regular mt-6" +
+          (isDifferent ? "" : " hidden")
         }
+        // className={
+        //   "ml-auto mr-auto mt-[5%] rounded-lg" + (isDifferent ? "" : " hidden")
+        // }
         onClick={handleAdd}
       >
         Modifier

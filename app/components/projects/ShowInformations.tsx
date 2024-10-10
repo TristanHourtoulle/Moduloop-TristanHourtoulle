@@ -22,7 +22,7 @@ import { Label } from "@components/input/Label";
 import { Textarea } from "@components/input/TextArea";
 import { getGroupsByUserId } from "@utils/database/group";
 import { updateAllFieldsInProject } from "@utils/database/project";
-import Image from "next/image";
+import { Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -106,12 +106,24 @@ export const ShowInformations = ({
   return (
     <Sheet>
       <SheetTrigger>
-        <Image
+        {/* <Image
           src="/icons/Edit.svg"
           alt="Change"
           width={40}
           height={40}
           className="cursor-pointer hover:opacity-50 transition-opacity duration-200"
+        /> */}
+        {/* <Button2
+          color="primary"
+          startContent={<Settings strokeWidth={1.5} />}
+          size="lg"
+          variant="ghost"
+          className="text-md rounded-full outfit-regular px-0"
+        /> */}
+        <Settings
+          strokeWidth={1.5}
+          size={45}
+          className="cursor-pointer transition-opacity duration-200 px-2 py-2 rounded-full border-2 border-[#30c1bd] text-[#30c1bd] hover:bg-[#30c1bd] hover:bg-opacity-25"
         />
       </SheetTrigger>
 
