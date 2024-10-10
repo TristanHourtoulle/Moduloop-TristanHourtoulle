@@ -1,6 +1,5 @@
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -16,10 +15,10 @@ import {
   SelectValue,
 } from "@components/input/Select";
 
-import { Button } from "@components/button/Button";
 import { Input } from "@components/input/Input";
 import { Label } from "@components/input/Label";
 import { Textarea } from "@components/input/TextArea";
+import { Button as Button2 } from "@nextui-org/button";
 import { getGroupsByUserId } from "@utils/database/group";
 import { updateAllFieldsInProject } from "@utils/database/project";
 import { Settings } from "lucide-react";
@@ -36,6 +35,7 @@ export const ShowInformations = ({
   ctaSave,
 }: ShowInformationsProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSheetOpen, setIsSheetOpen] = useState<boolean>(false); // État pour contrôler la fermeture de la popup
   const [userGroups, setUserGroups] = useState<any[]>([]);
 
   const [selectedGroup, setSelectedGroup] = useState<string | null>(
@@ -81,12 +81,14 @@ export const ShowInformations = ({
         return;
       }
       ctaSave();
-      setIsLoading(false);
       toast.success("Les informations ont été sauvegardées avec succès.");
+      setIsSheetOpen(false); // Fermer la popup une fois la sauvegarde terminée
     } catch (error: any) {
       toast.error(
         "Une erreur est survenue au moment de la sauvegarde. Veuillez réessayer."
       );
+    } finally {
+      setIsLoading(false); // Arrêter le chargement même en cas d'erreur
     }
   };
 
@@ -104,22 +106,8 @@ export const ShowInformations = ({
   }, [project]);
 
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger>
-        {/* <Image
-          src="/icons/Edit.svg"
-          alt="Change"
-          width={40}
-          height={40}
-          className="cursor-pointer hover:opacity-50 transition-opacity duration-200"
-        /> */}
-        {/* <Button2
-          color="primary"
-          startContent={<Settings strokeWidth={1.5} />}
-          size="lg"
-          variant="ghost"
-          className="text-md rounded-full outfit-regular px-0"
-        /> */}
         <Settings
           strokeWidth={1.5}
           size={45}
@@ -127,92 +115,90 @@ export const ShowInformations = ({
         />
       </SheetTrigger>
 
-      {!isLoading && (
-        <SheetContent side={"right"}>
-          <SheetHeader>
-            <SheetTitle>Informations du projet</SheetTitle>
-            <SheetDescription>
-              Faites des modifications sur les informations de votre projet ici.
-              Cliquez sur "sauvegarder" une fois que vous avez mis à jour vos
-              données.
-            </SheetDescription>
-          </SheetHeader>
+      <SheetContent side={"right"} className="outfit-regular">
+        <SheetHeader>
+          <SheetTitle>Informations du projet</SheetTitle>
+          <SheetDescription>
+            Faites des modifications sur les informations de votre projet ici.
+            Cliquez sur "sauvegarder" une fois que vous avez mis à jour vos
+            données.
+          </SheetDescription>
+        </SheetHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Nom
-              </Label>
-              <Input
-                id="name"
-                value={selectedName ?? ""}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setSelectedName(event.target.value)
-                }
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="description" className="text-right">
-                Description
-              </Label>
-              <Textarea
-                id="description"
-                value={selectedDescription ?? ""}
-                className="col-span-3"
-                onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-                  setSelectedDescription(event.target.value)
-                }
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="group" className="text-right">
-                Groupe
-              </Label>
-              <div style={{ width: "150px" }}>
-                <Select onValueChange={(value) => setSelectedGroup(value)}>
-                  <SelectTrigger className="w-full">
-                    {project.groupInfo ? (
-                      <SelectValue placeholder={project.groupInfo.name} />
-                    ) : (
-                      <SelectValue placeholder="Aucun Groupe" />
-                    )}
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={"-1"}>Aucun Groupe</SelectItem>
-                    {userGroups &&
-                      Array.isArray(userGroups) &&
-                      userGroups.length > 0 &&
-                      userGroups.map((group) => (
-                        <SelectItem key={group.id} value={group.id}>
-                          {group.name}
-                        </SelectItem>
-                      ))}
-                  </SelectContent>
-                </Select>
-              </div>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Nom
+            </Label>
+            <Input
+              id="name"
+              value={selectedName ?? ""}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setSelectedName(event.target.value)
+              }
+              className="col-span-3"
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="description" className="text-right">
+              Description
+            </Label>
+            <Textarea
+              id="description"
+              value={selectedDescription ?? ""}
+              className="col-span-3"
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setSelectedDescription(event.target.value)
+              }
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="group" className="text-right">
+              Groupe
+            </Label>
+            <div style={{ width: "150px" }}>
+              <Select onValueChange={(value) => setSelectedGroup(value)}>
+                <SelectTrigger className="w-full">
+                  {project.groupInfo ? (
+                    <SelectValue placeholder={project.groupInfo.name} />
+                  ) : (
+                    <SelectValue placeholder="Aucun Groupe" />
+                  )}
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value={"-1"}>Aucun Groupe</SelectItem>
+                  {userGroups &&
+                    Array.isArray(userGroups) &&
+                    userGroups.length > 0 &&
+                    userGroups.map((group) => (
+                      <SelectItem key={group.id} value={group.id}>
+                        {group.name}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
+        </div>
 
-          <SheetFooter>
-            <SheetClose asChild>
-              {(backupData.name !== selectedName ||
-                backupData.description !== selectedDescription ||
-                String(backupData.group) !== selectedGroup) && (
-                <Button
-                  variant="secondary"
-                  onClick={handleSaveChanges}
-                  image={null}
-                  size="small"
-                  content="Enregistrer"
-                  disabled={isLoading}
-                  moreClasses="ml-auto mr-auto"
-                />
-              )}
-            </SheetClose>
-          </SheetFooter>
-        </SheetContent>
-      )}
+        <SheetFooter>
+          {(backupData.name !== selectedName ||
+            backupData.description !== selectedDescription ||
+            String(backupData.group) !== selectedGroup) && (
+            <Button2
+              color="primary"
+              size="lg"
+              onClick={handleSaveChanges}
+              disabled={isLoading}
+              radius="full"
+              className="w-full"
+              isLoading={isLoading}
+            >
+              Sauvegarder
+            </Button2>
+          )}
+        </SheetFooter>
+      </SheetContent>
     </Sheet>
   );
 };
