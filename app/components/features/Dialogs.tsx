@@ -21,7 +21,7 @@ export const Dialogs = (props: DialogsProps) => {
     <Transition.Root show={open} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-10 outfit-regular"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
