@@ -12,53 +12,48 @@ const carouselProducts = [
     id: 1,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/1.svg",
+    imageUrl: "/Landing Page/ImpactExempleOne.svg",
     link: "",
   },
   {
     id: 2,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/2.svg",
+    imageUrl: "/Landing Page/ImpactExempleTwo.svg",
     link: "",
   },
   {
     id: 3,
     name: "",
     price: "",
-    imageUrl: "/icons/Carrousels/3.svg",
-    link: "",
-  },
-  {
-    id: 4,
-    name: "",
-    price: "",
-    imageUrl: "/icons/Carrousels/4.svg",
+    imageUrl: "/Landing Page/ImpactExempleThree.svg",
     link: "",
   },
 ];
 
 export function Carousel() {
   return (
-    <section className="py-12 w-[80%] md:w-[45%] md:mr-[2.5%] mb-[50%] md:mb-0">
-      <div className=" w-full">
+    <section className="w-[90%] md:w-[70%] mt-0">
+      <div className="w-full">
         <Swiper
-          className="rounded-lg w-full w-[90%]"
+          className="rounded-lg w-full"
           loop={true}
           autoplay={{ delay: 5000, disableOnInteraction: false }}
           cardsEffect={{ slideShadows: false }}
           effect={"cards"}
           grabCursor={true}
           modules={[Autoplay, EffectCreative]}
+          spaceBetween={0} // Enlève tout espacement entre les slides
         >
           {carouselProducts.map((image, index) => (
-            <SwiperSlide key={index} className="">
-              <div className="flex items-center justify-start md:justify-end">
+            <SwiperSlide key={index} className="flex justify-center">
+              <div className="flex items-center justify-center">
                 <Image
                   src={image.imageUrl}
                   alt={image.name}
                   className=""
-                  width={500}
+                  width={1300} // Augmente la taille ici
+                  height={350} // Ajuste la hauteur également
                 />
               </div>
             </SwiperSlide>

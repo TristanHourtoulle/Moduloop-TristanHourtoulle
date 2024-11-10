@@ -25,6 +25,7 @@ export const CompareImpact = (props: CompareImpactProps) => {
   const [impact, setImpact] = useState<string>("rc");
   const [image, setImage] = useState<string>("/icons/ecologie.svg");
   const [bgColor, setBgColor] = useState<string>("rgba(255, 138, 0, 0.1)");
+  const [textColor, setTextColor] = useState<string>("rgba(255, 138, 0, 1)");
   const [finalPercentage, setFinalPercentage] = useState<string>(
     percentage.toString()
   );
@@ -61,6 +62,7 @@ export const CompareImpact = (props: CompareImpactProps) => {
         setWorstProject(project_two);
       }
       setBgColor("rgba(255, 48, 48, 0.1)");
+      setTextColor("rgba(255, 48, 48, 1)");
     } else if (type === "Acidification des sols et eaux") {
       setTitle("acidifications évitées");
       setImpact("ase");
@@ -75,6 +77,7 @@ export const CompareImpact = (props: CompareImpactProps) => {
         setWorstProject(project_two);
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
+      setTextColor("rgba(85, 215, 137, 1)");
     } else {
       additionalClasses = "mt-[5%]";
       setTitle("Eutrophisation évitée");
@@ -90,33 +93,35 @@ export const CompareImpact = (props: CompareImpactProps) => {
         setWorstProject(project_two);
       }
       setBgColor("rgba(0, 164, 16, 0.1)");
+      setTextColor("rgba(85, 215, 137, 1)");
     }
     setMoreClasses(additionalClasses);
   }, [project_one, project_two]);
 
   return (
-    <div className="w-full min-h-60 flex flex-col gap-5 impact-section-card">
+    <div className="w-full flex flex-col gap-5 impact-section-card p-[10px] lg:p-[20px]">
       <h2
-        className={`text-lg lg:text-2xl xl:text-3xl font-bold ${moreClasses}`}
+        className={`outfit-semibold text-xl lg:text-3xl`}
+        style={{ color: textColor }}
       >
-        Estimatif d'impact de vos projets <br></br>
-        <span className="opacity-50">{type}</span>
+        {type}
       </h2>
-      <div className="flex flex-wrap items-center justify-center gap-5 md:gap-10">
+
+      <div className="flex flex-wrap items-center justify-center xl:justify-between gap-5 md:gap-10">
         {/* Ecologie Card */}
-        <div className="px-8 py-4 bg-[#4AD860] flex flex-col items-start justify-center gap-2 rounded-[10px] drop-shadow-lg w-[30%] min-w-[250px] ">
-          <h3 className="uppercase font-semibold text-lg lg:text-xl xl:text-2xl text-white opacity-95">
+        <div className="px-8 py-4 bg-[#30C17B] flex flex-col items-center justify-center gap-2 rounded-[45px] drop-shadow-lg w-full lg:w-[30%] min-w-[250px] h-[125px]">
+          <h3 className="uppercase text-lg lg:text-xl text-white text-center outfit-regular">
             {title}
           </h3>
           <div className="flex items-center gap-5">
             <Image
               src={image}
               alt="Ecologie"
-              width={60}
-              height={60}
+              width={50}
+              height={50}
               className="drop-shadow-lg"
             />
-            <p className="text-white font-bold text-3xl lg:text-4xl xl:text-5xl">
+            <p className="text-white outfit-bold text-lg lg:text-4xl">
               {percentage.toFixed(0)}%
             </p>
           </div>

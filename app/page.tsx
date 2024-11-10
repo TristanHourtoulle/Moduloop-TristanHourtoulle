@@ -1,3 +1,4 @@
+import { Carousel } from "@components/Carousel";
 import { GetStarted } from "@components/GetStarted";
 import { Card, NoticeCard, SmallerCard } from "@components/landingPage/Card";
 import { Header } from "@components/landingPage/Header";
@@ -12,7 +13,6 @@ import {
   ShoppingCart,
   TrendingDown,
 } from "lucide-react";
-import Image from "next/image";
 
 export default async function Home() {
   const session: SessionType = await getSession();
@@ -38,12 +38,7 @@ export default async function Home() {
 
         <GetStarted />
 
-        <Image
-          src="/Landing Page/ImpactExempleOne.svg"
-          alt="Impact environnemental"
-          width={1000}
-          height={1000}
-        />
+        <Carousel />
       </div>
 
       <div className="flex flex-col items-center w-full gap-8">

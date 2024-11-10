@@ -14,9 +14,11 @@ export const LoginButton = () => {
     //   size="large"
     // />
     <Button
-      variant="shadow"
       color="primary"
-      size="md"
+      size="lg"
+      radius="full"
+      variant="ghost"
+      className="text-lg outfit-regular"
       onClick={() => (window.location.href = "/pages/login")}
     >
       Se connecter

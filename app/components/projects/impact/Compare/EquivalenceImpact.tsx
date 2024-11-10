@@ -53,7 +53,6 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
     getCO2impact(project).toString()
   );
 
-
   useEffect(() => {
     if (impactType === "RC" && type && type != undefined) {
       setImpactValue(getCO2impact(project).toString());
@@ -81,19 +80,19 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
   }, [project, worstProject, impactType, type, value1, value2, value3]);
 
   return (
-    <div className="w-full min-h-60 flex flex-col gap-2 md:gap-5 items-center md:items-start">
+    <div className="w-full flex flex-col gap-2 md:gap-3 items-center md:items-start">
       <div className="flex flex-col items-center md:items-start">
         {type && type != undefined && impactType === "RC" && (
-          <p className="text-lg lg:text-2xl xl:text-3xl font-bold opacity-70">
+          <p className="outfit-regular text-lg tertiary-color">
             Réchauffement climatique
           </p>
         )}
         {type && type != undefined && impactType === "ERF" && (
-          <p className="text-lg lg:text-2xl xl:text-3xl font-bold opacity-70 text-center">
+          <p className="outfit-regular text-lg tertiary-color">
             Epuisement des Ressources Fossiles
           </p>
         )}
-        <h2 className="text-lg lg:text-2xl xl:text-3xl mt-[5%] font-bold text-center">
+        <h2 className="text-lg lg:text-2xl xl:text-3xl outfit-regular tertiary-color text-center">
           {!type || type === undefined
             ? `En choisissant ${project.name}, `
             : " "}
@@ -105,7 +104,7 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
           à:
         </h2>
       </div>
-      <div className="flex flex-wrap items-center w-full justify-center gap-2 md:gap-5 mb-[5%]">
+      <div className="flex flex-wrap items-center w-full justify-center lg:justify-between gap-2 md:gap-5">
         <CardEquivalenceImpact
           project={project}
           title={title1}

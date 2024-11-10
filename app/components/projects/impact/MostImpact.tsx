@@ -1,8 +1,8 @@
 "use client";
 
-import { Button } from "@components/button/Button";
 import { ProductImpact } from "@models/Impact";
 import { ProjectType } from "@models/Project";
+import { Button as Button2 } from "@nextui-org/button";
 import { Select, SelectItem, SelectSection } from "@nextui-org/select";
 import {
   getASEendOfLife,
@@ -154,14 +154,21 @@ export const MostImpact = (props: MostImpactProps) => {
   };
 
   return (
-    <div className="w-full min-h-60 flex flex-col gap-2 md:gap-5 p-6 bg-[#e9e9e9] rounded-[16px]">
+    <div className="w-full min-h-60 flex flex-col gap-2 md:gap-5 p-6 bg-white rounded-[45px] border-2 border-[#D0D0D0]">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 text-center md:text-start md:gap-0">
-        <h2 className="text-xl font-bold md:text-4xl opacity-90">
-          Les produits les plus impactants
-        </h2>
-        <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start md:gap-5 md:mt-4 xl:mt-0">
-          <Button
+      <div className="flex flex-wrap items-start lg:items-center justify-between gap-2 lg:text-center md:gap-0">
+        <div className="flex flex-col gap-1 items-start w-full lg:max-w-[70%]">
+          <h2 className="text-xl md:text-3xl tertiary-color outfit-regular">
+            Les produits les plus impactants
+          </h2>
+          <p className="text-xs lg:text-md tertiary-color outfit-regular opacity-75">
+            Les 4 types d’impact disponible sont: réchauffement climatique,
+            épuisement des ressources fossiles, acidification des sols et Eaux
+            ainsi que l’eutrophisation marine
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-2 md:justify-end md:gap-5 md:mt-4 xl:mt-0">
+          {/* <Button
             variant="primary"
             onClick={() => {
               window.location.href = "https://www.moduloop.com/contact/";
@@ -171,8 +178,8 @@ export const MostImpact = (props: MostImpactProps) => {
             image={null}
             size="medium"
             moreClasses="border-2 border-[#E9E9E9]"
-          />
-          <Button
+          /> */}
+          {/* <Button
             variant="secondary"
             onClick={() => ctaView("products")}
             content="Modifier le projet"
@@ -180,22 +187,34 @@ export const MostImpact = (props: MostImpactProps) => {
             image={null}
             size="medium"
             moreClasses=""
-          />
+          /> */}
+
+          <Button2
+            onClick={() => ctaView("products")}
+            color="primary"
+            variant="ghost"
+            radius="full"
+            className="px-[25px] text-lg outfit-regular"
+            size="md"
+          >
+            Modifier le projet
+          </Button2>
         </div>
       </div>
 
       {/* TODO: Replace this by a select option like on the projects page */}
       {/* Nav */}
-      <div className="text-lg">
+      <div className="text-sm lg:text-lg">
         <Select
           items={listImpact}
-          labelPlacement="inside"
-          label="Impact Choisi"
+          labelPlacement="outside"
+          label="Choisir un type d'impact"
           size="lg"
-          color="primary"
-          className="w-full md:w-[50%] lg:w-[30%] font-medium text-lg"
+          variant="bordered"
+          radius="full"
+          className="w-full md:w-[50%] lg:w-[50%] text-lg outfit-regular"
           defaultOpen={false}
-          defaultSelectedKeys={"rc"}
+          placeholder="Réchauffement Climatique"
           onChange={(event: any) => {
             if (event.target.value === "Réchauffement Climatique")
               setView("rc");
@@ -211,7 +230,7 @@ export const MostImpact = (props: MostImpactProps) => {
               setView("em");
           }}
         >
-          <SelectSection title={"Vos groupes"} className="text-black">
+          <SelectSection className="tertiary-color">
             {/* <SelectItem key={-1} value={-1}>
               Tous les groupes
             </SelectItem> */}
@@ -227,44 +246,10 @@ export const MostImpact = (props: MostImpactProps) => {
           </SelectSection>
         </Select>
       </div>
-      {/* <div className="flex flex-wrap items-center gap-2 md:gap-10">
-        <p
-          className={`font-bold transition-all text-lg ${getOpacity("rc")}`}
-          onClick={() => {
-            setView("rc");
-          }}
-        >
-          Réchauffement Climatique
-        </p>
-        <p
-          className={`font-bold transition-all text-lg ${getOpacity("erf")}`}
-          onClick={() => {
-            setView("erf");
-          }}
-        >
-          Epuisement des Ressources Fossiles
-        </p>
-        <p
-          className={`font-bold transition-all text-lg ${getOpacity("ase")}`}
-          onClick={() => {
-            setView("ase");
-          }}
-        >
-          Acidification des Sols et des Eaux
-        </p>
-        <p
-          className={`font-bold transition-all text-lg ${getOpacity("em")}`}
-          onClick={() => {
-            setView("em");
-          }}
-        >
-          Eutrophisation Marine
-        </p>
-      </div> */}
 
       {/* All cards */}
       {productWithMostImpact !== null && (
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-4 md:gap-1 md:mt-0">
+        <div className="flex flex-wrap items-center justify-center gap-3 mt-4 md:gap-1 md:mt-0 w-full">
           {productWithMostImpact[0] &&
             productWithMostImpact[0].product &&
             productWithMostImpact[0].product.product && (

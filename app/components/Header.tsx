@@ -59,7 +59,7 @@ const Header = () => {
       } else if (actualPage.includes("users")) {
         setSelectedLink("/pages/users");
       } else if (actualPage.includes("methodology")) {
-        setSelectedLink("/methodology");
+        setSelectedLink("/pages/methodology");
       } else {
         setSelectedLink("/");
       }

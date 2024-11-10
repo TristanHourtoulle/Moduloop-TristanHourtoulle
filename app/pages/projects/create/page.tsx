@@ -18,6 +18,7 @@ function page() {
   const [value, setValue] = useState<Iterable<Key> | "all" | undefined>(
     undefined
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +27,12 @@ function page() {
       if (data) {
         await setIdUser(data.user.id);
       } else {
-        console.error("Failed to fetch user:", data.error);
+        toast.warning(
+          "Vous devez être connecté pour accéder à cette page, vous allez être redirigé automatiquement."
+        );
+        setTimeout(() => {
+          window.location.href = "/pages/login";
+        }, 3000);
       }
     };
     fetchData();
@@ -60,6 +66,7 @@ function page() {
 
   const createProject = async () => {
     try {
+      setIsLoading(true);
       const nameProject = document.getElementById(
         "name-createProject"
       ) as HTMLInputElement;
@@ -69,12 +76,14 @@ function page() {
 
       if (!nameProject.value) {
         alert("Veuillez renseigner le nom du projet.");
+        setIsLoading(false);
         return;
       } else if (
         nameProject.value.length <= 0 ||
         nameProject.value.length >= 49
       ) {
         alert("Le nom du projet doit contenir entre 1 et 50 caractères.");
+        setIsLoading(false);
         return;
       }
 
@@ -113,15 +122,15 @@ function page() {
 
         if (data) {
           const createdProject = data;
-          toast.success("Le projet a bien été créé !");
-          setTimeout(() => {
-            window.location.href = "/pages/projects/" + createdProject.id;
-          }, 1000);
+          setIsLoading(false);
+          window.location.href = "/pages/projects/" + createdProject.id;
         } else {
+          setIsLoading(false);
           alert("Failed to create project.");
         }
       }
     } catch (error) {
+      setIsLoading(false);
       console.error("Failed to create project:", error);
     } finally {
     }
@@ -133,13 +142,13 @@ function page() {
 
   return (
     <div>
-      <div className="border-2 border-[#D0D0D0] border-opacity-50 mt-[10%] md:mt-[3%] flex flex-col gap-5 px-8 py-4 bg-white items-start justify-center w-[75%] md:w-[50%] lg-[50%] rounded-lg mt-auto mb-auto ml-auto mr-auto">
+      <div className="border-2 border-[#D0D0D0] border-opacity-50 mt-[10%] md:mt-[3%] flex flex-col gap-5 px-8 py-4 bg-white items-start justify-center w-full lg:w-[50%] rounded-lg mt-auto mb-auto ml-auto mr-auto">
         {/* Header */}
         <div className="flex flex-col items-start gap-1">
-          <h1 className="outfit-regular text-4xl tertiary-color">
+          <h1 className="outfit-regular text-2xl lg:text-4xl tertiary-color">
             Créer votre projet
           </h1>
-          <p className="text-md outfit-light tertiary-color opacity-50">
+          <p className="text-sm lg:text-md outfit-light tertiary-color opacity-50">
             Remplissez les champs obligatoire (*) et cliquer sur le bouton
             "créer".
           </p>
@@ -150,7 +159,7 @@ function page() {
           id="name-createProject"
           placeholder="Quel est le nom de votre projet ?"
           variant="bordered"
-          className="outfit-regular text-lg tertiary-color w-[100%]"
+          className="outfit-regular text-sm lg:text-lg tertiary-color w-[100%]"
           size="lg"
           label="Nom de votre projet"
           labelPlacement="outside"
@@ -207,7 +216,9 @@ function page() {
         <div className="flex items-center justify-between w-full">
           <Button
             color="primary"
-            onClick={() => {}}
+            onClick={() => {
+              history.back();
+            }}
             size="lg"
             variant="ghost"
             className="text-md rounded-full outfit-regular px-[10%] mt-2"
@@ -219,6 +230,7 @@ function page() {
             onClick={createProject}
             size="lg"
             className="text-md rounded-full outfit-regular px-[10%] mt-2"
+            isLoading={isLoading}
           >
             Créer
           </Button>

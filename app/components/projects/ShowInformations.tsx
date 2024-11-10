@@ -19,6 +19,7 @@ import { Input } from "@components/input/Input";
 import { Label } from "@components/input/Label";
 import { Textarea } from "@components/input/TextArea";
 import { Button as Button2 } from "@nextui-org/button";
+import { Tooltip } from "@nextui-org/tooltip";
 import { getGroupsByUserId } from "@utils/database/group";
 import { updateAllFieldsInProject } from "@utils/database/project";
 import { Settings } from "lucide-react";
@@ -108,11 +109,26 @@ export const ShowInformations = ({
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger>
-        <Settings
-          strokeWidth={1.5}
-          size={45}
-          className="cursor-pointer transition-opacity duration-200 px-2 py-2 rounded-full border-2 border-[#30c1bd] text-[#30c1bd] hover:bg-[#30c1bd] hover:bg-opacity-25"
-        />
+        <Tooltip
+          content={
+            <div className="px-1 py-2 max-w-[300px]">
+              <div className="text-sm outfit-regular">
+                {
+                  "Accéder aux paramètres de votre projet. Vous pourrez modifier le nom de votre projet, le groupe auquel il appartient, ou encore la description."
+                }
+              </div>
+            </div>
+          }
+          showArrow={false}
+          color="default"
+          className="categorize"
+        >
+          <Settings
+            strokeWidth={1.5}
+            size={45}
+            className="cursor-pointer transition-opacity duration-200 px-2 py-2 rounded-full border-2 border-[#30c1bd] text-[#30c1bd] hover:bg-[#30c1bd] hover:bg-opacity-25"
+          />
+        </Tooltip>
       </SheetTrigger>
 
       <SheetContent side={"right"} className="outfit-regular">
@@ -125,7 +141,7 @@ export const ShowInformations = ({
           </SheetDescription>
         </SheetHeader>
 
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 py-4 outfit-regular text-xs lg:text-md">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               Nom

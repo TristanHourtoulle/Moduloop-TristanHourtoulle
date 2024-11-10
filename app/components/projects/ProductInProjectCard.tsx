@@ -28,6 +28,7 @@ const ProductInProjectCard = (props: {
   const [isDifferent, setIsDifferent] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [base, setBase] = useState<string>("Inies");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dialogProps: DialogsProps = {
     title: "Supprimer ce produit du projet",
@@ -46,6 +47,7 @@ const ProductInProjectCard = (props: {
   }, [qNewReceived, qUsedReceived]); // Exécuter l'effet chaque fois que qNewReceived ou qUsedReceived change
 
   const handleAdd = async () => {
+    setIsLoading(true);
     const addProduct: AddProductType = {
       product: product.product,
       idProject: idProject,
@@ -58,19 +60,21 @@ const ProductInProjectCard = (props: {
     let res = await updateProductInProject(addProduct);
 
     if (res) {
-      toast.success(
-        "Quantité correctement modifié ! La page va se recharger...",
-        { duration: 2000 }
-      );
+      // toast.success(
+      //   "Quantité correctement modifié ! La page va se recharger...",
+      //   { duration: 2000 }
+      // );
       setInitialQNew(qNew);
       setInitialQUsed(qUsed);
       setIsDifferent(false);
       ctaDelete();
+      setIsLoading(false);
     } else {
       console.error("Erreur lors de l'ajout du produit au projet");
       toast.error("Erreur lors de l'ajout du produit au projet.", {
         duration: 2000,
       });
+      setIsLoading(false);
     }
   };
 
@@ -218,13 +222,11 @@ const ProductInProjectCard = (props: {
         color="primary"
         variant="ghost"
         size="md"
+        isLoading={isLoading}
         className={
           "text-md rounded-full outfit-regular mt-6" +
           (isDifferent ? "" : " hidden")
         }
-        // className={
-        //   "ml-auto mr-auto mt-[5%] rounded-lg" + (isDifferent ? "" : " hidden")
-        // }
         onClick={handleAdd}
       >
         Modifier

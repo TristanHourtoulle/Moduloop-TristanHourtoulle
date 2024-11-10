@@ -46,23 +46,25 @@ export const CardImpactProject = (props: CardImpactProjectProps) => {
   });
 
   return (
-    <div className="px-8 py-4 bg-white flex flex-col justify-center gap-2 rounded-[10px] drop-shadow-lg w-[30%] min-w-[250px] ">
-      <h3 className="uppercase font-semibold text-lg lg:text-xl xl:text-2xl text-black opacity-95">
+    <div className="px-8 py-4 bg-white flex flex-col items-center justify-center gap-2 rounded-[45px] drop-shadow-lg w-full lg:w-[30%] min-w-[250px] ">
+      <h3 className="uppercase text-lg lg:text-xl tertiary-color text-center outfit-regular">
         {project.name}
       </h3>
       <div className="flex items-center gap-5">
         <Image
           src={image}
           alt="Ecologie"
-          width={60}
-          height={60}
+          width={50}
+          height={50}
           className="drop-shadow-lg"
         />
         <div className="flex flex-wrap items-end gap-2">
-          <p className="text-black font-bold text-xl lg:text-2xl xl:text-4xl">
+          <p className="text-black outfit-regular text-lg lg:text-4xl">
             {result.replace(".", ",")}
           </p>
-          <p className="text-black font-regular text-md xl:text-xl">{unit}</p>
+          <p className="text-black outfit-light text-sm lg:text-lg opacity-50">
+            {unit}
+          </p>
         </div>
       </div>
     </div>

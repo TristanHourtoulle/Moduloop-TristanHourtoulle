@@ -17,7 +17,7 @@ import { Chip } from "@nextui-org/chip";
 import { Divider } from "@nextui-org/divider";
 import { Input } from "@nextui-org/input";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Spinner } from "@nextui-org/spinner";
+import { Tooltip } from "@nextui-org/tooltip";
 import { getGroupById } from "@utils/database/group";
 import { getProductById, getProducts } from "@utils/database/product";
 import {
@@ -63,7 +63,7 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
     null
   );
   const [value, setValue] = useState(new Set([]));
-  const [isDownloadLoading, setIsDownloadLoading] = useState(false);
+  const [isDownloadLoading, setIsDownloadLoading] = useState<boolean>(false);
 
   const { downloadPNG } = useRenderPNG({
     project,
@@ -351,27 +351,27 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   return (
     <div className="project-page w-full">
       {/* Header */}
-      <div className="flex gap-2 items-start md:items-center lg:items-center justify-between w-full">
+      <div className="flex flex-col lg:flex-row gap-2 items-start lg:items-center justify-between w-full">
         {/* Colonne gauche avec le titre et les informations */}
         <div className="flex items-center gap-3">
           {/* <Title {...title} /> */}
           <Button
             isIconOnly
             color="danger"
-            onClick={handleDownloadProject}
+            onClick={() => history.back()}
             size="lg"
             className="text-md rounded-full outfit-regular w-full"
           >
             <X strokeWidth={1.5} />
           </Button>
-          <h2 className="outfit-semibold text-4xl tertiary-color tracking-wider">
+          <h2 className="outfit-semibold text-xl lg:text-4xl tertiary-color tracking-wider">
             {project?.name}
           </h2>
           <Chip
             size="lg"
             color="primary"
             variant="flat"
-            className="outfit-regular text-sm"
+            className="outfit-regular text-xs lg:text-sm"
           >
             {project && project.groupInfo
               ? project.groupInfo.name
@@ -380,25 +380,66 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
         </div>
 
         {/* Colonne droite avec les boutons */}
-        <div className="flex items-center gap-3 ml-auto">
-          <Button
-            color="primary"
-            startContent={
-              isDownloadLoading ? <Spinner /> : <Download strokeWidth={1.5} />
+        <div className="flex items-center gap-3 lg:ml-auto">
+          <Tooltip
+            content={
+              <div className="px-1 py-2 max-w-[300px]">
+                <div className="text-sm outfit-regular">
+                  {
+                    "Télécharge un fichier contenant un récapitulatif complet de votre projet. C'est-à-dire l'ensemble des produits et de leur quantité, l'impact de ce projet ainsi que des comparaisons avec d'autres projets."
+                  }
+                </div>
+              </div>
             }
-            onClick={downloadPNG}
-            size="lg"
-            variant="ghost"
-            className="text-md rounded-full outfit-regular w-full"
+            showArrow={true}
+            color="default"
+            className="categorize"
           >
-            Télécharger
-          </Button>
-          <ShowInformations
-            project={project}
-            ctaSave={() => {
-              updateProductsInProject();
-            }}
-          />
+            <Button
+              color="primary"
+              startContent={
+                isDownloadLoading === false ? (
+                  <Download strokeWidth={1.5} />
+                ) : (
+                  <></>
+                )
+              }
+              onClick={() => {
+                setIsDownloadLoading(true);
+                downloadPNG().then(() => {
+                  setIsDownloadLoading(false);
+                });
+              }}
+              size="lg"
+              variant="ghost"
+              className="text-md rounded-full outfit-regular w-full"
+              isLoading={isDownloadLoading}
+            >
+              Télécharger
+            </Button>
+          </Tooltip>
+
+          <Tooltip
+            content={
+              <div className="px-1 py-2 max-w-[300px]">
+                <div className="text-sm outfit-regular">
+                  {
+                    "Accéder aux paramètres de votre projet. Vous pourrez modifier le nom de votre projet, le groupe auquel il appartient, ou encore la description."
+                  }
+                </div>
+              </div>
+            }
+            showArrow={true}
+            color="default"
+            className="categorize"
+          >
+            <ShowInformations
+              project={project}
+              ctaSave={() => {
+                updateProductsInProject();
+              }}
+            />
+          </Tooltip>
         </div>
       </div>
 
@@ -501,6 +542,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                           Ajouter
                         </Button>
                       )}
+                    </div>
+
+                    <div className="flex lg:hidden items-center justify-center w-full">
+                      <Divider />
                     </div>
 
                     <div className="text-lg flex flex-wrap items-center gap-2 w-full">
@@ -627,8 +672,8 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                     className="text-lg w-fit-content rounded-full outfit-regular"
                   >
                     {section === "products"
-                      ? "Afficher l'impact"
-                      : "Afficher les produits"}
+                      ? "Calculer l'impact"
+                      : "Revenir au(x) produit(s)"}
                   </Button>
                 )}
             </div>

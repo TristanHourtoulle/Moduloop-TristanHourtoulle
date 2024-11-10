@@ -581,7 +581,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
             margin: 0,
           }}
         >
-          Impact Global
+          Impact Global du projet {project.name}
         </h2>
 
         <div
@@ -1470,6 +1470,9 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
             style={{
               margin: 0,
               fontWeight: 500,
+              lineHeight: "1.5", // Ajuste l'espacement des lignes pour améliorer la lisibilité
+              fontSize: "40px", // Ajuste la taille de la police
+              wordWrap: "break-word", // Permet de couper les mots si nécessaire
             }}
           >
             En choisissant {project.name}, Vous évitez:&nbsp;
@@ -1872,6 +1875,9 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
             style={{
               margin: 0,
               fontWeight: 500,
+              lineHeight: "1.5", // Ajuste l'espacement des lignes pour améliorer la lisibilité
+              fontSize: "40px", // Ajuste la taille de la police
+              wordWrap: "break-word", // Permet de couper les mots si nécessaire
             }}
           >
             En choisissant {project.name}, Vous évitez:&nbsp;
@@ -2660,6 +2666,9 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
             style={{
               margin: 0,
               fontWeight: 500,
+              lineHeight: "1.5", // Ajuste l'espacement des lignes pour améliorer la lisibilité
+              fontSize: "40px", // Ajuste la taille de la police
+              wordWrap: "break-word", // Permet de couper les mots si nécessaire
             }}
           >
             En choisissant {project.name + " (TOUT EN réemploi)".toUpperCase()},
@@ -3064,6 +3073,9 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
             style={{
               margin: 0,
               fontWeight: 500,
+              lineHeight: "1.5", // Ajuste l'espacement des lignes pour améliorer la lisibilité
+              fontSize: "40px", // Ajuste la taille de la police
+              wordWrap: "break-word", // Permet de couper les mots si nécessaire
             }}
           >
             En choisissant {project.name + " Tout en réemploi".toUpperCase()},

@@ -22,6 +22,7 @@ import {
   convertProjectToNewProducts,
   convertProjectToUsedProducts,
 } from "@utils/projects";
+import { ArrowLeft } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { CompareImpact } from "./impact/Compare/CompareImpact";
@@ -69,6 +70,7 @@ const ImpactSection = (props: {
   const [petrolEquivalent, setPetrolEquivalent] = useState<number>(0);
   const [lampEquivalent, setLampEquivalent] = useState<number>(0);
   const [houseEquivalent, setHouseEquivalent] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getEquivalenceWithoutCompare = () => {
     if (project === null) return;
@@ -235,6 +237,7 @@ const ImpactSection = (props: {
   }, [compareWith, project?.products]);
 
   const handleCreateProjectFromTemplate = async () => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("name", compareWith?.name ?? "");
     formData.append("products", JSON.stringify(compareWith?.products));
@@ -247,8 +250,10 @@ const ImpactSection = (props: {
     });
     let data = await result.json();
     if (data.success) {
+      setIsLoading(false);
       toast.success("Le projet a été créé avec succès.");
     } else {
+      setIsLoading(false);
       toast.error("Une erreur est survenue lors de la création du projet.");
     }
   };
@@ -261,14 +266,15 @@ const ImpactSection = (props: {
           <div className="flex flex-wrap items-center w-full gap-5">
             <Button
               color="primary"
-              variant="flat"
-              size="lg"
+              size="md"
+              radius="full"
               onClick={() => {
                 ctaView("products");
               }}
-              className="text-lg px-7 rounded-lg border-1 border-primary-500"
+              startContent={<ArrowLeft />}
+              className="text-md w-fit-content rounded-full outfit-regular px-[3%]"
             >
-              Afficher les produits
+              Revenir au(x) produit(s)
             </Button>
 
             <Select
@@ -276,9 +282,11 @@ const ImpactSection = (props: {
               labelPlacement="inside"
               label="Comparer avec un autre projet"
               size="md"
-              color="primary"
-              className="font-medium max-w-[300px]"
+              variant="bordered"
+              placeholder="Ne pas comparer"
+              className="max-w-xs text-lg rounded-full bg-white font-outfit"
               defaultOpen={false}
+              radius="full"
               onChange={(event) => {
                 if (projects === null) return;
                 if (event.target.value === "-1") {
@@ -361,25 +369,40 @@ const ImpactSection = (props: {
                   ))}
               </SelectSection>
             </Select>
-            {/* If the compareWith are actualProjectNew or actualProjectReuse, we have to permit the creation of that project */}
-            {isCompareWithTemplate && (
-              <Button
-                color="primary"
-                variant="light"
-                size="md"
-                onClick={handleCreateProjectFromTemplate}
-                className="text-lg w-fit-content rounded-lg"
-              >
-                Créer ce projet
-              </Button>
-            )}
           </div>
         </div>
 
+        {/* If the compareWith are actualProjectNew or actualProjectReuse, we have to permit the creation of that project */}
+        {isCompareWithTemplate && (
+          <div className="flex flex-col items-start lg:flex-row lg:items-center lg:justify-start gap-4 lg:gap-8 outfit-regular">
+            <p className="text-lg lg:text-3xl tertiary-color">
+              Vous comparez{" "}
+              <span className="primary-color outfit-semibold">
+                {project.name}
+              </span>{" "}
+              à{" "}
+              <span className="primary-color outfit-semibold">
+                {compareWith?.name}
+              </span>
+            </p>
+            <Button
+              color="primary"
+              variant="ghost"
+              size="md"
+              onClick={handleCreateProjectFromTemplate}
+              radius="full"
+              className="px-[5%] text-md w-full lg:w-auto rounded-full"
+              isLoading={isLoading}
+            >
+              Voulez-vous créer ce projet ?
+            </Button>
+          </div>
+        )}
+
         {isLoaded && isCompare && compareWith && (
           <div
-            className="p-[10px] md:p-[20px] rounded-[16px]"
-            style={{ backgroundColor: "rgba(255, 138, 0, 0.25)" }}
+            className="p-[15px] md:p-[30px] rounded-[45px]"
+            style={{ backgroundColor: "rgba(254, 158, 88, 0.25)" }}
           >
             {isCompare && compareWith && (
               <CompareImpact
@@ -411,8 +434,8 @@ const ImpactSection = (props: {
 
         {isLoaded && isCompare && compareWith && (
           <div
-            className="p-[20px] rounded-[16px]"
-            style={{ backgroundColor: "rgba(255, 48, 48, 0.25)" }}
+            className="p-[20px] rounded-[45px]"
+            style={{ backgroundColor: "rgba(254, 88, 88, 0.25)" }}
           >
             {isCompare && compareWith && (
               <CompareImpact
@@ -431,7 +454,7 @@ const ImpactSection = (props: {
                 value3={houseEquivalent}
                 title1="pétrol brut"
                 title2="éclairage d'un lampadaire"
-                title3="chauffage"
+                title3="Chauffage"
                 unit1="Barils"
                 unit2="Années"
                 unit3="Jours"
@@ -444,8 +467,8 @@ const ImpactSection = (props: {
 
         {isLoaded && isCompare && compareWith && (
           <div
-            className="p-[20px] rounded-[16px]"
-            style={{ backgroundColor: "rgba(0, 164, 16, 0.25)" }}
+            className="p-[20px] rounded-[45px]"
+            style={{ backgroundColor: "rgba(85, 215, 137, 0.25)" }}
           >
             {isCompare && compareWith && (
               <CompareImpact
@@ -474,55 +497,63 @@ const ImpactSection = (props: {
         )}
 
         {isLoaded && !isCompare && (
-          <div
-            className="p-[10px] md:p-[20px] rounded-[16px]"
-            style={{ backgroundColor: "rgba(255, 138, 0, 0.25)" }}
-          >
-            <EquivalenceImpact
-              project={project}
-              worstProject={project}
-              value1={planeEquivalent}
-              value2={personEquivalent}
-              value3={kmEquivalent}
-              title1="paris - nice"
-              title2="émission journalière"
-              title3="kms parcourus"
-              unit1="Aller-Retour"
-              unit2="Français"
-              unit3="Kms"
-              type="Don't compare"
-              impactType="RC"
-              impactUnit="kg éq. CO2"
-            />
-          </div>
+          <>
+            <h2 className="text-xl md:text-4xl">Equivalence d'impact</h2>
+            <div
+              className="p-[10px] md:p-[20px] rounded-[45px]"
+              style={{ backgroundColor: "rgba(254, 158, 88, 0.25)" }}
+            >
+              <EquivalenceImpact
+                project={project}
+                worstProject={project}
+                value1={planeEquivalent}
+                value2={personEquivalent}
+                value3={kmEquivalent}
+                title1="paris - nice"
+                title2="émission journalière"
+                title3="kms parcourus"
+                unit1="Aller-Retour"
+                unit2="Français"
+                unit3="Kms"
+                type="Don't compare"
+                impactType="RC"
+                impactUnit="kg éq. CO2"
+              />
+            </div>
+          </>
         )}
 
         {isLoaded && !isCompare && (
-          <div
-            className="p-[10px] md:p-[20px] rounded-[16px]"
-            style={{ backgroundColor: "rgba(255, 48, 48, 0.25)" }}
-          >
-            <EquivalenceImpact
-              project={project}
-              worstProject={project}
-              value1={petrolEquivalent}
-              value2={lampEquivalent}
-              value3={Number(getNumbersOnly(convertTime(houseEquivalent)))}
-              title1="pétrol brut"
-              title2="éclairage d'un lampadaire"
-              title3="Consommation électrique d'un foyer"
-              unit1="Barils"
-              unit2="Années"
-              unit3={getNonNumbers(convertTime(houseEquivalent))}
-              type="Don't compare"
-              impactType="ERF"
-              impactUnit="MJ"
-            />
-          </div>
+          <>
+            <div
+              className="p-[10px] md:p-[20px] rounded-[45px]"
+              style={{ backgroundColor: "rgba(254, 88, 88, 0.25)" }}
+            >
+              <EquivalenceImpact
+                project={project}
+                worstProject={project}
+                value1={petrolEquivalent}
+                value2={lampEquivalent}
+                value3={Number(getNumbersOnly(convertTime(houseEquivalent)))}
+                title1="pétrol brut"
+                title2="éclairage d'un lampadaire"
+                title3="Chauffage"
+                unit1="Barils"
+                unit2="Années"
+                unit3={getNonNumbers(convertTime(houseEquivalent))}
+                type="Don't compare"
+                impactType="ERF"
+                impactUnit="MJ"
+              />
+            </div>
+          </>
         )}
 
         {isLoaded && !isCompare && (
-          <MostImpact project={project} ctaView={ctaView} />
+          <>
+            <h2 className="text-lg md:text-4xl">Classement</h2>
+            <MostImpact project={project} ctaView={ctaView} />
+          </>
         )}
 
         {!isLoaded && <Loader />}
