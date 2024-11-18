@@ -4,9 +4,9 @@ import "@styles/globals.css";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-export const runtime = "nodejs";
+// export const dynamic = "force-dynamic"; // Permet un comportement dynamique pour les routes
+// export const revalidate = 60; // Revalidation toutes les 60 secondes
+// export const runtime = "nodejs";
 
 export const metadata: Metadata = {
   title: "Moduloop - Impact",
@@ -24,14 +24,17 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icons/logoImage.png" />
       </head>
-      <body className="min-h-[100vh] w-full bg-[#F6F6F6] px-[5%] p-0">
+      <body
+        className="min-h-[100vh] w-full bg-[#F6F6F6] px-[5%] p-0"
+        suppressHydrationWarning={true} // Utile pour éviter des erreurs lors de l'hydratation
+      >
         <div
           className="mb-3 md:mb-10 lg:mb-10"
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Header />
         </div>
-        <div className="">
+        <div>
           <Toaster
             richColors
             position="top-center"
