@@ -1,6 +1,7 @@
 "use client";
 
 import { SessionType } from "@models/Session";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -84,7 +85,7 @@ const Header = () => {
       {/* Desktop View */}
       <div className="hidden lg:flex lg:justify-between w-full">
         <div className="flex items-center justify-center w-full gap-7">
-          <a
+          <Link
             href="/"
             onClick={() => {
               setSelectedLink("/");
@@ -96,9 +97,9 @@ const Header = () => {
             }`}
           >
             Accueil
-          </a>
+          </Link>
           {session && session.user && (
-            <a
+            <Link
               href="/pages/projects"
               onClick={() => {
                 setSelectedLink("/pages/projects");
@@ -110,10 +111,10 @@ const Header = () => {
               }`}
             >
               Projets
-            </a>
+            </Link>
           )}
           {session && session.user && (
-            <a
+            <Link
               href="/pages/methodology"
               onClick={() => {
                 setSelectedLink("/pages/methodology");
@@ -125,10 +126,10 @@ const Header = () => {
               }`}
             >
               Méthodologie
-            </a>
+            </Link>
           )}
           {isAdmin && (
-            <a
+            <Link
               href="/pages/products"
               onClick={() => {
                 setSelectedLink("/pages/products");
@@ -140,10 +141,10 @@ const Header = () => {
               }`}
             >
               Produits
-            </a>
+            </Link>
           )}
           {isAdmin && (
-            <a
+            <Link
               href="/pages/users"
               onClick={() => {
                 setSelectedLink("/pages/users");
@@ -155,10 +156,10 @@ const Header = () => {
               }`}
             >
               Utilisateurs
-            </a>
+            </Link>
           )}
 
-          <a
+          <Link
             href="https://www.moduloop.com/contact/"
             onClick={(e) => {
               e.preventDefault();
@@ -171,9 +172,9 @@ const Header = () => {
             className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd]`}
           >
             Contact
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/"
             onClick={() => {
               handleLogout();
@@ -181,7 +182,7 @@ const Header = () => {
             className={`outfit-regular text-md tertiary-color relative transition-all hover:text-[#30c1bd]`}
           >
             Déconnexion
-          </a>
+          </Link>
         </div>
 
         <Button
