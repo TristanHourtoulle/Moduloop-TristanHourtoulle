@@ -5,15 +5,13 @@ import { ProjectCard } from "@components/projects/ProjectCard";
 import { getSession } from "@lib/session";
 import { GroupType } from "@models/Group";
 import { ProjectType } from "@models/Project";
-import { TitleType } from "@models/Title";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem, SelectSection } from "@nextui-org/select";
 import {
-  databaseToGroupModel,
   databaseToProjectModel,
   databaseToSeveralGroupModel,
 } from "@utils/convert";
-import { getGroupById, getGroupsByUserId } from "@utils/database/group";
+import { getGroupsByUserId } from "@utils/database/group";
 import { getProjectsByUserId } from "@utils/database/project";
 import { useEffect, useState } from "react";
 
@@ -24,214 +22,121 @@ export default function Page() {
   );
   const [groups, setGroups] = useState<GroupType[]>([]);
   const [selectedGroup, setSelectedGroup] = useState(-1);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<{ id: string } | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userSession, getUserSession] = useState(null);
 
-  useEffect(() => {
-    if (backupProjects !== null) {
-      setProjects(filterProjects());
-    }
-  }, [selectedGroup, backupProjects]);
+  // Filtrer les projets selon le groupe sélectionné
+  const filteredProjects =
+    selectedGroup === -1
+      ? projects
+      : projects
+      ? projects.filter((project) => project.groupInfo?.id === selectedGroup)
+      : null;
 
-  const updateProjects = async () => {
-    const fetchGroup = async (id_user: string) => {
-      let res = await getGroupsByUserId(Number(id_user));
-      if (res) {
-        let groupData = databaseToSeveralGroupModel(res);
-        const backupGroup = {
-          id: -1,
-          name: "Tous les groupes",
-          description: "",
-          budget: "0",
-          user_id: Number(id_user),
-          image: "",
-        };
-        groupData.push(backupGroup);
-        await setGroups(groupData.reverse());
-      } else {
-        console.error("Failed to fetch groups:", res.error);
-      }
-    };
+  const fetchGroupsAndProjects = async (userId: string) => {
+    try {
+      setIsLoading(true);
 
-    setIsLoading(true);
-    // Get User Session
-    let res = await getSession();
-    const session = await res;
-    if (!session) {
-      console.error("Failed to fetch session:", session.error);
-      alert(session.error);
-    } else {
-      await setUser(session.user);
-      await fetchGroup(session.user.id);
-      // Get Projects
-      res = await getProjectsByUserId(session.user.id);
-      const data = await res;
-      if (data) {
-        let projectsData = databaseToProjectModel(data);
-        for (let i = 0; i < projectsData.length; i++) {
-          // Get Group By Id
-          if (
-            projectsData === null ||
-            projectsData[i] === null ||
-            projectsData[i].group === null
-          ) {
-            break;
-          }
-          res = getGroupById(projectsData[i].group ?? 0);
-          const groupData = await res;
-          if (groupData) {
-            const groupInfo = databaseToGroupModel(groupData);
-            if (groupInfo && groupInfo.id) {
-              projectsData[i].groupInfo = groupInfo;
-            } else {
-              const tempGroupInfo: GroupType = {
-                id: -1,
-                name: "Aucun Groupe",
-                description: "",
-                budget: "0",
-                user_id: session.user.id,
-                image: "",
-              };
-              projectsData[i].groupInfo = tempGroupInfo;
-            }
-          } else {
-            console.error("Failed to fetch groups:", groupData.error);
-          }
-        }
-        setProjects(projectsData);
-        setBackupProjects(projectsData); // Sauvegarder les projets initiaux
-        setIsLoading(false);
-      } else {
-        // pas de projet créé
-        setProjects([]);
-        setBackupProjects([]);
-        setIsLoading(false);
-      }
+      // Récupération des groupes et projets en parallèle
+      const [groupRes, projectRes] = await Promise.all([
+        getGroupsByUserId(Number(userId)),
+        getProjectsByUserId(Number(userId)),
+      ]);
+
+      // Traiter les groupes
+      const groupData = groupRes
+        ? databaseToSeveralGroupModel(groupRes).concat({
+            id: -1,
+            name: "Tous les groupes",
+            description: "",
+            budget: "0",
+            user_id: Number(userId),
+            image: "",
+          })
+        : [];
+
+      // Traiter les projets et inclure les informations de groupe
+      const projectsData = projectRes
+        ? databaseToProjectModel(projectRes).map((project) => {
+            const groupInfo = groupData.find(
+              (group) => group.id === project.group
+            ) || {
+              id: -1,
+              name: "Aucun Groupe",
+              description: "",
+              budget: "0",
+              user_id: Number(userId),
+              image: "",
+            };
+            return { ...project, groupInfo };
+          })
+        : [];
+
+      // Mettre à jour les états
+      setGroups(groupData.reverse());
+      setProjects(projectsData);
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     const fetchSession = async () => {
-      const temp = await getSession();
+      try {
+        setIsLoading(true);
+        const session = await getSession();
 
-      if (temp && !temp.user.name.includes("undefined")) {
-        getUserSession(temp);
-        fetchData();
-        return;
-      }
-      window.location.href = "/";
-    };
-
-    const fetchGroup = async (id_user: string) => {
-      let res = await getGroupsByUserId(Number(id_user));
-      const data = await res;
-      if (data) {
-        let groupData = databaseToSeveralGroupModel(data);
-        const backupGroup = {
-          id: -1,
-          name: "Aucun Groupe",
-          description: "",
-          budget: "0",
-          user_id: Number(id_user),
-          image: "",
-        };
-        groupData.push(backupGroup);
-        await setGroups(groupData.reverse());
-      } else {
-        // pas de groupe créé
-      }
-    };
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      // Get User Session
-      let res = await getSession();
-      const session = await res;
-      if (!session) {
-        console.error("Failed to fetch session:", session.error);
-        alert(session.error);
-      } else {
-        await setUser(session.user);
-        await fetchGroup(session.user.id);
-        // Get Projects
-        res = await getProjectsByUserId(session.user.id);
-        const data = await res;
-        if (data) {
-          let projectsData = databaseToProjectModel(data);
-          for (let i = 0; i < projectsData.length; i++) {
-            // Get Group By Id
-            if (
-              projectsData === null ||
-              projectsData[i] === null ||
-              projectsData[i].group === null
-            ) {
-              break;
-            }
-            res = await getGroupById(projectsData[i].group ?? 0);
-            const groupData = await res;
-            if (groupData) {
-              const groupInfo = databaseToGroupModel(groupData);
-              if (groupInfo && groupInfo.id) {
-                projectsData[i].groupInfo = groupInfo;
-              } else {
-                const tempGroupInfo: GroupType = {
-                  id: -1,
-                  name: "Aucun Groupe",
-                  description: "",
-                  budget: "0",
-                  user_id: session.user.id,
-                  image: "",
-                };
-                projectsData[i].groupInfo = tempGroupInfo;
-              }
-            } else {
-              console.error("Failed to fetch groups:", groupData.error);
-            }
-          }
-          setProjects(projectsData);
-          setBackupProjects(projectsData); // Sauvegarder les projets initiaux
+        if (session && session.user) {
+          setUser(session.user);
+          await fetchGroupsAndProjects(session.user.id);
         } else {
-          // pas de projet créé
-          setProjects([]);
-          setBackupProjects([]);
+          console.error("Failed to fetch session");
+          window.location.href = "/";
         }
+      } catch (error) {
+        console.error("Failed to fetch session:", error);
+        window.location.href = "/";
+      } finally {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
-    setIsLoading(true);
     fetchSession();
-    setIsLoading(false);
   }, []);
 
-  const filterProjects = () => {
-    if (backupProjects === null) return [];
-    if (selectedGroup === -1) {
-      return backupProjects;
-    } else {
-      const tempProjects: ProjectType[] = [];
-      for (let i = 0; i < backupProjects.length; i++) {
-        if (
-          backupProjects &&
-          backupProjects[i] &&
-          backupProjects[i].groupInfo &&
-          backupProjects[i].groupInfo?.id === selectedGroup
-        ) {
-          tempProjects.push(backupProjects[i]);
-        }
-      }
-      return tempProjects;
-    }
+  // // Fonction pour mettre à jour la liste des projets
+  // const updateProjects = async () => {
+  //   if (user) {
+  //     await fetchGroupsAndProjects(user.id);
+  //   }
+  // };
+
+  const handleDeleteLocal = (deletedProjectId: number) => {
+    setProjects(
+      (prevProjects) =>
+        prevProjects?.filter((project) => project.id !== deletedProjectId) ??
+        null
+    );
   };
 
-  const title: TitleType = {
-    title: "Vos projets",
-    image: "/icons/but.svg",
-    number: projects ? projects.length.toString() : "0",
-    back: "#",
-    canChange: false,
-    id_project: undefined,
+  const handleAddDuplicate = (duplicatedProject: any, baseId: number) => {
+    console.log("duplicatedProject:", duplicatedProject);
+    // Récupérer les informations groupInfo du projet original
+    const groupInfo = projects?.find(
+      (project) => project.id === baseId
+    )?.groupInfo;
+
+    // Remplacer groupInfo par le groupInfo du projet original
+    duplicatedProject.groupInfo = groupInfo ?? null;
+    console.log("duplicatedProject With groupInfo:", duplicatedProject);
+
+    // Ajouter le projet dupliqué à la liste des projets et au début de la liste
+    setProjects((prevProjects) =>
+      prevProjects ? [duplicatedProject, ...prevProjects] : [duplicatedProject]
+    );
   };
 
   return (
@@ -317,7 +222,8 @@ export default function Page() {
               <ProjectCard
                 key={index}
                 project={project}
-                ctaUpdate={updateProjects}
+                ctaUpdate={handleAddDuplicate}
+                ctaDelete={handleDeleteLocal}
               />
             );
           })

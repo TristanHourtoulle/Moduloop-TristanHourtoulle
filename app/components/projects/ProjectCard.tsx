@@ -7,11 +7,12 @@ import { useState } from "react";
 
 export type ProjectCardProps = {
   project: any;
-  ctaUpdate: () => void;
+  ctaUpdate: (res: any, baseId: number) => void;
+  ctaDelete: (id: number) => void;
 };
 
 export const ProjectCard = (props: ProjectCardProps) => {
-  const { project, ctaUpdate } = props;
+  const { project, ctaUpdate, ctaDelete } = props;
   const group = project.groupInfo;
   const showProjectUrl = "/pages/projects/" + project.id;
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,7 +31,7 @@ export const ProjectCard = (props: ProjectCardProps) => {
   const handleDeleteProject = async (id: number) => {
     let res = await deleteProject(id);
     if (res) {
-      ctaUpdate();
+      ctaDelete(id);
       setIsOpenDialog(false);
     } else {
       alert("FAILED");
@@ -40,8 +41,9 @@ export const ProjectCard = (props: ProjectCardProps) => {
 
   const handleDuplicateProject = async (id: number) => {
     let res = await duplicateProject(id);
+    console.log("res:", res);
     if (res) {
-      ctaUpdate();
+      ctaUpdate(res, id); // Passe le projet dupliqué à la fonction de mise à jour
     } else {
       alert("FAILED");
     }

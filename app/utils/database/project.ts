@@ -160,10 +160,12 @@ export const duplicateProject = async (id: number) => {
     method: "POST",
   });
 
-  if (response.ok) {
-    return true;
+  const data = await response.json();
+  console.log("data:", data);
+  if (data.success && data.data) {
+    return data.data;
   }
-  return false;
+  return null;
 };
 
 export const duplicateProjectFromTemplate = async (formData: FormData) => {
