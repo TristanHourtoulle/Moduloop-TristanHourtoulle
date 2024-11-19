@@ -1,29 +1,25 @@
 "use client";
 
-import Loader from "@components/Loader";
 import { ProjectCard } from "@components/projects/ProjectCard";
 import {
   useGroups,
   useProjects,
   useUpdateQueryCache,
-} from "@hooks/useGroupsAndProjects"; // Les hooks React Query créés
-import { getSession } from "@lib/session"; // Conserver la logique de session
+} from "@hooks/useGroupsAndProjects";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem, SelectSection } from "@nextui-org/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function Page() {
-  const [selectedGroup, setSelectedGroup] = useState<number>(-1); // ID du groupe sélectionné
-  const [user, setUser] = useState<{ id: string } | null>(null);
+export default function ClientPage({ user }: { user: { id: string } }) {
+  const [selectedGroup, setSelectedGroup] = useState<number>(-1);
 
-  const { data: groups = [], isLoading: isGroupsLoading } = useGroups(
-    user?.id ?? ""
-  ); // Récupère les groupes via React Query
+  // Utilisation des données avec React Query
+  const { data: groups = [], isLoading: isGroupsLoading } = useGroups(user.id);
   const { data: projects = [], isLoading: isProjectsLoading } = useProjects(
-    user?.id ?? "",
+    user.id,
     groups
-  ); // Récupère les projets via React Query
-  const { updateProjects } = useUpdateQueryCache(); // Hook pour mettre à jour le cache local
+  );
+  const { updateProjects } = useUpdateQueryCache();
 
   // Filtrer les projets selon le groupe sélectionné
   const filteredProjects =
@@ -31,32 +27,13 @@ export default function Page() {
       ? projects
       : projects.filter((project) => project.groupInfo?.id === selectedGroup);
 
-  // Gestion de session utilisateur
-  useEffect(() => {
-    const fetchSession = async () => {
-      try {
-        const session = await getSession();
-        if (session && session.user) {
-          setUser(session.user);
-        } else {
-          console.error("Failed to fetch session");
-          window.location.href = "/";
-        }
-      } catch (error) {
-        console.error("Failed to fetch session:", error);
-        window.location.href = "/";
-      }
-    };
-    fetchSession();
-  }, []);
-
-  // Fonction pour ajouter un projet dupliqué localement
+  // Fonction pour ajouter un projet dupliqué
   const handleAddDuplicate = (duplicatedProject: any, baseId: number) => {
     const groupInfo = projects.find(
       (project) => project.id === baseId
     )?.groupInfo;
     const newProject = { ...duplicatedProject, groupInfo };
-    updateProjects(user?.id ?? "", [newProject, ...projects]); // Met à jour le cache localement
+    updateProjects(user.id, [newProject, ...projects]);
   };
 
   // Fonction pour supprimer un projet localement
@@ -64,7 +41,7 @@ export default function Page() {
     const updatedProjects = projects.filter(
       (project) => project.id !== deletedProjectId
     );
-    updateProjects(user?.id ?? "", updatedProjects);
+    updateProjects(user.id, updatedProjects);
   };
 
   return (
@@ -80,7 +57,7 @@ export default function Page() {
 
       <div className="text-lg">
         {isGroupsLoading ? (
-          <Loader />
+          <p>Chargement des groupes...</p>
         ) : (
           <Select
             labelPlacement="inside"
@@ -127,9 +104,7 @@ export default function Page() {
         }`}
       >
         {isProjectsLoading ? (
-          <div className="flex items-center justify-center">
-            <Loader />
-          </div>
+          <p>Chargement des projets...</p>
         ) : filteredProjects.length > 0 ? (
           filteredProjects.map((project, index) => (
             <ProjectCard

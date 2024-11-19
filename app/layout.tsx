@@ -1,6 +1,7 @@
 import Header from "@components/Header";
 import { NextUIProvider } from "@nextui-org/react";
 import "@styles/globals.css";
+import Provider from "@utils/Provider";
 import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
@@ -41,7 +42,9 @@ export default function RootLayout({
             expand={false}
             className="w-full text-xl"
           />
-          <NextUIProvider className="pb-10">{children}</NextUIProvider>
+          <NextUIProvider className="pb-10">
+            <Provider>{children}</Provider>
+          </NextUIProvider>
         </div>
       </body>
     </html>
