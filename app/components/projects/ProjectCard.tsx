@@ -3,6 +3,7 @@ import { Button } from "@nextui-org/button";
 import { Divider } from "@nextui-org/divider";
 import { deleteProject, duplicateProject } from "@utils/database/project";
 import { ArrowUpRight, Copy, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 export type ProjectCardProps = {
@@ -100,87 +101,15 @@ export const ProjectCard = (props: ProjectCardProps) => {
         >
           Dupliquer
         </Button>
-        <Button
-          color="primary"
-          variant="solid"
-          onClick={() => (window.location.href = showProjectUrl)}
-          className="rounded-full text-md outfit-regular"
-          size="md"
-          endContent={<ArrowUpRight />}
+        <Link
+          href={`${showProjectUrl}`}
+          className="bg-primary text-white py-2 px-4 rounded-full text-md outfit-regular flex items-center justify-center hover:bg-opacity-85 transition-all"
         >
           Ouvrir
-        </Button>
+          <ArrowUpRight className="ml-2" />
+        </Link>
       </div>
       {isOpenDialog && <Dialogs {...dialogProps} />}
     </div>
-    // <div className="flex flex-col justify-between gap-1 bg-white px-4 py-4 md:px-8 md:py-6 rounded-[16px] shadow-lg w-[100%] md:w-[350px] lg:w-[350px] h-[333px]">
-    //   {group && group.name !== "Aucun Groupe" ? (
-    //     <p className="text-in-single-line text-md md:text-lg lg:text-lg opacity-80">
-    //       {group.name}
-    //     </p>
-    //   ) : (
-    //     <p className="text-in-single-line text-lg opacity-80">Aucun Groupe</p>
-    //   )}
-    //   <p className="text-[1.5rem] md:text-[2rem] lg:text-[2rem] font-bold">
-    //     {project.name}
-    //   </p>
-    //   <p className="text-md md:text-lg lg:text-lg line-clamp-3">
-    //     {project.description ? project.description : "Aucune description"}
-    //   </p>
-    //   <div className="flex items-center justify-between gap-3">
-    //     <p className="mr-auto text-xs md:text-sm lg:text-sm opacity-65">
-    //       Dernières modifications:
-    //     </p>
-    //     <div className="opacity-65 text-xs md:text-sm lg:text-sm flex flex-col items-center">
-    //       <p>{project.updated_at && dateFormater(project.updated_at).date}</p>
-    //       <p>à {project.updated_at && dateFormater(project.updated_at).time}</p>
-    //     </div>
-    //   </div>
-    //   <Divider className="my-3" />
-    //   <div className="flex justify-center items-center gap-5 max-w-[75%] ml-auto mr-auto">
-    //     <Button
-    //       isIconOnly
-    //       aria-label="Supprimer"
-    //       color="danger"
-    //       onClick={() => setIsOpenDialog(true)}
-    //       className="rounded-lg transition-all duration-300 ease-in-out hover:rotate-12 text-md md:text-lg lg:text-lg"
-    //       size="lg"
-    //       variant="solid"
-    //     >
-    //       <Trash2 />
-    //     </Button>
-    //     <Button
-    //       color="primary"
-    //       variant="ghost"
-    //       onClick={() => {
-    //         handleDuplicateProject(project.id ?? -1);
-    //       }}
-    //       size="lg"
-    //       className="rounded-lg text-md md:text-lg lg:text-lg"
-    //     >
-    //       Copier
-    //     </Button>
-    //     <Button
-    //       color="primary"
-    //       variant="ghost"
-    //       onClick={() => (window.location.href = showProjectUrl)}
-    //       className="rounded-lg text-md md:text-lg lg:text-lg"
-    //       size="lg"
-    //     >
-    //       Ouvrir
-    //     </Button>
-    //     {/* <Button
-    //       variant="secondary"
-    //       onClick={() => (window.location.href = showProjectUrl)}
-    //       content="Ouvrir"
-    //       disabled={false}
-    //       image={null}
-    //       size="medium"
-    //       moreClasses="font-bold border-3"
-    //     /> */}
-    //   </div>
-
-    //   {isOpenDialog && <Dialogs {...dialogProps} />}
-    // </div>
   );
 };

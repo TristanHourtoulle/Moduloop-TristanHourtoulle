@@ -6,8 +6,8 @@ import {
   useProjects,
   useUpdateQueryCache,
 } from "@hooks/useGroupsAndProjects";
-import { Button } from "@nextui-org/button";
 import { Select, SelectItem, SelectSection } from "@nextui-org/select";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function ClientPage({ user }: { user: { id: string } }) {
@@ -86,17 +86,12 @@ export default function ClientPage({ user }: { user: { id: string } }) {
         )}
       </div>
 
-      <Button
-        color="secondary"
-        variant="shadow"
-        size="lg"
-        className="flex lg:hidden text-md rounded-full w-full outfit-regular px-[10%] mt-2"
-        onClick={() => {
-          window.location.href = "/pages/projects/create";
-        }}
+      <Link
+        href="/pages/projects/create"
+        className="bg-secondary shadow-lg text-white py-3 px-[10%] rounded-full text-md outfit-regular flex items-center justify-center w-full lg:hidden mt-2 hover:bg-opacity-90 transition-all"
       >
         Créer mon projet
-      </Button>
+      </Link>
 
       <div
         className={`flex items-center gap-4 md:gap-8 mt-[5%] md:mt-[2%] flex-wrap ${

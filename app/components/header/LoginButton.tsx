@@ -1,27 +1,14 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
+import Link from "next/link";
 
 export const LoginButton = () => {
   return (
-    // <Button
-    //   variant="primary"
-    //   onClick={() => (window.location.href = "/pages/login")}
-    //   content="Se connecter"
-    //   image={null}
-    //   moreClasses=""
-    //   disabled={false}
-    //   size="large"
-    // />
-    <Button
-      color="primary"
-      size="lg"
-      radius="full"
-      variant="ghost"
-      className="text-lg outfit-regular"
-      onClick={() => (window.location.href = "/pages/login")}
+    <Link
+      href="/pages/login"
+      className="text-md outfit-regular rounded-full bg-transparent hover:bg-primary hover:bg-opacity-10 py-2 px-6 flex items-center justify-center transition-all text-primary border-2 border-primary"
     >
       Se connecter
-    </Button>
+    </Link>
   );
 };

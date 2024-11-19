@@ -1,26 +1,10 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export const GetStarted = () => {
-  // const [isDownloadLoading, setIsDownloadLoading] = useState<boolean>(false);
-
-  // const handleDownloadGuideline = async () => {
-  //   setIsDownloadLoading(true);
-  //   setTimeout(() => {
-  //     // Faire télécharger le fichier /public/guideline/Goodwill.pptx
-  //     const a = document.createElement("a");
-  //     a.href =
-  //       "/guideline/Slides méthodologies outil d'impact aménagement VF 2 (240718).pdf";
-  //     a.download = "Méthodologie.pdf";
-  //     a.click();
-  //     a.remove();
-  //     setIsDownloadLoading(false);
-  //   }, 1000);
-  // };
-
   return (
     <Tooltip
       content={
@@ -36,18 +20,16 @@ export const GetStarted = () => {
       color="default"
       className="categorize"
     >
-      <Button
-        color="primary"
-        variant="shadow"
-        size="lg"
-        className="text-md rounded-full outfit-regular px-[10%] lg:px-[1.5%]"
-        onClick={() => {
-          window.location.href = "/pages/projects/create";
+      <Link
+        href="/pages/projects/create"
+        className="text-md rounded-full outfit-regular px-[10%] lg:px-[1.5%] bg-primary shadow-lg text-white py-3 flex items-center justify-center hover:bg-opacity-90 transition-all"
+        style={{
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Pour simuler l'ombre du thème
         }}
-        endContent={<ChevronRight />}
       >
         Démarrer mon projet
-      </Button>
+        <ChevronRight className="ml-2" />
+      </Link>
     </Tooltip>
   );
 };

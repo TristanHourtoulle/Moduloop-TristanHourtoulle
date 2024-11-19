@@ -168,27 +168,6 @@ export const MostImpact = (props: MostImpactProps) => {
           </p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-2 md:justify-end md:gap-5 md:mt-4 xl:mt-0">
-          {/* <Button
-            variant="primary"
-            onClick={() => {
-              window.location.href = "https://www.moduloop.com/contact/";
-            }}
-            content="Contacter Moduloop"
-            disabled={false}
-            image={null}
-            size="medium"
-            moreClasses="border-2 border-[#E9E9E9]"
-          /> */}
-          {/* <Button
-            variant="secondary"
-            onClick={() => ctaView("products")}
-            content="Modifier le projet"
-            disabled={false}
-            image={null}
-            size="medium"
-            moreClasses=""
-          /> */}
-
           <Button2
             onClick={() => ctaView("products")}
             color="primary"

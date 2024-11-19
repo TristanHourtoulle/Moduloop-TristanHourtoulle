@@ -201,18 +201,6 @@ const ProductInProjectCard = (props: {
           className=" tertiary-color outfit-regular text-right"
         />
       </div>
-      {/* <div className="w-auto pt-[5%] ml-auto mr-auto">
-        <button
-          onClick={handleAdd}
-          className={
-            isDifferent
-              ? "project-product-button"
-              : "hidden project-product-button"
-          }
-        >
-          Modifier
-        </button>
-      </div> */}
       <Button
         color="primary"
         variant="ghost"

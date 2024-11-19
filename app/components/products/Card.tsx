@@ -1,9 +1,9 @@
-import { Button } from "@components/button/Button";
 import TrashCan from "@components/button/TrashCan";
 import { Dialogs } from "@components/features/Dialogs";
 import { ProductType } from "@models/Product";
 import { deleteProductById } from "@utils/database/product";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 const Card = ({
@@ -66,27 +66,18 @@ const Card = ({
       </div>
       {/* CTA */}
       <div className="flex items-center gap-3 justify-center ml-auto mr-auto">
-        {/* <Link
-          href={showProductUrl}
-          className="flex items-center gap-15 bg-white border-10"
+        <Link
+          href={`/pages/products/${id}`}
+          className="bg-secondary text-white py-2 px-4 rounded-md flex items-center justify-center hover:bg-secondary-dark transition-all"
         >
-          <Image
+          <img
             src="/icons/link.svg"
-            alt="Ouvrir"
-            width={27}
-            height={27}
-            className="object-contain"
+            alt="Link icon"
+            className="mr-2" // Ajoute un espace entre l'image et le texte
+            style={{ width: "16px", height: "16px" }}
           />
-          <p>Ouvrir</p>
-        </Link> */}
-        <Button
-          variant="secondary"
-          onClick={() => (window.location.href = showProductUrl)}
-          content="Ouvrir"
-          disabled={false}
-          image="/icons/link.svg"
-          size="medium"
-        />
+          Ouvrir
+        </Link>
       </div>
     </div>
   );

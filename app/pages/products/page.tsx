@@ -2,11 +2,11 @@
 
 import Loader from "@components/Loader";
 import { Title } from "@components/Title";
-import { Button } from "@components/button/Button";
 import Card from "@components/products/Card";
 import { getSession } from "@lib/session";
 import { TitleType } from "@models/Title";
 import { getProducts } from "@utils/database/product";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -60,15 +60,13 @@ export default function Page() {
         <div className="mr-auto">
           <Title {...title} />
         </div>
-        <Button
-          variant="primary"
-          onClick={() => (window.location.href = "/pages/products/add")}
-          content="Gérer"
-          disabled={false}
-          image="/icons/reglages.svg"
-          size="large"
-          moreClasses="mr-5"
-        />
+        <Link
+          href="/pages/products/add"
+          className="bg-primary text-white py-2 px-6 rounded-full text-lg outfit-regular flex items-center justify-center hover:bg-opacity-85 transition-all mr-5"
+        >
+          <img src="/icons/reglages.svg" alt="Gérer" className="w-5 h-5 mr-2" />
+          Gérer
+        </Link>
       </div>
 
       {isLoading ? (

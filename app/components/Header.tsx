@@ -9,7 +9,6 @@ import { Logo } from "./header/Logo";
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { getSession, logout } from "@lib/session";
-import { Button } from "@nextui-org/button";
 import { LoginButton } from "./header/LoginButton";
 import { LogoIcon } from "./header/LogoIcon";
 
@@ -184,17 +183,15 @@ const Header = () => {
           </Link>
         </div>
 
-        <Button
-          color="secondary"
-          variant="shadow"
-          size="lg"
-          className="text-md rounded-full outfit-regular px-[2%]"
-          onClick={() => {
-            window.location.href = "/pages/projects/create";
+        <Link
+          href="/pages/projects/create"
+          className="text-md rounded-full outfit-regular px-[2%] bg-secondary shadow-lg text-white py-3 flex items-center justify-center hover:bg-opacity-90 transition-all w-full lg:max-w-[200px]"
+          style={{
+            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Simule l'ombre du thème
           }}
         >
           Créer mon projet
-        </Button>
+        </Link>
       </div>
 
       {/* Mobile View */}
@@ -285,17 +282,15 @@ const Header = () => {
                   >
                     Déconnexion
                   </a>
-                  <Button
-                    color="secondary"
-                    variant="shadow"
-                    size="lg"
-                    className="w-full text-md rounded-full outfit-regular px-[2%]"
-                    onClick={() => {
-                      window.location.href = "/pages/projects/create";
+                  <Link
+                    href="/pages/projects/create"
+                    className="text-md rounded-full outfit-regular px-[2%] bg-secondary shadow-lg text-white py-3 flex items-center justify-center hover:bg-opacity-90 transition-all w-full lg:max-w-[200px]"
+                    style={{
+                      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Simule l'ombre du thème
                     }}
                   >
                     Créer mon projet
-                  </Button>
+                  </Link>
                 </nav>
               </div>
             </div>
