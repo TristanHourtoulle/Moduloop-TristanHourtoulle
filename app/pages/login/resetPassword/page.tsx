@@ -42,9 +42,6 @@ const page = () => {
         );
         return;
       }
-      toast.success(
-        "Un email de réinitialisation de mot de passe a été envoyé sur votre adresse mail."
-      );
       setIsEmailSent(true);
     } else {
       toast.warning("Cette adresse mail n'est pas associée à un compte.");
@@ -60,7 +57,6 @@ const page = () => {
     }
 
     if (code === resetCode) {
-      toast.success("Code de vérification valide");
       setIsValidCode(true);
       return;
     }
@@ -79,8 +75,6 @@ const page = () => {
     // Update password
     const result = await updateUserPassword(userEmail, password);
     if (result) {
-      toast.success("Mot de passe mis à jour avec succès");
-      // Timeout before redirect to login page
       setTimeout(() => {
         window.location.href = "/pages/login";
       }, 2000);

@@ -25,22 +25,19 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/icons/logoImage.png" />
       </head>
-      <body
-        className="min-h-[100vh] w-full bg-[#F6F6F6] px-[5%] p-0"
-        suppressHydrationWarning={true} // Utile pour éviter des erreurs lors de l'hydratation
-      >
+      <body className="min-h-[100vh] w-full bg-[#F6F6F6] px-[5%] p-0">
         <div
           className="mb-3 md:mb-10 lg:mb-10"
           style={{ display: "flex", justifyContent: "center" }}
         >
           <Header />
         </div>
-        <div>
+        <div className="">
           <Toaster
             richColors
             position="top-center"
             expand={false}
-            className="w-full text-xl"
+            className="w-full text-xl ml-auto mr-auto"
           />
           <NextUIProvider className="pb-10">
             <Provider>{children}</Provider>

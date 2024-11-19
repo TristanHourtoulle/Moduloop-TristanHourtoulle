@@ -1,8 +1,8 @@
 "use client";
 
 import Loader from "@components/Loader";
+import { useProductsInProject, useProject } from "@hooks/useProjectData";
 import { getSession } from "@lib/session";
-import { AddProductType } from "@models/AddProduct";
 import { ProjectType } from "@models/Project";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem, SelectSection } from "@nextui-org/select";
@@ -45,11 +45,32 @@ function initCompareWithProjects(project: ProjectType) {
 }
 
 const ImpactSection = (props: {
-  products: AddProductType[];
-  project: ProjectType;
+  projectId: number;
   ctaView: (view: string) => void;
 }) => {
-  const { products, project, ctaView } = props;
+  const { projectId, ctaView } = props;
+  const {
+    data: productsInProject = [],
+    isLoading,
+    refetch,
+  } = useProductsInProject(projectId ?? 0); // Utilisez directement les produits du projet
+  const { data: project = null, isLoading: isProjectLoading } =
+    useProject(projectId); // Utilisez directement les
+
+  useEffect(() => {
+    // Refetch les données dès que le composant est monté
+    refetch();
+  }, [refetch]);
+
+  // Recalculer les équivalences lorsque les produits changent
+  useEffect(() => {
+    if (!isLoading && productsInProject.length > 0) {
+      getEquivalenceWithoutCompare(); // Met à jour les équivalences
+      setIsLoaded(true);
+    } else {
+      setIsLoaded(false);
+    }
+  }, [productsInProject, isLoading]);
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [projects, setProjects] = useState<ProjectType[]>([]);
@@ -62,15 +83,16 @@ const ImpactSection = (props: {
   const [erfPercentage, setErfPercentage] = useState<number>(0.0);
   const [asePercentage, setAsePercentage] = useState<number>(0.0);
   const [emPercentage, setEmPercentage] = useState<number>(0.0);
-  const [betterProject, setBetterProject] = useState<ProjectType>(project);
-  const [worstProject, setWorstProject] = useState<ProjectType>(project);
+  const [betterProject, setBetterProject] = useState<ProjectType | null>(
+    project
+  );
+  const [worstProject, setWorstProject] = useState<ProjectType | null>(project);
   const [planeEquivalent, setPlaneEquivalent] = useState<number>(0);
   const [personEquivalent, setPersonEquivalent] = useState<number>(0);
   const [kmEquivalent, setKmEquivalent] = useState<number>(0);
   const [petrolEquivalent, setPetrolEquivalent] = useState<number>(0);
   const [lampEquivalent, setLampEquivalent] = useState<number>(0);
   const [houseEquivalent, setHouseEquivalent] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const getEquivalenceWithoutCompare = () => {
     if (project === null) return;
@@ -237,7 +259,6 @@ const ImpactSection = (props: {
   }, [compareWith, project?.products]);
 
   const handleCreateProjectFromTemplate = async () => {
-    setIsLoading(true);
     const formData = new FormData();
     formData.append("name", compareWith?.name ?? "");
     formData.append("products", JSON.stringify(compareWith?.products));
@@ -250,13 +271,15 @@ const ImpactSection = (props: {
     });
     let data = await result.json();
     if (data.success) {
-      setIsLoading(false);
-      toast.success("Le projet a été créé avec succès.");
     } else {
-      setIsLoading(false);
       toast.error("Une erreur est survenue lors de la création du projet.");
     }
   };
+
+  // Check if products are loaded and the reactQuery is done
+  if (isLoading || !isLoaded) {
+    return <Loader />;
+  }
 
   return (
     <div className="impact flex flex-col items-start gap-5">
@@ -298,7 +321,7 @@ const ImpactSection = (props: {
                   if (event.target.value === "-2") {
                     // Comparer avec du neuf
                     const newProject = convertProjectToNewProducts(
-                      products,
+                      productsInProject,
                       project
                     );
                     setCompareWith(newProject);
@@ -307,10 +330,16 @@ const ImpactSection = (props: {
                     return;
                   } else if (event.target.value === "-3") {
                     // Comparer avec du réemploi
-                    const reusedProject = convertProjectToUsedProducts(
-                      products,
-                      project
-                    );
+                    let reusedProject = null;
+                    if (project) {
+                      reusedProject = convertProjectToUsedProducts(
+                        productsInProject,
+                        project
+                      );
+                      setCompareWith(reusedProject);
+                      setIsCompare(true);
+                      setIsCompareWithTemplate(true);
+                    }
                     setCompareWith(reusedProject);
                     setIsCompare(true);
                     setIsCompareWithTemplate(true);
@@ -343,14 +372,14 @@ const ImpactSection = (props: {
                   value={-2}
                   className="text-black font-outfit text-lg"
                 >
-                  {project.name + " (Tout en neuf)"}
+                  {project?.name + " (Tout en neuf)"}
                 </SelectItem>
                 <SelectItem
                   key={-3}
                   value={-3}
                   className="text-black font-outfit text-lg"
                 >
-                  {project.name + " (Tout en réemploi)"}
+                  {project?.name + " (Tout en réemploi)"}
                 </SelectItem>
               </SelectSection>
               <SelectSection
@@ -378,7 +407,7 @@ const ImpactSection = (props: {
             <p className="text-lg lg:text-3xl tertiary-color">
               Vous comparez{" "}
               <span className="primary-color outfit-semibold">
-                {project.name}
+                {project?.name}
               </span>{" "}
               à{" "}
               <span className="primary-color outfit-semibold">
@@ -404,7 +433,7 @@ const ImpactSection = (props: {
             className="p-[15px] md:p-[30px] rounded-[45px]"
             style={{ backgroundColor: "rgba(254, 158, 88, 0.25)" }}
           >
-            {isCompare && compareWith && (
+            {project && isCompare && compareWith && (
               <CompareImpact
                 project_one={project}
                 project_two={compareWith}
@@ -412,7 +441,7 @@ const ImpactSection = (props: {
                 type="Réchauffement climatique"
               />
             )}
-            {isCompare && compareWith && (
+            {betterProject && worstProject && isCompare && compareWith && (
               <EquivalenceImpact
                 project={betterProject}
                 worstProject={worstProject}
@@ -437,7 +466,7 @@ const ImpactSection = (props: {
             className="p-[20px] rounded-[45px]"
             style={{ backgroundColor: "rgba(254, 88, 88, 0.25)" }}
           >
-            {isCompare && compareWith && (
+            {project && isCompare && compareWith && (
               <CompareImpact
                 project_one={project}
                 project_two={compareWith}
@@ -445,7 +474,7 @@ const ImpactSection = (props: {
                 type="Epuisement des ressources fossiles"
               />
             )}
-            {isCompare && compareWith && (
+            {betterProject && worstProject && isCompare && compareWith && (
               <EquivalenceImpact
                 project={betterProject}
                 worstProject={worstProject}
@@ -470,7 +499,7 @@ const ImpactSection = (props: {
             className="p-[20px] rounded-[45px]"
             style={{ backgroundColor: "rgba(85, 215, 137, 0.25)" }}
           >
-            {isCompare && compareWith && (
+            {project && isCompare && compareWith && (
               <CompareImpact
                 project_one={project}
                 project_two={compareWith}
@@ -479,7 +508,7 @@ const ImpactSection = (props: {
               />
             )}
 
-            {isCompare && compareWith && (
+            {project && isCompare && compareWith && (
               <div className="">
                 <CompareImpact
                   project_one={project}
@@ -492,11 +521,11 @@ const ImpactSection = (props: {
           </div>
         )}
 
-        {isLoaded && !isCompare && (
+        {project && isLoaded && !isCompare && (
           <ImpactGlobalProject project_one={project} />
         )}
 
-        {isLoaded && !isCompare && (
+        {project && isLoaded && !isCompare && (
           <>
             <h2 className="text-xl md:text-4xl">Equivalence d'impact</h2>
             <div
@@ -523,7 +552,7 @@ const ImpactSection = (props: {
           </>
         )}
 
-        {isLoaded && !isCompare && (
+        {project && isLoaded && !isCompare && (
           <>
             <div
               className="p-[10px] md:p-[20px] rounded-[45px]"
@@ -549,7 +578,7 @@ const ImpactSection = (props: {
           </>
         )}
 
-        {isLoaded && !isCompare && (
+        {project && isLoaded && !isCompare && (
           <>
             <h2 className="text-lg md:text-4xl">Classement</h2>
             <MostImpact project={project} ctaView={ctaView} />

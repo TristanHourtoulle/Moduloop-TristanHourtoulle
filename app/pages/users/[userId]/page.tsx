@@ -173,7 +173,6 @@ export default function Page({
           setSelectedRole(selectedRole);
           setUserRole(selectedRole);
           setChangeRole(false);
-          toast.success("Le rôle de l'utilisateur a été modifié avec succès !");
         } else {
           console.error(
             "Erreur lors de la modification du rôle de l'utilisateur:",

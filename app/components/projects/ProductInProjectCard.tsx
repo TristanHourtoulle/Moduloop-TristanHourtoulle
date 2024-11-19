@@ -60,10 +60,6 @@ const ProductInProjectCard = (props: {
     let res = await updateProductInProject(addProduct);
 
     if (res) {
-      // toast.success(
-      //   "Quantité correctement modifié ! La page va se recharger...",
-      //   { duration: 2000 }
-      // );
       setInitialQNew(qNew);
       setInitialQUsed(qUsed);
       setIsDifferent(false);
@@ -114,7 +110,6 @@ const ProductInProjectCard = (props: {
     if (product.product !== undefined && product.product[0].id !== null) {
       let res = await deleteProductInProject(idProject, product.product[0].id);
       if (res) {
-        toast.success("Produit supprimé du projet");
         setDialogOpen(false);
         ctaDelete();
       } else {

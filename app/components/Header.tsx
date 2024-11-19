@@ -32,7 +32,6 @@ const Header = () => {
       console.error("Error logging out:", error);
       toast.error("Erreur lors de la déconnexion");
     } finally {
-      toast.success("Déconnexion réussie");
       window.location.href = "/";
     }
   };

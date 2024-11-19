@@ -163,7 +163,6 @@ export function useRenderPNG({
     a.download = `${project.name}.png`;
     a.click();
     setIsLoading(false);
-    toast.success("Téléchargement terminé");
   });
 
   return useMemo(() => ({ downloadPNG }), [downloadPNG]);

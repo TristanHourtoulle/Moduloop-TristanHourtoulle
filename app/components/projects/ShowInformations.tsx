@@ -74,7 +74,9 @@ export const ShowInformations = ({
         group: selectedGroup,
       };
       const response = await updateAllFieldsInProject(newProject);
+      console.log("response", response);
       if (!response) {
+        console.log("Error updating project 1");
         toast.error(
           "Une erreur est survenue au moment de la sauvegarde. Veuillez réessayer."
         );
@@ -82,9 +84,9 @@ export const ShowInformations = ({
         return;
       }
       ctaSave();
-      toast.success("Les informations ont été sauvegardées avec succès.");
       setIsSheetOpen(false); // Fermer la popup une fois la sauvegarde terminée
     } catch (error: any) {
+      console.log("Error updating project 2", error);
       toast.error(
         "Une erreur est survenue au moment de la sauvegarde. Veuillez réessayer."
       );

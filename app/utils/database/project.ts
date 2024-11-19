@@ -91,6 +91,7 @@ export const updateAllFieldsInProject = async (project: any) => {
   });
 
   const data = await response.json();
+  console.log("Data received from API:", data);
   if (data.success && data.data) {
     return data.data;
   }
@@ -98,18 +99,40 @@ export const updateAllFieldsInProject = async (project: any) => {
 };
 
 export const addProductInProject = async (product: any) => {
-  let response = await fetch(`/api/project/addProduct`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(product),
-  });
-  let data = await response.json();
-  if (data.success) {
-    return true;
+  try {
+    console.log("Sending product data to API:", product);
+
+    const response = await fetch(`/api/project/addProduct`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+      console.error(
+        "API response not OK:",
+        response.status,
+        response.statusText
+      );
+      throw new Error(`API Error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    console.log("API response data:", data);
+
+    if (data.success) {
+      return true;
+    }
+
+    console.error("API response indicates failure:", data);
+    return null;
+  } catch (error) {
+    console.error("Error in addProductInProject:", error);
+    throw new Error("Failed to add product to project");
   }
-  return null;
 };
 
 export const updateProductInProject = async (product: any) => {

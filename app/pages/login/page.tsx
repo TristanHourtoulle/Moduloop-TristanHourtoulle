@@ -30,7 +30,6 @@ export default function Login() {
       const response = await loginUser(email, password);
 
       if (response) {
-        toast.success("Connexion réussie");
         window.location.href = "/pages/projects";
       } else {
         toast.error("Email ou mot de passe incorrect");

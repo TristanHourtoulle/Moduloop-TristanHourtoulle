@@ -35,7 +35,6 @@ const ProductCard = (props: {
     let res = await addProductInProject(addProductData);
 
     if (res) {
-      toast.success("Produit ajouté au projet", { duration: 2000 });
       setQNew(0);
       setQUsed(0);
       cta();

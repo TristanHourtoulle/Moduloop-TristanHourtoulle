@@ -30,7 +30,6 @@ export default function Register() {
       const response = await createUser(user);
 
       if (response) {
-        toast.success("Compte créé avec succès");
         window.location.href = "/pages/projects";
       } else {
         toast.error("Erreur lors de la création du compte");
