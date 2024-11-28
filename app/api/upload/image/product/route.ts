@@ -1,7 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import path from "path";
-import { mkdir, writeFile } from "fs/promises";
 import pool from "@lib/database";
+import { put } from "@vercel/blob";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
@@ -23,24 +22,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Convertir le fichier en buffer
-    const fileBlob = await file.arrayBuffer();
-    const buffer = Buffer.from(fileBlob);
+    // Charger le fichier sur le Blob Storage de Vercel
+    const blob = await put(file.name, file.stream(), {
+      access: "public", // L'URL sera publique
+    });
 
-    // Définir le chemin de sauvegarde
-    const uploadDir = path.join(process.cwd(), "public", "products");
-    await mkdir(uploadDir, { recursive: true });
-    const filepath = path.join(uploadDir, file.name);
-    await writeFile(filepath, new Uint8Array(buffer));
+    // URL publique du fichier
+    const publicUrl = blob.url;
 
-    // Construire le chemin pour la base de données
-    const dbFilePath = filepath.replace(process.cwd(), "").replace(/\\/g, "/");
-    const dbImageUrl = dbFilePath.replace("/public", "");
-
-    // Mise à jour de la base de données
+    // Mise à jour de la base de données avec l'URL publique
     const result = await pool.query(
       "UPDATE products SET image = $1 WHERE id = $2 RETURNING *;",
-      [dbImageUrl, idProduct]
+      [publicUrl, idProduct]
     );
 
     if (result.rowCount === 1) {

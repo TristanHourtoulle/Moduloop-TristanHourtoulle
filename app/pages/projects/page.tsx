@@ -91,7 +91,7 @@ export default function Page() {
             radius="full"
             className="w-full lg:w-[30%] text-lg font-medium bg-white border-2 border-[#e54600] rounded-full !important outfit-regular"
             defaultOpen={false}
-            onChange={(event) => {
+            onChange={(event: any) => {
               setSelectedGroup(Number(event.target.value));
             }}
           >

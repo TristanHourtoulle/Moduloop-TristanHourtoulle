@@ -39,9 +39,16 @@ function substituteNewValuesFromReuseValues(
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
   try {
-    const param: any = await request.json();
-    let products = JSON.parse(param);
-    products = products.products;
+    const param: any = await request.json(); // Pas besoin de JSON.parse ici
+    console.log("param reçu :", param);
+
+    // Vérifie que `param` contient des produits
+    const products = param.products;
+    if (!products || typeof products !== "object") {
+      throw new Error(
+        "Les données envoyées ne contiennent pas de produits valides."
+      );
+    }
 
     // Parcours de chaque produit
     for (const productName in products) {
@@ -69,19 +76,20 @@ export async function POST(request: NextRequest) {
               substituteNewValuesFromReuseValues(product.new, product.used),
             ]
           );
-          if (result.rowCount == 1) {
-            const data = result.rows[0];
-          } else {
+          if (result.rowCount !== 1) {
             throw new Error("La requête INSERT a échoué");
           }
-        } else {
         }
       }
     }
+
     return Response.json({ success: true, data: "OK" }, { status: 200 });
-  } catch (error) {
-    console.error("Erreur lors de l'insertion de l'utilisateur:", error);
-    return Response.json({ success: false, error }, { status: 500 });
+  } catch (error: any) {
+    console.error("Erreur lors du traitement des produits :", error);
+    return Response.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
   }
 }
 

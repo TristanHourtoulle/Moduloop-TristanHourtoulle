@@ -36,17 +36,18 @@ export const deleteProductById = async (id: number) => {
 };
 
 export const addProductsInDatabase = async (data: any) => {
+  console.log("Données envoyées à l'API :", data); // Log pour vérifier les données
   const response = await fetch("/api/product", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(data), // Assure-toi que data est un objet valide
   });
 
   if (response.ok) {
     return response.json();
   } else {
-    return null;
+    throw new Error(await response.text()); // Lève une erreur si la requête échoue
   }
 };
