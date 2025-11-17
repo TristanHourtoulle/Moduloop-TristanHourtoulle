@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     borderWidth: 2,
     borderColor: "#D0D0D0",
+    break: "avoid", // Empêche la coupure entre pages
   },
   projectTitle: {
     fontSize: 32,
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderWidth: 2,
     borderColor: "#D0D0D0",
+    break: "avoid", // Empêche la coupure entre pages
   },
   productName: {
     fontSize: 16,
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 15,
     marginBottom: 20,
+    break: "avoid", // Empêche la coupure entre pages
   },
   impactCard: {
     backgroundColor: "white",
@@ -171,6 +174,7 @@ const styles = StyleSheet.create({
     width: "48%",
     borderWidth: 2,
     borderColor: "#D0D0D0",
+    break: "avoid", // Empêche la coupure entre pages
   },
   impactCardTitle: {
     fontSize: 20, // text-lg lg:text-2xl
@@ -204,6 +208,7 @@ const styles = StyleSheet.create({
   equivalenceSection: {
     marginTop: 20,
     marginBottom: 20,
+    break: "avoid", // Empêche la coupure entre pages
   },
   equivalenceTitle: {
     fontSize: 20,
@@ -226,6 +231,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
+    break: "avoid", // Empêche la coupure entre pages
   },
   equivalenceIcon: {
     width: 40, // Plus gros
@@ -270,11 +276,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 10,
     marginBottom: 20,
+    break: "avoid", // Empêche la coupure entre pages
   },
   comparisonCard: {
     borderRadius: 45, // rounded-[45px]
     padding: 15,
     width: "32%",
+    break: "avoid", // Empêche la coupure entre pages
   },
   comparisonCardGreen: {
     backgroundColor: "#30C17B", // bg-[#30C17B] - Couleur exacte du web
