@@ -188,14 +188,14 @@ export const ShowInformations = ({
                   )}
                 </SelectTrigger>
                 <SelectContent>
-                  <option value={"-1"}>Aucun Groupe</option>
+                  <SelectItem value={"-1"}>Aucun Groupe</SelectItem>
                   {userGroups &&
                     Array.isArray(userGroups) &&
                     userGroups.length > 0 &&
                     userGroups.map((group) => (
-                      <option key={group.id} value={group.id}>
+                      <SelectItem key={group.id} value={String(group.id)}>
                         {group.name}
-                      </option>
+                      </SelectItem>
                     ))}
                 </SelectContent>
               </Select>
