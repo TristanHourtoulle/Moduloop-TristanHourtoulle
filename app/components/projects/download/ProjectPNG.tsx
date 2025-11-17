@@ -209,10 +209,18 @@ export type ProjectPNGProps = {
   width: number;
   project: ProjectType;
   user: any;
+  iconsDataUrls?: Record<string, string>;
 };
 
-export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
+export const ProjectPNG = ({ width, project, user, iconsDataUrls }: ProjectPNGProps) => {
   const impact = getAllImpact(project);
+
+  // Helper function to get icon source
+  const getIconSrc = (iconPath: string) => {
+    if (!iconsDataUrls) return iconPath;
+    const iconName = iconPath.split("/").pop();
+    return iconName && iconsDataUrls[iconName] ? iconsDataUrls[iconName] : iconPath;
+  };
 
   console.log("ProjectPNG: ", project);
   return (
@@ -237,7 +245,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
         }}
       >
         <img
-          src="/icons/logo.png"
+          src={getIconSrc("/icons/logo.png")}
           alt="Logo"
           style={{
             width: "600px",
@@ -913,7 +921,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                 alignItems: "center",
               }}
             >
-              <img src="/icons/avion.png" alt="Plane" width={100} />
+              <img src={getIconSrc("/icons/avion.png")} alt="Plane" width={100} />
               <p
                 style={{
                   margin: 0,
@@ -968,7 +976,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                 alignItems: "center",
               }}
             >
-              <img src="/icons/personnes.png" alt="Personnes" width={100} />
+              <img src={getIconSrc("/icons/personnes.png")} alt="Personnes" width={100} />
               <p
                 style={{
                   margin: 0,
@@ -1023,7 +1031,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                 alignItems: "center",
               }}
             >
-              <img src="/icons/suv.png" alt="Personnes" width={100} />
+              <img src={getIconSrc("/icons/suv.png")} alt="Personnes" width={100} />
               <p
                 style={{
                   margin: 0,
@@ -1130,7 +1138,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               }}
             >
               <img
-                src="/icons/pétrol.png"
+                src={getIconSrc("/icons/pétrol.png")}
                 alt="Pétrol"
                 width={100}
                 height={100} // Ajout de la hauteur
@@ -1190,7 +1198,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
               }}
             >
               <img
-                src="/icons/suv.png"
+                src={getIconSrc("/icons/suv.png")}
                 alt="Personnes"
                 width={100}
                 height={100} // Ajout de la hauteur
@@ -1335,7 +1343,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/ecologie.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/ecologie.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1388,7 +1396,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1443,7 +1451,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/rc.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/rc.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1525,7 +1533,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/avion.png" alt="Plane" width={100} />
+                <img src={getIconSrc("/icons/avion.png")} alt="Plane" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1580,7 +1588,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/personnes.png" alt="Personnes" width={100} />
+                <img src={getIconSrc("/icons/personnes.png")} alt="Personnes" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1635,7 +1643,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/suv.png" alt="Personnes" width={100} />
+                <img src={getIconSrc("/icons/suv.png")} alt="Personnes" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1740,7 +1748,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/ecologie.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/ecologie.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1793,7 +1801,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1848,7 +1856,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/erf.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/erf.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1930,7 +1938,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/pétrol.png" alt="Plane" width={100} />
+                <img src={getIconSrc("/icons/pétrol.png")} alt="Plane" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -1985,7 +1993,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/maison.png" alt="Personnes" width={100} />
+                <img src={getIconSrc("/icons/maison.png")} alt="Personnes" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2090,7 +2098,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/no-ase.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/no-ase.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2143,7 +2151,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2198,7 +2206,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/ase.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/ase.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2285,7 +2293,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/no-em.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/no-em.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2338,7 +2346,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2393,7 +2401,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/em.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/em.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2531,7 +2539,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/ecologie.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/ecologie.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2584,7 +2592,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2639,7 +2647,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/rc.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/rc.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2722,7 +2730,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/avion.png" alt="Plane" width={100} />
+                <img src={getIconSrc("/icons/avion.png")} alt="Plane" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2777,7 +2785,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/personnes.png" alt="Personnes" width={100} />
+                <img src={getIconSrc("/icons/personnes.png")} alt="Personnes" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2832,7 +2840,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/suv.png" alt="Personnes" width={100} />
+                <img src={getIconSrc("/icons/suv.png")} alt="Personnes" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2937,7 +2945,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/ecologie.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/ecologie.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -2991,7 +2999,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3046,7 +3054,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/erf.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/erf.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3129,7 +3137,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/pétrol.png" alt="Plane" width={100} />
+                <img src={getIconSrc("/icons/pétrol.png")} alt="Plane" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3184,7 +3192,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/maison.png" alt="Personnes" width={100} />
+                <img src={getIconSrc("/icons/maison.png")} alt="Personnes" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3289,7 +3297,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/no-ase.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/no-ase.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3343,7 +3351,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3398,7 +3406,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/ase.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/ase.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3485,7 +3493,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/no-em.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/no-em.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3539,7 +3547,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/feuille.png" alt="Ecologie" width={100} />
+                <img src={getIconSrc("/icons/feuille.png")} alt="Ecologie" width={100} />
                 <p
                   style={{
                     margin: 0,
@@ -3594,7 +3602,7 @@ export const ProjectPNG = ({ width, project, user }: ProjectPNGProps) => {
                   alignItems: "center",
                 }}
               >
-                <img src="/icons/em.png" alt="Worst" width={100} />
+                <img src={getIconSrc("/icons/em.png")} alt="Worst" width={100} />
                 <p
                   style={{
                     margin: 0,
