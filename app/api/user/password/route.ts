@@ -1,6 +1,6 @@
 import pool from "@lib/database";
 import { NextRequest } from "next/server";
-const bcrypt = require("bcrypt");
+import * as bcrypt from "bcryptjs";
 
 export async function POST(request: NextRequest) {
   try {

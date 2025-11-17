@@ -3,8 +3,9 @@ import pool from "@lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
+    const { idProject } = await params;
     const result = await pool.query("SELECT * FROM projects WHERE id = $1;", [
-      params.idProject,
+      idProject,
     ]);
     if (result.rowCount == 1) {
       const product = result.rows[0];
@@ -24,9 +25,10 @@ export async function GET(request: Request, context: any) {
 export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
+    const { idProject } = await params;
 
     const result = await pool.query("DELETE FROM projects WHERE id = $1;", [
-      params.idProject,
+      idProject,
     ]);
 
     // Vérification si la requête a réussi
@@ -45,7 +47,7 @@ export async function DELETE(request: Request, context: any) {
 export async function POST(request: Request, context: any) {
   try {
     const { params } = context;
-    const idProject = params.idProject;
+    const { idProject } = await params;
 
     // Get project to copy
     let res = await pool.query("SELECT * FROM projects WHERE id = $1;", [

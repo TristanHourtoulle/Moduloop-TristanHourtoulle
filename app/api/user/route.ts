@@ -3,12 +3,18 @@ import pool from "@/lib/database";
 import { login } from "@/lib/session";
 import { User } from "@/models/User";
 import { NextRequest } from "next/server";
-const bcrypt = require("bcrypt");
+import * as bcrypt from "bcryptjs";
 
 // Fonction pour gérer les requêtes POST
 export async function POST(request: NextRequest) {
   try {
     const user: User = await request.json();
+    if (!user.password) {
+      return Response.json(
+        { success: false, error: "Password is required" },
+        { status: 400 }
+      );
+    }
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(user.password, saltRounds);
 

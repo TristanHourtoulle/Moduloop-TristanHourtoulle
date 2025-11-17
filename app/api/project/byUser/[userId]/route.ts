@@ -3,11 +3,11 @@ import pool from "@lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
-    const id = params.userId;
+    const { userId } = await params;
 
     const result = await pool.query(
       "SELECT * FROM projects WHERE user_id = $1 ORDER BY updated_at DESC;",
-      [id]
+      [userId]
     );
     let toSend;
 

@@ -4,8 +4,9 @@ import pool from "@lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
+    const { idProduct } = await params;
     const result = await pool.query("SELECT * FROM products WHERE id = $1;", [
-      params.idProduct,
+      idProduct,
     ]);
     if (result.rowCount == 1) {
       const product = result.rows[0];
@@ -28,9 +29,10 @@ export async function GET(request: Request, context: any) {
 export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
+    const { idProduct } = await params;
 
     // Convertir l'ID du produit en nombre
-    const productId = Number(params.idProduct);
+    const productId = Number(idProduct);
 
     // Get all projects stored in the database
     const result = await pool.query("SELECT * FROM projects");
@@ -67,7 +69,7 @@ export async function DELETE(request: Request, context: any) {
       indexProject++;
     }
     const res = await pool.query("DELETE FROM products WHERE id = $1;", [
-      params.idProduct,
+      idProduct,
     ]);
     if (res.rowCount === 1) {
       return Response.json({ success: true, data: "OK" }, { status: 200 });

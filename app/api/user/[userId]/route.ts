@@ -3,7 +3,7 @@ import pool from "../../../lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
-    const id = params.userId;
+    const { userId: id } = await params;
 
     const result = await pool.query(
       'SELECT * FROM users WHERE id = $1 ORDER BY "updatedAt" ASC;',

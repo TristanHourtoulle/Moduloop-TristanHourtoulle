@@ -4,8 +4,9 @@ import pool from "@lib/database";
 export async function GET(request: Request, context: any) {
   try {
     const { params } = context;
+    const { idGroup } = await params;
     const result = await pool.query("SELECT * FROM groups WHERE id = $1;", [
-      params.idGroup,
+      idGroup,
     ]);
     let toSend;
 

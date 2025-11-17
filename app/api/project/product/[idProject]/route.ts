@@ -3,7 +3,7 @@ import pool from "@lib/database";
 export async function DELETE(request: Request, context: any) {
   try {
     const { params } = context;
-    const idProject = params.idProject;
+    const { idProject } = await params;
 
     const result = await pool.query(
       "UPDATE projects SET products = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *;",

@@ -1,8 +1,6 @@
 import { NextRequest } from "next/server";
 import pool from "../../../lib/database";
 
-export const dynamic = "force-dynamic";
-
 export async function GET(request: NextRequest) {
   try {
     const result = await pool.query(
