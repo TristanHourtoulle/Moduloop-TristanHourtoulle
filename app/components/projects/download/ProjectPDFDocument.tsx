@@ -462,7 +462,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
         </View>
 
         {/* Project Information */}
-        <View style={styles.projectInfoSection}>
+        <View style={styles.projectInfoSection} wrap={false}>
           <Text style={styles.projectTitle}>{project.name}</Text>
           <Text style={styles.projectDescription}>{project.description}</Text>
 
@@ -498,7 +498,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
         </View>
 
         {/* Products Section */}
-        <View style={styles.productsSection}>
+        <View style={styles.productsSection} wrap={false}>
           <Text style={styles.sectionTitle}>
             Les {Array.isArray(project.products) ? project.products.length : 0}{" "}
             produits de votre Projet
@@ -507,7 +507,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
           <View style={styles.productsGrid}>
             {Array.isArray(project.products) &&
               project.products.slice(0, 4).map((product: any, index: number) => (
-                <View key={product.product[0].id || index} style={styles.productCard}>
+                <View key={product.product[0].id || index} style={styles.productCard} wrap={false}>
                   <Text style={styles.productName}>{product.product[0].name}</Text>
                   <Text style={styles.productBase}>{product.product[0].base}</Text>
 
@@ -534,14 +534,14 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
       {/* Page 2: Remaining Products (if more than 4) */}
       {Array.isArray(project.products) && project.products.length > 4 && (
         <Page size="A4" style={styles.page}>
-          <View style={styles.productsSection}>
+          <View style={styles.productsSection} wrap={false}>
             <Text style={styles.sectionTitle}>
               Produits (suite)
             </Text>
 
             <View style={styles.productsGrid}>
               {project.products.slice(4).map((product: any, index: number) => (
-                <View key={product.product[0].id || index} style={styles.productCard}>
+                <View key={product.product[0].id || index} style={styles.productCard} wrap={false}>
                   <Text style={styles.productName}>{product.product[0].name}</Text>
                   <Text style={styles.productBase}>{product.product[0].base}</Text>
 
@@ -568,14 +568,14 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
 
       {/* Page 3: Global Impact */}
       <Page size="A4" style={styles.page}>
-        <View style={styles.impactSection}>
+        <View style={styles.impactSection} wrap={false}>
           <Text style={styles.sectionTitle}>
             Impact Global du projet {project.name}
           </Text>
 
-          <View style={styles.impactCardsRow}>
+          <View style={styles.impactCardsRow} wrap={false}>
             {/* Santé Humaine - RC */}
-            <View style={styles.impactCard}>
+            <View style={styles.impactCard} wrap={false}>
               <Text style={styles.impactCardTitle}>Santé Humaine</Text>
               <Text style={styles.impactCardSubtitle}>Réchauffement Climatique</Text>
               <View style={styles.impactValueRow}>
@@ -587,7 +587,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
 
             {/* Ressources - ERF */}
-            <View style={styles.impactCard}>
+            <View style={styles.impactCard} wrap={false}>
               <Text style={styles.impactCardTitle}>Ressources Naturelles</Text>
               <Text style={styles.impactCardSubtitle}>Épuisement des Ressources Fossiles</Text>
               <View style={styles.impactValueRow}>
@@ -599,9 +599,9 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
           </View>
 
-          <View style={styles.impactCardsRow}>
+          <View style={styles.impactCardsRow} wrap={false}>
             {/* Acidification des sols et eaux - ASE */}
-            <View style={styles.impactCard}>
+            <View style={styles.impactCard} wrap={false}>
               <Text style={styles.impactCardTitle}>Acidification des sols et eaux</Text>
               <Text style={styles.impactCardSubtitle}>Acidifications des Sols et Eaux</Text>
               <View style={styles.impactValueRow}>
@@ -613,7 +613,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
 
             {/* Eutrophisation Marine - EM */}
-            <View style={styles.impactCard}>
+            <View style={styles.impactCard} wrap={false}>
               <Text style={styles.impactCardTitle}>Eutrophisation marine</Text>
               <Text style={styles.impactCardSubtitle}>Acidifications des Sols et Eaux</Text>
               <View style={styles.impactValueRow}>
@@ -626,13 +626,13 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
           </View>
 
           {/* Equivalences */}
-          <View style={styles.equivalenceSection}>
+          <View style={styles.equivalenceSection} wrap={false}>
             <Text style={styles.equivalenceTitle}>
               Équivalences de votre impact environnemental
             </Text>
 
-            <View style={styles.equivalenceCardsRow}>
-              <View style={styles.equivalenceCard}>
+            <View style={styles.equivalenceCardsRow} wrap={false}>
+              <View style={styles.equivalenceCard} wrap={false}>
                 <Image src={getIconSrc("/icons/avion.png")} style={styles.equivalenceIcon} />
                 <View style={styles.equivalenceText}>
                   <Text style={styles.equivalenceLabel}>Voyages en avion</Text>
@@ -640,7 +640,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
                 </View>
               </View>
 
-              <View style={styles.equivalenceCard}>
+              <View style={styles.equivalenceCard} wrap={false}>
                 <Image src={getIconSrc("/icons/suv.png")} style={styles.equivalenceIcon} />
                 <View style={styles.equivalenceText}>
                   <Text style={styles.equivalenceLabel}>Kilomètres en voiture</Text>
@@ -648,7 +648,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
                 </View>
               </View>
 
-              <View style={styles.equivalenceCard}>
+              <View style={styles.equivalenceCard} wrap={false}>
                 <Image src={getIconSrc("/icons/personnes.png")} style={styles.equivalenceIcon} />
                 <View style={styles.equivalenceText}>
                   <Text style={styles.equivalenceLabel}>Émissions quotidiennes</Text>
@@ -656,7 +656,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
                 </View>
               </View>
 
-              <View style={styles.equivalenceCard}>
+              <View style={styles.equivalenceCard} wrap={false}>
                 <Image src={getIconSrc("/icons/pétrol.png")} style={styles.equivalenceIcon} />
                 <View style={styles.equivalenceText}>
                   <Text style={styles.equivalenceLabel}>Litres de pétrole</Text>
@@ -664,7 +664,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
                 </View>
               </View>
 
-              <View style={styles.equivalenceCard}>
+              <View style={styles.equivalenceCard} wrap={false}>
                 <Image src={getIconSrc("/icons/maison.png")} style={styles.equivalenceIcon} />
                 <View style={styles.equivalenceText}>
                   <Text style={styles.equivalenceLabel}>Consommation énergétique</Text>
@@ -678,7 +678,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
 
       {/* Page 4: Comparison with All New */}
       <Page size="A4" style={styles.page}>
-        <View style={styles.comparisonSection}>
+        <View style={styles.comparisonSection} wrap={false}>
           <Text style={styles.comparisonTitle}>
             Comparaison avec tout en Neuf
           </Text>
@@ -686,9 +686,9 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Réchauffement Climatique (RC)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
             {/* Emission évitée */}
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % ÉMISSIONS ÉVITÉES
               </Text>
@@ -700,7 +700,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
 
             {/* Projet Actuel */}
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -711,7 +711,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
 
             {/* Tout en Neuf */}
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN NEUF)
               </Text>
@@ -729,8 +729,8 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Épuisement des Ressources Fossiles (ERF)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % RESSOURCES ÉPARGNÉES
               </Text>
@@ -741,7 +741,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -751,7 +751,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN NEUF)
               </Text>
@@ -769,8 +769,8 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Acidification des Sols et de l'Eau (ASE)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % ASE ÉVITÉ
               </Text>
@@ -781,7 +781,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -791,7 +791,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN NEUF)
               </Text>
@@ -809,8 +809,8 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Eutrophisation Marine (EM)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % EM ÉVITÉ
               </Text>
@@ -821,7 +821,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -831,7 +831,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN NEUF)
               </Text>
@@ -846,7 +846,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
 
       {/* Page 5: Comparison with Reuse */}
       <Page size="A4" style={styles.page}>
-        <View style={styles.comparisonSection}>
+        <View style={styles.comparisonSection} wrap={false}>
           <Text style={styles.comparisonTitle}>
             Comparaison avec tout en Réemploi
           </Text>
@@ -854,9 +854,9 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Réchauffement Climatique (RC)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
             {/* Emission évitée */}
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % RC ÉVITÉ
               </Text>
@@ -868,7 +868,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
 
             {/* Meilleur Projet */}
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN RÉEMPLOI)
               </Text>
@@ -879,7 +879,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             </View>
 
             {/* Projet Actuel */}
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -897,8 +897,8 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Épuisement des Ressources Fossiles (ERF)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % ERF ÉVITÉ
               </Text>
@@ -909,7 +909,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN RÉEMPLOI)
               </Text>
@@ -919,7 +919,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -937,8 +937,8 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Acidification des Sols et de l'Eau (ASE)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % ASE ÉVITÉ
               </Text>
@@ -949,7 +949,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN RÉEMPLOI)
               </Text>
@@ -959,7 +959,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
@@ -977,8 +977,8 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
             Eutrophisation Marine (EM)
           </Text>
 
-          <View style={styles.comparisonCardsRow}>
-            <View style={[styles.comparisonCard, styles.comparisonCardGreen]}>
+          <View style={styles.comparisonCardsRow} wrap={false}>
+            <View style={[styles.comparisonCard, styles.comparisonCardGreen]} wrap={false}>
               <Text style={[styles.comparisonCardLabel, styles.comparisonCardLabelWhite]}>
                 % EM ÉVITÉ
               </Text>
@@ -989,7 +989,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()} (TOUT EN RÉEMPLOI)
               </Text>
@@ -999,7 +999,7 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
               </View>
             </View>
 
-            <View style={[styles.comparisonCard, styles.comparisonCardWhite]}>
+            <View style={[styles.comparisonCard, styles.comparisonCardWhite]} wrap={false}>
               <Text style={styles.comparisonCardLabel}>
                 {project.name?.toUpperCase()}
               </Text>
