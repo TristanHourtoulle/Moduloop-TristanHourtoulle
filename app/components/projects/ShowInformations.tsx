@@ -59,20 +59,15 @@ export const ShowInformations = ({
   const handleSaveChanges = async () => {
     try {
       setIsLoading(true);
-      const data = {
-        name: selectedName,
-        description: selectedDescription,
-        group_id: selectedGroup,
-      };
-      if (data.group_id === "-1") {
-        data.group_id = null;
-      }
+
       const newProject = {
-        ...project,
+        id: project.id,
         name: selectedName,
         description: selectedDescription,
-        group: selectedGroup,
+        group: selectedGroup === "-1" ? null : selectedGroup,
+        products: project.products,
       };
+
       const response = await updateAllFieldsInProject(newProject);
       console.log("response", response);
       if (!response) {
@@ -83,6 +78,15 @@ export const ShowInformations = ({
         setIsLoading(false);
         return;
       }
+
+      // Mettre à jour les données de backup après sauvegarde réussie
+      setBackupData({
+        name: selectedName,
+        description: selectedDescription,
+        group: selectedGroup,
+      });
+
+      toast.success("Projet mis à jour avec succès !");
       ctaSave();
       setIsSheetOpen(false); // Fermer la popup une fois la sauvegarde terminée
     } catch (error: any) {
