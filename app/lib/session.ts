@@ -26,16 +26,16 @@ export async function decrypt(input: string): Promise<any> {
 export async function login(user: User) {
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
   const session = await encrypt({ user, expires }); // Stockez l'utilisateur entier dans la session
-  cookies().set("session", session, { expires, httpOnly: true });
+  (await cookies()).set("session", session, { expires, httpOnly: true });
 }
 
 export async function logout() {
   // Destroy the session
-  cookies().set("session", "", { expires: new Date(0) });
+  (await cookies()).set("session", "", { expires: new Date(0) });
 }
 
 export async function getSession() {
-  const session = cookies().get("session")?.value;
+  const session = (await cookies()).get("session")?.value;
   if (!session) return null;
 
   try {

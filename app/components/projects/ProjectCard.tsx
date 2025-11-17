@@ -1,6 +1,6 @@
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
-import { Button } from "@nextui-org/button";
-import { Divider } from "@nextui-org/divider";
+import { Button } from "@/components/ui-compat/button";
+import { Divider } from "@/components/ui-compat/divider";
 import { deleteProject, duplicateProject } from "@utils/database/project";
 import { ArrowUpRight, Copy, Trash2 } from "lucide-react";
 import Link from "next/link";

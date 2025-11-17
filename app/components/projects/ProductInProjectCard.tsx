@@ -1,8 +1,8 @@
 import { AddProductType } from "@/models/AddProduct";
 import { Dialogs, DialogsProps } from "@components/features/Dialogs";
-import { Button } from "@nextui-org/button";
-import { Divider } from "@nextui-org/divider";
-import { Input } from "@nextui-org/input";
+import { Button } from "@/components/ui-compat/button";
+import { Divider } from "@/components/ui-compat/divider";
+import { Input } from "@/components/ui-compat/input";
 import {
   deleteProductInProject,
   updateProductInProject,
@@ -178,12 +178,10 @@ const ProductInProjectCard = (props: {
         <Input
           type="number"
           label="Neuf"
-          labelPlacement="outside"
           value={qNew.toString()}
           onChange={handleQNewChange}
           min={0}
           variant="bordered"
-          radius="full"
           size="md"
           className=" tertiary-color outfit-regular"
         />
@@ -191,13 +189,11 @@ const ProductInProjectCard = (props: {
         <Input
           type="number"
           label="Réemploi"
-          labelPlacement="outside"
           value={qUsed.toString()}
           onChange={handleQUsedChange}
           min={0}
           variant="bordered"
           size="md"
-          radius="full"
           className=" tertiary-color outfit-regular text-right"
         />
       </div>

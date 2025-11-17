@@ -1,6 +1,6 @@
 "use client";
 
-import { Image } from "@nextui-org/react";
+import Image from "next/image";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-cards";

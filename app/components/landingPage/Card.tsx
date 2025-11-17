@@ -1,7 +1,8 @@
 import Image from "next/image";
+import React from "react";
 
 export type CardProps = {
-  icon: JSX.Element;
+  icon: React.JSX.Element;
   title: string;
   description: string;
 };

@@ -1,5 +1,4 @@
 import Header from "@components/Header";
-import { NextUIProvider } from "@nextui-org/react";
 import "@styles/globals.css";
 import Provider from "@utils/Provider";
 import type { Metadata } from "next";
@@ -32,16 +31,14 @@ export default function RootLayout({
         >
           <Header />
         </div>
-        <div className="">
+        <div className="pb-10">
           <Toaster
             richColors
             position="top-center"
             expand={false}
             className="w-full text-xl ml-auto mr-auto"
           />
-          <NextUIProvider className="pb-10">
-            <Provider>{children}</Provider>
-          </NextUIProvider>
+          <Provider>{children}</Provider>
         </div>
       </body>
     </html>

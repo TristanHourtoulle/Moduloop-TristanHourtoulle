@@ -1,6 +1,6 @@
 "use client";
 
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@/components/ui-compat/tooltip";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 

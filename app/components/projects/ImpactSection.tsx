@@ -4,8 +4,8 @@ import Loader from "@components/Loader";
 import { useProductsInProject, useProject } from "@hooks/useProjectData";
 import { getSession } from "@lib/session";
 import { ProjectType } from "@models/Project";
-import { Button } from "@nextui-org/button";
-import { Select, SelectItem, SelectSection } from "@nextui-org/select";
+import { Button } from "@/components/ui-compat/button";
+import { Select } from "@/components/ui-compat/select";
 import { getProjectsByUserId } from "@utils/database/project";
 import {
   convertTime,
@@ -101,14 +101,14 @@ const ImpactSection = (props: {
     const erfValue: number = Number(getERFimpact(project));
 
     // Plane equivalent
-    let result = rcValue / 100; // Convertir kg en tonnes
+    let result = rcValue / 1000; // Convertir kg en tonnes
     result = result / 0.524; // 0.524 => Emission d'un vol Paris-Nice en tonne de CO2 par passager
     setPlaneEquivalent(Number(result.toFixed(0)));
     // Person equivalent
     result = rcValue / 24.38; // 24.38 => Consommation moyenne d'un français en kg de CO2 par jour
     setPersonEquivalent(Number(result.toFixed(0)));
     // Km equivalent
-    result = rcValue * 0.17; // 0.17 => Emission d'un km en kg de CO2 en SUV
+    result = rcValue / 0.17; // 0.17 => Emission d'un km en kg de CO2 en SUV
     setKmEquivalent(Number(result.toFixed(0)));
     // Petrol equivalent
     result = erfValue / 5861.52; // 5861.52 => Equivalence d'un baril de pétrole en MJ
@@ -202,14 +202,14 @@ const ImpactSection = (props: {
 
         // Plane equivalent
         let delta = value1 - value2;
-        let result = delta / 100; // Convertir kg en tonnes
+        let result = delta / 1000; // Convertir kg en tonnes
         result = result / 0.524;
         setPlaneEquivalent(Number(result.toFixed(0)));
         // Person equivalent
         result = delta / 24.38;
         setPersonEquivalent(Number(result.toFixed(0)));
         // Km equivalent
-        result = delta * 0.17;
+        result = delta / 0.17;
         setKmEquivalent(Number(result.toFixed(0)));
         // Petrol equivalent
         delta = erfValue1 - erfValue2;
@@ -229,14 +229,14 @@ const ImpactSection = (props: {
 
         // Plane equivalent
         let delta = value2 - value1;
-        let result = delta / 100;
+        let result = delta / 1000;
         result = result / 0.524;
         setPlaneEquivalent(Number(result.toFixed(0)));
         // Person equivalent
         result = delta / 24.38;
         setPersonEquivalent(Number(result.toFixed(0)));
         // Km equivalent
-        result = delta * 0.17;
+        result = delta / 0.17;
         setKmEquivalent(Number(result.toFixed(0)));
         // Petrol equivalent
         delta = erfValue2 - erfValue1;
@@ -290,7 +290,6 @@ const ImpactSection = (props: {
             <Button
               color="primary"
               size="md"
-              radius="full"
               onClick={() => {
                 ctaView("products");
               }}
@@ -301,15 +300,11 @@ const ImpactSection = (props: {
             </Button>
 
             <Select
-              items={projects ?? []}
-              labelPlacement="inside"
               label="Comparer avec un autre projet"
               size="md"
               variant="bordered"
               placeholder="Ne pas comparer"
               className="max-w-xs text-lg rounded-full bg-white font-outfit"
-              defaultOpen={false}
-              radius="full"
               onChange={(event) => {
                 if (projects === null) return;
                 if (event.target.value === "-1") {
@@ -359,44 +354,37 @@ const ImpactSection = (props: {
                 }
               }}
             >
-              <SelectSection title={"Templates"} className="text-black text-lg">
-                <SelectItem
-                  key={-1}
-                  value={-1}
-                  className="text-black font-outfit text-lg"
-                >
-                  Aucun projet
-                </SelectItem>
-                <SelectItem
-                  key={-2}
-                  value={-2}
-                  className="text-black font-outfit text-lg"
-                >
-                  {project?.name + " (Tout en neuf)"}
-                </SelectItem>
-                <SelectItem
-                  key={-3}
-                  value={-3}
-                  className="text-black font-outfit text-lg"
-                >
-                  {project?.name + " (Tout en réemploi)"}
-                </SelectItem>
-              </SelectSection>
-              <SelectSection
-                title={"Vos projets"}
-                className="text-black text-lg"
+              <option
+                key={-1}
+                value={-1}
+                className="text-black font-outfit text-lg"
               >
-                {projects &&
-                  projects.map((temp) => (
-                    <SelectItem
-                      key={temp.id ?? "-2"}
-                      value={temp.id ?? "-3"}
-                      className="text-black font-outfit text-lg"
-                    >
-                      {temp.name ?? "Aucun nom"}
-                    </SelectItem>
-                  ))}
-              </SelectSection>
+                Aucun projet
+              </option>
+              <option
+                key={-2}
+                value={-2}
+                className="text-black font-outfit text-lg"
+              >
+                {project?.name + " (Tout en neuf)"}
+              </option>
+              <option
+                key={-3}
+                value={-3}
+                className="text-black font-outfit text-lg"
+              >
+                {project?.name + " (Tout en réemploi)"}
+              </option>
+              {projects &&
+                projects.map((temp) => (
+                  <option
+                    key={temp.id ?? "-2"}
+                    value={temp.id ?? "-3"}
+                    className="text-black font-outfit text-lg"
+                  >
+                    {temp.name ?? "Aucun nom"}
+                  </option>
+                ))}
             </Select>
           </div>
         </div>
@@ -419,7 +407,6 @@ const ImpactSection = (props: {
               variant="ghost"
               size="md"
               onClick={handleCreateProjectFromTemplate}
-              radius="full"
               className="px-[5%] text-md w-full lg:w-auto rounded-full"
               isLoading={isLoading}
             >

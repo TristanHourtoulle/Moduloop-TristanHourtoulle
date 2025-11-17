@@ -1,8 +1,6 @@
 import { login } from "@lib/session";
 import { unstable_noStore as noStore } from "next/cache";
 
-export const dynamic = "force-dynamic";
-
 export const getUserById = async (id: number) => {
   const response = await fetch(`/api/user/${encodeURIComponent(id)}`, {
     method: "GET",

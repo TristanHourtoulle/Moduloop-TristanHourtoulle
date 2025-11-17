@@ -2,8 +2,8 @@
 
 import { ProductImpact } from "@models/Impact";
 import { ProjectType } from "@models/Project";
-import { Button as Button2 } from "@nextui-org/button";
-import { Select, SelectItem, SelectSection } from "@nextui-org/select";
+import { Button as Button2 } from "@/components/ui-compat/button";
+import { Select } from "@/components/ui-compat/select";
 import {
   getASEendOfLife,
   getASEimpact,
@@ -172,7 +172,6 @@ export const MostImpact = (props: MostImpactProps) => {
             onClick={() => ctaView("products")}
             color="primary"
             variant="ghost"
-            radius="full"
             className="px-[25px] text-lg outfit-regular"
             size="md"
           >
@@ -186,13 +185,10 @@ export const MostImpact = (props: MostImpactProps) => {
       <div className="text-sm lg:text-lg">
         <Select
           items={listImpact}
-          labelPlacement="outside"
           label="Choisir un type d'impact"
           size="lg"
           variant="bordered"
-          radius="full"
           className="w-full md:w-[50%] lg:w-[50%] text-lg outfit-regular"
-          defaultOpen={false}
           placeholder="Réchauffement Climatique"
           onChange={(event: any) => {
             if (event.target.value === "Réchauffement Climatique")
@@ -209,20 +205,20 @@ export const MostImpact = (props: MostImpactProps) => {
               setView("em");
           }}
         >
-          <SelectSection className="tertiary-color">
-            {/* <SelectItem key={-1} value={-1}>
+          
+            {/* <option key={-1} value={-1}>
               Tous les groupes
-            </SelectItem> */}
+            </option> */}
             {listImpact.map((impact) => (
-              <SelectItem
+              <option
                 key={impact.toString() ?? "-2"}
                 value={impact.toString() ?? "-3"}
                 className="text-lg text-black font-outfit"
               >
                 {impact ?? "Aucun nom"}
-              </SelectItem>
+              </option>
             ))}
-          </SelectSection>
+          
         </Select>
       </div>
 

@@ -18,8 +18,8 @@ import {
 import { Input } from "@components/input/Input";
 import { Label } from "@components/input/Label";
 import { Textarea } from "@components/input/TextArea";
-import { Button as Button2 } from "@nextui-org/button";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Button as Button2 } from "@/components/ui-compat/button";
+import { Tooltip } from "@/components/ui-compat/tooltip";
 import { getGroupsByUserId } from "@utils/database/group";
 import { updateAllFieldsInProject } from "@utils/database/project";
 import { Settings } from "lucide-react";
@@ -40,20 +40,20 @@ export const ShowInformations = ({
   const [userGroups, setUserGroups] = useState<any[]>([]);
 
   const [selectedGroup, setSelectedGroup] = useState<string | null>(
-    project.groupInfo ? project.groupInfo.id ?? null : null
+    project?.groupInfo ? project.groupInfo.id ?? null : null
   );
 
   const [selectedName, setSelectedName] = useState<string | null>(
-    project.name // Initialisez la valeur avec la valeur actuelle du projet
+    project?.name ?? null // Initialisez la valeur avec la valeur actuelle du projet
   );
   const [selectedDescription, setSelectedDescription] = useState<string | null>(
-    project.description // Initialisez la valeur avec la valeur actuelle du projet
+    project?.description ?? null // Initialisez la valeur avec la valeur actuelle du projet
   );
 
   const [backupData, setBackupData] = useState<any>({
-    name: project.name,
-    description: project.description,
-    group: project.groupInfo ? project.groupInfo.id ?? null : null,
+    name: project?.name ?? null,
+    description: project?.description ?? null,
+    group: project?.groupInfo ? project.groupInfo.id ?? null : null,
   });
 
   const handleSaveChanges = async () => {
@@ -177,21 +177,21 @@ export const ShowInformations = ({
             <div style={{ width: "150px" }}>
               <Select onValueChange={(value) => setSelectedGroup(value)}>
                 <SelectTrigger className="w-full">
-                  {project.groupInfo ? (
+                  {project?.groupInfo ? (
                     <SelectValue placeholder={project.groupInfo.name} />
                   ) : (
                     <SelectValue placeholder="Aucun Groupe" />
                   )}
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value={"-1"}>Aucun Groupe</SelectItem>
+                  <option value={"-1"}>Aucun Groupe</option>
                   {userGroups &&
                     Array.isArray(userGroups) &&
                     userGroups.length > 0 &&
                     userGroups.map((group) => (
-                      <SelectItem key={group.id} value={group.id}>
+                      <option key={group.id} value={group.id}>
                         {group.name}
-                      </SelectItem>
+                      </option>
                     ))}
                 </SelectContent>
               </Select>
@@ -208,7 +208,6 @@ export const ShowInformations = ({
               size="lg"
               onClick={handleSaveChanges}
               disabled={isLoading}
-              radius="full"
               className="w-full"
               isLoading={isLoading}
             >
