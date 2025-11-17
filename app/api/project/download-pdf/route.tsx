@@ -77,9 +77,13 @@ export async function POST(req: NextRequest) {
     // Récupérer les données du projet depuis la base de données
     console.log("🔍 [PDF API] Récupération du projet depuis la DB...");
     const pool = (await import("@/lib/database")).default;
-    const result = await pool.query("SELECT * FROM projects WHERE id = $1;", [
-      projectId,
-    ]);
+    const result = await pool.query(
+      `SELECT p.*, g.id as group_id_info, g.name as group_name
+       FROM projects p
+       LEFT JOIN groups g ON p.group_id = g.id
+       WHERE p.id = $1;`,
+      [projectId]
+    );
     console.log("✅ [PDF API] Projet récupéré, nombre de lignes:", result.rowCount);
 
     if (result.rowCount !== 1) {
@@ -90,9 +94,19 @@ export async function POST(req: NextRequest) {
     }
 
     const projectData = result.rows[0];
+
+    // Ajouter groupInfo si le projet appartient à un groupe
+    if (projectData.group_id && projectData.group_name) {
+      projectData.groupInfo = {
+        id: projectData.group_id,
+        name: projectData.group_name,
+      };
+    }
+
     console.log("📦 [PDF API] Données du projet:", {
       id: projectData.id,
       name: projectData.name,
+      group: projectData.groupInfo?.name || "Aucun groupe",
     });
 
     // Convertir les dates en strings ISO
