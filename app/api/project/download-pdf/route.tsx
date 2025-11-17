@@ -15,8 +15,7 @@ import { renderToStream } from "@react-pdf/renderer";
 import { ProjectPDFDocument } from "@/components/projects/download/ProjectPDFDocument";
 import { ProjectPDFMinimal } from "@/components/projects/download/ProjectPDFMinimal";
 import { registerPDFFonts } from "@/lib/pdf-fonts";
-import path from "path";
-import fs from "fs/promises";
+import { convertImageToBase64 } from "@/lib/image-to-base64";
 import React from "react";
 
 export const runtime = "nodejs";
@@ -28,28 +27,6 @@ interface ProjectData {
   user_id: number;
   products: any[];
   // ... autres champs
-}
-
-// Helper function to convert local image paths to HTTP URLs for @react-pdf/renderer
-// @react-pdf/renderer works best with HTTP(S) URLs served by the Next.js server
-function convertImageToLocalURL(imagePath: string): string {
-  try {
-    if (imagePath.startsWith("http://") || imagePath.startsWith("https://")) {
-      return imagePath; // Already an absolute HTTP(S) URL
-    }
-
-    // Use local Next.js server URL
-    // In production, this should be your actual domain
-    const baseUrl = process.env.NEXT_PUBLIC_URL || "http://localhost:3000";
-
-    // Ensure path starts with /
-    const cleanPath = imagePath.startsWith("/") ? imagePath : `/${imagePath}`;
-
-    return `${baseUrl}${cleanPath}`;
-  } catch (error) {
-    console.error(`Erreur lors de la conversion de l'image ${imagePath}:`, error);
-    return imagePath; // Return original path on error
-  }
 }
 
 export async function POST(req: NextRequest) {
@@ -128,24 +105,8 @@ export async function POST(req: NextRequest) {
     const user = userResult.rowCount === 1 ? userResult.rows[0] : null;
     console.log("✅ [PDF API] Utilisateur récupéré:", user ? user.email : "null");
 
-    // Convertir les images des produits en URLs HTTP locales pour @react-pdf/renderer
-    console.log("🖼️ [PDF API] Conversion des images de produits en URLs HTTP...");
-    if (projectData.products && Array.isArray(projectData.products)) {
-      for (const productEntry of projectData.products) {
-        if (productEntry.product && Array.isArray(productEntry.product)) {
-          for (const product of productEntry.product) {
-            if (product.image && typeof product.image === "string" && product.image.startsWith("/")) {
-              product.image = convertImageToLocalURL(product.image);
-              console.log(`  📷 Produit image: ${product.image}`);
-            }
-          }
-        }
-      }
-    }
-    console.log("✅ [PDF API] Images de produits converties");
-
-    // Convertir les icônes en URLs HTTP locales
-    console.log("🎨 [PDF API] Conversion des icônes en URLs HTTP...");
+    // Convertir les icônes en base64
+    console.log("🎨 [PDF API] Conversion des icônes en base64...");
     const iconNames = [
       "logo.png",
       "avion.png",
@@ -155,25 +116,52 @@ export async function POST(req: NextRequest) {
       "maison.png",
     ];
 
-    const iconsLocalUrls: Record<string, string> = {};
+    const iconsBase64: Record<string, string> = {};
     for (const iconName of iconNames) {
-      iconsLocalUrls[iconName] = convertImageToLocalURL(`/icons/${iconName}`);
-      console.log(`  🎨 Icône ${iconName}: ${iconsLocalUrls[iconName]}`);
+      try {
+        const iconPath = `/icons/${iconName}`;
+        iconsBase64[iconName] = await convertImageToBase64(iconPath);
+        console.log(`  🎨 Icône ${iconName} convertie en base64`);
+      } catch (error) {
+        console.error(`  ❌ Erreur lors de la conversion de ${iconName}:`, error);
+      }
     }
-    console.log("✅ [PDF API] Icônes converties");
+    console.log("✅ [PDF API] Icônes converties en base64");
+
+    // Convertir les images des produits en base64
+    console.log("🖼️ [PDF API] Conversion des images de produits en base64...");
+    if (projectData.products && Array.isArray(projectData.products)) {
+      for (const productEntry of projectData.products) {
+        if (productEntry.product && Array.isArray(productEntry.product)) {
+          for (const product of productEntry.product) {
+            if (product.image && typeof product.image === "string") {
+              try {
+                const originalImage = product.image;
+                product.image = await convertImageToBase64(originalImage);
+                console.log(`  📷 Image produit convertie: ${originalImage.substring(0, 50)}...`);
+              } catch (error) {
+                console.error(`  ❌ Erreur lors de la conversion de l'image produit:`, error);
+                // Garder l'image originale en cas d'erreur
+              }
+            }
+          }
+        }
+      }
+    }
+    console.log("✅ [PDF API] Images de produits converties en base64");
 
     // Générer le PDF avec @react-pdf/renderer
     console.log("📄 [PDF API] Génération du PDF avec @react-pdf/renderer...");
     console.log("📋 [PDF API] Projet name:", projectData.name);
     console.log("📋 [PDF API] User:", user?.firstName, user?.name);
-    console.log("📋 [PDF API] Icônes:", Object.keys(iconsLocalUrls));
+    console.log("📋 [PDF API] Icônes:", Object.keys(iconsBase64));
 
     // Use ProjectPDFDocument (full PDF with all pages)
     const pdfStream = await renderToStream(
       <ProjectPDFDocument
         project={projectData}
         user={user}
-        iconsDataUrls={iconsLocalUrls}
+        iconsDataUrls={iconsBase64}
       />
     );
 
