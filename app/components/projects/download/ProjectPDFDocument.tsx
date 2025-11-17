@@ -35,7 +35,7 @@ import {
   convertProjectToUsedProducts,
 } from "@utils/projects";
 
-// Styles optimisés pour @react-pdf/renderer
+// Styles optimisés pour @react-pdf/renderer avec design identique à la page web
 // Note: Tailwind CSS n'est pas supporté - styles en objets JavaScript
 const styles = StyleSheet.create({
   page: {
@@ -57,9 +57,11 @@ const styles = StyleSheet.create({
   // Project Info Section
   projectInfoSection: {
     backgroundColor: "white",
-    borderRadius: 12,
+    borderRadius: 45, // rounded-[45px]
     padding: 30,
     marginBottom: 40,
+    borderWidth: 2,
+    borderColor: "#D0D0D0",
   },
   projectTitle: {
     fontSize: 32,
@@ -104,9 +106,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   sectionTitle: {
-    fontSize: 20,
+    fontSize: 24, // Plus gros
     fontWeight: 600,
     marginBottom: 20,
+    color: "#333",
   },
   productsGrid: {
     flexDirection: "row",
@@ -116,10 +119,12 @@ const styles = StyleSheet.create({
   },
   productCard: {
     backgroundColor: "white",
-    borderRadius: 12,
+    borderRadius: 45, // rounded-[45px]
     padding: 20,
     width: "48%",
     marginBottom: 15,
+    borderWidth: 2,
+    borderColor: "#D0D0D0",
   },
   productName: {
     fontSize: 16,
@@ -156,40 +161,44 @@ const styles = StyleSheet.create({
   impactCardsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "lightgrey",
-    borderRadius: 12,
-    padding: 30,
+    gap: 15,
     marginBottom: 20,
   },
   impactCard: {
     backgroundColor: "white",
-    borderRadius: 12,
-    padding: 15,
+    borderRadius: 45, // rounded-[45px]
+    padding: 20, // p-[20px]
     width: "48%",
-    borderTopWidth: 4,
+    borderWidth: 2,
+    borderColor: "#D0D0D0",
   },
   impactCardTitle: {
-    fontSize: 16,
+    fontSize: 20, // text-lg lg:text-2xl
     fontWeight: 500,
-    marginBottom: 5,
+    marginBottom: 15,
+    color: "#333",
   },
   impactCardSubtitle: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 300,
-    marginBottom: 10,
+    marginBottom: 15,
+    color: "#666",
   },
   impactValue: {
-    fontSize: 20,
+    fontSize: 48, // text-3xl lg:text-6xl - Plus gros comme sur le web
     fontWeight: 600,
     marginRight: 5,
   },
   impactUnit: {
-    fontSize: 10,
+    fontSize: 14, // text-md
     fontWeight: 300,
+    opacity: 0.75,
   },
   impactValueRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
   },
   // Equivalences Section
   equivalenceSection: {
@@ -197,10 +206,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   equivalenceTitle: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 600,
-    marginBottom: 15,
+    marginBottom: 20,
     textAlign: "center",
+    color: "#333",
   },
   equivalenceCardsRow: {
     flexDirection: "row",
@@ -210,7 +220,7 @@ const styles = StyleSheet.create({
   },
   equivalenceCard: {
     backgroundColor: "white",
-    borderRadius: 12,
+    borderRadius: 45, // rounded-[45px]
     padding: 15,
     width: "48%",
     flexDirection: "row",
@@ -218,20 +228,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   equivalenceIcon: {
-    width: 30,
-    height: 30,
+    width: 40, // Plus gros
+    height: 40,
     marginRight: 10,
   },
   equivalenceText: {
     flex: 1,
   },
   equivalenceLabel: {
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: 300,
     color: "#666",
+    textTransform: "uppercase",
+    marginBottom: 3,
   },
   equivalenceValue: {
-    fontSize: 14,
+    fontSize: 18, // text-xl lg:text-2xl
     fontWeight: 600,
     color: "#000",
   },
@@ -240,17 +252,18 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   comparisonTitle: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 600,
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  comparisonSubtitle: {
-    fontSize: 14,
-    fontWeight: 500,
-    opacity: 0.75,
     marginBottom: 15,
     textAlign: "center",
+    color: "#333",
+  },
+  comparisonSubtitle: {
+    fontSize: 16,
+    fontWeight: 600,
+    marginBottom: 15,
+    textAlign: "center",
+    color: "#333",
   },
   comparisonCardsRow: {
     flexDirection: "row",
@@ -259,12 +272,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   comparisonCard: {
-    borderRadius: 12,
+    borderRadius: 45, // rounded-[45px]
     padding: 15,
     width: "32%",
   },
   comparisonCardGreen: {
-    backgroundColor: "#4AD860",
+    backgroundColor: "#30C17B", // bg-[#30C17B] - Couleur exacte du web
   },
   comparisonCardWhite: {
     backgroundColor: "white",
@@ -274,12 +287,13 @@ const styles = StyleSheet.create({
     fontWeight: 500,
     marginBottom: 10,
     color: "#000",
+    textTransform: "uppercase",
   },
   comparisonCardLabelWhite: {
     color: "white",
   },
   comparisonCardValue: {
-    fontSize: 16,
+    fontSize: 20, // text-lg lg:text-4xl
     fontWeight: 600,
   },
   comparisonCardUnit: {
@@ -553,52 +567,52 @@ export const ProjectPDFDocument: React.FC<ProjectPDFDocumentProps> = ({
 
           <View style={styles.impactCardsRow}>
             {/* Santé Humaine - RC */}
-            <View style={[styles.impactCard, { borderTopColor: "#FF8A00" }]}>
+            <View style={styles.impactCard}>
               <Text style={styles.impactCardTitle}>Santé Humaine</Text>
               <Text style={styles.impactCardSubtitle}>Réchauffement Climatique</Text>
               <View style={styles.impactValueRow}>
-                <Text style={[styles.impactValue, { color: "#FF8A00" }]}>
+                <Text style={[styles.impactValue, { color: "#FE9E58" }]}>
                   {impact.global.rc}
                 </Text>
-                <Text style={styles.impactUnit}>kg éq. CO2</Text>
+                <Text style={[styles.impactUnit, { color: "#FE9E58" }]}>kg éq. CO2</Text>
               </View>
             </View>
 
-            {/* Ecosystèmes - ASE */}
-            <View style={[styles.impactCard, { borderTopColor: "#00A410" }]}>
-              <Text style={styles.impactCardTitle}>Ecosystèmes</Text>
-              <Text style={styles.impactCardSubtitle}>Acidification des Sols et de l'Eau</Text>
+            {/* Ressources - ERF */}
+            <View style={styles.impactCard}>
+              <Text style={styles.impactCardTitle}>Ressources Naturelles</Text>
+              <Text style={styles.impactCardSubtitle}>Épuisement des Ressources Fossiles</Text>
               <View style={styles.impactValueRow}>
-                <Text style={[styles.impactValue, { color: "#00A410" }]}>
-                  {impact.global.ase}
+                <Text style={[styles.impactValue, { color: "#FE5858" }]}>
+                  {impact.global.erf}
                 </Text>
-                <Text style={styles.impactUnit}>Mol H+</Text>
+                <Text style={[styles.impactUnit, { color: "#FE5858" }]}>MJ</Text>
               </View>
             </View>
           </View>
 
           <View style={styles.impactCardsRow}>
-            {/* Ressources - ERF */}
-            <View style={[styles.impactCard, { borderTopColor: "#4169E1" }]}>
-              <Text style={styles.impactCardTitle}>Ressources</Text>
-              <Text style={styles.impactCardSubtitle}>Épuisement des Ressources Fossiles</Text>
+            {/* Acidification des sols et eaux - ASE */}
+            <View style={styles.impactCard}>
+              <Text style={styles.impactCardTitle}>Acidification des sols et eaux</Text>
+              <Text style={styles.impactCardSubtitle}>Acidifications des Sols et Eaux</Text>
               <View style={styles.impactValueRow}>
-                <Text style={[styles.impactValue, { color: "#4169E1" }]}>
-                  {impact.global.erf}
+                <Text style={[styles.impactValue, { color: "#55D789" }]}>
+                  {impact.global.ase}
                 </Text>
-                <Text style={styles.impactUnit}>MJ</Text>
+                <Text style={[styles.impactUnit, { color: "#55D789" }]}>mol H+ éq.</Text>
               </View>
             </View>
 
             {/* Eutrophisation Marine - EM */}
-            <View style={[styles.impactCard, { borderTopColor: "#8B4513" }]}>
-              <Text style={styles.impactCardTitle}>Eutrophisation Marine</Text>
-              <Text style={styles.impactCardSubtitle}>Impact sur les écosystèmes aquatiques</Text>
+            <View style={styles.impactCard}>
+              <Text style={styles.impactCardTitle}>Eutrophisation marine</Text>
+              <Text style={styles.impactCardSubtitle}>Acidifications des Sols et Eaux</Text>
               <View style={styles.impactValueRow}>
-                <Text style={[styles.impactValue, { color: "#8B4513" }]}>
+                <Text style={[styles.impactValue, { color: "#55D789" }]}>
                   {impact.global.em}
                 </Text>
-                <Text style={styles.impactUnit}>kg P eq.</Text>
+                <Text style={[styles.impactUnit, { color: "#55D789" }]}>kg P éq.</Text>
               </View>
             </View>
           </View>
