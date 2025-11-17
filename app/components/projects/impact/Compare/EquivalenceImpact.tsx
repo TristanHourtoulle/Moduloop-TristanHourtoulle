@@ -79,6 +79,12 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
     }
   }, [project, worstProject, impactType, type, value1, value2, value3]);
 
+  // Calculer le nombre de cards à afficher pour adapter le grid
+  const numberOfCards = impactType === "ERF" ? 2 : 3;
+  const gridColsClass = numberOfCards === 2
+    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3";
+
   return (
     <div className="w-full flex flex-col gap-2 md:gap-3 items-center md:items-start">
       <div className="flex flex-col items-center md:items-start">
@@ -104,7 +110,7 @@ export const EquivalenceImpact = (props: EquivalenceImpactProps) => {
           à:
         </h2>
       </div>
-      <div className="flex flex-wrap items-center w-full justify-center lg:justify-between gap-2 md:gap-5">
+      <div className={`grid ${gridColsClass} gap-2 md:gap-5 w-full`}>
         <CardEquivalenceImpact
           project={project}
           title={title1}

@@ -1,5 +1,5 @@
 import { ProjectType } from "@models/Project";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Tooltip } from "@/components/ui-compat/tooltip";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -85,10 +85,7 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
       className="categorize"
     >
       <div
-        className={`px-4 py-2 md:px-8 md:py-4 bg-white flex flex-col justify-center items-center outfit-regular gap-2 rounded-[45px] drop-shadow-lg min-w-[275px] 
-    ${
-      title === "pétrol brut" || title === "Chauffage" ? "w-[45%]" : "w-[30%]"
-    }`}
+        className="w-full h-full px-4 py-2 md:px-8 md:py-4 bg-white flex flex-col justify-center items-center outfit-regular gap-2 rounded-[45px] drop-shadow-lg"
       >
         <h3 className="uppercase text-lg lg:text-xl xl:text-2xl text-black opacity-95">
           {title}
@@ -103,7 +100,7 @@ export const CardEquivalenceImpact = (props: CardEquivalenceImpactProps) => {
           />
           <div className="flex flex-wrap items-end gap-2 xl:gap-3">
             <p className="text-black text-xl lg:text-2xl xl:text-4xl">
-              {value}
+              {value === 0 ? "< 1" : value}
             </p>
             <p className="text-black font-regular text-md lg:text-lg xl:text-xl opacity-50">
               {unit}
