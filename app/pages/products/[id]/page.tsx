@@ -10,9 +10,10 @@ import { TitleType } from "@models/Title";
 import { uploadImageProduct } from "@utils/database/file";
 import { getProductById } from "@utils/database/product";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const [myProduct, setMyProduct] = useState<ProductType | null>(null);
   const [title, setTitle] = useState<TitleType | null>(null);
   const [view, setView] = useState("new"); // "new" - "reuse"

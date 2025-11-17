@@ -13,18 +13,19 @@ import {
   useUpdateProductsInProject,
 } from "@hooks/useProjectData";
 import { ProductType } from "@models/Product";
-import { Button } from "@nextui-org/button";
-import { Chip } from "@nextui-org/chip";
-import { Divider } from "@nextui-org/divider";
-import { Input } from "@nextui-org/input";
-import { Select, SelectItem } from "@nextui-org/select";
-import { Tooltip } from "@nextui-org/tooltip";
+import { Button } from "@/components/ui-compat/button";
+import { Chip } from "@/components/ui-compat/chip";
+import { Divider } from "@/components/ui-compat/divider";
+import { Input } from "@/components/ui-compat/input";
+import { Select } from "@/components/ui-compat/select";
+import { Tooltip } from "@/components/ui-compat/tooltip";
 import { useQueryClient } from "@tanstack/react-query";
 import { Download, X } from "lucide-react";
-import { useState } from "react";
+import { use, useState, useEffect } from "react";
 import { toast } from "sonner";
 
-export default function Page({ params: { id } }: { params: { id: string } }) {
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
   const queryClient = useQueryClient();
   const { data: project, isLoading: isProjectLoading } = useProject(Number(id));
   const { data: productsInProject = [], refetch: refetchProducts } =
@@ -39,6 +40,13 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const [selectedProductId, setSelectedProductId] = useState<number | null>(
     null
   );
+
+  // Initialiser avec le premier produit quand les données sont chargées
+  useEffect(() => {
+    if (storeProducts.inies.length > 0 && selectedProductId === null) {
+      setSelectedProductId(storeProducts.inies[0].id);
+    }
+  }, [storeProducts.inies, selectedProductId]);
   const [isDownloadLoading, setIsDownloadLoading] = useState(false);
   const { downloadPNG } = useRenderPNG({
     project,
@@ -53,6 +61,10 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
   const selectedProduct = storeProducts.inies
     .concat(storeProducts.autres)
     .find((p: any) => p.id === selectedProductId);
+
+  console.log('selectedProductId:', selectedProductId);
+  console.log('selectedProduct:', selectedProduct);
+  console.log('selectedProduct?.unit:', selectedProduct?.unit);
 
   // Suppression des produits
   const deleteAllProducts = async () => {
@@ -205,62 +217,59 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                     <div className="text-lg flex flex-wrap items-center gap-2 w-full">
                       <Select
                         items={storeProducts.inies}
-                        labelPlacement="outside"
                         label="Aménagement intérieur"
                         placeholder="ex: Cloison en plâtre"
                         size="lg"
                         variant="bordered"
-                        radius="full"
                         className="max-w-xs text-lg rounded-full bg-white font-outfit"
+                        value={selectedProductId?.toString() || ""}
                         onChange={(event) => {
-                          setSelectedProductId(parseInt(event.target.value));
+                          console.log('Select onChange - raw value:', event.target.value);
+                          const parsedId = parseInt(event.target.value);
+                          console.log('Select onChange - parsed ID:', parsedId);
+                          setSelectedProductId(parsedId);
                         }}
                       >
                         {(product: ProductType) => (
-                          <SelectItem
+                          <option
                             key={product.id ?? -1}
                             value={product.id ?? -1}
                             className="text-black font-outfit text-lg"
                           >
                             {product.name?.replace("Inies - ", "")}
-                          </SelectItem>
+                          </option>
                         )}
                       </Select>
                       <Input
                         type="text"
                         isReadOnly
                         label="Unité"
-                        labelPlacement="outside"
                         value={selectedProduct?.unit ?? ""}
                         variant="bordered"
                         size="lg"
-                        radius="full"
-                        className="w-[150px] max-w-[20%] text-lg bg-white rounded-full outfit-regular"
+                        className="w-[200px] text-lg bg-white rounded-full outfit-regular"
+                        style={{ color: '#1f2937' }}
                       />
                       <Input
                         type="number"
                         label="Quantité Neuve"
-                        labelPlacement="outside"
                         size="lg"
                         id="qNew-addProduct-AI"
                         min={0}
                         placeholder="0"
                         variant="bordered"
-                        radius="full"
-                        className="w-[150px] text-lg bg-white rounded-full outfit-regular"
+                        className="w-[180px] text-lg bg-white rounded-full outfit-regular"
                       />
 
                       <Input
                         type="number"
                         label="Quantité Réemploi"
-                        labelPlacement="outside"
                         id="qUsed-addProduct-AI"
                         size="lg"
                         min={0}
                         placeholder="0"
                         variant="bordered"
-                        radius="full"
-                        className="w-[150px] text-md bg-white rounded-full outfit-regular"
+                        className="w-[180px] text-lg bg-white rounded-full outfit-regular"
                       />
 
                       <Button
@@ -302,62 +311,55 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                     <div className="text-lg flex flex-wrap items-center gap-2 w-full">
                       <Select
                         items={storeProducts.autres}
-                        labelPlacement="outside"
                         label="Mobilier"
                         placeholder="ex: Chaise en bois et textile"
                         size="lg"
                         variant="bordered"
-                        radius="full"
                         className="max-w-xs text-lg rounded-full bg-white font-outfit"
                         onChange={(event) => {
                           setSelectedProductId(parseInt(event.target.value));
                         }}
                       >
                         {(product: any) => (
-                          <SelectItem
+                          <option
                             key={product.id ?? -1}
                             value={product.id ?? -1}
                             className="text-black font-outfit text-lg"
                           >
                             {product.name?.replace("Inies - ", "")}
-                          </SelectItem>
+                          </option>
                         )}
                       </Select>
                       <Input
                         type="text"
                         isReadOnly
                         label="Unité"
-                        labelPlacement="outside"
                         value={selectedProduct?.unit ?? ""}
                         variant="bordered"
                         size="lg"
-                        radius="full"
-                        className="w-[150px] max-w-[20%] text-lg bg-white rounded-full outfit-regular"
+                        className="w-[200px] text-lg bg-white rounded-full outfit-regular"
+                        style={{ color: '#1f2937' }}
                       />
                       <Input
                         type="number"
                         label="Quantité Neuve"
-                        labelPlacement="outside"
                         size="lg"
                         id="qNew-addProduct"
                         min={0}
                         placeholder="0"
                         variant="bordered"
-                        radius="full"
-                        className="w-[150px] text-lg bg-white rounded-full outfit-regular"
+                        className="w-[180px] text-lg bg-white rounded-full outfit-regular"
                       />
 
                       <Input
                         type="number"
                         label="Quantité Réemploi"
-                        labelPlacement="outside"
                         id="qUsed-addProduct"
                         size="lg"
                         min={0}
                         placeholder="0"
                         variant="bordered"
-                        radius="full"
-                        className="w-[150px] text-md bg-white rounded-full outfit-regular"
+                        className="w-[180px] text-lg bg-white rounded-full outfit-regular"
                       />
 
                       <Button
@@ -414,7 +416,6 @@ export default function Page({ params: { id } }: { params: { id: string } }) {
                   <Button
                     color="primary"
                     size="lg"
-                    radius="full"
                     onClick={() => {
                       section === "products"
                         ? setSection("impact")

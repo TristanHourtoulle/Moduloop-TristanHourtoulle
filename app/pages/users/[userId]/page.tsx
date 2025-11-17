@@ -10,14 +10,15 @@ import { getProjectsByUserId } from "@utils/database/project";
 import { getUserById, updateUser } from "@utils/database/user";
 import { Copy, ExternalLink, Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page({
-  params: { userId },
+  params,
 }: {
-  params: { userId: number };
+  params: Promise<{ userId: number }>;
 }) {
+  const { userId } = use(params);
   const [user, setUser] = useState<User | null>(null);
   const [userSession, getUserSession] = useState(null);
   const [title, setTitle] = useState<TitleType | null>(null);

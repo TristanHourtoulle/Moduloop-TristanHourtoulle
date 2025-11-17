@@ -8,8 +8,7 @@ import {
   useUpdateQueryCache,
 } from "@hooks/useGroupsAndProjects"; // Les hooks React Query créés
 import { getSession } from "@lib/session"; // Conserver la logique de session
-import { Button } from "@nextui-org/button";
-import { Select, SelectItem, SelectSection } from "@nextui-org/select";
+import { Select } from "@/components/ui-compat/select";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
@@ -84,28 +83,24 @@ export default function Page() {
           <Loader />
         ) : (
           <Select
-            labelPlacement="inside"
             label="Filtrer par groupe"
             size="md"
             color="secondary"
-            radius="full"
-            className="w-full lg:w-[30%] text-lg font-medium bg-white border-2 border-[#e54600] rounded-full !important outfit-regular"
-            defaultOpen={false}
+            className="w-full lg:w-[30%] text-lg font-medium bg-white border-2 border-[#e54600] outfit-regular"
             onChange={(event: any) => {
               setSelectedGroup(Number(event.target.value));
             }}
           >
-            <SelectSection title="Vos groupes" className="text-black">
-              {groups.map((group) => (
-                <SelectItem
-                  key={group.id ?? "-2"}
-                  value={group.id ?? "-3"}
-                  className="text-black font-outfit text-xl"
-                >
-                  {group.name ?? "Aucun nom"}
-                </SelectItem>
-              ))}
-            </SelectSection>
+            <option value={-1}>Tous les groupes</option>
+            {groups.map((group, index) => (
+              <option
+                key={group.id ?? `group-${index}`}
+                value={group.id ?? -3}
+                className="text-black font-outfit text-xl"
+              >
+                {group.name ?? "Aucun nom"}
+              </option>
+            ))}
           </Select>
         )}
       </div>

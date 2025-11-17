@@ -2,10 +2,9 @@
 
 import { getSession } from "@lib/session";
 import { GroupType } from "@models/Group";
-import { Button } from "@nextui-org/button";
-import { Input } from "@nextui-org/input";
-import { Select, SelectItem, SelectSection } from "@nextui-org/select";
-import { Key } from "@react-types/shared";
+import { Button } from "@/components/ui-compat/button";
+import { Input } from "@/components/ui-compat/input";
+import { Select } from "@/components/ui-compat/select";
 import { databaseToSeveralGroupModel } from "@utils/convert";
 import { getGroupsByUserId } from "@utils/database/group";
 import { createProjectInDatabase } from "@utils/database/project";
@@ -15,9 +14,7 @@ import { toast } from "sonner";
 function page() {
   const [idUser, setIdUser] = useState<string>("");
   const [groups, setGroups] = useState<GroupType[]>([]);
-  const [value, setValue] = useState<Iterable<Key> | "all" | undefined>(
-    undefined
-  );
+  const [value, setValue] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -98,14 +95,11 @@ function page() {
         formData.append("location", "");
         formData.append("area", "");
         formData.append("budget", "");
-        // Convertir `groupId` en une chaîne si c'est un ensemble
-        if (groupId && groupId !== "all") {
-          const groupAsString = Array.isArray(groupId)
-            ? groupId.join(",") // Si c'est un tableau de valeurs
-            : Array.from(groupId).join(","); // Si c'est un ensemble
-          formData.append("group", groupAsString);
+        // Convertir `groupId` en une chaîne si nécessaire
+        if (groupId && groupId !== "") {
+          formData.append("group", groupId);
         } else {
-          formData.append("group", ""); // Gérer les cas où `groupId` est `undefined` ou `all`
+          formData.append("group", "");
         }
         if (createGroup) {
           const groupNew = document.getElementById(
@@ -158,44 +152,35 @@ function page() {
           type="text"
           id="name-createProject"
           placeholder="Quel est le nom de votre projet ?"
-          variant="bordered"
           className="outfit-regular text-sm lg:text-lg tertiary-color w-[100%]"
           size="lg"
           label="Nom de votre projet"
-          labelPlacement="outside"
-          radius="full"
+          fullWidth
         />
 
         <div className="flex flex-col gap-1 w-[100%]">
           <div>
             <Select
-              items={groups}
               label="Groupe"
-              labelPlacement="outside"
-              placeholder="Relié ce projet à un groupe ? (exemple: Etage 2)"
               size="lg"
-              radius="full"
-              variant="bordered"
               className="outfit-regular text-lg tertiary-color w-[100%]"
-              defaultOpen={false}
-              onSelectionChange={(selected) => {
-                setValue(selected as Iterable<Key> | "all");
-                const selectedAsString = Array.from(selected).join(",");
-                handleGroupChange(selectedAsString);
+              fullWidth
+              value={value}
+              onChange={(e) => {
+                setValue(e.target.value);
+                handleGroupChange(e.target.value);
               }}
-              selectedKeys={value}
             >
-              <SelectSection title={"Vos groupes"} className="text-black">
-                {groups.map((group) => (
-                  <SelectItem
-                    key={group.id ?? "-2"}
-                    value={group.id ?? "-3"}
-                    className="text-black font-outfit text-xl"
-                  >
-                    {group.name ?? "Aucun nom"}
-                  </SelectItem>
-                ))}
-              </SelectSection>
+              <option value="">Relié ce projet à un groupe ? (exemple: Etage 2)</option>
+              {groups.map((group) => (
+                <option
+                  key={group.id ?? "-2"}
+                  value={group.id ?? "-3"}
+                  className="text-black font-outfit text-xl"
+                >
+                  {group.name ?? "Aucun nom"}
+                </option>
+              ))}
             </Select>
           </div>
 
@@ -204,12 +189,10 @@ function page() {
               type="text"
               id="group-NewGroup"
               placeholder="Quel est le nom de votre nouveau groupe ?"
-              variant="bordered"
               className="outfit-regular text-lg tertiary-color w-[100%]"
               size="lg"
               label="Nom de votre groupe"
-              labelPlacement="outside"
-              radius="full"
+              fullWidth
             />
           )}
         </div>
@@ -221,7 +204,7 @@ function page() {
             }}
             size="lg"
             variant="ghost"
-            className="text-md rounded-full outfit-regular px-[10%] mt-2"
+            className="text-md outfit-regular px-[10%] mt-2"
           >
             Annuler
           </Button>
@@ -229,7 +212,7 @@ function page() {
             color="primary"
             onClick={createProject}
             size="lg"
-            className="text-md rounded-full outfit-regular px-[10%] mt-2"
+            className="text-md outfit-regular px-[10%] mt-2"
             isLoading={isLoading}
           >
             Créer

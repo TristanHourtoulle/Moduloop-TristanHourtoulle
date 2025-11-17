@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/button";
+import { Button } from "@/components/ui-compat/button";
 import {
   getUserByEmail,
   sendResetCodeByMail,
@@ -106,11 +106,10 @@ const page = () => {
           />
 
           <Button
-            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg rounded-lg"
+            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg"
             color="primary"
             size="lg"
             onClick={handleSubmit}
-            variant="solid"
           >
             Confirmer
           </Button>
@@ -129,11 +128,10 @@ const page = () => {
           />
 
           <Button
-            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg rounded-lg"
+            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg"
             color="primary"
             size="lg"
             onClick={handleSubmitResetCode}
-            variant="solid"
           >
             Confirmer
           </Button>
@@ -153,11 +151,10 @@ const page = () => {
           />
 
           <Button
-            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg rounded-lg"
+            className="bg-[#0A726F] mt-5 md:mt-0 lg:mt-0 md:ml-0 lg:ml-0 w-fit w-full text-lg"
             color="primary"
             size="lg"
             onClick={handleSubmitPassword}
-            variant="solid"
           >
             Confirmer
           </Button>

@@ -2,7 +2,7 @@
 
 import { Title } from "@components/Title";
 import { TitleType } from "@models/Title";
-import { Button } from "@nextui-org/button";
+import { Button } from "@/components/ui-compat/button";
 import { Download, Loader } from "lucide-react";
 import { useState } from "react";
 

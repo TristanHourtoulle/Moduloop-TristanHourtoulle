@@ -6,7 +6,7 @@ import {
   useProjects,
   useUpdateQueryCache,
 } from "@hooks/useGroupsAndProjects";
-import { Select, SelectItem, SelectSection } from "@nextui-org/select";
+import { Select } from "@/components/ui-compat/select";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -60,28 +60,25 @@ export default function ClientPage({ user }: { user: { id: string } }) {
           <p>Chargement des groupes...</p>
         ) : (
           <Select
-            labelPlacement="inside"
             label="Filtrer par groupe"
             size="md"
             color="secondary"
-            radius="full"
             className="w-full lg:w-[30%] text-lg font-medium bg-white border-2 border-[#e54600] rounded-full !important outfit-regular"
-            defaultOpen={false}
             onChange={(event: any) => {
               setSelectedGroup(Number(event.target.value));
             }}
           >
-            <SelectSection title="Vos groupes" className="text-black">
+            
               {groups.map((group) => (
-                <SelectItem
+                <option
                   key={group.id ?? "-2"}
                   value={group.id ?? "-3"}
                   className="text-black font-outfit text-xl"
                 >
                   {group.name ?? "Aucun nom"}
-                </SelectItem>
+                </option>
               ))}
-            </SelectSection>
+            
           </Select>
         )}
       </div>
