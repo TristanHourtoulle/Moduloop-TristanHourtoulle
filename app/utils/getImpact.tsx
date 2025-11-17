@@ -1,5 +1,5 @@
 export function getPlaneEquivalence(value: any) {
-  let delta = value / 100; // Convertir kg en tonnes
+  let delta = value / 1000; // Convertir kg en tonnes
   let result = delta / 0.524;
   return result.toFixed(0);
 }
@@ -10,7 +10,7 @@ export function getPersonEquivalence(value: any) {
 }
 
 export function getKilometersEquivalence(value: any) {
-  let result = value * 0.17;
+  let result = value / 0.17;
   return result.toFixed(0);
 }
 
