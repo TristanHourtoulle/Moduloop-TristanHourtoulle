@@ -4,7 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Moduloop is an environmental impact calculation platform for construction projects. It's built with Next.js 14 (App Router), TypeScript, and PostgreSQL, allowing users to create projects, manage products, and calculate environmental impacts.
+Moduloop is an environmental impact calculation platform for construction projects. It's built with **Next.js 16** (App Router with Turbopack), TypeScript, **React 19**, and PostgreSQL, allowing users to create projects, manage products, and calculate environmental impacts.
+
+### Recent Upgrade (Next.js 16 & React 19)
+The project has been upgraded from Next.js 14 to Next.js 16 with React 19. Key changes:
+- **Turbopack** is now the default bundler (2-5× faster builds, up to 10× faster Fast Refresh)
+- **React 19** with new features and breaking changes
+- **Async Request APIs**: `params`, `searchParams`, `cookies()`, `headers()` are now async
+- **bcryptjs** instead of bcrypt (for build compatibility)
+- **Cache Components** enabled for performance optimization
+
+### Known Compatibility Issues
+⚠️ Some UI libraries have peer dependency warnings with React 19 (NextUI, Material Tailwind, Radix UI, etc.). These are warnings only - the libraries generally work but may need updates in the future. A build error related to `createContext` persists due to React 19 compatibility with certain component libraries.
 
 ## Core Commands
 
@@ -50,8 +61,9 @@ python3 app.py        # Run all API tests (requires dev server running on port 3
 **Authentication & Sessions:**
 - JWT-based session management in `app/lib/session.ts`
 - Sessions stored in HTTP-only cookies (7-day expiration)
-- Password hashing with bcrypt (10 salt rounds)
+- Password hashing with **bcryptjs** (10 salt rounds) - switched from bcrypt for Next.js 16 compatibility
 - Session helpers: `login()`, `logout()`, `getSession()`, `updateSession()`
+- **Important**: All session functions (`cookies()`, `headers()`) must be awaited in Next.js 16
 
 **API Routes:**
 - Follow Next.js App Router convention: `app/api/[resource]/route.ts`
@@ -214,6 +226,40 @@ Additional services:
 - Use try-catch blocks in all API handlers
 - Toast notifications using Sonner library
 
+## Next.js 16 & React 19 Migration Notes
+
+### Async Request APIs
+In Next.js 16, several APIs that were previously synchronous are now asynchronous:
+
+**Dynamic Route Params:**
+```typescript
+// ❌ Old (Next.js 14)
+export default function Page({ params: { id } }: { params: { id: string } }) {
+  // use id directly
+}
+
+// ✅ New (Next.js 16)
+import { use } from "react";
+export default function Page({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  // use id
+}
+```
+
+**Cookies and Headers:**
+```typescript
+// ❌ Old
+cookies().set("name", "value");
+
+// ✅ New
+(await cookies()).set("name", "value");
+```
+
+### Other Breaking Changes
+- `export const dynamic = "force-dynamic"` is incompatible with `cacheComponents` - remove it
+- `JSX.Element` type should be `React.JSX.Element` in React 19
+- TypeScript config automatically updated by Next.js 16 (jsx: "react-jsx", target: "ES2017")
+
 ## Best Practices for This Codebase
 
 1. **API Routes**: Always include try-catch blocks and return proper success/error responses
@@ -223,6 +269,8 @@ Additional services:
 5. **Styling**: Prefer Tailwind classes over custom CSS; use NextUI/Material Tailwind components when available
 6. **Type Safety**: All API responses and component props should be properly typed
 7. **Path Imports**: Always use `@/` alias for app directory imports
+8. **Async APIs**: Always await `params`, `searchParams`, `cookies()`, and `headers()` in Next.js 16
+9. **Password Hashing**: Use `bcryptjs` (not `bcrypt`) for compatibility
 
 ## French Language
 
